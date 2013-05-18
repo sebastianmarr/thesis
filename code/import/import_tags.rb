@@ -1,5 +1,8 @@
 require_relative 'importer'
 
 i = Importer.new
-i.import 'ss_tags'
-i.import 'ss_tag_link_object'
+
+['ss_tags', 'ss_tag_link_object'].each do |table|
+    puts "importing #{table}..."
+    i.import table
+end
