@@ -22,17 +22,17 @@ db.ss_tags.find().forEach(function(tag) {
 
 // merge duplicate tags
 db.ss_tags.ensureIndex({"tag": true, "lang": true})
-db.ss_tags.ensureIndex({"tag": true})
+db.ss_tags.ensureIndex({"tag_id": true})
 db.ss_tags.find().addOption(DBQuery.Option.noTimeout).forEach(function(tag) {
-    db.ss_tags.find({"tag": tag.tag, "lang": tag.lang}).forEach(function(duplicate) {
-        if (duplicate.tag_id != tag.tag_id) { // don't remove the tag itself
-            db.ss_tag_link_object.update(
-                {"tag_id": duplicate.tag_id},
-                {$set: {"tag_id": tag.tag_id}},
-                {multi: true}
-            )
-            db.ss_tags.remove({tag_id: duplicate.tag_id})
-        }
+    db.ss_tags.find(
+        {"tag": tag.tag, "lang": tag.lang, "tag_id": {$ne: tag.tag_id}}
+    ).forEach(function(duplicate) {
+        db.ss_tag_link_object.update(
+            {"tag_id": duplicate.tag_id},
+            {$set: {"tag_id": tag.tag_id}},                
+            {multi: true}
+        )
+        db.ss_tags.remove({tag_id: duplicate.tag_id})
     })
 })
 
