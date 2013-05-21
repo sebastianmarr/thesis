@@ -22,11 +22,11 @@ The first step is to extract the tag data from the Opossum MySQL database for fu
 
 ### Data Cleaning
 
-To narror the search space and be able to use the data efficiently, it first has to be cleaned. For the problem of cleaning the tag data, some cleaning steps can be thought of instantly:
+To narrow the search space and be able to use the data efficiently, it first has to be cleaned. For the problem of cleaning the tag data, some cleaning steps can be thought of instantly:
 
-* eliminate case sensitivity in tags to combine simlar tags
+* eliminate case sensitivity in tags to combine duplicate tags
 * combine tags by finding misspellings of a tag
-* remove tags that are uses for SEO by the partner and do not describe the product
+* remove tags that are used for SEO by the partner and do not describe the product
 
 Clearly, there will be more ways to clean the data that will arise during further investigation of the data set.
 
