@@ -32,7 +32,7 @@ Clearly, there will be more ways to clean the data that will arise during furthe
 
 ### Data Integration
 
-The tag data has then to be integrated into a data structure suitable for mining. The current idea fur that data structure is a graph. This graph includes all the remaining tags (after cleaning) as nodes. The edges of the graph describe, how often to tags are used together. This results in a measure of distance between the tags.
+The tag data has then to be integrated into a data structure suitable for mining. The current idea fur that data structure is a graph. This graph includes all the remaining tags (after cleaning) as nodes. The edges of the graph describe how similar tags are in terms of co-occurence. To calculate this similarity, different similarity measures can be used.
 
 Further integration, for example of external dictionary data, can lead to more than one type of edges. One could think of edges, that desribe is-a, homonym, synonym and other relationships between tags, that can later be used for mining.
 
