@@ -27,7 +27,6 @@ db.mr_duplicate_tags.find({value:{$gt:1}}).toArray().forEach(function(dups) {
         db.ss_tags.remove(dup._id)
     }
 })
-db.mr_duplicate_tags.drop()
 
 // remove duplicate link entries after merging tags
 var map = function() {
@@ -46,7 +45,6 @@ db.mr_duplicate_tag_links.find({value:{$gt:1}}).toArray().forEach(function(dups)
         db.ss_tag_link_object.remove(dup._id)
     };
 })
-db.mr_duplicate_tag_links.drop()
 
 // remove all tags that are never referenced
 db.ss_tags.find().toArray().forEach(function(tag) {
