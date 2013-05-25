@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "mongo"
 require "mysql2"
+require "yaml"
 
 include Mongo
 
@@ -12,25 +13,38 @@ class Importer
     self.setup
   end
 
-  def reset
+  def reset(options={})
 
-    @mongo.drop_database("spreadshirt")
+    default_options = {
+        :shard => false,
+    }
+    options = default_options.merge(options)
 
-    # sharding setup
-    enableShardingCommand = BSON::OrderedHash.new
-    enableShardingCommand['enableSharding'] = 'spreadshirt'
-    @admin.command(enableShardingCommand)
+    @mongo.drop_database(@config['mongodb']['database'])
+
+    if options[:shard]
+      # sharding setup
+      enableShardingCommand = BSON::OrderedHash.new
+      enableShardingCommand['enableSharding'] = @config['mongodb']['database']
+      @admin.command(enableShardingCommand)
+    end
   end
 
-  def import(table)
+  def import(table, options={})
+
+    default_options = {
+        :shard => false,
+    }
+    options = default_options.merge(options)
 
     @db[table].drop
 
-    # enable sharding for that collection
-    shardCollectionCommand = BSON::OrderedHash.new
-    shardCollectionCommand['shardCollection'] = "spreadshirt.#{table}"
-    shardCollectionCommand['key'] = { '_id' => 1 }
-    @admin.command(shardCollectionCommand)
+    if(options[:shard])
+      shardCollectionCommand = BSON::OrderedHash.new
+      shardCollectionCommand['shardCollection'] = "spreadshirt.#{table}"
+      shardCollectionCommand['key'] = { '_id' => 1 }
+      @admin.command(shardCollectionCommand)
+    end
 
     batch = []
     rows = @mysql.query("SELECT *
@@ -59,17 +73,20 @@ class Importer
   @private
 
     def setup
-      @mysql = Mysql2::Client.new(:host => "db.cloudclaus.virtual", 
-                                  :port => 3308, 
-                                  :username => "catalog", 
-                                  :password => "ooru1kaedae8Eehu", 
-                                  :database => "marr_fulldump")
+
+      @config = YAML.load_file('../configuration/db.yml')
+
+      @mysql = Mysql2::Client.new(:host => @config['mysql']['host'], 
+                                  :port => @config['mysql']['port'], 
+                                  :username => @config['mysql']['username'], 
+                                  :password => @config['mysql']['password'], 
+                                  :database => @config['mysql']['database'])
 
 
-      @mongo = MongoClient.new('vm124.virtual')
+      @mongo = MongoClient.new(@config['mongodb']['host'])
 
       # databases
       @admin = @mongo['admin']
-      @db = @mongo['spreadshirt']
+      @db = @mongo[@config['mongodb']['database']]
     end
 end
