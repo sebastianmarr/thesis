@@ -42,7 +42,7 @@ dbscan = function(edges_collection, eps, minPts) {
         })
     })
 
-    return cluster
+    return {numClusters: cluster, numNoise: db.tmp_dbscan.count({n: true})}
 }
 
 expandCluster = function(node, neighborPts, cluster, eps, minPts) {
