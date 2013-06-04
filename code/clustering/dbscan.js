@@ -1,53 +1,75 @@
-dbscan = function(coll, eps, minPts) {
+dbscan = function(edges_collection, eps, minPts) {
 
-    var c = 0
+    var cluster = 0
 
-    // cleanup and index generation
-    coll.ensureIndex({"tn.ochiai" : 1})
-    print("measure index done")
-    coll.ensureIndex({visited: 1})
-    print("visited index done")
-    coll.update({},{$set:{visited:false}, $unset: {cluster: 1}}, {multi: true})
-    print("cleanup done")
-
-    // filter each node for edges within eps
-    coll.find().forEach(function(e) {
-        e.en = e.tn.filter(function(n) { return n.ochiai > eps })
-        coll.save(e)
+    // keep clustering information in temporary collection
+    // pre-calculate edges within eps for each node
+    db.tmp_dbscan.drop()
+    db.tmp_dbscan.ensureIndex({v: 1})
+    db.tmp_dbscan.ensureIndex({c: 1})
+    edges_collection.find({},{_id:1, tn:1}).forEach(function(x) {
+        db.tmp_dbscan.insert({
+            _id: x._id,
+            e: x.tn.filter(function(n) { return n.ochiai > eps }).map(function(y) { return {id: y.id, d: y.ochiai}}), // eps-neighborhood
+            v: false, // visited
+        })
     })
-    print("eps neighbors done")
 
-    // main loop
-    while (n = coll.findOne({visited: false})) {
-        n.visited = true
-        if (n.en.length < minPts) {
-            n.noise = true
+    // main loop of algorithm
+    while (node = db.tmp_dbscan.findOne({v: false})) {
+
+        node.v = true
+        // get all neighbor nodes
+        var neighborPts = regionQuery(node, eps)
+        if (neighborPts.length < minPts) {
+            node.n = true
+            db.tmp_dbscan.save(node)
         } else {
-            c++
-            print("new cluster no." + c)
-            expandCluster(n, n.en, c, eps, minPts)
+            cluster++
+            expandCluster(node, neighborPts, cluster, eps, minPts)
         }
-        print(coll.count({visited: false}) + "unvisited nodes left")
-    }    
+    }
+
+    // print number of found clusters
+    print(cluster + " clusters found")
+
+    // copy results into separate collection
+    db.dbscan_results.drop()
+    db.tmp_dbscan.find().forEach(function(x) {
+        db.dbscan_results.insert({
+            _id: x._id,
+            c: x.c
+        })
+    })
+
+    return cluster
 }
 
-expandCluster = function(node, neighbors, cluster, eps, minPts) {
-    node.cluster = c
-
-    q = neighbors.map(function(n) {return n.id})
-    while (n = q.pop()) {
-        neighbor = coll.findOne({_id:n})
-        neighbor.visited = true
-        if (n.en.length >= minPts) {
-            n.en.forEach(function(e) {
-                if (q.indexOf(e.id) < 0) {
-                    q.push(e.id)
-                }
-            })
+expandCluster = function(node, neighborPts, cluster, eps, minPts) {
+    node.c = cluster
+    while (n = neighborPts.pop()) {
+        if (!n.v) {
+            n.v = true
+            furtherNeighbors = regionQuery(n, eps)
+            if (furtherNeighbors.length >= minPts) {
+                // add further neighbors to queue (without producing duplicates)
+                furtherNeighbors.forEach(function(f) {
+                    if (!neighborPts.some(function(x) { return x._id == f._id })) {
+                        neighborPts.push(f)
+                    }
+                })
+            }
+            if (!n.c) {
+                n.c = cluster
+            }
         }
-        if (!neighbor.cluster) {
-            neighbor.cluster = c
-        }
-        coll.save(neighbor)
+        db.tmp_dbscan.save(n)
     }
+    db.tmp_dbscan.save(node)
+}
+
+regionQuery = function(node, eps) {
+    var neighborPts = db.tmp_dbscan.find({_id: {$in: node.e.map(function(x){return x.id})}}).toArray()
+    neighborPts.push(node) // include the node itself (as described in algorithm)
+    return neighborPts 
 }
