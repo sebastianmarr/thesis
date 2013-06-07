@@ -1,3 +1,4 @@
+require "bundler/setup"
 require "mongo"
 require "mysql2"
 require "yaml"

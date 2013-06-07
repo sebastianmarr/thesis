@@ -4,3 +4,4 @@ ruby "2.0.0"
 gem 'mongo'
 gem 'bson_ext'
 gem 'mysql2'
+gem 'net-ssh-gateway'

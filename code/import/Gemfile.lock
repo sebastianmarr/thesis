@@ -7,6 +7,9 @@ GEM
     mongo (1.8.6)
       bson (~> 1.8.6)
     mysql2 (0.3.11)
+    net-ssh (2.6.7)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
 
 PLATFORMS
   ruby
@@ -15,3 +18,4 @@ DEPENDENCIES
   bson_ext
   mongo
   mysql2
+  net-ssh-gateway
