@@ -1,92 +1,90 @@
-require "bundler/setup"
 require "mongo"
 require "mysql2"
 require "yaml"
+require "net/ssh/gateway"
 
 include Mongo
 
 class Importer
 
-  LIMIT = 1000
+  def initialize(reset_mongo: false, shard: false)
+    config = read_config
+    @mongo = connect_mongo(config['mongodb'])
+    @mysql = connect_mysql(config['mysql'])
 
-  def initialize
-    self.setup
+    reset(@mongo.connection, config['mongodb']['database'], shard: shard) if reset_mongo
   end
 
-  def reset(options={})
-
-    default_options = {
-        :shard => false,
-    }
-    options = default_options.merge(options)
-
-    @mongo.drop_database(@config['mongodb']['database'])
-
-    if options[:shard]
-      # sharding setup
-      enableShardingCommand = BSON::OrderedHash.new
-      enableShardingCommand['enableSharding'] = @config['mongodb']['database']
-      @admin.command(enableShardingCommand)
-    end
-  end
-
-  def import(table, options={})
-
-    default_options = {
-        :shard => false,
-    }
-    options = default_options.merge(options)
-
-    @db[table].drop
-
-    if(options[:shard])
-      shardCollectionCommand = BSON::OrderedHash.new
-      shardCollectionCommand['shardCollection'] = "spreadshirt.#{table}"
-      shardCollectionCommand['key'] = { '_id' => 1 }
-      @admin.command(shardCollectionCommand)
-    end
+  def import(dataset, drop: true, shard: false, batch_size: 1000)
+    @mongo[dataset].drop if drop
+    shard_collection(@mongo, dataset) if shard
 
     batch = []
-    rows = @mysql.query("SELECT *
-                         FROM #{table}",
-                         :cache_rows => false,
-                         :cast => true)
-
-    rows.each do |row|
+    @mysql.query("SELECT * FROM #{dataset}", cache_rows: false, cast: true).each do |row|
 
       # find all BigDecimal and convert to floats, since mongo won't take BigDecimal
-      row.each do |key, value|
-        if value.class == BigDecimal
-          row[key] = value.to_f
-        end
-      end
+      row.each { |key, value| row[key] = value.to_f if value.class == BigDecimal }
 
       batch << row
-      if batch.count == LIMIT
-        @db[table].insert(batch)
+      if batch.count == batch_size
+        @mongo[dataset].insert(batch)
         batch = []
       end
     end
-    @db[table].insert(batch)
+    @mongo[dataset].insert(batch)
   end
 
   @private
 
-    def setup
+    def read_config
+      YAML.load_file('../configuration/db.yml')
+    end
 
-      @config = YAML.load_file('../configuration/db.yml')
+    def connect_mongo(config)
+      conn = MongoClient.new config['host']
+      conn[config['database']]
+    end
 
-      @mysql = Mysql2::Client.new(:host => @config['mysql']['host'], 
-                                  :port => @config['mysql']['port'], 
-                                  :username => @config['mysql']['username'], 
-                                  :password => @config['mysql']['password'], 
-                                  :database => @config['mysql']['database'])
+    def connect_mysql(config)
+      tunnel = config['ssh']
+      port = config['port']
+      host = config['host']
 
+      if tunnel
+        port = tunnel_port(tunnel, port)
+        host = '127.0.0.1'
+      end
 
-      @mongo = MongoClient.new(@config['mongodb']['host'])
+      Mysql2::Client.new(:host => host, 
+                         :port => port, 
+                         :username => config['username'], 
+                         :password => config['password'], 
+                         :database => config['database'])
+    end
 
-      # databases
-      @admin = @mongo['admin']
-      @db = @mongo[@config['mongodb']['database']]
+    def tunnel_port(ssh_config, port)
+      gateway = Net::SSH::Gateway.new(
+                 ssh_config['host'],
+                 ssh_config['username'],
+                 :keys => [ssh_config['key']])
+      port = gateway.open("127.0.0.1", port, 13307)
+    end
+
+    def reset(mongo_connection, database, shard: false)
+      mongo_connection.drop_database database
+      shard_database(mongo_connection, database) if shard
+    end
+
+    def shard_database(mongo_connection, database)
+      enableShardingCommand = BSON::OrderedHash.new
+      enableShardingCommand['enableSharding'] = database
+      mongo_connection['admin'].command(enableShardingCommand)
+    end
+
+    def shard_collection(database_connection, collection, shard_key: {'_id' => 1})
+      shardCollectionCommand = BSON::OrderedHash.new
+      shardCollectionCommand['shardCollection'] = "#{database_connection.name}.#{collection}"
+      shardCollectionCommand['key'] = shard_key
+      database_connection.connection['admin'].command(shardCollectionCommand)
     end
 end
