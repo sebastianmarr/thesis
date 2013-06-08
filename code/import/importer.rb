@@ -8,8 +8,13 @@ include Mongo
 
 class Importer
 
-  def initialize(reset_mongo: false, shard: false)
-    config = read_config
+  def initialize(config_name,reset_mongo: false, shard: false)
+    config = read_config[config_name]
+
+    if !config
+      raise "Database configuration not found"
+    end
+
     @mongo = connect_mongo(config['mongodb'])
     @mysql = connect_mysql(config['mysql'])
 
@@ -38,7 +43,7 @@ class Importer
   @private
 
     def read_config
-      YAML.load_file('../configuration/db.yml')
+      YAML.load_file('./db.yml')
     end
 
     def connect_mongo(config)

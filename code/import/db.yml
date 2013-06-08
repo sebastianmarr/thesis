@@ -1,0 +1,40 @@
+reporting_com:
+    mysql:
+        host: report02.ffm.sprd.net
+        port: 3308
+        username: pentaho-ro
+        password: Aegah5ae
+        database: spreadshirt_com
+        ssh:
+            host: report02.ffm.sprd.net
+            username: marr
+            key: ~/.ssh/id_rsa
+    mongodb:
+        host: vm134.virtual
+        database: spreadshirt_com
+
+reporting_net:
+    mysql:
+        host: report02.ffm.sprd.net
+        port: 3307
+        username: pentaho-ro
+        password: Aegah5ae
+        database: spreadshirt_net
+        ssh:
+            host: report02.ffm.sprd.net
+            username: marr
+            key: ~/.ssh/id_rsa
+    mongodb:
+        host: vm134.virtual
+        database: spreadshirt_net
+        
+marr_fulldump:
+    mysql:
+        host: db.cloudclaus.virtual
+        port: 3308
+        username: catalog
+        password: ooru1kaedae8Eehu
+        database: marr_fulldump
+    mongodb:
+        host: vm134.virtual
+        database: marr_fulldump
