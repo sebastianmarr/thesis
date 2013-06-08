@@ -1,5 +1,7 @@
 var topNeighborsForTag = function(tag, n) {
 
+    db.tag_graph_nodes.ensureIndex({tag: 1})
+
     var tag_id = db.tag_graph_nodes.findOne({tag: tag})._id
     var edges = db.tag_graph_edges.findOne({_id: tag_id})
 
