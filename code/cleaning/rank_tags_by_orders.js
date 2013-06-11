@@ -1,6 +1,10 @@
 // extract article tags per orderitem
 db.ss_order_orderitems.ensureIndex({article_id: 1})
 db.ss_tag_link_object.ensureIndex({object_type_id: 1, object_id: 1})
+
+db.ss_order_orderitems.update({}, {$unset: {a_tags: 1}, {multi: true}})
+db.ss_order_orderitems.update({}, {$unset: {d_tags: 1}, {multi: true}})
+
 db.ss_order_orderitems.find({article_id: {$ne: 0}}, {article_id: 1}).addOption(DBQuery.Option.noTimeout).forEach(function(orderitem) {
     var article_tags = db.ss_tag_link_object.find(
         {object_type_id: 3, object_id: orderitem.article_id},
