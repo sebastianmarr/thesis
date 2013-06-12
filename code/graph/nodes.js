@@ -1,5 +1,6 @@
 db.links.ensureIndex({tag_id: 1})
 db.tags.ensureIndex({"tag_id": 1})
+db.tag_graph_nodes.drop()
 db.tags.find().forEach(function(tag) {
     
     // create node
