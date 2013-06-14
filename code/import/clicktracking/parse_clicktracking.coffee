@@ -15,10 +15,11 @@ parseClickTracking = (path) ->
 parseLine = (line) ->
     input = JSON.parse line
     query = parseQuery input
-    articleId = parseArticleId input
-    platform = parsePlatform input
-    language = parseLanguage input
-    console.log JSON.stringify(new Click(query, articleId, platform, language))
+    if query
+        articleId = parseArticleId input
+        platform = parsePlatform input
+        language = parseLanguage input
+        console.log JSON.stringify(new Click(query, articleId, platform, language))
 
 parseQuery = (input) ->
     if input.params && x = input.params['search-query']
