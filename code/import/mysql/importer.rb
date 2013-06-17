@@ -21,12 +21,18 @@ class Importer
     reset(@mongo.connection, config['mongodb']['database'], shard: shard) if reset_mongo
   end
 
-  def import(dataset, drop: true, shard: false, batch_size: 1000)
+  def import(dataset, columns = nil, drop: true, shard: false, batch_size: 1000)
     @mongo[dataset].drop if drop
     shard_collection(@mongo, dataset) if shard
 
+    select = if columns
+      columns.join  ","
+    else
+      "*"
+    end
+
     batch = []
-    @mysql.query("SELECT * FROM #{dataset}", cache_rows: false, cast: true).each do |row|
+    @mysql.query("SELECT #{select} FROM #{dataset}", cache_rows: false, cast: true).each do |row|
 
       # find all BigDecimal and convert to floats, since mongo won't take BigDecimal
       row.each { |key, value| row[key] = value.to_f if value.class == BigDecimal }
