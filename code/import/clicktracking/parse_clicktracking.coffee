@@ -2,9 +2,6 @@
 
 fs = require "fs"
 
-class Click
-    constructor: (@query, @articleId, @platform, @language) ->
-
 parseClickTracking = (path) ->
     fs.readFileSync(path).toString().split('\n').forEach (line) ->
         try
@@ -13,29 +10,46 @@ parseClickTracking = (path) ->
             # do nothing, end of file reached
 
 parseLine = (line) ->
+
     input = JSON.parse line
-    query = parseQuery input
-    if query
-        articleId = parseArticleId input
-        platform = parsePlatform input
-        language = parseLanguage input
-        console.log JSON.stringify(new Click(query, articleId, platform, language))
 
-parseQuery = (input) ->
-    if input.params && x = input.params['search-query']
-        x.slice 1, -1
+    date = new Date(input.date.split('_')[0])
+    platform = input.path.slice(7, 9)
 
-parseArticleId = (input) ->
-    if input.params && x = input.params.cl
-        articles = x.slice(1, -1).split(',').filter((z) -> z.charAt(0) == 'a')
-        articles[0].slice(1)
+    # no sense continuing without click parameters
+    if params = input.params
+
+        query = if x = params['search-query'] 
+                    params['search-query'].slice(1,-1)
+                else null
+
+        articleId = parseCl params, 'a'
+        productId = parseCl params, 'p'
+        index = parseCl params, 'i'
+
+        language = params.locale.slice(1, 3)
+
+        click =
+            date: date
+            platform: platform
+            query: query
+            articleId: articleId
+            productId: productId
+            index: index
+            language: language
+
+        process.stdout.write JSON.stringify(click) + '\n'
+
+
+parseCl = (input, type) ->
+    if x = input.cl
+        objects = x.slice(1, -1).split(', ').filter((z) -> z.charAt(0) == type)
+        objects[0].slice(1)
+    else null
 
 parsePlatform = (input) ->
     input.path.slice 7, 9
 
-parseLanguage = (input) ->
-    if input.params && x = input.params.locale
-        x.slice 1, 3
 
 process.argv.forEach (path, index) ->
     if index >= 2
