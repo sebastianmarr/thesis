@@ -44,7 +44,7 @@ parseLine = (line) ->
 parseCl = (input, type) ->
     if x = input.cl
         objects = x.slice(1, -1).split(', ').filter((z) -> z.charAt(0) == type)
-        objects[0].slice(1)
+        parseInt(objects[0].slice(1))
     else null
 
 parsePlatform = (input) ->
