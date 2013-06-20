@@ -1,10 +1,5 @@
 load('../nodes.js')
 
-db.clicks.ensureIndex({language: 1});
-db.clicks.ensureIndex({articleId: 1});
-db.clicks.ensureIndex({productId: 1});
-db.clicks.ensureIndex({query: 1});
-
 db.clicks.remove({query: {$in: [null, ""]}});
 
 db.clicks.find().forEach(function(click) {
