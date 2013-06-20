@@ -1,5 +1,7 @@
 load('../nodes.js')
 
+db.clicks.ensureIndex({query: 1});
+
 var ids = db.clicks.distinct('query');
 
 var occs = function(nodeId) {
