@@ -1,16 +1,16 @@
-load('../nodes.js')
+load('graph/nodes.js')
 
-db.links.ensureIndex({tag_id: 1})
-db.tags.ensureIndex({tag_id: 1})
+db.tmp_links_subset.ensureIndex({tag_id: 1})
+db.tmp_tags_subset.ensureIndex({tag_id: 1})
 
-ids = db.tags.find({},{tag_id: 1}).toArray().map(function(x) { return x.tag_id });
+ids = db.tmp_tags_subset.find({},{tag_id: 1}).toArray().map(function(x) { return x.tag_id });
 
 occs = function(nodeId) {
-    return db.links.count({tag_id: nodeId});
+    return db.tmp_links_subset.count({tag_id: nodeId});
 };
 
 props = function(nodeId) {
-    var tag = db.tags.findOne({tag_id: nodeId}, {lang: 1, tag: 1});
+    var tag = db.tmp_tags_subset.findOne({tag_id: nodeId}, {lang: 1, tag: 1});
     return {
         tag: tag.tag,
         lang: tag.lang

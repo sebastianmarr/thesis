@@ -1,17 +1,19 @@
-db.links.ensureIndex({tag_id: 1})
-db.links.ensureIndex({object_type_id: 1, object_id: 1, tag_id: 1})
+load('graph/edges.js');
+
+db.tmp_links_subset.ensureIndex({tag_id: 1})
+db.tmp_links_subset.ensureIndex({object_type_id: 1, object_id: 1, tag_id: 1})
 
 
 neighbors = function(nodeId) {
 
     var ret = [];
 
-    db.links.find(
+    db.tmp_links_subset.find(
         {tag_id: nodeId},
         {object_type_id: 1, object_id: 1}
     ).forEach(function(object_with_tag) {
 
-        db.links.find(
+        db.tmp_links_subset.find(
             {
                 object_type_id: object_with_tag.object_type_id,
                 object_id: object_with_tag.object_id,
