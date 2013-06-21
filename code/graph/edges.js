@@ -2,16 +2,17 @@ var buildEdges = function(nodeCollection, edgeCollection, getNeighbors) {
 
     edgeCollection.drop();
 
-    nodeCollection.find({},{_id: 1, occs: 1}).addOption(DBQuery.Option.noTimeout).forEach(function(node) {
+
+    nodeCollection.distinct('_id').forEach(function(nodeId) {
 
         var temp_tn = {};
 
         var edge = {
-            _id: node._id,
+            _id: nodeId,
             tn: []
         };
 
-        getNeighbors(node._id).forEach(function(neighborId) {
+        getNeighbors(nodeId).forEach(function(neighborId) {
 
             if (temp_tn[neighborId]) {
                 temp_tn[neighborId] ++;
@@ -32,6 +33,5 @@ var buildEdges = function(nodeCollection, edgeCollection, getNeighbors) {
         };
 
         edgeCollection.insert(edge);
-
     });
 };
