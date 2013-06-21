@@ -10,6 +10,6 @@ var buildMeasures = function(nodeCollection, edgeCollection) {
             n.jaccard = n.occs / (node_occs + target_occs - n.occs);
             n.ochiai = n.occs / (Math.sqrt(node_occs * target_occs));
         });
-        edgeCollection.save(edge)
-    };
+        edgeCollection.save(edge);
+    });
 };
