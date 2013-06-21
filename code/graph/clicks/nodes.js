@@ -1,4 +1,4 @@
-load('../nodes.js')
+load('graph/nodes.js')
 
 db.clicks.ensureIndex({query: 1});
 

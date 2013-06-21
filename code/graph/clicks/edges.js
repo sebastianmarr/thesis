@@ -1,4 +1,4 @@
-load('../edges.js')
+load('graph/edges.js')
 
 db.clicks.ensureIndex({articleId: 1});
 db.clicks.ensureIndex({query: 1});
