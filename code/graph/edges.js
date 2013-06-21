@@ -15,21 +15,18 @@ var buildEdges = function(nodeCollection, edgeCollection, getNeighbors) {
         getNeighbors(nodeId).forEach(function(neighborId) {
 
             if (temp_tn[neighborId]) {
-                temp_tn[neighborId] ++;
+                temp_tn[neighborId].occs ++;
             } else {
-                temp_tn[neighborId] = 1;
+                temp_tn[neighborId] = {
+                    id: neighborId,
+                    occs: 1
+                };
             };
 
         });
 
         for (var e in temp_tn) {
-
-            var edge_id = isNaN(parseInt(e)) ? e : parseInt(e);
-
-            edge.tn.push({
-                id: edge_id,
-                occs: temp_tn[e]
-            });
+            edge.tn.push(temp_tn[e]);
         };
 
         edgeCollection.insert(edge);
