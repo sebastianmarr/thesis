@@ -30,5 +30,8 @@ var buildEdges = function(nodeCollection, edgeCollection, getNeighbors) {
                 occs: temp_tn[e]
             });
         };
+
+        edgeCollection.insert(edge);
+
     });
 };
