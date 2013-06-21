@@ -10,23 +10,23 @@ var reduce = function(key, values) {
     return Array.sum(values)
 }
 
-db.tmp_tags.mapReduce(map, reduce, {out: "mr_duplicate_tags"})
+db.ss_tags.mapReduce(map, reduce, {out: "mr_duplicate_tags"})
 
 // remove duplicates by merging tags
-db.tmp_tags.ensureIndex({tag:1, lang:1})
-db.tmp_tag_link_object.ensureIndex({tag_id: true})
+db.ss_tags.ensureIndex({tag:1, lang:1})
+db.ss_tag_link_object.ensureIndex({tag_id: true})
 db.mr_duplicate_tags.find({value:{$gt:1}}).toArray().forEach(function(dups) {
 
-    var tags = db.tmp_tags.find(dups._id).toArray()
+    var tags = db.ss_tags.find(dups._id).toArray()
     var canonical = tags[0]
     for (var i = tags.length - 1; i >= 1; i--) {
         var dup = tags[i]
-        db.tmp_tag_link_object.update(
+        db.ss_tag_link_object.update(
             {tag_id: dup.tag_id},
             {$set: {tag_id: canonical.tag_id}},
             {multi: true}
         )
-        db.tmp_tags.remove(dup._id)
+        db.ss_tags.remove(dup._id)
     }
 })
 
@@ -37,20 +37,20 @@ var map = function() {
 var reduce = function(key, values) {
     return Array.sum(values)
 }
-db.tmp_tag_link_object.mapReduce(map, reduce, {out: "mr_duplicate_tag_links"})
+db.ss_tag_link_object.mapReduce(map, reduce, {out: "mr_duplicate_tag_links"})
 
-db.tmp_tag_link_object.ensureIndex({tag_id:1, object_id:1, object_type_id:1})
+db.ss_tag_link_object.ensureIndex({tag_id:1, object_id:1, object_type_id:1})
 db.mr_duplicate_tag_links.find({value:{$gt:1}}).toArray().forEach(function(dups) {
-    var links = db.tmp_tag_link_object.find(dups._id).toArray()
+    var links = db.ss_tag_link_object.find(dups._id).toArray()
     for (var i = links.length - 1; i >= 1; i--) {
         var dup = links[i]
-        db.tmp_tag_link_object.remove(dup._id)
+        db.ss_tag_link_object.remove(dup._id)
     };
 })
 
 // remove all tags that are never referenced
-db.tmp_tags.find().toArray().forEach(function(tag) {
-    if (db.tmp_tag_link_object.count({"tag_id": tag.tag_id}) == 0) {
-        db.tmp_tags.remove({_id: tag._id})
+db.ss_tags.find().toArray().forEach(function(tag) {
+    if (db.ss_tag_link_object.count({"tag_id": tag.tag_id}) == 0) {
+        db.ss_tags.remove({_id: tag._id})
     }
 })
