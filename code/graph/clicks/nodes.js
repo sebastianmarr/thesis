@@ -1,11 +1,11 @@
 load('graph/nodes.js')
 
-db.clicks.ensureIndex({query: 1});
+db.tmp_clicks.ensureIndex({query: 1});
 
-var ids = db.clicks.distinct('query');
+var ids = db.tmp_clicks.distinct('query');
 
 var occs = function(nodeId) {
-    return db.clicks.count({query: nodeId});
+    return db.tmp_clicks.count({query: nodeId});
 };
 
 var props = function(nodeId) {

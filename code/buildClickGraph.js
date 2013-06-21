@@ -20,3 +20,5 @@ print("Done.\n");
 print("Measures...");
 load('graph/clicks/measures.js');
 print("Done.\n");
+
+db.tmp_clicks.drop();

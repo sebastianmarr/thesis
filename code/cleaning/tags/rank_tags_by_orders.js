@@ -2,6 +2,10 @@
 db.ss_order_orderitems.ensureIndex({article_id: 1})
 db.ss_tag_link_object.ensureIndex({object_type_id: 1, object_id: 1})
 
+// temporary collection to not modify original data
+db.tmp_orderitems.drop();
+
+
 db.ss_order_orderitems.update({}, {$unset: {a_tags: 1}, {multi: true}})
 db.ss_order_orderitems.update({}, {$unset: {d_tags: 1}, {multi: true}})
 
