@@ -10,6 +10,7 @@ var reduce = function(key, values) {
     return Array.sum(values)
 }
 
+db.mr_duplicate_tags.drop()
 db.ss_tags.mapReduce(map, reduce, {out: "mr_duplicate_tags"})
 
 // remove duplicates by merging tags
@@ -39,6 +40,8 @@ var map = function() {
 var reduce = function(key, values) {
     return Array.sum(values)
 }
+
+db.mr_duplicate_tag_links.drop()
 db.ss_tag_link_object.mapReduce(map, reduce, {out: "mr_duplicate_tag_links"})
 
 db.mr_duplicate_tag_links.ensureIndex({value: 1});

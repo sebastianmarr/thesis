@@ -54,4 +54,5 @@ var reduce = function(key, values) {
     return Array.sum(values)
 }
 
+db.mr_orders_per_tag.drop();
 db.ss_order_orderitems.mapReduce(map, reduce, {out: "mr_orders_per_tag"})
