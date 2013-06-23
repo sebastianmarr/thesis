@@ -1,6 +1,7 @@
 load('graph/edges.js');
 
 db.links_subset.ensureIndex({tag_id: 1})
+db.links_subset.ensureIndex({object_type_id: 1, object_id: 1})
 db.links_subset.ensureIndex({object_type_id: 1, object_id: 1, tag_id: 1})
 
 

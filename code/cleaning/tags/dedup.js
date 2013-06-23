@@ -15,6 +15,8 @@ db.ss_tags.mapReduce(map, reduce, {out: "mr_duplicate_tags"})
 // remove duplicates by merging tags
 db.ss_tags.ensureIndex({tag:1, lang:1})
 db.ss_tag_link_object.ensureIndex({tag_id: true})
+db.mr_duplicate_tags.ensureIndex({value: 1})
+
 db.mr_duplicate_tags.find({value:{$gt:1}}).toArray().forEach(function(dups) {
 
     var tags = db.ss_tags.find(dups._id).toArray()
@@ -38,6 +40,8 @@ var reduce = function(key, values) {
     return Array.sum(values)
 }
 db.ss_tag_link_object.mapReduce(map, reduce, {out: "mr_duplicate_tag_links"})
+
+db.mr_duplicate_tag_links.ensureIndex({value: 1});
 
 db.ss_tag_link_object.ensureIndex({tag_id:1, object_id:1, object_type_id:1})
 db.mr_duplicate_tag_links.find({value:{$gt:1}}).toArray().forEach(function(dups) {
