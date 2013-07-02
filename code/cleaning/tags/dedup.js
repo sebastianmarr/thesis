@@ -21,3 +21,28 @@ var reduce = function(key, values) {
 
 db.mr_dedup.drop();
 db.mr_tags.mapReduce(map, reduce, {out: {replace: "mr_dedup", sharded: true}});
+
+// dedup the links by flattening everything
+var map = function() {
+
+    var t = this._id.t;
+    var l = this._id.l;
+
+    this.value.o.forEach(function(link) {
+
+        emit({
+            t: t,
+            l: l,
+            oid: link.oid,
+            ot: link.ot
+        }, null);
+
+    });
+}
+
+var reduce = function(key, values) {
+    return values[0];
+}
+
+db.mr_flattened.drop();
+db.mr_dedup.mapReduce(map, reduce, {out: {replace: "mr_flattened", sharded: true}});
