@@ -31,11 +31,7 @@ var reduce = function(key, values) {
 
 db.ss_tag_link_object.mapReduce(map, reduce, {out: {reduce: "mr_tags", sharded: true}});
 
-// remove unreferenced tags
-db.mr_tags.remove({
-    $or: [
-        {"value.o":{$not:{$exists:1}}},
-        {"value.t":{$not:{$exists:1}}},
-        {"value.l":{$not:{$exists:1}}},
-    ]
-});
+// remove unreferenced and null tags
+db.mr_tags.remove({"value.t": null});
+db.mr_tags.remove({"value.l": null});
+db.mr_tags.remove({"value.o": {$size: 0}});
