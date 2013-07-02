@@ -1,21 +1,22 @@
 var map = function() {
-    var key = this.value.t + "_" + this.value.l;
-    emit(key, {o: this.value.o});
+    emit(
+        {t: this.value.t, l: this.value.l},
+        {o: this.value.o}
+    );
 }
 
 var reduce = function(key, values) {
-    r = {o: []};
+    
 
-    values.forEach(function(value) {
-        value.o.forEach(function(link) {
-            var exists = r.o.some(function(x){ return x.ot === link.ot && x.oid === link.oid });
-            if (!exists) {
-                r.o.push(link);
-            }
-        });
-    });
+    var allLinks = values.reduce(function(memo, value) {
 
-    return r;
+        return memo.concat(value.o);
+
+    }, []);
+
+    return {
+        o: allLinks
+    };
 }
 
 db.mr_dedup.drop();
