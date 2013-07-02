@@ -35,3 +35,4 @@ db.ss_tag_link_object.mapReduce(map, reduce, {out: {reduce: "mr_tags", sharded: 
 db.mr_tags.remove({"value.t": null});
 db.mr_tags.remove({"value.l": null});
 db.mr_tags.remove({"value.o": {$size: 0}});
+db.mr_tags.remove({"value.o":{$not: {$exists:1}}});
