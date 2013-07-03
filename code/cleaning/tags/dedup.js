@@ -1,7 +1,7 @@
 var map = function() {
 
-    var t = this._id.t;
-    var l = this._id.l;
+    var t = this.value.t;
+    var l = this.value.l;
 
     this.value.o.forEach(function(o) {
         emit({
@@ -9,7 +9,7 @@ var map = function() {
             l: l,
             oid: o.oid,
             ot: o.ot
-        }, null);
+        }, 1);
     });
 }
 
@@ -18,4 +18,4 @@ var reduce = function(key, values) {
 }
 
 db.mr_dedup.drop();
-db.mr_tags.mapReduce(map, reduce, {out: {replace: "mr_dedup", sharded: false}});
+db.mr_tags.mapReduce(map, reduce, {out: {merge: "mr_dedup", sharded: true}});
