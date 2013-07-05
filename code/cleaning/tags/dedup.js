@@ -19,4 +19,4 @@ var reduce = function(key, values) {
 }
 
 db.mr_dedup.drop();
-db.mr_tags.mapReduce(map, reduce, {out: {merge: "mr_dedup", sharded: true}});
+db.mr_tags.mapReduce(map, reduce, {out: {merge: "mr_dedup"}});
