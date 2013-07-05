@@ -7,7 +7,6 @@ var map = function() {
     var sanitized = this.tag.replace(nonPrintables, "")
                             .replace(quotes, "")
                             .replace(punctuation, "")
-                            .replace(htmlEntities, "")
                             .replace(/#/g, "")
                             .replace(/&nbsp/g, "")
                             .replace(/&quot/g, "")
