@@ -1,3 +1,4 @@
+// flatten tags and links to find unique combinations (dedup tags and links at the same time)
 var map = function() {
 
     var t = this.value.t;
