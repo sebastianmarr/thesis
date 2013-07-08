@@ -14,5 +14,5 @@ i = Importer.new(db_configuration, reset_mongo:true, shard: true)
  'ss_order_orderitems' => ['orderitem_id', 'order_id', 'product_id', 'article_id', 'quantity']
 }.each do |table, columns|
     puts "importing #{table}..."
-    i.import(table, shard: true)
+    i.import(table, columns, shard: true)
 end
