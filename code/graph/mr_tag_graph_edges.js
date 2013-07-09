@@ -26,7 +26,7 @@ var reduce = function(key, values) {
 }
 
 db.mr_tag_co_occs.drop();
-db.nodes_tags.mapReduce(map, reduce, {out: {merge: "mr_tag_co_occs", sharded: true}, query: {"lang": "de"}});
+db.nodes_tags.mapReduce(map, reduce, {out: {replace: "mr_tag_co_occs", sharded: true}, query: {"lang": "de"}});
 
 // build stripes
 var map = function() {
