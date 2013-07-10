@@ -5,9 +5,18 @@ var async = require('async');
 
 var googleApiKey = "AIzaSyCzf-kyzTQ3jdVXZdqr_RSXlsP_ehFSvFk"
 
-var lines = fs.readFileSync('tags.txt').toString().split(/\r?\n/);
-async.each(lines, processLine, function(err) {
-    process.exit(0);
+db.open('google_language_detection', function(err, database) {
+
+    if (err) {
+        exit(1);
+    }
+
+    detection_db = database;
+    var lines = fs.readFileSync('tags.txt').toString().split(/\r?\n/);
+    async.each(lines, processLine, function(err) {
+        process.exit(0);
+    });
+
 });
 
 function processLine(string, callback) {
@@ -54,17 +63,15 @@ function detectLanguage(string, callback) {
 
 function writeDetectionToDB(string, detection, callback) {
 
-    db.open('google_language_detection', function(err, db) {
-        db.collection('detections', function(err, coll) {
+    detection_db.collection('detections', function(err, coll) {
 
-            var doc = {
-                _id: string,
-                detections: detection.data.detections[0]
-            }
+        var doc = {
+            _id: string,
+            detections: detection.data.detections[0]
+        }
 
-            coll.insert(doc, function(err) {
-                callback(err);
-            });
+        coll.insert(doc, function(err) {
+            callback(err);
         });
     });
 }
