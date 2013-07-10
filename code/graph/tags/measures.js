@@ -13,7 +13,7 @@ var buildMeasures = function(nodeCollection, edgeCollection, target_edge_collect
             s: edge._id.s,
             t: edge._id.t,
             occs: edgeOccs,
-            dice: 2 * edgeOccs.occs / (sourceOccs + targetOccs),
+            dice: 2 * edgeOccs / (sourceOccs + targetOccs),
             jaccard: edgeOccs / (sourceOccs + targetOccs - edgeOccs),
             cosine: edgeOccs / (Math.sqrt(sourceOccs * targetOccs))
         });
