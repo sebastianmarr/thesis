@@ -36,9 +36,14 @@ var reduce = function(key, values) {
 db.mr_tag_nodes.drop();
 db.mr_dedup.mapReduce(map, reduce, {out: {merge: "mr_tag_nodes"}});
 
-// insert them into collection to get a "real" _id and be able to shard and build edges out of them (faster)
-db.mr_tag_nodes.find().forEach(function(node) {
-    db.nodes_tags.insert(node.value);
-});
+// give them real ids
+var map = function() {
+    emit(new ObjectId, this.value);
+}
 
-sh.shardCollection("marr_fulldump.nodes_tags", {_id: 1});
+var reduce = function(key, values) {
+    return values[0];
+}
+
+db.nodes_tags.drop();
+db.mr_tag_nodes.mapReduce(map, reduce, {out: {replace: "nodes_tags", sharded: true}});

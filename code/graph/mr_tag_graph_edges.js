@@ -3,7 +3,7 @@ var map = function() {
 
     var id = this._id;
 
-    this.links.forEach(function(link) {
+    this.value.links.forEach(function(link) {
 
         emit(
             link.ot + '_' + link.oid,
@@ -26,7 +26,7 @@ var reduce = function(key, values) {
 }
 
 db.mr_tag_co_occs.drop();
-db.nodes_tags.mapReduce(map, reduce, {out: {replace: "mr_tag_co_occs", sharded: true}, query: {"lang": "de"}});
+db.nodes_tags.mapReduce(map, reduce, {out: {replace: "mr_tag_co_occs", sharded: true}, query: {"value.lang": "de"}});
 
 // build stripes
 var map = function() {
