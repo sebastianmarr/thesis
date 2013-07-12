@@ -2,12 +2,13 @@
 var map = function() {
 
     var id = this._id;
+    var occs = this.value.occs;
 
     this.value.links.forEach(function(link) {
 
         emit(
             link.ot + '_' + link.oid,
-            {t: [id]}
+            {t: [{i: id, o: occs}]}
         );
     });
 }
@@ -33,10 +34,12 @@ var map = function() {
 
     var t = this.value.t;
 
-    t.forEach(function(tag_id) {
-        t.forEach(function(other_tag_id) {
+    t.forEach(function(tag) {
+        tag_id = tag.i;
+        t.forEach(function(other_tag) {
+            other_tag_id = other_tag.i;
             if (tag_id != other_tag_id) {
-                emit({s: tag_id, t: other_tag_id}, {occs: 1});
+                emit({s: tag_id, t: other_tag_id}, {occs: 1, s_occs: tag.o, t_occs: other_tag.o});
             }
         });
     });
@@ -44,12 +47,15 @@ var map = function() {
 
 var reduce = function(key, values) {
 
+    var s_occs = values[0].s_occs;
+    var t_occs = values[0].t_occs;
+
     var reduction = values.reduce(function(memo, value) {
         if (value.occs) {
             memo.occs += value.occs;
         }
         return memo;
-    }, {occs: 0});
+    }, {occs: 0, s_occs: s_occs, t_occs: t_occs});
 
     return reduction;
 }
