@@ -40,7 +40,8 @@ parseLine = (line) ->
             index: index
             language: language
 
-        process.stdout.write JSON.stringify(click) + '\n'
+        if click.query
+            process.stdout.write JSON.stringify(click) + '\n'
 
 
 parseCl = (input, type) ->
