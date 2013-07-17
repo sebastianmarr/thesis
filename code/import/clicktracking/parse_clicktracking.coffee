@@ -1,6 +1,8 @@
 # takes json clicktracking import and outputs (to stdout) usable click data that can directly be imported into mongodb
 
 fs = require "fs"
+moment = require "moment"
+
 
 parseClickTracking = (path) ->
     fs.readFileSync(path).toString().split('\n').forEach (line) ->
@@ -13,7 +15,7 @@ parseLine = (line) ->
 
     input = JSON.parse line
 
-    date = new Date(input.date.split('_')[0])
+    date = moment(input.date.split('_')[0], "DD.MM.YYYY HH:mm:ss_SSS").toDate()
     platform = input.path.slice(7, 9)
 
     # no sense continuing without click parameters
