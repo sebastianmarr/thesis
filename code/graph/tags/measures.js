@@ -1,23 +1,22 @@
-var buildMeasures = function(nodeCollection, edgeCollection, target_edge_collection) {
+var map = function() {
 
-    target_edge_collection.ensureIndex({s: 1});
-    target_edge_collection.ensureIndex({t: 1});
+    var sourceOccs = this.value.s_occs;
+    var targetOccs = this.value.t_occs;
+    var edgeOccs = this.value.occs;
 
-    edgeCollection.find().addOption(DBQuery.Option.noTimeout).forEach(function(edge) {
-
-        var sourceOccs = nodeCollection.findOne({"_id": edge._id.s}).occs;
-        var targetOccs = nodeCollection.findOne({"_id": edge._id.t}).occs;
-        var edgeOccs = edge.value.occs;
-
-        target_edge_collection.insert({
-            s: edge._id.s,
-            t: edge._id.t,
-            occs: edgeOccs,
-            dice: 2 * edgeOccs / (sourceOccs + targetOccs),
-            jaccard: edgeOccs / (sourceOccs + targetOccs - edgeOccs),
-            cosine: edgeOccs / (Math.sqrt(sourceOccs * targetOccs))
-        });
+    emit(new ObjectId, {
+        s: this._id.s,
+        t: this._id.t,
+        occs: edgeOccs,
+        dice: 2 * edgeOccs / (sourceOccs + targetOccs),
+        jaccard: edgeOccs / (sourceOccs + targetOccs - edgeOccs),
+        cosine: edgeOccs / (Math.sqrt(sourceOccs * targetOccs))
     });
-};
+}
 
-buildMeasures(db.nodes_tags, db.mr_edges_tags, db.edges_tags);
+var reduce = function(key, values) {
+    return values[0];
+}
+
+db.edges_tags.drop();
+db.mr_edges_tags.mapReduce(map, reduce, {out: {replace: "edges_tags", sharded: true}});

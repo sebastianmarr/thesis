@@ -1,37 +1,64 @@
-load('graph/edges.js');
+// transform nodes to get occurences of tags together
+var map = function() {
 
-db.links_subset.ensureIndex({tag_id: 1})
-db.links_subset.ensureIndex({object_type_id: 1, object_id: 1})
-db.links_subset.ensureIndex({object_type_id: 1, object_id: 1, tag_id: 1})
+    var id = this._id;
+    var occs = this.value.occs;
 
+    this.value.links.forEach(function(link) {
 
-neighbors = function(nodeId) {
+        emit(
+            link.ot + '_' + link.oid,
+            {t: [{i: id, o: occs}]}
+        );
+    });
+}
 
-    var ret = [];
+var reduce = function(key, values) {
 
-    db.links_subset.find(
-        {tag_id: nodeId},
-        {object_type_id: 1, object_id: 1}
-    ).forEach(function(object_with_tag) {
+    return values.reduce(function(memo, value) {
 
-        db.links_subset.find(
-            {
-                object_type_id: object_with_tag.object_type_id,
-                object_id: object_with_tag.object_id,
-                tag_id: {$ne: nodeId}
-            },
-            {tag_id: 1}
-        ).forEach(function(other_tag) {
-            ret.push(other_tag.tag_id);
+        if (value.t) {
+            memo.t = memo.t.concat(value.t);
+        }
+
+        return memo;
+
+    }, {t: []});
+}
+
+db.mr_tag_co_occs.drop();
+db.nodes_tags.mapReduce(map, reduce, {out: {replace: "mr_tag_co_occs", sharded: true}, query: {"value.lang": "de"}});
+
+// build stripes
+var map = function() {
+
+    var t = this.value.t;
+
+    t.forEach(function(tag) {
+        tag_id = tag.i;
+        t.forEach(function(other_tag) {
+            other_tag_id = other_tag.i;
+            if (tag_id != other_tag_id) {
+                emit({s: tag_id, t: other_tag_id}, {occs: 1, s_occs: tag.o, t_occs: other_tag.o});
+            }
         });
     });
+}
 
-    return ret;
-};
+var reduce = function(key, values) {
 
+    var s_occs = values[0].s_occs;
+    var t_occs = values[0].t_occs;
 
-buildEdges(
-    db.tag_graph_nodes,
-    db.tag_graph_edges,
-    neighbors
-);
+    var reduction = values.reduce(function(memo, value) {
+        if (value.occs) {
+            memo.occs += value.occs;
+        }
+        return memo;
+    }, {occs: 0, s_occs: s_occs, t_occs: t_occs});
+
+    return reduction;
+}
+
+db.mr_edges_tags.drop();
+db.mr_tag_co_occs.mapReduce(map, reduce, {out: {merge: "mr_edges_tags"}});
