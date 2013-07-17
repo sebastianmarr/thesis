@@ -15,21 +15,22 @@ parseLine = (line) ->
 
     input = JSON.parse line
 
-    date = moment(input.date.split('_')[0], "DD.MM.YYYY HH:mm:ss_SSS").toDate()
-    platform = input.path.slice(7, 9)
 
-    # no sense continuing without click parameters
-    if params = input.params
+    params = input.params
+    query = input.params['search-query'].slice 1, -1
 
-        query = if x = params['search-query'] 
-                    params['search-query'].slice(1,-1)
-                else null
-
+    # no sense continuing without click parameters or query
+    if params && query
+                
         articleId = parseCl params, 'a'
         productId = parseCl params, 'p'
         index = parseCl params, 'i'
 
         language = params.locale.slice(1, 3)
+
+        date = moment(input.date.split('_')[0], "DD.MM.YYYY HH:mm:ss_SSS").toDate()
+        platform = input.path.slice(7, 9)
+
 
         click =
             date: date
@@ -40,8 +41,7 @@ parseLine = (line) ->
             index: index
             language: language
 
-        if click.query
-            process.stdout.write JSON.stringify(click) + '\n'
+        process.stdout.write JSON.stringify(click) + '\n'
 
 
 parseCl = (input, type) ->
