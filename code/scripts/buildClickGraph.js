@@ -1,24 +1,18 @@
 // To be executed against the workspace, e.g.
-// $ mongo workspace buildClickGraph.js
+// $ mongo workspace scripts/buildClickGraph.js
 // (assuming the db is on localhost).
 
-print("Building Click Co-Occurence Graph from clicks collection...\n");
+// requires the clicks collection
 
-print("Cleanup...");
-load('cleaning/clicks/cleanup.js');
-print("Done.\n");
+var scripts = [
+    'cleaning/clicks/cleanup.js',
+    'cleaning/clicks/join.js',
+    'graph/clicks/nodes.js',
+    'graph/clicks/edges.js',
+    'graph/clicks/measures.js'
+]
 
-print("Nodes...")
-load('graph/clicks/nodes.js');
-print("Done.\n");
-
-
-print("Edges...");
-load('graph/clicks/edges.js');
-print("Done.\n");
-
-print("Measures...");
-load('graph/clicks/measures.js');
-print("Done.\n");
-
-db.tmp_clicks.drop();
+scripts.forEach(function(script_path) {
+    print(script_path.split('/').pop().slice(0, -3));
+    load(script_path);
+});
