@@ -1,20 +1,10 @@
-load('graph/nodes.js')
-
-db.tmp_clicks.ensureIndex({query: 1});
-
-var ids = db.tmp_clicks.distinct('query');
-
-var occs = function(nodeId) {
-    return db.tmp_clicks.count({query: nodeId});
-};
-
-var props = function(nodeId) {
-    return null;
+var map = function() {
+    emit(new ObjectId, this.value);
 }
 
-buildNodes(
-    ids,
-    occs,
-    props,
-    db.click_graph_nodes
-);
+var reduce = function(key, values) {
+    return values[0];
+}
+
+db.graph_nodes_clicks.drop();
+db.mr_clicks_joined.mapReduce(map, reduce, {out: {replace: "graph_nodes_clicks", sharded: true}});

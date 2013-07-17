@@ -1,33 +1,59 @@
-load('graph/edges.js')
+var map = function() {
+    var id = this._id;
+    var occs = this.value.occs;
 
-db.tmp_clicks.ensureIndex({articleId: 1});
-db.tmp_clicks.ensureIndex({query: 1});
-db.tmp_clicks.ensureIndex({articleId: 1, query: 1});
+    this.value.clicks.forEach(function(click) {
+        emit('a_' + click.articleId, {q: [{q: id, o: occs}]});
+        emit('p_' + click.productId, {q: [{q: id, o: occs}]});
+    });
+}
 
-neighbors = function(nodeId) {
+var reduce = function(key, values) {
 
-    var ret = [];
+    return values.reduce(function(memo, value) {
 
-    db.tmp_clicks.find(
-        {query: nodeId},
-        {articleId: 1}
-    ).forEach(function(click_with_query) {
-
-        db.tmp_clicks.find(
-            {articleId: click_with_query.articleId}, 
-            {query: 1}
-        ).forEach(function(other_click) {
-        if (other_click.query != nodeId) {
-                ret.push(other_click.query);
+        if (value.q) {
+            memo.q = memo.q.concat(value.q);
         }
+
+        return memo;
+
+    }, {q: []});
+}
+
+db.mr_click_co_occs.drop();
+db.graph_nodes_clicks.mapReduce(map, reduce, {out: {replace: "mr_click_co_occs", sharded: true}});
+
+// build pairs
+var map = function() {
+
+    var q = this.value.q;
+
+    q.forEach(function(query) {
+        query_id = query.q;
+        q.forEach(function(other_query) {
+            other_query_id = other_query.q;
+            if (query_id != other_query_id) {
+                emit({s: query_id, t: other_query_id}, {occs: 1, s_occs: query.o, t_occs: other_query.o});
+            }
         });
     });
+}
 
-    return ret;
-};
+var reduce = function(key, values) {
 
-buildEdges(
-    db.click_graph_nodes,
-    db.click_graph_edges,
-    neighbors
-);
+    var s_occs = values[0].s_occs;
+    var t_occs = values[0].t_occs;
+
+    var reduction = values.reduce(function(memo, value) {
+        if (value.occs) {
+            memo.occs += value.occs;
+        }
+        return memo;
+    }, {occs: 0, s_occs: s_occs, t_occs: t_occs});
+
+    return reduction;
+}
+
+db.mr_click_graph_edges.drop();
+db.mr_click_co_occs.mapReduce(map, reduce, {out: {merge: "mr_click_graph_edges"}});
