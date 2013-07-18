@@ -1,15 +1,19 @@
-print("Cleanup...");
-load('cleaning/tags/cleanup.js');
-print("Done.\n");
+// To be executed against the workspace, e.g.
+// $ mongo workspace scripts/buildClickGraph.js
+// (assuming the db is on localhost).
 
-print("Nodes");
-load('graph/tags/nodes.js');
-print("Done.\n");
+// requires the clicks collection
 
-print("Edges");
-load('graph/tags/edges.js');
-print("Done.\n");
+var scripts = [
+    'cleaning/tags/sanitize.js',
+    'cleaning/tags/join.js',
+    'cleaning/tags/dedup.js'.
+    'graph/tags/nodes.js',
+    'graph/tags/edges.js',
+    'graph/tags/measures.js'
+]
 
-print("Measures");
-load('graph/tags/measures.js');
-print("Done.\n");
+scripts.forEach(function(script_path) {
+    print(script_path.split('/').pop().slice(0, -3));
+    load(script_path);
+});

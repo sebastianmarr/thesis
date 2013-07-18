@@ -46,4 +46,4 @@ var reduce = function(key, values) {
 }
 
 db.nodes_tags.drop();
-db.mr_tag_nodes.mapReduce(map, reduce, {out: {replace: "nodes_tags", sharded: true}});
+db.mr_tag_nodes.mapReduce(map, reduce, {out: {replace: "nodes_tags"}});
