@@ -29,7 +29,16 @@ var reduce = function(key, values) {
     return r;
 }
 
-db.ss_tag_link_object.mapReduce(map, reduce, {out: {reduce: "mr_tags"}});
+db.ss_tag_link_object.mapReduce(
+    map,
+    reduce,
+    {
+        out: {
+            reduce: "mr_tags",
+            sharded: true
+        }
+    }
+);
 
 // remove unreferenced and null tags
 db.mr_tags.remove({"value.t": null});

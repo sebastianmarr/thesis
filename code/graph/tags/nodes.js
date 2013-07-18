@@ -34,7 +34,15 @@ var reduce = function(key, values) {
 }
 
 db.mr_tag_nodes.drop();
-db.mr_dedup.mapReduce(map, reduce, {out: {merge: "mr_tag_nodes"}});
+db.mr_dedup.mapReduce(
+    map,
+    reduce,
+    {
+        out: {
+            merge: "mr_tag_nodes"
+        }
+    }
+);
 
 // give them real ids
 var map = function() {
@@ -46,4 +54,13 @@ var reduce = function(key, values) {
 }
 
 db.nodes_tags.drop();
-db.mr_tag_nodes.mapReduce(map, reduce, {out: {replace: "nodes_tags"}});
+db.mr_tag_nodes.mapReduce(
+    map,
+    reduce,
+    {
+        out: {
+            replace: "nodes_tags",
+            sharded: true
+        }
+    }
+);

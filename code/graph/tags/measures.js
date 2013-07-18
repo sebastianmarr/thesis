@@ -19,4 +19,13 @@ var reduce = function(key, values) {
 }
 
 db.edges_tags.drop();
-db.mr_edges_tags.mapReduce(map, reduce, {out: {replace: "edges_tags"}});
+db.mr_edges_tags.mapReduce(
+    map,
+    reduce,
+    {
+        out: {
+            replace: "edges_tags",
+            sharded: true
+        }
+    }
+);

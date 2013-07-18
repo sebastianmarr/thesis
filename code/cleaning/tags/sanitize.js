@@ -36,7 +36,8 @@ db.ss_tags.mapReduce(
     reduce,
     {
         out: {
-            replace: "mr_tags"
+            replace: "mr_tags",
+            sharded: true
         },
         scope: {
             nonPrintables: nonPrintables, 

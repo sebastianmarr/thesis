@@ -1,13 +1,10 @@
-// To be executed against the workspace, e.g.
-// $ mongo workspace scripts/buildClickGraph.js
-// (assuming the db is on localhost).
-
-// requires the clicks collection
+// To be executed against an imported opossum db, either spreadshirt_net oder spreadshirt_com
+// Need ss_tags and ss_tag_link_object
 
 var scripts = [
     'cleaning/tags/sanitize.js',
     'cleaning/tags/join.js',
-    'cleaning/tags/dedup.js'.
+    'cleaning/tags/dedup.js',
     'graph/tags/nodes.js',
     'graph/tags/edges.js',
     'graph/tags/measures.js'
