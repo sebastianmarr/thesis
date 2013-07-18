@@ -3,8 +3,7 @@ var map = function() {
     var occs = this.value.occs;
 
     this.value.clicks.forEach(function(click) {
-        emit('a_' + click.articleId, {q: [{q: id, o: occs}]});
-        emit('p_' + click.productId, {q: [{q: id, o: occs}]});
+        emit(click.platform + click.articleId.toString(), {q: [{q: id, o: occs}]});
     });
 }
 
@@ -33,7 +32,7 @@ var map = function() {
         query_id = query.q;
         q.forEach(function(other_query) {
             other_query_id = other_query.q;
-            if (query_id != other_query_id) {
+            if (!query_id.equals(other_query_id)) {
                 emit({s: query_id, t: other_query_id}, {occs: 1, s_occs: query.o, t_occs: other_query.o});
             }
         });

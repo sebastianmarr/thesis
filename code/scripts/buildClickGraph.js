@@ -6,6 +6,7 @@
 
 var scripts = [
     'cleaning/clicks/cleanup.js',
+    'cleaning/clicks/dedup.js',
     'cleaning/clicks/join.js',
     'graph/clicks/nodes.js',
     'graph/clicks/edges.js',

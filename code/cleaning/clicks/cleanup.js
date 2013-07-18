@@ -15,13 +15,13 @@ var map = function() {
                             .trim();
 
     // if nothing longer than 1 char remains after sanitation, drop the tag
-    if (sanitized && sanitized.length > 1) {
+    if (sanitized && sanitized.length > 1 && this.articleId) {
         emit(
             this._id,
             {
                 query: sanitized,
                 date: this.date,
-                platform: this.platform,
+                platform: this.platform.toLowerCase(),
                 articleId: this.articleId,
                 productId: this.productId,
                 index: this.index,
@@ -41,7 +41,8 @@ db.clicks.mapReduce(
     reduce,
     {
         out: {
-            replace: "mr_clicks_sanitized"
+            replace: "mr_clicks_sanitized",
+            sharded: true
         },
         scope: {
             nonPrintables: nonPrintables, 
