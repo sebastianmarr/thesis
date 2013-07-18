@@ -19,4 +19,4 @@ var reduce = function(key, values) {
 }
 
 db.graph_edges_clicks.drop();
-db.mr_click_graph_edges.mapReduce(map, reduce, {out: {replace: "graph_edges_clicks", sharded: true}});
+db.mr_click_graph_edges.mapReduce(map, reduce, {out: {replace: "graph_edges_clicks"}});

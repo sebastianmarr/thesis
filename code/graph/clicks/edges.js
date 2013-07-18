@@ -22,7 +22,7 @@ var reduce = function(key, values) {
 }
 
 db.mr_click_co_occs.drop();
-db.graph_nodes_clicks.mapReduce(map, reduce, {out: {replace: "mr_click_co_occs", sharded: true}});
+db.graph_nodes_clicks.mapReduce(map, reduce, {out: {replace: "mr_click_co_occs"}});
 
 // build pairs
 var map = function() {
