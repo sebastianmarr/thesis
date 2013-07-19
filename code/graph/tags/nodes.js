@@ -59,8 +59,7 @@ db.mr_tag_nodes.mapReduce(
     reduce,
     {
         out: {
-            replace: "nodes_tags",
-            sharded: true
+            replace: "nodes_tags"
         }
     }
 );

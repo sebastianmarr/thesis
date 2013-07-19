@@ -32,8 +32,7 @@ db.nodes_tags.mapReduce(
     reduce,
     {
         out: {
-            replace: "mr_tag_co_occs",
-            sharded: true
+            replace: "mr_tag_co_occs"
         }
     }
 );
