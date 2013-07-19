@@ -26,4 +26,13 @@ var reduce = function(key, values) {
 }
 
 db.mr_clicks_joined.drop();
-db.mr_clicks_dedup.mapReduce(map, reduce, {out: {merge: "mr_clicks_joined"}});
+db.mr_clicks_dedup.mapReduce(
+    map,
+    reduce,
+    {
+        out: {
+            reduce: "mr_clicks_joined",
+            sharded: true
+        }
+    }
+);

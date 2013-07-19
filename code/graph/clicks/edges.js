@@ -21,7 +21,16 @@ var reduce = function(key, values) {
 }
 
 db.mr_click_co_occs.drop();
-db.graph_nodes_clicks.mapReduce(map, reduce, {out: {replace: "mr_click_co_occs"}});
+db.graph_nodes_clicks.mapReduce(
+    map,
+    reduce,
+    {
+        out: {
+            reduce: "mr_click_co_occs",
+            sharded: true
+        }
+    }
+);
 
 // build pairs
 var map = function() {
@@ -55,4 +64,14 @@ var reduce = function(key, values) {
 }
 
 db.mr_click_graph_edges.drop();
-db.mr_click_co_occs.mapReduce(map, reduce, {out: {merge: "mr_click_graph_edges"}});
+db.mr_click_co_occs.mapReduce(
+    map,
+    reduce,
+    {
+        out: 
+        {
+            reduce: "mr_click_graph_edges",
+            sharded: true
+        }
+    }
+);

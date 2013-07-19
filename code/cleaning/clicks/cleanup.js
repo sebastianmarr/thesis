@@ -41,7 +41,7 @@ db.clicks.mapReduce(
     reduce,
     {
         out: {
-            replace: "mr_clicks_sanitized",
+            reduce: "mr_clicks_sanitized",
             sharded: true
         },
         scope: {
