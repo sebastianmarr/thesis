@@ -32,7 +32,7 @@ db.nodes_tags.mapReduce(
     reduce,
     {
         out: {
-            replace: "mr_tag_co_occs"
+            reduce: "mr_tag_co_occs"
         }
     }
 );
@@ -74,7 +74,7 @@ db.mr_tag_co_occs.mapReduce(
     reduce,
     {
         out: {
-            merge: "mr_edges_tags"
+            reduce: "mr_edges_tags"
         }
     }
 );

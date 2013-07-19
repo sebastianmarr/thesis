@@ -39,7 +39,7 @@ db.mr_dedup.mapReduce(
     reduce,
     {
         out: {
-            merge: "mr_tag_nodes"
+            reduce: "mr_tag_nodes"
         }
     }
 );
@@ -59,7 +59,7 @@ db.mr_tag_nodes.mapReduce(
     reduce,
     {
         out: {
-            replace: "nodes_tags"
+            reduce: "nodes_tags"
         }
     }
 );

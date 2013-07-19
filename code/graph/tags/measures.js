@@ -24,8 +24,7 @@ db.mr_edges_tags.mapReduce(
     reduce,
     {
         out: {
-            replace: "edges_tags",
-            sharded: true
+            reduce: "edges_tags"
         }
     }
 );
