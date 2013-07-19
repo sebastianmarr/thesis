@@ -25,7 +25,7 @@ db.mr_click_graph_edges.mapReduce(
     {
         out: 
         {
-            replace: "graph_edges_clicks",
+            reduce: "graph_edges_clicks",
             sharded: true
         }
     }
