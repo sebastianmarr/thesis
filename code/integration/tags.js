@@ -25,3 +25,28 @@ function importNode(tagNode) {
 
   graphDB.nodes.insert(integratedNode);
 }
+
+// integrate edges
+tagDB.edges_tags.find().forEach(importEdge);
+
+function importEdge(edge) {
+
+  // get source and target node
+  var source = tagDB.nodes_tags.findOne({_id: edge.s});
+  var target = tagDB.nodes_tags.findOne({_id: edge.t});
+
+  var integratedSource = graphDB.nodes.findOne({string: source.tag, language: source.lang});
+  var integratedTarget = graphDB.nodes.findOne({string: target.tag, language: target.lang});
+
+  var integratedEdge = {
+    source: integratedSource._id,
+    target: integratedTarget._id,
+    type: 'tag-co-occurence',
+    occurences: edge.occs,
+    dice: edge.dice,
+    jaccard: edge.jaccard,
+    cosine: edge.cosine
+  };
+
+  graphDB.edges.insert(integratedEdge);
+}
