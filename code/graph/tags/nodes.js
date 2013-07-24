@@ -39,7 +39,8 @@ db.mr_dedup.mapReduce(
     reduce,
     {
         out: {
-            merge: "mr_tag_nodes"
+            merge: "mr_tag_nodes",
+            sharded: true
         }
     }
 );
@@ -59,7 +60,8 @@ db.mr_tag_nodes.mapReduce(
     reduce,
     {
         out: {
-            replace: "nodes_tags"
+            reduce: "nodes_tags",
+            sharded: true
         }
     }
 );

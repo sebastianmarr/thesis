@@ -24,7 +24,8 @@ db.mr_tags.mapReduce(
     reduce,
     {
         out: {
-            merge: "mr_dedup"
+            reduce: "mr_dedup",
+            sharded: true
         }
     }
 );
