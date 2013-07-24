@@ -35,7 +35,6 @@ db.ss_tag_link_object.mapReduce(
     {
         out: {
             reduce: "mr_tags",
-            sharded: true
         }
     }
 );
