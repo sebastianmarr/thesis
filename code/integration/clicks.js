@@ -1,6 +1,3 @@
-var clicktrackingDB = db.getSiblingDB('clicktracking');
-var graphDB =  db.getSiblingDB('graph');
-
 // nodes
 clicktrackingDB.graph_nodes_clicks.find().forEach(importClickNode);
 

@@ -1,6 +1,3 @@
-var tagDB = db.getSiblingDB('german_tag_graph');
-var graphDB =  db.getSiblingDB('graph');
-
 // integrate nodes
 tagDB.nodes_tags.find().forEach(importNode);
 
