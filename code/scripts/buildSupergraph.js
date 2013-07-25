@@ -1,9 +1,9 @@
 var tagDB = db.getSiblingDB('german_tag_graph');
 var graphDB =  db.getSiblingDB('graph');
 
+graphDB.nodes.ensureIndex({language: 1, string: 1}, {unique: true});
 graphDB.nodes.ensureIndex({string: 1, language: 1});
-graphDB.nodes.ensureIndex({language: 1, string: 1});
-graphDB.edges.ensureIndex({type: 1, source: 1});
+graphDB.edges.ensureIndex({type: 1, source: 1}, {unique: true});
 graphDB.edges.ensureIndex({source: 1});
 
 var scripts = [
