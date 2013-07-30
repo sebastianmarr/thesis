@@ -1,7 +1,6 @@
 require "wlapi"
 require "mongo"
 require "unicode"
-require "pry"
 
 include Mongo
 
