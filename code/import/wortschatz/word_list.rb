@@ -31,7 +31,7 @@ class WordList
     private
 
         def self.all_nodes
-            MongoClient.new['graph']['nodes'].find({}, fields: ['string'], limit: 10)
+            MongoClient.new['graph']['nodes'].find({}, fields: ['string'])
         end
 
         def self.words(node)
