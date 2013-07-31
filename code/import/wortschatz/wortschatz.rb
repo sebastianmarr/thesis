@@ -15,9 +15,7 @@ class Wortschatz
     end
 
     def get_wortschatz_service(service)
-        @words.each do |word|
-            query(word, service) unless already_queried?(word, service)
-        end
+        @words.each { |word| query(word, service) unless already_queried?(word, service) }
     end
 
     private
