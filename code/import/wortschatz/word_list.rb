@@ -25,7 +25,7 @@ class WordList
     include Mongo
 
     def self.list
-        all_nodes.inject([]) { |list, node| list.concat words(node) }
+        all_nodes.inject([]) { |list, node| list.concat words(node) }.uniq
     end
 
     private
@@ -35,7 +35,7 @@ class WordList
         end
 
         def self.words(node)
-            node['string'].split.inject([]) { |words, word| words.concat process_word(word) }.uniq
+            node['string'].split.inject([]) { |words, word| words.concat process_word(word) }
         end
 
         def self.process_word(word)
