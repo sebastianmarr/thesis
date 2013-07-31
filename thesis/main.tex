@@ -1,20 +1,26 @@
-\documentclass[a4paper,listof=totoc,abstracton]{scrreprt}
+\RequirePackage[l2tabu, orthodox]{nag}
+
+\documentclass[a4paper, abstracton, DIV=calc]{scrreprt}
 
 \usepackage{xltxtra}
 
-% stuff for german
-\usepackage[ngerman]{babel}
-\usepackage[ngerman]{translator}
-\usepackage[fixlanguage]{babelbib}
-\usepackage{setspace} 
+% babel replacement
+\usepackage{polyglossia}
+\setdefaultlanguage{german}
+\setotherlanguage{english}
+\PolyglossiaSetup{german}{indentfirst=false}
 
-\onehalfspacing
+% line spacing
+\usepackage{setspace} 
+\setstretch{1.3}
+
+% hyphenation
+\usepackage{hyphenat}
+
 
 \setmainfont{Minion Pro}
 \setsansfont{MetaBold-Roman}
 \setmonofont{Menlo}
-
-\selectbiblanguage{german}
 
 \author{Sebastian Marr}
 \title{Integration und Clustering von kundengenerierten Produkt-Tags in Online-Shops}
