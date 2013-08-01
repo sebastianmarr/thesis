@@ -1,23 +1,35 @@
-JOBNAME = masterarbeit
-TEX = xelatex -jobname=$(JOBNAME) -output-directory=$(BUILDDIR)/
-BUILDDIR = build
-CHAPTERDIR = $(BUILDDIR)/chapters
-JOBINBUILD = $(BUILDDIR)/$(JOBNAME)
-BIBNAME = bibliography
-MAIN = main.tex
+MAINDOC = main
 
-default : $(MAIN)
-	mkdir -p $(CHAPTERDIR)
-	$(TEX) $(MAIN)
-	cp $(BIBNAME).bib $(BUILDDIR)
-	cd $(BUILDDIR); bibtex $(JOBNAME); rm $(BIBNAME).bib
-	# makeindex -s $(JOBINBUILD).ist -t $(JOBINBUILD).glg -o $(JOBINBUILD).gls $(JOBINBUILD).glo
-	# makeindex -s $(JOBINBUILD).ist -t $(JOBINBUILD).alg -o $(JOBINBUILD).acr $(JOBINBUILD).acn
-	$(TEX) $(MAIN)
-	$(TEX) $(MAIN)
+all:
+	make xetex
+xetex:	
+	xelatex -no-pdf -interaction=nonstopmode $(MAINDOC)
+	bibtex $(MAINDOC)
+	# makeglossaries $(MAINDOC)
+	xelatex -no-pdf -interaction=nonstopmode $(MAINDOC)
+	xelatex -interaction=nonstopmode $(MAINDOC)
 
-open : default
-	open $(BUILDDIR)/$(JOBNAME).pdf
-
-clean :
-	rm -rf $(BUILDDIR)
+	make clean
+open:
+	make xetex
+	open $(MAINDOC).pdf
+clean:
+	rm -f $(MAINDOC).aux
+	rm -f $(MAINDOC).acn
+	rm -f $(MAINDOC).acr
+	rm -f $(MAINDOC).bbl
+	rm -f $(MAINDOC).blg
+	rm -f $(MAINDOC).alg
+	rm -f $(MAINDOC).glg
+	rm -f $(MAINDOC).glo
+	rm -f $(MAINDOC).gls
+	rm -f $(MAINDOC).dvi
+	rm -f $(MAINDOC).ist
+	rm -f $(MAINDOC).lof
+	rm -f $(MAINDOC).log
+	rm -f $(MAINDOC).lol
+	rm -f $(MAINDOC).out
+	rm -f $(MAINDOC).pdfsync
+	rm -f $(MAINDOC).ps
+	rm -f $(MAINDOC).toc
+	rm -f $(MAINDOC).xdv
