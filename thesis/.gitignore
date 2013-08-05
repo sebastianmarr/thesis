@@ -5,6 +5,8 @@
 *.alg
 *.aux
 *.bbl
+*.bcf
+*.run.xml
 *.blg
 *.dvi
 *.fdb_latexmk

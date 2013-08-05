@@ -11,6 +11,9 @@
 \usepackage{setspace} 
 \setstretch{1.3}
 
+\usepackage{biblatex}
+\bibliography{bibliography.bib}
+
 % font stuff
 \defaultfontfeatures{Ligatures=TeX}
 \setmainfont{Minion Pro}
@@ -32,11 +35,6 @@
 
 \include{chapters/einleitung}
 
-\nocite{*}
-
-\bibliographystyle{plaindin}
-\clearpage
-\addcontentsline{toc}{section}{Literaturverzeichnis}
-\bibliography{bibliography}
+\printbibliography 
 
 \end{document}

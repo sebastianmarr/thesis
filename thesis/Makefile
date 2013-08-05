@@ -4,7 +4,7 @@ all:
 	make xetex
 xetex:	
 	xelatex -no-pdf -interaction=nonstopmode $(MAINDOC)
-	bibtex $(MAINDOC)
+	biber $(MAINDOC)
 	# makeglossaries $(MAINDOC)
 	xelatex -no-pdf -interaction=nonstopmode $(MAINDOC)
 	xelatex -interaction=nonstopmode $(MAINDOC)
