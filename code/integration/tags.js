@@ -18,7 +18,7 @@ function importNode(tagNode) {
     {
       _id: tagNode._id,
       string: tagNode.tag,
-      language: tagNode.lang
+      origLanguage: tagNode.lang
     },
     {$set: {tagProperties: tagProperties}},
     {upsert: true}

@@ -10,6 +10,7 @@ var scripts = [
     'integration/tags.js',
     'integration/languageDetection.js',
     'integration/clicks.js'
+    'integration/buildTextIndex.js'
 ];
 
 scripts.forEach(function(script_path) {
