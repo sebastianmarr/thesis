@@ -31,8 +31,9 @@ var map = function() {
     // synonyms
     var synonyms = this.synonyms || [];
 
-
-    emit(key, { baseforms: baseforms, domains: domains, wordforms: wordforms, thesaurus: thesaurus, synonyms: synonyms });
+    if (key.length > 2) {
+        emit(key, { baseforms: baseforms, domains: domains, wordforms: wordforms, thesaurus: thesaurus, synonyms: synonyms });
+    }
 }
 
 var reduce = function(key, values) {
