@@ -1,5 +1,8 @@
 var tagDB = db.getSiblingDB('german_tag_graph');
 var graphDB =  db.getSiblingDB('graph');
+var languageDetectionDB =  db.getSiblingDB('google_language_detection');
+var clicktrackingDB =  db.getSiblingDB('clicktracking');
+var wortschatzDB = db.getSiblingDB('wortschatz');
 
 graphDB.nodes.ensureIndex({language: 1, string: 1}, {unique: true});
 graphDB.nodes.ensureIndex({string: 1, language: 1});
@@ -11,6 +14,7 @@ var scripts = [
     'integration/languageDetection.js',
     'integration/clicks.js'
     'integration/buildTextIndex.js'
+    'integration/wortschatz.js'
 ];
 
 scripts.forEach(function(script_path) {
