@@ -19,7 +19,7 @@ open: all
 	open $(BUILDDIR)/$(OUTPUTNAME).pdf
 
 clean:
-	rm -rf $(BUILDDIR)
+	rm -rf $(BUILDDIR)/*
 
 .SILENT: all clean open
 .PHONY: all clean open
