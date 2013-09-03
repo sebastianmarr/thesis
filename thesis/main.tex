@@ -1,5 +1,3 @@
-\RequirePackage[l2tabu, orthodox]{nag}
-
 \documentclass[a4paper, abstracton, DIV=calc]{scrreprt}
 
 \usepackage{xltxtra}
@@ -7,13 +5,11 @@
 \usepackage{polyglossia}
 \setdefaultlanguage{german}
 
-\usepackage{csquotes}
-
 % line spacing
 \usepackage{setspace} 
 \setstretch{1.3}
 
-\usepackage{biblatex}
+\usepackage[backend=biber]{biblatex}
 \bibliography{bibliography.bib}
 
 % font stuff
@@ -50,7 +46,7 @@
 \include{chapters/einleitung}
 \include{chapters/problembeschreibung}
 
-\nocite{*}
+% \nocite{*}
 \printbibliography 
 
 \end{document}

@@ -1,15 +1,16 @@
 MAINDOC = main
+TEX = xelatex -interaction=nonstopmode
 
 all:
 	make xetex
 xetex:	
-	xelatex -no-pdf -interaction=nonstopmode $(MAINDOC)
+	$(TEX) -no-pdf $(MAINDOC) &> /dev/null
 	biber $(MAINDOC)
 	# makeglossaries $(MAINDOC)
-	xelatex -no-pdf -interaction=nonstopmode $(MAINDOC)
-	xelatex -interaction=nonstopmode $(MAINDOC)
+	$(TEX) -no-pdf $(MAINDOC) &> /dev/null
+	$(TEX) $(MAINDOC)
 
-	make clean
+	make clean &> /dev/null
 open:
 	make xetex
 	open $(MAINDOC).pdf
