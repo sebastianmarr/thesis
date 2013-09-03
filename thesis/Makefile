@@ -5,7 +5,7 @@ all:
 	make xetex
 xetex:	
 	$(TEX) -no-pdf $(MAINDOC) &> /dev/null
-	biber $(MAINDOC)
+	biber -q  $(MAINDOC)
 	# makeglossaries $(MAINDOC)
 	$(TEX) -no-pdf $(MAINDOC) &> /dev/null
 	$(TEX) $(MAINDOC)
