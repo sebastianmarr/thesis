@@ -17,7 +17,7 @@ all: clean
 .PHONY: all clean open
 
 open: all
-	open $(MAINDOC).pdf
+	open $(BUILDDIR)/$(OUTPUTNAME).pdf
 
 clean:
 	rm -rf $(BUILDDIR)
