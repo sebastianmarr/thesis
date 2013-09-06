@@ -1,9 +1,12 @@
 \documentclass[a4paper, abstracton, DIV=calc]{scrreprt}
 
+% fixes certain things for use with XeTeX
 \usepackage{xltxtra}
 
-\usepackage[strict]{csquotes}
+% quotations
+\usepackage[strict=true]{csquotes}
 
+% language support
 \usepackage{polyglossia}
 \setdefaultlanguage{german}
 
@@ -11,6 +14,7 @@
 \usepackage{setspace} 
 \setstretch{1.3}
 
+% bibliography
 \usepackage[backend=biber, style=alphabetic-verb]{biblatex}
 \bibliography{bibliography.bib}
 
@@ -33,7 +37,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
-
+% title page
 \author{Sebastian Marr}
 \title{Integration und Clustering von kundengenerierten Produkt-Tags in Online-Shops}
 
