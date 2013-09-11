@@ -35,6 +35,8 @@ db = mongo.db 'graph'
 nodes = db.collection 'nodes'
 edges = db.collection 'edges'
 
+nodes.ensure_index string: Mongo::ASCENDING, language: Mongo::ASCENDING
+
 nodes.find({}, fields: ['string', 'language'], timeout: false) do |cursor|
     cursor.each do |tag_node|
         
@@ -46,10 +48,11 @@ nodes.find({}, fields: ['string', 'language'], timeout: false) do |cursor|
             word_node = {string: word, language: tag_node['language']}
             existing = nodes.find_one(word_node)
             word_id = existing ? existing['_id'] : nodes.insert(word_node)
+            nodes.update({_id: word_id}, {'$set' => {singleWord: true}})
             
             # insert word edges
-            edges.insert({source: tag_node['_id'], target: word_id, type: "decomposition"})
-            edges.insert({source: word_id, target: tag_node['_id'], type: "composition"})
+            edges.update({source: tag_node['_id'], target: word_id, type: "decomposition"}, {'$set' => {type: "decomposition"}}, upsert: true)
+            edges.update({source: word_id, target: tag_node['_id'], type: "composition"}, {'$set' => {type: "composition"}}, upsert: true)
         end
     end
 end

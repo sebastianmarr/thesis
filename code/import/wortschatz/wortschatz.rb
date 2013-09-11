@@ -1,21 +1,29 @@
 require "wlapi"
 require "mongo"
 
-require_relative 'word_list'
-
 class Wortschatz
 
     include Mongo
 
     def initialize
-        @target_collection = MongoClient.new['wortschatz']['words']
+
+        @mongo = MongoClient.new
+
+        @graph = @mongo.db 'graph'
+        @target_db = @mongo.db 'wortschatz'
+        @target_collection = @target_db.collection 'words'
+
         @target_collection.ensure_index('string', unique: true)
+
         @api = WLAPI::API.new
-        @words = WordList.list
+        @nodes = @graph.collection('nodes').find({singleWord: true}, fields: ['string'])
     end
 
     def get_wortschatz_service(service)
-        @words.each { |word| query(word, service) unless already_queried?(word, service) }
+        @nodes.each do |node|
+            word = node['string']
+            query(word, service) unless already_queried?(word, service)
+        end
     end
 
     private
