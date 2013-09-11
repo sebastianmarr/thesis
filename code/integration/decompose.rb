@@ -36,6 +36,8 @@ nodes = db.collection 'nodes'
 edges = db.collection 'edges'
 
 nodes.ensure_index string: Mongo::ASCENDING, language: Mongo::ASCENDING
+edges.remove({type: "composition"})
+edges.remove({type: "decomposition"})
 
 nodes.find({}, fields: ['string', 'language'], timeout: false) do |cursor|
     cursor.each do |tag_node|
@@ -51,8 +53,8 @@ nodes.find({}, fields: ['string', 'language'], timeout: false) do |cursor|
             nodes.update({_id: word_id}, {'$set' => {singleWord: true}})
             
             # insert word edges
-            edges.update({source: tag_node['_id'], target: word_id, type: "decomposition"}, {'$set' => {type: "decomposition"}}, upsert: true)
-            edges.update({source: word_id, target: tag_node['_id'], type: "composition"}, {'$set' => {type: "composition"}}, upsert: true)
+            edges.insert({source: tag_node['_id'], target: word_id, type: "decomposition"})
+            edges.insert({source: word_id, target: tag_node['_id'], type: "composition"})
         end
     end
 end
