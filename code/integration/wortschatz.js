@@ -1,41 +1,28 @@
-// integrate wortschatz domain edges based on full text search
-var cur = wortschatzDB.mr_domain_edges.find().addOption(DBQuery.Option.noTimeout);
-var currentEdge = 0;
-var totalEdges = cur.count();
+var graphDB =  db.getSiblingDB('graph');
+var wortschatzDB = db.getSiblingDB('wortschatz');
 
-cur.forEach(function(domainEdge) {
+// integrate wortschatz properties onto single words
+graphDB.nodes.ensureIndex({singleWord: true, string: true});
+wortschatzDB.mr_cleanup.find().forEach(function(word) {
+    graphDB.nodes.update(
+        {singleWord: true, string: word._id},
+        {$set: {wortschatzProperties: word.value}},
+        {multi: true}
+    );
+});
 
-   var sourceString = domainEdge._id.s;
-   var targetString = domainEdge._id.t;
-
-   // volltextsuche nach auf wort matchenden nodes
-   var treshold = 0.7;
-   var sourceNodes = graphDB.nodes.runCommand("text", {search: sourceString, limit: 1000000}).results
-   sourceNodes = sourceNodes.filter(function(result) { return result.score >= treshold });
-   var targetNodes = graphDB.nodes.runCommand("text", {search: targetString, limit: 1000000}).results
-   targetNodes = targetNodes.filter(function(result) { return result.score >= treshold });
-
-   sourceNodes.forEach(function(source) {
-    targetNodes.forEach(function(target) {
-
-        var edge = {
-            source: source.obj._id,
-            target: target.obj._id,
-            type: "shared_domains",
-            sourceWord: sourceString,
-            sourceMatch: source.score,
-            targetWord: targetString,
-            targetMatch: target.score,
-            domains: domainEdge.value.domains,
-            domainCount: domainEdge.value.domains.length
-        }
-
-        graphDB.edges.insert(edge);
+// integrate domain edges between single words
+wortschatzDB.mr_domain_edges.find().forEach(function(edge) {
+    graphDB.nodes.find({singleWord: true, string: edge._id.s}).forEach(function(sourceNode) {
+        graphDB.nodes.find({singleWord: true, string: edge._id.t}).forEach(function(targetNode) {
+            var newEdge = {
+                source: sourceNode._id,
+                target: targetNode._id,
+                type: "shared_domains",
+                domains: edge.value.domains,
+                domainCount: edge.value.domains.length
+            };
+            graphDB.edges.insert(newEdge);
+        });
     });
-   });
-
-   currentEdge++;
-   if (currentEdge % 1000 === 0) {
-      print(currentEdge + "/" + totalEdges + " processed");
-   }
 });
