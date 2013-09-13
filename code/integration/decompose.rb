@@ -52,9 +52,13 @@ nodes.find({}, fields: ['string', 'language'], timeout: false) do |cursor|
             word_id = existing ? existing['_id'] : nodes.insert(word_node)
             nodes.update({_id: word_id}, {'$set' => {singleWord: true}})
             
-            # insert word edges
-            edges.insert({source: tag_node['_id'], target: word_id, type: "decomposition"})
-            edges.insert({source: word_id, target: tag_node['_id'], type: "composition"})
+            node1 = tag_node['_id']
+            node2 = word_id
+
+            unless node1 == node2
+                edges.insert({source: tag_node['_id'], target: word_id, type: "decomposition"})
+                edges.insert({source: word_id, target: tag_node['_id'], type: "composition"}) 
+            end
         end
     end
 end
