@@ -26,3 +26,21 @@ wortschatzDB.mr_domain_edges.find().forEach(function(edge) {
         });
     });
 });
+
+// integrate synonyms
+
+graphDB.nodes.find({"wortschatzProperties.synonyms": {$exists: true}}).forEach(function(node) {
+    var syns = node.wortschatzProperties.synonyms;
+    if (syns.length > 0) {
+        syns.forEach(function(synonym) {
+            graphDB.nodes.find({string: synonym.toLowerCase()}).forEach(function(otherNode) {
+                var edge = {
+                    source: node._id,
+                    target: otherNode._id,
+                    type: "synonym"
+                }
+                graphDB.edges.insert(edge);
+            });
+        });
+    }
+});
