@@ -28,7 +28,6 @@ wortschatzDB.mr_domain_edges.find().forEach(function(edge) {
 });
 
 // integrate synonyms
-
 graphDB.nodes.find({"wortschatzProperties.synonyms": {$exists: true}}).forEach(function(node) {
     var syns = node.wortschatzProperties.synonyms;
     if (syns.length > 0) {
@@ -41,6 +40,35 @@ graphDB.nodes.find({"wortschatzProperties.synonyms": {$exists: true}}).forEach(f
                 }
                 graphDB.edges.insert(edge);
             });
+        });
+    }
+});
+
+// integrate wordforms
+graphDB.nodes.find({"wortschatzProperties.wordforms": {$exists: true}}).forEach(function(node) {
+    var forms = node.wortschatzProperties.wordforms;
+    if (forms.length > 0) {
+        forms.forEach(function(f) {
+            var form = f.toLowerCase();
+            if (form !== node.string) {
+
+                // insert word if it doesn't exist
+                if (graphDB.nodes.count({string: form}) === 0) {
+                    graphDB.nodes.insert({
+                        string: form,
+                        language: "de",
+                        singleWord: true
+                    })
+                }
+
+                graphDB.nodes.find({string: form, singleWord: true}).forEach(function(formNode) {
+                    graphDB.edges.insert({
+                        source: node._id,
+                        target: formNode._id,
+                        type: "wordform"
+                    });
+                });
+            }
         });
     }
 });
