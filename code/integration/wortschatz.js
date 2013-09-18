@@ -72,3 +72,27 @@ graphDB.nodes.find({"wortschatzProperties.wordforms": {$exists: true}}).forEach(
         });
     }
 });
+
+// integrate baseforms
+graphDB.nodes.find({"wortschatzProperties.baseforms": {$exists: true}}).forEach(function(node) {
+    baseforms = node.wortschatzProperties.baseforms.map(function(element){ return element.word.toLowerCase() });
+    if (baseforms.length > 0) {
+        baseforms.filter(function(element) { return element !== node.string }).forEach(function(baseform) {
+            // insert word if it doesn't exist
+            if (graphDB.nodes.count({string: baseform}) === 0) {
+                graphDB.nodes.insert({
+                    string: baseform,
+                    language: "de",
+                    singleWord: true
+                })
+            }
+            graphDB.nodes.find({string: baseform, singleWord: true}).forEach(function(baseformNode) {
+                    graphDB.edges.insert({
+                        source: node._id,
+                        target: baseformNode._id,
+                        type: "baseform"
+                    });
+                });
+        });
+    }
+});
