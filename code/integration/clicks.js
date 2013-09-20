@@ -8,10 +8,19 @@ function importClickNode(node) {
         clicks: node.value.clicks
     };
 
+    var key = {language: node.value.language, string: node.value.query};
+    if (graphDB.nodes.count(key) === 0) {
+        graphDB.nodes.insert({
+            string: node.value.query,
+            language: node.value.language,
+            origin: "click"
+        });
+    }
+
     graphDB.nodes.update(
-        {language: node.value.language, string: node.value.query},
+        key,
         {$set: {clickProperties: clickData}},
-        {upsert: true}
+        {multi: true}
     );
 }
 

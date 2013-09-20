@@ -49,7 +49,7 @@ nodes.find({}, fields: ['string', 'language'], timeout: false) do |cursor|
             # insert word node
             word_node = {string: word, language: tag_node['language']}
             existing = nodes.find_one(word_node)
-            word_id = existing ? existing['_id'] : nodes.insert(word_node)
+            word_id = existing ? existing['_id'] : nodes.insert(word_node.merge({origin: "decomposition"}))
             nodes.update({_id: word_id}, {'$set' => {singleWord: true}})
             
             node1 = tag_node['_id']

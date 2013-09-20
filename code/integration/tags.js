@@ -14,15 +14,13 @@ function importNode(tagNode) {
     designIDs: designIDs
   };
 
-  graphDB.nodes.update(
-    {
+  graphDB.nodes.insert({
       _id: tagNode._id,
       string: tagNode.tag,
-      origLanguage: tagNode.lang
-    },
-    {$set: {tagProperties: tagProperties}},
-    {upsert: true}
-  );
+      language: tagNode.lang,
+      tagProperties: tagProperties,
+      origin: "tag"
+  });
 }
 
 // integrate edges
