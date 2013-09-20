@@ -26,14 +26,19 @@ wortschatzDB.mr_cleanup.find().forEach(function(word) {
 wortschatzDB.mr_domain_edges.find().forEach(function(edge) {
     graphDB.nodes.find({string: edge._id.s}).forEach(function(sourceNode) {
         graphDB.nodes.find({string: edge._id.t}).forEach(function(targetNode) {
-            var newEdge = {
-                source: sourceNode._id,
-                target: targetNode._id,
-                type: "shared_domains",
-                domains: edge.value.domains,
-                domainCount: edge.value.domains.length
-            };
-            graphDB.edges.insert(newEdge);
+
+            var sourceID = sourceNode._id;
+            var targetID = targetNode._id;
+
+            if (!sourceID.equals(targetID)) {
+                graphDB.edges.insert({
+                    source: sourceNode._id,
+                    target: targetNode._id,
+                    type: "shared_domains",
+                    domains: edge.value.domains,
+                    domainCount: edge.value.domains.length
+                });
+            }
         });
     });
 });
