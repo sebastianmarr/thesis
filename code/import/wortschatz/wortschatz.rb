@@ -16,7 +16,7 @@ class Wortschatz
         @target_collection.ensure_index('string', unique: true)
 
         @api = WLAPI::API.new
-        @nodes = @graph.collection('nodes').find({singleWord: true}, fields: ['string'])
+        @nodes = @graph.collection('nodes').find({}, fields: ['string'])
     end
 
     def get_wortschatz_service(service)
