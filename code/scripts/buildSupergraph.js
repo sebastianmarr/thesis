@@ -4,11 +4,6 @@ var languageDetectionDB =  db.getSiblingDB('google_language_detection');
 var clicktrackingDB =  db.getSiblingDB('clicktracking');
 var wortschatzDB = db.getSiblingDB('wortschatz');
 
-graphDB.nodes.ensureIndex({language: 1, string: 1}, {unique: true});
-graphDB.nodes.ensureIndex({string: 1, language: 1});
-graphDB.edges.ensureIndex({type: 1, source: 1, target: 1}, {unique: true});
-graphDB.edges.ensureIndex({source: 1});
-
 var scripts = [
     'integration/tags.js',
     'integration/languageDetection.js',

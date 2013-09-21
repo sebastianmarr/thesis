@@ -13,7 +13,6 @@ var insertAndFind = function(word, origin) {
 }
 
 // integrate wortschatz properties onto single words
-graphDB.nodes.ensureIndex({string: true});
 wortschatzDB.mr_cleanup.find().forEach(function(word) {
     graphDB.nodes.update(
         {string: word._id},

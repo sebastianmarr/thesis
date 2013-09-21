@@ -1,6 +1,3 @@
-db.edges.ensureIndex({source: 1, _id: 1});
-db.edges.ensureIndex({target: 1, _id: 1});
-
 // remove unused nodes with no special properties
 var count = 0;
 db.nodes.find().forEach(function(node) {

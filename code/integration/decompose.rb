@@ -35,7 +35,6 @@ db = mongo.db 'graph'
 nodes = db.collection 'nodes'
 edges = db.collection 'edges'
 
-nodes.ensure_index string: Mongo::ASCENDING, language: Mongo::ASCENDING
 edges.remove({type: "composition"})
 edges.remove({type: "decomposition"})
 
