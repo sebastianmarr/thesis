@@ -25,7 +25,7 @@ def words(node)
     node['string'].split.inject([]) do |words, word|
         sanitized = word.sanitize
         words << sanitized if sanitized.valid?
-        words
+        words.uniq
     end
 end
 
@@ -54,8 +54,11 @@ nodes.find({}, fields: ['string', 'language'], timeout: false) do |cursor|
             node2 = word_id
 
             unless node1 == node2
-                edges.insert({source: tag_node['_id'], target: word_id, type: "decomposition"})
-                edges.insert({source: word_id, target: tag_node['_id'], type: "composition"}) 
+
+                edge1 = {source: node1, type: "decomposition", target: node2}
+                edge2 = {source: node2, type: "composition", target: node1}
+
+                [edge1, edge2].each { | edge| edges.insert(edge) }
             end
         end
     end
