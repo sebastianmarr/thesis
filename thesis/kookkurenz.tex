@@ -4,6 +4,18 @@ Das folgende Kapitel beschreibt detailliert die Erstellung von Kookkurenzgraphen
 
 \section{Grundprinzipien}
 
+Um gewichtete inhaltliche Beziehungen zwischen Wörtern und Wortgruppen herstellen zu können, wird eine Definition von \emph{Ähnlichkeit} benötigt. Diese lässt sich auf vielfältige Arten bestimmen.
+
+Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, folgendermaßen definieren:
+\[s(A,B) = F(A \cap B, A-B, B-A)\]
+
+Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein-Distanz \cite{vl1966} die Ähnlichkeit zweier Zwichenketten durch die minmale Menge von Einfüge-, Lösch- und Ersetzungsoperartionen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
+
+Im Kontext dieser Arbeit wird also ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Wörtern und Wortgruppen eine Distanz zwischen ebenjenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen lingustische Ähnhlichkeitsmaße wie die Levenshtein-Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Zeichenketten, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können.
+
+Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, dass den Kontext, in dem die Wörter und Wortgruppen im Quellsystem verwednet werden, berücksichtigt.
+
+\section{Kookkurenz}
 
 \section{Kookkurenzmaße}
 
