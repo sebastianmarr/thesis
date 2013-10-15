@@ -99,7 +99,7 @@ Als Eingabedaten für die Berechnung der Knotenmenge dienen Tupel der Form \((d,
 
 Die Reduce-Funktion fasst die einelementigen Listen zusammen, addiert die Vorkommen und erzeugt somit den Knoten, der für einen Begriff alle Dokumente, die mit diesem Begriff versehen wurden, sowie die Anzahl der Vorkommen insgesamt enthält.
 
-Die Map- und Reduce-Funktionen für die Knotenberechnung sind in Listing \ref{alg:nodes} als Pseudo-Code dargestellt.
+Die Map- und Reduce-Funktionen für die Knotenberechnung sind in Algorithmus \ref{alg:nodes} als Pseudo-Code dargestellt.
 
 \begin{algorithm}
 \caption{Knotenerzeugung mit MapReduce
@@ -121,3 +121,55 @@ Die Map- und Reduce-Funktionen für die Knotenberechnung sind in Listing \ref{al
 \end{algorithm}
 
 \subsubsection{Berechnung der Kanten}
+
+Die Berechnung der Kantenmenge kann mit den vorher berechneten Knoten als Eingabedaten erfolgen. Dabei wird die Berechnung in 2 Bearbeitungsschritte aufgeteilt. Zuerst werden die annotierten Knoten so umgeformt, dass zu einem Dokument alle vergebenen Begriffe bekannt sind. Im zweiten Schritt werden alle Paare von miteinander auftretenden Begriffen gebildet und die Ähnlichkeitsmaße berechnet.
+
+Algorithmus \ref{alg:edges1} zeigt die Umformung der Knoten mittels MapReduce. Als Eingabe für die Map-Funktion dienen die Knoten. Diese werden so umgeformt, dass für jedes Dokument, dass am Knoten annotiert ist, ein neues Schlüssel-/Wertpaar emittiert wird. Die Reduce-Funktion fasst die emittierten Ergebnisse zusammen, sodass als Ergebnis alle Begriffe, die an ein Dokument vergeben wurde, gesammelt als Liste vorliegen.
+
+\begin{algorithm}
+\caption{Umformung der Knoten mit MapReduce
+    \label{alg:edges1}}
+    \begin{algorithmic}[1]
+        \Function{map}{node}
+            \ForAll{node.documents}
+                \State \Call{Emit}{document, \{terms: [node]\}}
+            \EndFor
+        \EndFunction
+        \Statex
+        \Function{reduce}{term, values}
+            \State $result := \{terms: []\}$
+            \ForAll{values}
+                \State $result.terms :=$ \Call{concat}{result.terms, value.terms}
+            \EndFor
+            \State \Return{result}
+        \EndFunction
+        \Statex
+    \end{algorithmic}
+\end{algorithm}
+
+In Algorithmus \ref{alg:edges2} wird die Erzeugung der Kookkurenzkanten dargestellt. Im Map-Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist dabei eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurenzen zwischen beiden Begriffen. Im Reduce-Schritt werden alle Kanten zwischen zwei Termen zusammengefasst, die Summe der Kookkurenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \ref{measures} beschrieben.
+
+\begin{algorithm}
+\caption{Kantenerzeugung mit MapReduce
+    \label{alg:edges2}}
+    \begin{algorithmic}[1]
+        \Function{map}{document}
+            \ForAll{term1 in document.terms}
+                \ForAll{term2 in document.terms}
+                    \State \Call{Emit}{\{source: term1, target: term2\}, \{count: 1\}}
+                \EndFor
+            \EndFor
+        \EndFunction
+        \Statex
+        \Function{reduce}{edge, values}
+            \State $result := \{count: 0, dice: 0, jaccard: 0, cosine: 0\}$
+            \ForAll{values}
+                \State $result.count := result.count + value.count$
+            \EndFor
+            \State $result.dice = $ \Call{dice}{edge.source, edge.target, result.count}
+            \State $result.jaccard = $ \Call{jaccard}{edge.source, edge.target, result.count}
+            \State $result.cosine = $ \Call{cosine}{edge.source, edge.target, result.count}
+            \State \Return{result}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
