@@ -67,7 +67,9 @@ Die Kosinus-Ähnlichkeit \cite{hkp2012} ist ursprünglich ein Maß für die Ähn
 
 \section{Umsetzung}
 
-Um einen Graphen zu erstellen, der zwischen allen gemeinsam auftauchenden Begriffen Kanten mit den eingeführten Kookkurenzmaßen enthält, steigt der Aufwand mit wachsender Knotenanzahl stark an. Dieser Aufwand hängt davon ab, wie viele Begriffe pro Inhalt vergeben werden.
+Im folgenden Abschnitt wird die Erstellung eines Graphen beschrieben, der die Kookkurenzmaße für alle Paare von Begriffen enthält. Die Knoten stellen in diesem Fall die Begriffe dar. Die Kanten repräsentieren eine Kookkurenz dieser Begriffe und werden mit den gewünschten Kookkurenzmaßen annotiert. Existiert keine Kante zwischen zwei Knoten, so beträgt die Kookkurenz zwischen den beiden repräsentierten Begriffen \num{0}.
+
+Der Aufwand, um diesen Graphen zu erstellen, hängt also von der Anzahl der Begriffe, Dokumente, und Verbindungen von Begriffen und Dokumenten ab.
 
 Für jedes Dokument muss, um die Ähnlichkeitsmaße zu berechnen, das Kreuzprodukt aller vergebenen Begriffe gebildet werden. Dabei muss das Auftreten jeder Paarung gezählt werden, um die Mächtigkeit der Menge \(A \cap B\) bestimmen zu können. Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet werden, um die Mächtigkeit der Mengen \(A\), \(B\) usw. zu bestimmen. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokument \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung daher liegt zwischen diesen Schranken.
 
@@ -81,6 +83,8 @@ MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitun
 
 Die Map-Funktion dient zur Erzeugung von Zwischenergebnissen, ebenfalls in der Form von Schlüssel-/Wertpaaren. Die Funktion wird dabei einzeln auf jedes Paar der Eingabedaten angewandt und kann eine beliebige Anzahl von Zwischenergebnissen \emph{emittieren}. Die MapReduce-Bibliothek gruppiert daraufhin alle Paare mit dem gleichen Schlüssel und übergibt diese an die Reduce-Funktion.
 
-Die Reduce-Funktion wird also jeweils auf einen Schlüssel und eine Liste von Werten angewandt. Ziel dieser Funktion ist, für jeden Schlüssel kein oder ein Ergebnis zurückzugeben. Dabei werden die zu reduzierenden Werte für gewöhnlich als Iterator übergeben, um auch Datenmengen verarbeiten zu können, die nicht in den Arbeitsspeicher des Rechenknotens passen.
+Die Reduce-Funktion wird also jeweils auf einen Schlüssel und eine Liste von Werten angewandt. Ziel dieser Funktion ist, für jeden Schlüssel kein oder ein Ergebnis zurückzugeben. Dabei werden die zu reduzierenden Werte für gewöhnlich als Iterator übergeben, um auch Datenmengen verarbeiten zu können, die nicht in den Arbeitsspeicher des Rechenknotens passen. Die Reduce-Funktion wird nur angewandt, wenn nach dem Map-Schritt mehr als ein Wert für einen Schlüssel emittiert wurde. Somit sollten Map- und Reduce-Funktion das gleiche Ausgabeformat besitzen.
+
+Die MapReduce-Bibliothek übernimmt dabei sämtliche Kommunkation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
 
 Die MapReduce-Bibliothek übernimmt dabei sämtliche Kommunkation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
