@@ -87,4 +87,37 @@ Die Reduce-Funktion wird also jeweils auf einen Schlüssel und eine Liste von We
 
 Die MapReduce-Bibliothek übernimmt dabei sämtliche Kommunkation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
 
-Die MapReduce-Bibliothek übernimmt dabei sämtliche Kommunkation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
+\subsection{Anwendung von MapReduce}
+
+MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurenzgraphen genutzt werden. Dazu müss für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
+
+Um die Berechnung zu vereinfachen, werden zuerst die Knoten erzeugt und mit allen Vorkommen der Begriffe annotiert. Somit kann daraufhin direkt aus der Knotenmenge die Kantenmenge erzeugt werden.
+
+\subsubsection{Berechnung der Knoten}
+
+Als Eingabedaten für die Berechnung der Knotenmenge dienen Tupel der Form \((d, t)\), wobei \(d\) ein Dokument und \(t\) einen Begriff darstellt. Die Map-Funktion wird nun auf jeden dieser Tupel angewandt und emmitiert Schlüssel-/Wertpaare mit dem Begriff als Schlüssel und einer einelementigen Liste, die das Dokument des Tupels enthält sowie der Zahl \num{1} als Anzahl Vorkommen dieses Begriffs. Dieses Vorgehen ist notwendig, da die Ausgabe der Map- und Reduce-Funktionen das gleiche Datenformat haben sollten.
+
+Die Reduce-Funktion fasst die einelementigen Listen zusammen, addiert die Vorkommen und erzeugt somit den Knoten, der für einen Begriff alle Dokumente, die mit diesem Begriff versehen wurden, sowie die Anzahl der Vorkommen insgesamt enthält.
+
+Die Map- und Reduce-Funktionen für die Knotenberechnung sind in Listing \ref{alg:nodes} als Pseudo-Code dargestellt.
+
+\begin{algorithm}
+\caption{Knotenerzeugung mit MapReduce
+    \label{alg:nodes}}
+    \begin{algorithmic}[1]
+        \Function{map}{document, term}
+            \State \Call{Emit}{term, \{documents: [document], count: 1\}}
+        \EndFunction
+        \Statex
+        \Function{reduce}{term, values}
+            \State $result := \{documents: [], count: 0\}$
+            \ForAll{values}
+                \State $result.documents :=$ \Call{concat}{result.documents, value.documents}
+                \State $result.count := result.count + value.count$
+            \EndFor
+            \State \Return{result}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Berechnung der Kanten}
