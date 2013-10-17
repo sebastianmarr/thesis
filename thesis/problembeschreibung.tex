@@ -47,7 +47,6 @@ Zum Zeitpunkt der Bearbeitung dieser Arbeit befanden sich in der Datenbank der e
 In der Menge der Tags befinden sich Tags in \num{15} verschiedenen Sprachen. Es wurden insgesamt \num{71936424} Dokumente mit Tags versehen.
 
 \subsection{Clicktracking}
-
 Spreadshirt betreibt ein Clicktracking-System. Dieses System dient dazu, aufzuzeichnen, welche Artikel auf Suchergebnisseiten von Benutzern angeklickt werden. Dabei ist unerheblich, ob der Benutzer bei Spreadshirt registriert und angemeldet ist. Dieses System sammelt Daten von beiden Spreadshirt-Plattformen (siehe \ref{platforms}) und erzeugt bei jedem Klick eines Besuchers auf ein Suchergebnis einen Datensatz mit folgenden Attributen:
 
 \begin{itemize}
@@ -59,7 +58,14 @@ Spreadshirt betreibt ein Clicktracking-System. Dieses System dient dazu, aufzuze
     \item Sprache
 \end{itemize}
 
-Die Nutzung der Clicktracking-Daten liefert eine andere Sicht auf die Metadaten der Produkte als die Tags. Die Klicks liefern eine Einschätzung des suchenden Benutzers, ob die Metadaten, die für den Suchindex verwendet werden, zum Artikel selbst passen. Die Grundannahme ist hierbei, dass Benutzer nur auf Suchergebnisse klicken, die ihren Erwartungen bezüglich des Suchbegriffes gerecht werden.
+Die Nutzung der Clicktracking-Daten liefert eine andere Sicht auf die Metadaten der Produkte als die Tags. Die Klicks liefern eine Einschätzung des suchenden Benutzers, ob die Metadaten, die für den Suchindex verwendet werden, zum Artikel selbst passen. Die Grundannahme ist hierbei, dass Benutzer nur auf Suchergebnisse klicken, die ihren Erwartungen bezüglich des Suchbegriffes gerecht werden. Abbildung \ref{fig:search_result} zeigt ein Beispiel für ein Suchergebnis.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{assets/search-result}
+\caption{Suchergebnisseite}
+\label{fig:search_result}
+\end{figure}
 
 Aufgrund der kürzlichen Einführung des Clicktracking-Systems wurde im Kontext dieser Arbeit mit den ersten \num{611836} aufgezeichneten Klicks gearbeitet.
 
