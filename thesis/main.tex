@@ -1,5 +1,8 @@
 \documentclass[a4paper, abstracton, DIV=calc]{scrreprt}
 
+% silence KOMA warnings about float (for compatibility with listings, algorithm etc.)
+\usepackage{scrhack}
+
 % silence specific warnings
 \usepackage{silence}
 \WarningFilter{csquotes}{Using preliminary 'polyglossia' interface.}
@@ -7,15 +10,19 @@
 % fixes certain things for use with XeTeX
 \usepackage{xltxtra}
 
+% language support
+\usepackage{polyglossia}
+\setdefaultlanguage{german}
+
+% bibliography
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\bibliography{bibliography.bib}
+
 % quotations
 \usepackage[strict=true]{csquotes}
 
 % numbers and units
 \usepackage{siunitx}
-
-% language support
-\usepackage{polyglossia}
-\setdefaultlanguage{german}
 
 % pseudocode
 \usepackage{algpseudocode}
@@ -25,9 +32,6 @@
 \usepackage{setspace} 
 \setstretch{1.3}
 
-% bibliography
-\usepackage[backend=biber, style=alphabetic]{biblatex}
-\bibliography{bibliography.bib}
 
 % font stuff
 \defaultfontfeatures{Ligatures=TeX}
@@ -48,7 +52,7 @@
 \usepackage[all]{nowidow}
 
 % links
-\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 
 % header
 % \usepackage{fancyhdr}
@@ -76,6 +80,7 @@
 \include{zusammenfassung}
 
 % \nocite{*}
+\sloppy
 \printbibliography 
 
 \end{document}
