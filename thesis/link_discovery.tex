@@ -1,6 +1,9 @@
 \chapter{Link Discovery}
 
 Um den erstellten Graphen aufzuwerten, bietet sich die Integration externer Datenquellen an. Das folgende Kapitel beschreibt die im Rahmen dieser Arbeit verwendeten Datenquellen und deren Integration in den Graphen näher. Konkret handelt es sich dabei um die Google Translate API zur automatischen Spracherkennung sowie das Wortschatz-Projekt der Universität Leipzig zur Ingration von Wortbedeutungen und lingustischen Beziehungen zwischen Begriffen.
+\section{Tags}
+
+\section{Clicktracking}
 
 \section{Google Translate}
 
@@ -13,6 +16,8 @@ Die Integration der Spracherkennungs-Daten in den Graphen gestaltet sich einfach
 Eine Bereinigung der Ergebnisse ist nicht erforderlich. Somit müssen die Ergebnisse lediglich in den Ausgangsgraphen integriert werden. Die Spracherkennung an sich bringt keine Ähnlichkeitsbeziehungen mit sich, sondern verbessert gegebenenfalls nur die Knotenauswahl für spätere Operationen.
 
 In der Konsequenz genügt es also, die für die Abfrage verwendeten Knoten mit den Ergbenissen der Spracherkennung zu annotieren. Somit kann dann bei späteren Analysen anhand des Konfidenzwertes abgewogen werden, ob die erkannte Sprache oder die eventuell schon am Knoten vorhandene Sprache verwendet werden soll.
+
+\section{Zerlegung von Wortgruppen}
 
 \section{Wortschatz der Universität Leipzig}
 
