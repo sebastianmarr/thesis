@@ -3,16 +3,11 @@
 % silence KOMA warnings about float (for compatibility with listings, algorithm etc.)
 \usepackage{scrhack}
 
-% silence specific warnings
-\usepackage{silence}
-\WarningFilter{csquotes}{Using preliminary 'polyglossia' interface.}
-
 % fixes certain things for use with XeTeX
 \usepackage{xltxtra}
 
 % language support
-\usepackage{polyglossia}
-\setdefaultlanguage{german}
+\usepackage[ngerman]{babel}
 
 % bibliography
 \usepackage[backend=biber, style=alphabetic]{biblatex}
