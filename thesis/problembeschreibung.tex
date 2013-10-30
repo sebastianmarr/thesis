@@ -50,7 +50,7 @@ Zum Zeitpunkt der Bearbeitung dieser Arbeit befanden sich in der Datenbank der e
     \item \num{2072079} Tags
     \item \num{6433410} Benutzer
     \item \num{26147860} Dokumente (\num{16494430} Artikel und \num{9653430} Designs)
-    \item \num{76978414} Taggings
+    \item \num{71938905} Taggings
 \end{itemize}
 
 In der Menge der Tags befinden sich Tags in \num{15} verschiedenen Sprachen. Es wurden insgesamt \num{71936424} Dokumente mit Tags versehen.
@@ -79,6 +79,7 @@ Die Nutzung der Clicktracking-Daten liefert eine andere Sicht auf die Metadaten 
 Aufgrund der kürzlichen Einführung des Clicktracking-Systems wurde im Kontext dieser Arbeit mit den ersten \num{611836} aufgezeichneten Klicks gearbeitet.
 
 \subsection{Datenqualität}
+\label{quality}
 
 Die Qualität von Daten wird im Allgemeinen unter mehreren Gesichtspunkten beurteilt \cite{hkp2012}. Dazu gehören unter Anderem \emph{Korrektheit}, \emph{Vollständigkeit}, und \emph{Redundanzfreiheit}. Nachfolgend werden die bei Spreadshirt vorhandenen Daten nach diesen Kriterien betrachtet und die Quellen eventueller Fehler \cite[43 ff]{jo2003} diskutiert.
 
@@ -105,6 +106,7 @@ Technisch kann jeder Tag genau ein Mal in der Datenbank vorkommen. Jedoch führe
 Außerdem führten in der Vergangenheit Systemfehler und Implementierungsfehler dazu, dass falsche, nicht druckbare Zeichen in den Tags enthalten waren. Nach Beseitigung der Fehler blieben die fehlerhaften Tags bestehen, so dass bei einer erneuten Eingabe des gleichen Wortes ein neuer Tag in der Datenbank angelegt wurde.
 
 \section{Lösungsansatz}
+\label{solution}
 
 Die Beziehungen, die zwischen Wörtern und Wortgruppen hergestellt werden können, hängen stark von Umfang, Vielfältigkeit und Qualität der vorhandenen Datenquellen ab. Daher wurde zur Realisierung der Zielstellung ein iterativer Ansatz gewählt.
 

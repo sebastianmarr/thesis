@@ -1,7 +1,28 @@
 \chapter{Link Discovery}
 
-Um den erstellten Graphen aufzuwerten, bietet sich die Integration externer Datenquellen an. Das folgende Kapitel beschreibt die im Rahmen dieser Arbeit verwendeten Datenquellen und deren Integration in den Graphen näher. Konkret handelt es sich dabei um die Google Translate API zur automatischen Spracherkennung sowie das Wortschatz-Projekt der Universität Leipzig zur Ingration von Wortbedeutungen und lingustischen Beziehungen zwischen Begriffen.
+Das folgende Kapitel beschäftigt sich mit den im Rahmen dieser Arbeit unternommenen Schritten zur Link Discovery, also dem Finden von Beziehungen zwischen Wörtern und Wortgruppen. Dazu zählen die Generierung eines Ausgangsgraphen aus Tag-Daten sowie dessen Anreicherung durch die Integration weiterer interner und externer Datenquellen.
 \section{Tags}
+
+Den Ausgangspunkt für den in \ref{solution} beschriebenen Lösungsansatz stellen die Daten des Tag-Systems dar. Diese werden in \ref{tag-system} ausführlich beschrieben. Aus diesen Daten wird im ersten Schritt der Graph erstellt, in diesen in allen weiteren Schritten weitere Daten integriert werden. Die in diesem Graph enthaltenen Knoten stellen also die Kriterien für die Abfrage der weiteren Datenquellen dar.
+
+Um den Ausgangsgraphen zu berechnen, sind die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration notwendig, welche im folgenden genauer beschrieben werden.
+\subsection{Import}
+
+Die Daten liegen im Quellsystem in relationaler Form vor. Somit existieren Tabellen für die Tags, Dokumente und Verknüpfungen zwischen ebenjenen. Da der Inhalt der Dokumente nicht relevant für die Link Discovery mittels Kookkurenz sind, genügt es, die Tabellen der Tags und Verknüpfungen zu importieren.
+
+Die Tags liegen in der Form \((i, s, l)\) vor, wobei \(i\) den eindeutigen Bezeichner des Tags, \(s\) die Zeichenkette und \(l\) die Sprache des Tags repräsentieren.
+
+Die Verknüpfungen sind durch Tupel der Form \((i, t, d_t, d_i)\) repräsentiert, wobei \(i\) der eindeutige Bezeichner der Verknüpfung selbst ist. \(t\) ist der Bezeichner des Tags, \(d_t\) der Typ des Dokuments und \(d_i\) der Bezeichner des Dokumentes. \(d_t\) und \(d_i\) bilden also den zusammengesetzten Schlüssel des getaggten Dokumentes. 
+ 
+\begin{figure}
+\label{fig:tag_source_erd}
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{tag_source_erd}
+\end{center}
+\caption{Tag-Quelldaten als Entity-Relationship Diagramm}
+\end{figure}
+
+Die importierten Quelldaten sind in Abbildung \ref{fig:tag_source_erd} als Entity - Relationship Diagramm abgebildet. Nach dem Import stehen \num{2072079} Tags und \num{71938905} Verknüpfungen zur Verfügung.
 
 \section{Clicktracking}
 
