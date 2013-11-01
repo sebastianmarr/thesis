@@ -80,7 +80,7 @@ Der Transformationsschritt beschreibt die Überführung der Daten in die Form, d
 
 Um die vorhandenen Informationen später einfach nutzbar zu machen, erscheint es sinnvoll, die Knoten mit allen verfügbaren Daten anzureichern. Dazu gehören bei den Tags die Sprache und Zeichenkette, sowie Informationen darüber an welche Dokumente der Tag verwendet wurde. Diese Informationen lassen sich in einer dokumentenbasierten Datenbank leicht abbilden.
 
-Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Dieses besitzt als Attribute zum einen die Zeichenkette und die Sprache des Tags, aus dem es erzeugt wurde. Zum anderen wird ein Unterdokument hinzugefügt, welches weitere Eigenschaften des Ausgangstags beschreibt. Die umfasst die Anzahl der Verwendungen und die eindeutigen Bezeichner der Dokumente, die mit dem Tag getaggt wurden. Außerdem kann im Transformationsschritt für jeden Knoten ein global eindeutiger Bezeichner erzeugt werden, um das spätere Referenzieren der Knoten einfacher zu machen. Zeichenkette und Sprache des Knotens stellen einen zusammengesetzten Schlüssel dar und sind in der Knotenmenge eindeutig. Der Aufbau der Knoten ist schemahaft in Abbildung \ref{fig:tag_transform_node} dargestellt.
+Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Dieses besitzt als Attribute zum einen die Zeichenkette und die Sprache des Tags, aus dem es erzeugt wurde. Zum anderen wird ein Unterdokument hinzugefügt, welches weitere Eigenschaften des Ausgangstags beschreibt. Die umfasst die Anzahl der Verwendungen und die eindeutigen Bezeichner der Dokumente, die mit dem Tag getaggt wurden. Außerdem kann im Transformationsschritt für jeden Knoten ein global eindeutiger Bezeichner erzeugt werden, um das spätere Referenzieren der Knoten einfacher zu machen. Zeichenkette und Sprache des Knotens stellen einen zusammengesetzten Schlüssel dar und sind in der Knotenmenge eindeutig. Der Aufbau der Knoten ist schemahaft in Abbildung \ref{fig:tag_transform_node} dargestellt. Listing \ref{lst:tag_transform_node} zeigt ein Beispiel für ein in der Datenbank abgelegtes Knotendokument.
 
 \begin{figure}
 \label{fig:tag_transform_node}
@@ -90,7 +90,27 @@ Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Diese
 \caption{Aufbau der aus den Tag-Daten erzeugten Knoten}
 \end{figure}
 
-Die Erzeugung der Kanten erfolgt dann wie in Abschnitt \ref{mapreduce_cooccurence} beschrieben. Dabei werden für jedes gemeinsame Auftreten von zwei Tags zwei Datenbankdokumente erzeugt. Dieses beschreiben gerichtete Kanten zwischen den Tags, die ein gemeinsames Auftreten der Tags repräsentieren. Neben Quell- und Zielknoten enthält eine Kante den Kantentyp sowie weitere Informationen über die Art der Verbindung. Im Fall von Kookkurenzkanten ist dies zum einen die absolute Anzahl gemeinsamer Vorkommen der Tags, zum anderen die in \ref{measures} beschriebenen Kookkurenzmaße. Der Kantentyp ist aus der Berechnung folgend der Typ der Tag-Kookkurenz. Der Aufbau der erzeugten Kanten ist in Abbildung \ref{fig:tag_transform_edge} dargestellt.
+\begin{lstlisting}[language=json, label={lst:tag_transform_node}, caption={Tag-Knoten als JSON-Dokument}]
+{
+    "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
+    "language" : "de",
+    "string" : "mama",
+    "tagProperties" : {
+        "occurenceCount" : 3,
+        "articleCount" : 2,
+        "designCount" : 1,
+        "articleIDs" : [
+            24231101,
+            24231105
+        ],
+        "designIDs" : [
+            15514592
+        ]
+    }
+}
+\end{lstlisting}
+
+Die Erzeugung der Kanten erfolgt dann wie in Abschnitt \ref{mapreduce_cooccurence} beschrieben. Dabei werden für jedes gemeinsame Auftreten von zwei Tags zwei Datenbankdokumente erzeugt. Dieses beschreiben gerichtete Kanten zwischen den Tags, die ein gemeinsames Auftreten der Tags repräsentieren. Neben Quell- und Zielknoten enthält eine Kante den Kantentyp sowie weitere Informationen über die Art der Verbindung. Im Fall von Kookkurenzkanten ist dies zum einen die absolute Anzahl gemeinsamer Vorkommen der Tags, zum anderen die in \ref{measures} beschriebenen Kookkurenzmaße. Der Kantentyp ist aus der Berechnung folgend der Typ der Tag-Kookkurenz. Der Aufbau der erzeugten Kanten ist in Abbildung \ref{fig:tag_transform_edge} dargestellt. Ein Beispiel JSON-Dokument für eine Kante ist in Listing \ref{lst:tag_transform_edge} zu sehen.
 
 \begin{figure}
 \label{fig:tag_transform_edge}
@@ -99,6 +119,19 @@ Die Erzeugung der Kanten erfolgt dann wie in Abschnitt \ref{mapreduce_cooccurenc
 \end{center}
 \caption{Aufbau der aus den Tag-Daten erzeugten Kanten}
 \end{figure}
+
+\begin{lstlisting}[language=json, label={lst:tag_transform_edge}, caption={Tag-Kante als JSON-Dokument}]
+{
+    "_id" : ObjectId("51efd6f61177ff360605bd99"),
+    "source" : ObjectId("51efc1af47cae77dfc00c3f8"),
+    "target" : ObjectId("51efc1e047cae77dfc02087c"),
+    "type" : "tag-co-occurence",
+    "occurences" : 1,
+    "dice" : 0.0001317089232795522,
+    "jaccard" : 0.00006585879873551106,
+    "cosine" : 0.008115343414514944
+}
+\end{lstlisting}
 
 \subsection{Integration}
 
