@@ -58,7 +58,15 @@ Der Reduktionsschritt dient zur Einschränkung der Gesamtdaten auf eine nützlic
 
 Im Fall der Tag-Daten liegt das Hauptaugenmerk im Reduktionsschritt auf der Entfernung von Duplikaten, die bei der Bereinigung entstanden sind. Dabei muss gleichzeitig sicher gestellt werden, dass keine Informationen über die Verwendung der Tags verloren gehen. Somit besteht die Duplikatentfernung der Tags im Zusammenführen von Datensätzen mit gleichen Zeichenketten und Sprachen. Dabei werden auch die Verwendungen der Tags zusammengeführt.
 
-Werden die Verknüpfungen zweier Tags mit Dokumenten zusammengeführt, können auch dabei wieder Duplikate entstehen. Diese müssen in diesem Fall entfernt werden, da ein Tag nicht mehrmals mit einem Dokument verknüpft werden kann.
+Werden die Verknüpfungen zweier Tags mit Dokumenten zusammengeführt, können auch dabei wieder Duplikate entstehen. Diese müssen in diesem Fall entfernt werden, da ein Tag nicht mehrmals mit einem Dokument verknüpft werden kann. Das Zusammenfühen von Tags ist exemplarisch in Abbildung \ref{fig:tag_reduction} dargestellt.
+
+\begin{figure}
+\label{fig:tag_reduction}
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{tag_reduction}
+\end{center}
+\caption{Beispiel für das Zusammenführen der bereinigten Tags}
+\end{figure}
 
 Eine weitere im Rahmen dieser Arbeit unternommene Maßnahme zur Datenreduktion bestand darin, sich auf die Menge der Tags zu beschränken, deren Attribut \(l\) den Wert \emph{de} besitzt. Praktisch handelt es sich dabei um alle Tags, die als deutsch gekennzeichnet in der Datenbank gespeichert sind. Diese Einschränkung wurde vorgenommen, um die zu verarbeitende Datenmenge überschaubar zu halten.
 
