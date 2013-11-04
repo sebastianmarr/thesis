@@ -43,6 +43,7 @@ Nach der Auswahl eines geeigneten Datenbanksystems sollte das Datenmodell des Er
 Generell handelt es sich bei dem gewünschten Ergebnis um einen gerichteten Multigraph. Dieser repräsentiert Objekte, oder auch \emph{Knoten}, zwischen denen paarweise Verbindungen, die \emph{Kanten} bestehen. Die Besonderheit eines Multigraphen ist dabei, dass zwischen zwei Knoten auch mehrere Kanten existieren dürfen \cite{rd2012}. Dies ist dem gewählten Lösungsansatz geschuldet, da zwischen Wörtern und Wortgruppen verschiedenartige Beziehungen existieren können.
 
 Somit müssen für das Datenmodell die beiden Entitäten \emph{Knoten} und \emph{Kante} modelliert werden.
+Das komplette Datenmodell des Graphen nach der Integration aller Datenquellen ist in Anhang \ref{complete_data_model} dargestellt.
 
 \subsection{Knoten}
 
@@ -137,14 +138,6 @@ Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben
         "cosine" : 0.008115343414514944
 }
 \end{lstlisting}
-
-\begin{figure}
-\label{fig:graph_model}
-\begin{center}
-    \includegraphics[width=1\textwidth]{graph_model}
-\end{center}
-\caption{Datenmodell des Graphen als Entity-Relationship-Diagramm}
-\end{figure}
 
 \section{Systemarchitektur}
 
