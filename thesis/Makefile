@@ -13,6 +13,7 @@ all: clean
 	biber -q  $(BUILDDIR)/$(OUTPUTNAME)
 	#makeglossaries $(MAINDOC)
 	$(TEX) -no-pdf $(MAINDOC) &> /dev/null || $(PP) -q
+	$(TEX) -no-pdf $(MAINDOC) &> /dev/null || $(PP) -q
 	$(TEX) $(MAINDOC) &> /dev/null && $(PP)
 
 open: all
