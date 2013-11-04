@@ -82,6 +82,62 @@ Das beschriebene Kantenmodell ist in Abbildung \ref{fig:edge_erd} dargestellt.
 
 \subsection{Technische Umsetzung}
 
+Um das beschriebene Datenmodell in MongoDB umzusetzen, muss es in eine Dokumentenform überführt werden. Dazu bietet sich an, Knoten in Kanten in unterschiedlichen Collections zu speichern, um sie voneinander zu trennen.
+
+Somit stellt sich anschließend die Frage, wie die Knoten und Kanten als Dokumente repräsentiert werden. Durch die durch MongoDB gegebene Schemaflexibilität lassen sich die optionalen Eigenschaften von Knoten und Kanten direkt in den Dokumenten speichern.
+
+Im Fall der Knoten bietet sich daher an, die zusätzlichen Eigenschaften als Unterdokumente des Knotens zu behandeln. Der Schlüssel für diese Unterdokumente ist dabei der Name der zusätzlichen Eigenschaft. Dadurch lassen sich die Knoten gut filtern, da die Abfrage auf das Vorhandensein des jeweiligen Schlüssels angepasst sein kann. Listing \ref{lst:node_json} zeigt ein Beispiel für einen Knoten in JSON-Notation. Arrays mit vielen Elementen sind dabei verkürzt dargestellt.
+
+Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben sich zusätzliche Eigenschaften. Listing \ref{lst:edge_json} zeigt beispielhaft ein Kantendokument für eine Tag-Kookkurenz in JSON-Notation.
+
+\begin{lstlisting}[language=json, label={lst:node_json}, caption={Knotendokument in JSON}]
+{
+    "_id" : ObjectId("51efc22447cae77dfc03e16b"),
+    "language" : "de",
+    "string" : "segeln",
+    "languageDetection" : {
+        "language" : "de",
+        "confidence" : 1
+    },
+    "tagProperties" : {
+        "occurenceCount" : 4678,
+        "articleCount" : 2347,
+        "designCount" : 2331,
+        "articleIDs" : [ 
+            4961057, 
+            4977725, 
+            ...
+        ],
+        "designIDs" : [ 
+            1645572, 
+            2216059, 
+            ...
+        ]
+    },
+    "wortschatzProperties" : {
+        "synonyms" : [ 
+            "flattern", 
+            "fliegen", 
+            "gaukeln", 
+            ...
+        ]
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=json, label={lst:edge_json}, caption={Kantendokument in JSON}]
+{
+        "_id" : ObjectId("51efd6f61177ff360605bd99"),
+        "source" : ObjectId("51efc1af47cae77dfc00c3f8"),
+        "target" : ObjectId("51efc1e047cae77dfc02087c"),
+        "type" : "tag-co-occurence",
+        "occurences" : 1,
+        "dice" : 0.0001317089232795522,
+        "jaccard" : 0.00006585879873551106,
+        "cosine" : 0.008115343414514944
+}
+\end{lstlisting}
+
 \begin{figure}
 \label{fig:graph_model}
 \begin{center}
