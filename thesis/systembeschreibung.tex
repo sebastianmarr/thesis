@@ -64,7 +64,21 @@ Das resultierende Knotenmodell ist in Abbildung \ref{fig:node_erd} dargestellt.
 
 \subsection{Kanten}
 
+Eine Kante ist im Wesentlichen durch die Knoten, die sie verbindet, beschrieben. Sie stellt einen irgendwie gearteten Zusammenhang zwischen zwei Knoten dar. Sie ist dabei gerichtet, um auch assymetrische Zusammenhänge zwischen Knoten abbilden zu können.
 
+Somit sind die einzig immer benötigten Attribute der Quell- und Zielknoten und der Typ der Kante. Zusätzlich erhält jede Kante einen eindeutigen Bezeichner.
+
+Alle weiteren Eigenschaften der Kante hängen vom Typ ab. Dies können beispielsweise Maße sein, die ein Kantengewicht darstellen. Da eine Kante nur genau einen Typ haben kann, werden die zusätzlichen Kanteneigenschaften einfach als Attribute an der Kante annotiert.
+
+Das beschriebene Kantenmodell ist in Abbildung \ref{fig:edge_erd} dargestellt.
+
+\begin{figure}
+\label{fig:edge_erd}
+\begin{center}
+    \includegraphics[width=0.2\textwidth]{edge_erd}
+\end{center}
+\caption{Kantenmodell als Entity-Relationship-Diagramm}
+\end{figure}
 
 \subsection{Technische Umsetzung}
 
