@@ -152,6 +152,22 @@ In der Konsequenz genügt es also, die für die Abfrage verwendeten Knoten mit d
 
 \section{Zerlegung von Wortgruppen}
 
+Die Zerlegung von Tags, die aus mehr als einem Wort bestehen, stellt zwar keine Integration anderer Datenquellen dar, kann aber trotzdem zum Auffinden neuer Verknüpfungen nützlich sein.
+
+Zum Zeitpunkt des Importes befanden sich \num{147364} Tags in der Datenbank, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozenzt aller bereinigten deutschen Tags. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Tags auch Wörter enthalten sind, die nicht als Einzelwörter existieren.
+
+Werden diese Tags in ihre Einzelwörter zerlegt, entstehen einerseits unter Umständen neue Knoten, andererseits können in diesem Schritt Kanten vom Typ \emph{Zerlegung} beziehungsweise \emph{Zusammensetzung} eingefügt werden. Somit sind nach dem Zerlegungsschritt weitere Informationen über den Kontext, in dem Wörter verwendet werden, verfügbar. Abbildung \ref{fig:decomposition} zeigt beispielhaft das Ergebnis einer solchen Zerlegung.
+
+Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Tag-Daten wurden insgesamt \num{38349} Knoten und \num{1238900} Kanten erzeugt, die für spätere Analyseschritte genutzt werden können.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{decomposition}
+\caption{Beispielhafter Graphausschnitt nach der Zerlegung}
+\label{fig:decomposition}
+\end{figure}
+
+
 \section{Wortschatz der Universität Leipzig}
 
 Die Universität Leipzig betreibt ein Wortschatz-Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften und Beziehungen zu anderen Wörtern aufgebaut.
