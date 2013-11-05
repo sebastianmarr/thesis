@@ -17,11 +17,10 @@ Die Tags liegen in der Form \((i, s, l)\) vor, wobei \(i\) den eindeutigen Bezei
 Die Verknüpfungen sind durch Tupel der Form \((i, t, d_t, d_i)\) repräsentiert, wobei \(i\) der eindeutige Bezeichner der Verknüpfung selbst ist. \(t\) ist der Bezeichner des Tags, \(d_t\) der Typ des Dokuments und \(d_i\) der Bezeichner des Dokumentes. \(d_t\) und \(d_i\) bilden also den zusammengesetzten Schlüssel des getaggten Dokumentes. 
  
 \begin{figure}
-\label{fig:tag_source_erd}
-\begin{center}
-    \includegraphics[width=0.6\textwidth]{tag_source_erd}
-\end{center}
+\centering
+\includegraphics[width=0.6\textwidth]{tag_source_erd}
 \caption{Tag-Quelldaten als Entity-Relationship Diagramm}
+\label{fig:tag_source_erd}
 \end{figure}
 
 Die importierten Quelldaten sind in Abbildung \ref{fig:tag_source_erd} als Entity - Relationship Diagramm abgebildet. Nach dem Import stehen \num{2072079} Tags und \num{71938905} Verknüpfungen zur Verfügung.
@@ -61,11 +60,10 @@ Im Fall der Tag-Daten liegt das Hauptaugenmerk im Reduktionsschritt auf der Entf
 Werden die Verknüpfungen zweier Tags mit Dokumenten zusammengeführt, können auch dabei wieder Duplikate entstehen. Diese müssen in diesem Fall entfernt werden, da ein Tag nicht mehrmals mit einem Dokument verknüpft werden kann. Das Zusammenfühen von Tags ist exemplarisch in Abbildung \ref{fig:tag_reduction} dargestellt.
 
 \begin{figure}
-\label{fig:tag_reduction}
-\begin{center}
-    \includegraphics[width=0.7\textwidth]{tag_reduction}
-\end{center}
+\centering
+\includegraphics[width=0.7\textwidth]{tag_reduction}
 \caption{Beispiel für das Zusammenführen der bereinigten Tags}
+\label{fig:tag_reduction}
 \end{figure}
 
 Eine weitere im Rahmen dieser Arbeit unternommene Maßnahme zur Datenreduktion bestand darin, sich auf die Menge der Tags zu beschränken, deren Attribut \(l\) den Wert \emph{de} besitzt. Praktisch handelt es sich dabei um alle Tags, die als deutsch gekennzeichnet in der Datenbank gespeichert sind. Diese Einschränkung wurde vorgenommen, um die zu verarbeitende Datenmenge überschaubar zu halten.
@@ -83,11 +81,11 @@ Um die vorhandenen Informationen später einfach nutzbar zu machen, erscheint es
 Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Dieses besitzt als Attribute zum einen die Zeichenkette und die Sprache des Tags, aus dem es erzeugt wurde. Zum anderen wird ein Unterdokument hinzugefügt, welches weitere Eigenschaften des Ausgangstags beschreibt. Die umfasst die Anzahl der Verwendungen und die eindeutigen Bezeichner der Dokumente, die mit dem Tag getaggt wurden. Außerdem kann im Transformationsschritt für jeden Knoten ein global eindeutiger Bezeichner erzeugt werden, um das spätere Referenzieren der Knoten einfacher zu machen. Zeichenkette und Sprache des Knotens stellen einen zusammengesetzten Schlüssel dar und sind in der Knotenmenge eindeutig. Der Aufbau der Knoten ist schemahaft in Abbildung \ref{fig:tag_transform_node} dargestellt. Listing \ref{lst:tag_transform_node} zeigt ein Beispiel für ein in der Datenbank abgelegtes Knotendokument.
 
 \begin{figure}
-\label{fig:tag_transform_node}
 \begin{center}
     \includegraphics[width=0.7\textwidth]{tag_transform_node}
 \end{center}
 \caption{Aufbau der aus den Tag-Daten erzeugten Knoten}
+\label{fig:tag_transform_node}
 \end{figure}
 
 \begin{lstlisting}[language=json, label={lst:tag_transform_node}, caption={Tag-Knoten als JSON-Dokument}]
@@ -113,11 +111,10 @@ Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Diese
 Die Erzeugung der Kanten erfolgt dann wie in Abschnitt \ref{mapreduce_cooccurence} beschrieben. Dabei werden für jedes gemeinsame Auftreten von zwei Tags zwei Datenbankdokumente erzeugt. Dieses beschreiben gerichtete Kanten zwischen den Tags, die ein gemeinsames Auftreten der Tags repräsentieren. Neben Quell- und Zielknoten enthält eine Kante den Kantentyp sowie weitere Informationen über die Art der Verbindung. Im Fall von Kookkurenzkanten ist dies zum einen die absolute Anzahl gemeinsamer Vorkommen der Tags, zum anderen die in \ref{measures} beschriebenen Kookkurenzmaße. Der Kantentyp ist aus der Berechnung folgend der Typ der Tag-Kookkurenz. Der Aufbau der erzeugten Kanten ist in Abbildung \ref{fig:tag_transform_edge} dargestellt. Ein Beispiel JSON-Dokument für eine Kante ist in Listing \ref{lst:tag_transform_edge} zu sehen.
 
 \begin{figure}
-\label{fig:tag_transform_edge}
-\begin{center}
-    \includegraphics[width=0.3\textwidth]{tag_transform_edge}
-\end{center}
+\centering
+\includegraphics[width=0.3\textwidth]{tag_transform_edge}
 \caption{Aufbau der aus den Tag-Daten erzeugten Kanten}
+\label{fig:tag_transform_edge}
 \end{figure}
 
 \begin{lstlisting}[language=json, label={lst:tag_transform_edge}, caption={Tag-Kante als JSON-Dokument}]
