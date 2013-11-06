@@ -211,11 +211,14 @@ Ziel der Transformation ist somit die Erzeugung von Knoten und Kanten. Die Knote
 }
 \end{lstlisting}
 
+Die Kanten besitzen die gleiche Form wie die Kookkurrenzkanten, die bei der Integration der Tag-Daten erzeugt wurden. Ein Beispiel für ein solches Kantendokument ist in Listing \ref{lst:click_edge} dargestellt.
+
 \begin{lstlisting}[language=json, label={lst:click_edge}, caption={Clicktracking-Kookkurenzkante}]
 {
     "_id": ObjectId("51e91aff3b6a20bfd68c468a")
     "source" : ObjectId("51e91af93b6a20bfd68b0bed"),
     "target" : ObjectId("51e91aff3b6a20bfd68c463e"),
+    "type": "tag-co-occurence",
     "occs" : 1,
     "dice" : 0.003883495145631068,
     "jaccard" : 0.0019455252918287938,
@@ -223,12 +226,17 @@ Ziel der Transformation ist somit die Erzeugung von Knoten und Kanten. Die Knote
 }
 \end{lstlisting}
 
-Die Kanten besitzen die gleiche Form wie die Kookkurrenzkanten, die bei der Integration der Tag-Daten erzeugt wurden. Ein Beispiel für ein solches Kantendokument ist in Listing \ref{lst:click_edge} dargestellt.
-
 Die Durchführung des Transformationsschrittes erfolgte ebenfalls mittels MapReduce (siehe \ref{mapreduce_cooccurence}). Dadurch wurden \num{92727} Knoten und \num{310860} Kanten erzeugt.
 
 \subsection{Integration}
 
+Die Integration der erzeugten Daten stellt eine Vereinigung des vorhandenen Zielgraphen mit dem im Transformationsschritt erzeugten Kookkurenzgraphen dar.
+
+Dabei wird die Knotenmenge derart vereinigt, dass die Knotenmenge des Zielgraphen die Eigenschaft behält, dass Paare aus Sprache und Zeichenkette eindeutig sind. Somit werden bei bereits vorhandenen Knoten die zusätzlichen Informationen bezüglich das Clicktrackings als Attribute hinzugefügt. Existiert eine Kombination aus Sprache und Zeichenkette noch nicht im Zielgraph, so wird der entsprechende Knoten kopiert.
+
+Da die erzeugten Kanten einen noch nicht im Graoh vorhandenen Typ besitzen, müssen keine Kanten zusammengeführt werden. Jedoch müssen die Ziel- und Quellquoten entsprechend angepasst werden, wenn bei der Integration der Knoten eine Zusammenführung statt gefunden hat.
+
+Durch dieses Vorgehen konnten der Knotenmenge \emph{78237} Knoten, und somit auch neue Begriffe hinzugefügt werden. Die Kantenmenge wurde, wie bereits erläutert, um \emph{310860} Kanten erweitert.
 
 \section{Google Translate}
 
