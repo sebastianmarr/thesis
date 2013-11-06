@@ -143,6 +143,7 @@ Wie in \ref{problem:clicktracking} bereits einführend beschrieben, betreibt Spr
 Wie bereits für die Tag-Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration näher erläutert.
 
 \subsection{Import}
+\label{click_import}
 
 Das Clicktracking-System erzeugt Dateien im JSON-Format, die zu jedem Klick auf einer Ergebnisseite die wesentlichen Informationen enthalten. Dabei ist pro Klick ein JSON-Dokument in der Datei abgespeichert. Ein Beispiel für ein solches Dokument ist in Listing \ref{lst:click_raw} dargestellt.
 
@@ -166,6 +167,20 @@ Da das Clicktracking-System zum Zeitpunkt des Imports erst 3 Monate Daten aufzei
 
 \subsection{Bereinigung}
 
+Im Bereinigungsschritt müssen zunächst die genannten Defekte der Klickdaten beseitigt werden. Dazu gehört die Entfernung der eckigen Klammern in Suchbegriff und Gebietsschema und die Extraktion des eindeutigen Bezeichners des geklickten Artikels. Aus dem Gebietsschame ist nur die Sprache von Interesse. Außerdem wurden für den Suchbegriff die gleichen Bereinigungsoperationen wie für die Tag-Daten vorgenommen, also die Entfernung von überflüssigen Leerzeiche, Groß-/Kleinschreibung, nicht druckbarer Sonderzeichen und Satzzeichen.
+
+Im Bereinigunsschritt werden so auch einfacher verarbeitbare Dokumente erzeugt, da die Möglichkeiten des JSON-Formates besser ausgenutzt werden. Listing \ref{lst:tag_cleanup} zeigt das Ergebnis der Bereinigung des in \ref{click_import} gezeigten Beispieldokumentes.
+
+\begin{lstlisting}[language=json, label={lst:tag_cleanup}, caption={Bereinigtess Clicktracking-Dokument}]
+{
+    "_id": ObjectId("51e7b1e0417498f9c6868939"),
+    "query" : "biene",
+    "date" : "2013-07-01T00:09:31.633Z",
+    "articleId" : 18869874,
+    "index" : 57,
+    "language" : "de"
+}
+\end{lstlisting}
 
 \subsection{Reduktion}
 
