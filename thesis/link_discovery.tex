@@ -138,6 +138,42 @@ Durch die Schritte, die zur Link Discovery aus den Tag-Daten verwendet wurden, w
 
 \section{Clicktracking}
 
+Wie in \ref{problem:clicktracking} bereits einführend beschrieben, betreibt Spreadshirt ein Clicktracking-System, welches die Klicks der Benutzer auf Suchergebnisseiten aufzeichnet. Die von diesem System erzeugten Daten können für die Link Discovery von großer Bedeutung sein, da sie eine andere Perspektive auf die Begriffe im Graphen liefern. Die Tags liefern die Sicht der Partner, also der Personen, die Inhalte hochladen und verkaufen möchten. Die Klicks beschreiben die Sicht der Käufer, also der Personen, die nach Inhalten suchen. Durch die Auswertung der Clicktracking-Daten ergibt sich also die Möglichkeit, eine Form der Validierung der durch Partner vergebenen Metadaten zu erhalten. Die Annahme hierbei ist, dass Käufer nur auf Suchergebnisse klicken, die eine inhaltliche Relevanz zum eingegebenen Suchbegriff besitzen.
+
+Wie bereits für die Tag-Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration näher erläutert.
+
+\subsection{Import}
+
+Das Clicktracking-System erzeugt Dateien im JSON-Format, die zu jedem Klick auf einer Ergebnisseite die wesentlichen Informationen enthalten. Dabei ist pro Klick ein JSON-Dokument in der Datei abgespeichert. Ein Beispiel für ein solches Dokument ist in Listing \ref{lst:click_raw} dargestellt.
+
+\begin{lstlisting}[language=json, label={lst:click_raw}, caption={Clicktracking - Rohdokument als JSON}]
+{
+    "date": "01.07.2013 00:09:31_633",
+    "path": "/track/eu/205909/1E3B6E3E-B454-4496-C51A14A8FA25/2.10.4/list",
+    "params": {
+        "locale": "[de_DE]",
+        "search-query": "[biene]",
+        "cl": "[a18869874, p25446183, i49]"
+    }
+}
+\end{lstlisting}
+
+Ein Clicktracking-Dokument enthält dabei die Attribute \emph{Datum}, \emph{Pfad}, \emph{Gebietsschema}, \emph{Suchbegriff} und die Daten des eigentlichen Klicks, also den geklickten \emph{Artikel}, das geklickte \emph{Produkt} und den \emph{Index}, also die Position des geklickten Inhaltes auf der Suchergebnisseite. Die Unterscheidung zwischen Produkt und Artikel ist dabei im Domänenmodell von Spreadshirt begründet und für die Link Discovery nicht von Interesse. Es genügt, das geklickte Produkt im Weiteren näher zu betrachten.
+
+Auffällig ist, dass die Möglichkeiten des JSON-Formates bei der Speicherung der Klickdaten nicht vollständig ausgenutzt wurden. So sind die Werte, die das geklickte Dokument beschreiben, als Zeichenkette abgelegt und zusätzlich die eindeutigen Bezeichner mit einem Buchstaben versehen, der ihren Typ angibt. Des weiteren enthalten  das Gebietsschema und der Suchbegriff zusätzliche eckige Klammern. Diese Defekte sollten im Bereinigungsschritt beseitigt werden, um ein nutzbareres Datenformat zu erhalten.
+
+\subsection{Bereinigung}
+
+
+\subsection{Reduktion}
+
+
+\subsection{Transformation}
+
+
+\subsection{Integration}
+
+
 \section{Google Translate}
 
 Google bietet im Rahmen seines \emph{Translate}-Services \cite{gt2013} eine kostenpfichtige API für Spracherkennung an. Diese ermöglicht es, die Sprache beliebiger Zeichenketten automatisch erkennen zu lassen. Google stellt hierzu eine REST-API zur Verfügung.
