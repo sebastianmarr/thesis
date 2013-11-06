@@ -140,7 +140,7 @@ Durch die Schritte, die zur Link Discovery aus den Tag-Daten verwendet wurden, w
 
 Wie in \ref{problem:clicktracking} bereits einführend beschrieben, betreibt Spreadshirt ein Clicktracking-System, welches die Klicks der Benutzer auf Suchergebnisseiten aufzeichnet. Die von diesem System erzeugten Daten können für die Link Discovery von großer Bedeutung sein, da sie eine andere Perspektive auf die Begriffe im Graphen liefern. Die Tags liefern die Sicht der Partner, also der Personen, die Inhalte hochladen und verkaufen möchten. Die Klicks beschreiben die Sicht der Käufer, also der Personen, die nach Inhalten suchen. Durch die Auswertung der Clicktracking-Daten ergibt sich also die Möglichkeit, eine Form der Validierung der durch Partner vergebenen Metadaten zu erhalten. Die Annahme hierbei ist, dass Käufer nur auf Suchergebnisse klicken, die eine inhaltliche Relevanz zum eingegebenen Suchbegriff besitzen.
 
-Wie bereits für die Tag-Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration näher erläutert.
+Wie bereits für die Tag-Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration näher erläutert. Der Ansatz zur Erzeugung der Verbindungen ist ebenfalls kookkurenzbasiert.
 
 \subsection{Import}
 \label{click_import}
@@ -184,6 +184,13 @@ Im Bereinigunsschritt werden so auch einfacher verarbeitbare Dokumente erzeugt, 
 
 \subsection{Reduktion}
 
+Die Reduktion der Clicktracking-Daten besteht zum einen aus einer Duplikatentfernung, zum anderen aus der Einschränkung der Sprache.
+
+Im Sinne der Kookkurenz ist es nicht von Bedeutung, wenn Paare aus Suchbegriffen und geklickten Artikeln mehrfach auftauchen, da hierfür nur das gemeinsame Auftreten unterschiedlicher Suchbegriffe betrachtet wird. Somit besteht die Duplikatentfernung lediglich darin, aus mehrfach vorkommenden Artikel-/Klickpaaren genau eines auszuwählen.
+
+Außerdem erfolgte, wie schon bei den Tag-Daten, eine Einschränkung auf Klicks, die als \emph{deutsch} gekennzeichnet sind.
+
+Nach dem Reduktionsschritt verblieben zur Transformation noch \num{411341} Klicks.
 
 \subsection{Transformation}
 
