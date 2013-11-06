@@ -171,7 +171,7 @@ Im Bereinigungsschritt müssen zunächst die genannten Defekte der Klickdaten be
 
 Im Bereinigunsschritt werden so auch einfacher verarbeitbare Dokumente erzeugt, da die Möglichkeiten des JSON-Formates besser ausgenutzt werden. Listing \ref{lst:tag_cleanup} zeigt das Ergebnis der Bereinigung des in \ref{click_import} gezeigten Beispieldokumentes.
 
-\begin{lstlisting}[language=json, label={lst:tag_cleanup}, caption={Bereinigtess Clicktracking-Dokument}]
+\begin{lstlisting}[language=json, label={lst:tag_cleanup}, caption={Bereinigtes Clicktracking-Dokument}]
 {
     "_id": ObjectId("51e7b1e0417498f9c6868939"),
     "query" : "biene",
@@ -194,6 +194,38 @@ Nach dem Reduktionsschritt verblieben zur Transformation noch \num{411341} Klick
 
 \subsection{Transformation}
 
+Im Transformationsschritt wird für die Clicktracking-Daten ein Kookkurrenzgraph berechnet. Die Kookkurrenz bestimmt sich hierbei daraus, welche Suchbegriffe zum Klick auf einen Artikel geführt haben. Wird ein Artikel zu mehreren Suchbegriffen geklickt, liegt die Vermutung nah, dass zwischen den Suchbegriffen ein irgendwie gearteter Zusammenhang besteht.
+
+Ziel der Transformation ist somit die Erzeugung von Knoten und Kanten. Die Knoten besitzen dabei zusätzliche Eigenschaften, die die Eigenschaften des durch den Knoten repräsentierten Begriffes im Kontext des Clicktrackings widerspiegeln. Konkret sind dies die Artikel, die zu dem Begriff als Suchbegriff geklickt wurden. Listing \ref{lst:click_node} zeigt beispielhaft ein erzeugtes Knotendokument.
+
+\begin{lstlisting}[language=json, label={lst:click_node}, caption={Knotendokument mit Clicktracking-Eigenschaften}]
+{
+    "_id": ObjectId("51e7f1e04146498f9c6868945"),
+    "string": "biene",
+    "language": "de",
+    "clickProperties": [
+        { "articleId": 4512 },
+        { "articleId": 4794 },
+        ...
+    ]
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=json, label={lst:click_edge}, caption={Clicktracking-Kookkurenzkante}]
+{
+    "_id": ObjectId("51e91aff3b6a20bfd68c468a")
+    "source" : ObjectId("51e91af93b6a20bfd68b0bed"),
+    "target" : ObjectId("51e91aff3b6a20bfd68c463e"),
+    "occs" : 1,
+    "dice" : 0.003883495145631068,
+    "jaccard" : 0.0019455252918287938,
+    "cosine" : 0.04410810913912309
+}
+\end{lstlisting}
+
+Die Kanten besitzen die gleiche Form wie die Kookkurrenzkanten, die bei der Integration der Tag-Daten erzeugt wurden. Ein Beispiel für ein solches Kantendokument ist in Listing \ref{lst:click_edge} dargestellt.
+
+Die Durchführung des Transformationsschrittes erfolgte ebenfalls mittels MapReduce (siehe \ref{mapreduce_cooccurence}). Dadurch wurden \num{92727} Knoten und \num{310860} Kanten erzeugt.
 
 \subsection{Integration}
 
