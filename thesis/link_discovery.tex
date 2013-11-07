@@ -362,7 +362,7 @@ Ein letzer Bereinigungsschritt besteht in der Veränderungen des Formates der Gr
 
 \subsection{Reduktion}
 
-Der Reduktionsschritt besteht in der Zusammenführung von Dokumenten mit gleichen Wörtern, welche im Bereinigungsschritt entstanden sind. Wie schon bei der Reduktion der Tag-Daten, muss auch hierbei das Enstehen neuer Duplikate vermieden werden. Dies bedeutet, dass die gefundenen Wortbeziehungen ebenfalls zusammengeführt werden, wobei jedes verbundene Wort nur einmal enthalten sein darf. Die Reduktion ist beispielhaft in Abbildung \ref{fig:wortschatz_reduction} dargestellt.
+Der Reduktionsschritt besteht in der Zusammenführung von Dokumenten mit gleichen Wörtern, welche im Bereinigungsschritt entstanden sind. Wie schon bei der Reduktion der Tag-Daten, muss auch hierbei das Enstehen neuer Duplikate vermieden werden. Dies bedeutet, dass die gefundenen Wortbeziehungen ebenfalls zusammengeführt werden, wobei jedes verbundene Wort nur einmal enthalten sein darf. Die Reduktion ist beispielhaft in Abbildung \ref{fig:wortschatz_reduction} dargestellt. Dabei ist zu beachten, dass bei der zusammenführung mehrere Grundformen enstehen können, wodurch dieses Attribut in ein Array umgewandelt wird.
 
 \begin{figure}
 \centering
@@ -371,7 +371,27 @@ Der Reduktionsschritt besteht in der Zusammenführung von Dokumenten mit gleiche
 \label{fig:wortschatz_reduction}
 \end{figure}
 
+Durch die Reduktion wird die Anzahl der Dokumente auf die Hälfte reduziert und beträgt danach \num{197614}.
 
 \subsection{Transformation}
+
+Die Transformation der Wortschatz-Daten besteht, wie bereits bei den anderen Datenquellen, in einer Überführung in eine Graph-Datenstruktur. 
+
+Die Knoten sind dabei alle Wörter, die durch die Benutzung der Wortschatz-API bekannt sind. Dazu zählen einerseits sowohl die angefragten Wörter, als auch die verbundenen Wörter, die die API liefert.
+
+Die Kanten werden dabei jeweils für die Attribute \emph{Synonyme}, \emph{Thesaurus}, \emph{Grundform} und \emph{Wortformen} erzeugt und besitzen die entsprechenden Kantentypen. Sie besitzen keine weiteren Attribute, da über diese Beziehungen keine weiteren Informationen verfügbar sind.
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{wortschatz_transformation}
+\caption{Wortschatz-Daten in Graphenform}
+\label{fig:wortschatz_transformation}
+\end{figure}
+
+Einen Sonderfall stellen dabei die Kategorien der Wörter dar. Diese können in der vorliegenden Form nicht zur Link Discovery genutzt werden. Daher werden diese Daten mittels der Ermittlung von Kookkurrenzen umgeformt. Von Interesse ist dabei wie oft Paare von Wörtern 
+in gemeinsame Kategieren eingeordnet sind. 
+
+Somit werden bei der Transformation mittels MapReduce (siehe \ref{mapreduce_cooccurence}) Kanten mit den Kookkurrenzmaßen Dice, Jaccard und Kosinus erzeugt.
+
+Zusammenfassend werden bei der Transformation demnach Kanten der Typen \emph{Synonym}, \emph{Thesaurus}, \emph{Wortform}, \emph{Grundform} und \emph{Kategorie-Kookkurrenz} erzeugt. Abbildung \ref{fig:wortschatz_transformation} zeigt beispielhaft einen Ausschnit des resultierenden Graphen. Dabei fällt auf, dass mit Ausnahme der Grundform-Kanten jede Kante in beide Richtungen existiert.
 
 \subsection{Integration}
