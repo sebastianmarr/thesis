@@ -288,7 +288,7 @@ Für jedes Wort als Eingabeparameter stellt die Wortschatz-API die folgenden Inf
 
 Für die Link Discovery wurden die die Informationen \emph{Grundform}, \emph{Wortformen}, \emph{Kategorien}, \emph{Synonyme} und \emph{Thesaurus-Beziehungen} genutzt.
 
-Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben.Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben.
+Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben.
 
 \subsection{Import}
 
@@ -359,3 +359,19 @@ Ein letzer Bereinigungsschritt besteht in der Veränderungen des Formates der Gr
     }
 }
 \end{lstlisting}
+
+\subsection{Reduktion}
+
+Der Reduktionsschritt besteht in der Zusammenführung von Dokumenten mit gleichen Wörtern, welche im Bereinigungsschritt entstanden sind. Wie schon bei der Reduktion der Tag-Daten, muss auch hierbei das Enstehen neuer Duplikate vermieden werden. Dies bedeutet, dass die gefundenen Wortbeziehungen ebenfalls zusammengeführt werden, wobei jedes verbundene Wort nur einmal enthalten sein darf. Die Reduktion ist beispielhaft in Abbildung \ref{fig:wortschatz_reduction} dargestellt.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{wortschatz_reduction}
+\caption{Reduktion der Wortschatz-Daten}
+\label{fig:wortschatz_reduction}
+\end{figure}
+
+
+\subsection{Transformation}
+
+\subsection{Integration}
