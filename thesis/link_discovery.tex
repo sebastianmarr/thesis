@@ -267,8 +267,25 @@ Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Tag-Daten wurden
 \label{fig:decomposition}
 \end{figure}
 
-
 \section{Wortschatz der Universität Leipzig}
 
-Die Universität Leipzig betreibt ein Wortschatz-Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften, Häufigkeiten und Kookkurrenzen in Texten und Beziehungen zu anderen Wörtern aufgebaut.
-Die Universität Leipzig betreibt ein Wortschatz-Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften, Häufigkeiten und Kookkurrenzen in Texten und Beziehungen zu anderen Wörtern aufgebaut.
+Die Universität Leipzig betreibt ein Wortschatz-Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften, Häufigkeiten und Kookkurrenzen in Texten und Beziehungen zu anderen Wörtern aufgebaut. Somit stellt dieses Projekt eine sehr gute Möglichkeit dar, weitere Beziehungen zwischen den schon im Graph vorhandenen Knoten herzustellen. Neben den Daten, die im Spreadshirt-Kontext entstehen, können somit auch allgemeine linguistische Daten hinzugefügt und für spätere Analysen genutzt werden.
+
+Neben dem Webportal stellt dieses Projekt eine SOAP-API bereit, über die die Daten des Wortschatz programmatisch abgefragt werden können. Diese API wurde mittels einer Ruby-Bibliothek \cite{wlapi2013} im Rahmen dieser Arbeit für einen weiteren Integrationsschritt zur Link Discovery genutzt.
+
+Für jedes Wort als Eingabeparameter stellt die Wortschatz-API die folgenden Informationen bereit:
+
+\begin{itemize}
+    \item Grundform des Wortes
+    \item Wortformen
+    \item Kookkurrenzen in den analysierten Texten
+    \item Kategorien, in die das Wort eingeordnet werden kann
+    \item Synonyme
+    \item Thesaurus-Beziehungen
+    \item Häufigkeit des Auftretens
+    \item Sätze, die das Wort enthalten
+\end{itemize}
+
+Für die Link Discovery wurden die die Informationen \emph{Grundform}, \emph{Wortformen}, \emph{Kategorien}, \emph{Synonyme} und \emph{Thesaurus-Beziehungen} genutzt.
+
+Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben.
