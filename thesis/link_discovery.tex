@@ -340,3 +340,22 @@ Die Ergebnisse wurden mittels eines Ruby-Skriptes in MongoDB importiert. Dabei w
 \end{lstlisting}
 
 Hierbei ist zu beachten, dass nicht alle Attribute bei allen Wörtern vorhanden sind. Dies hängt davon ab, ob der Wortschatz die Informationen zur Verfügung stellen kann. Somit ist es auch möglich, dass Dokumente erzeugt werden, die keine zusätzlichen Informationen enthalten.
+
+\subsection{Bereinigung}
+
+Zur Bereinigung der importierten Wortschatz-Daten muss in einem ersten Schritt die Groß- und Kleinschreibung entfernt werden, da diese an erster Stelle nur für die Anfragen an die API wieder in den Datenbestand eingeführt wurde.
+
+Weiterhin werden die Kategorien ``Vorname'' und ``Nachname'' entfernt, da diese an über \num{25000} Wörter vergeben sind und somit für die Verwendung zur Link Discovery ungeeignet sind und zu viele irrelevante Kanten erzeugen würden.
+
+Ein letzer Bereinigungsschritt besteht in der Veränderungen des Formates der Grundform des Wortes. Die Wortschatz-API liefert lediglich ein Array, in dem das erste Element die Grundform und das zweite Element die Wortart ist. Zur Bereinigung wird diese Eigenschaft in ein geeignetes JSON-Format überführt, welches in Listing \ref{lst:word_baseform} dargestellt ist.
+
+\begin{lstlisting}[language=json, label={lst:word_baseform}, caption={Grundform eines Wortes}]
+{
+    _id: ...,
+    string: "Kopfs",
+    baseform: {
+        word: "Kopf",
+        type: "N"
+    }
+}
+\end{lstlisting}
