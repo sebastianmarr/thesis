@@ -288,4 +288,55 @@ Für jedes Wort als Eingabeparameter stellt die Wortschatz-API die folgenden Inf
 
 Für die Link Discovery wurden die die Informationen \emph{Grundform}, \emph{Wortformen}, \emph{Kategorien}, \emph{Synonyme} und \emph{Thesaurus-Beziehungen} genutzt.
 
-Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben.
+Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben.Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben.
+
+\subsection{Import}
+
+Da für die Anfrage an die Wortschatz-API nur Einzelwörter und keine Wortgruppen genutzt werden können, muss eine Auswahl der anzufragenden Daten getroffen werden. Im Rahmen dieser Arbeit wurden alle Einzelwörter, die zum Zeitpunkt des Importes der Wortschatz-API zur Verfügung standen, ausgewählt. Dabei handelt es sich um \num{197614} einzelne Wörter. Da die Daten in der Datenbank zu diesem Zeitpunkt keine Groß- und Kleinschreibung enthielten, die Wortschatz-API diese jedoch berücksichtigt, wurde jedes Wort jeweils groß und klein geschrieben angefragt. Somit wurde die doppelte Menge an Datensätzen, \num{395228} Dokumente, erzeugt.
+
+Die Ergebnisse wurden mittels eines Ruby-Skriptes in MongoDB importiert. Dabei wurde je angefragtem Wort ein Dokument erzeugt, dass die Wortschatz-Informationen enthält. Eines dieser Dokumente ist beispielhaft in Listing \ref{lst:wortschatz_import} dargestellt. Das Feld \emph{baseform} enthält dabei die Grundform des Wortes mit der Wortart und \emph{domain} die Kategorien des Wortes.
+
+\begin{lstlisting}[language=json, label={lst:wortschatz_import}, caption={Wortschatz-Dokument nach dem Import}]
+{
+    "_id" : ObjectId("51f7aa06eba16044e900015a"),
+    "string" : "Kopf",
+    "baseform" : [ 
+        "Kopf", 
+        "N"
+    ],
+    "domain" : [ 
+        "Medizin", 
+        "Anatomie", 
+        "Literarische/Motive/Stoffe/Gestalten", 
+        "Körperteile"
+    ],
+    "synonyms" : [  
+        "Chef", 
+        "Figur", 
+        "Gestalt", 
+        "Haupt", 
+        "Jemand", 
+        "Individuum", 
+        "Figur"
+    ],
+    "thesaurus" : [ 
+        "Titel", 
+        "Hand", 
+        "Kopf", 
+        "Mensch", 
+        "Gesicht", 
+        "Spitze", 
+        "Arm", 
+        "Gestalt"
+    ],
+    "wordforms" : [ 
+        "Kopf", 
+        "Köpfe", 
+        "Köpfen", 
+        "Kopfes", 
+        "Kopfs"
+    ]
+}
+\end{lstlisting}
+
+Hierbei ist zu beachten, dass nicht alle Attribute bei allen Wörtern vorhanden sind. Dies hängt davon ab, ob der Wortschatz die Informationen zur Verfügung stellen kann. Somit ist es auch möglich, dass Dokumente erzeugt werden, die keine zusätzlichen Informationen enthalten.
