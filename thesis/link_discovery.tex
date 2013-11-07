@@ -229,6 +229,7 @@ Die Kanten besitzen die gleiche Form wie die Kookkurrenzkanten, die bei der Inte
 Die Durchführung des Transformationsschrittes erfolgte ebenfalls mittels MapReduce (siehe \ref{mapreduce_cooccurence}). Dadurch wurden \num{92727} Knoten und \num{310860} Kanten erzeugt.
 
 \subsection{Integration}
+\label{click_integration}
 
 Die Integration der erzeugten Daten stellt eine Vereinigung des vorhandenen Zielgraphen mit dem im Transformationsschritt erzeugten Kookkurrenzgraphen dar.
 
@@ -395,3 +396,7 @@ Somit werden bei der Transformation mittels MapReduce (siehe \ref{mapreduce_cooc
 Zusammenfassend werden bei der Transformation demnach Kanten der Typen \emph{Synonym}, \emph{Thesaurus}, \emph{Wortform}, \emph{Grundform} und \emph{Kategorie-Kookkurrenz} erzeugt. Abbildung \ref{fig:wortschatz_transformation} zeigt beispielhaft einen Ausschnit des resultierenden Graphen. Dabei fällt auf, dass mit Ausnahme der Grundform-Kanten jede Kante in beide Richtungen existiert.
 
 \subsection{Integration}
+
+Zur Integration wird der im Transformationsschritt erzeugte Graph mit dem Zielgraphen vereinigt. Diese Vereinigung wird analog zur Integration der Clicktracking-Daten in Abschnitt \ref{click_integration} durchgeführt.
+
+Insgesamt wurden dadurch \num{144223} neue Knoten und \num{50227965} neue Kanten erzeugt.  Dabei entfallen \num{48399466} Kanten auf Kookkurrenz von Kategorien, \num{550270} Kanten auf Wortformen, \num{149381} Kanten auf Grundformen, \num{279118} Kanten auf Synonyme und \num{849730} Kanten auf Thesaurus-Beziehungen.
