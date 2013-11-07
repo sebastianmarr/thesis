@@ -10,7 +10,7 @@ Um den Ausgangsgraphen zu berechnen, sind die Schritte des Imports, der Bereinig
 
 \subsection{Import}
 
-Die Daten liegen im Quellsystem in relationaler Form vor. Somit existieren Tabellen für die Tags, Dokumente und Verknüpfungen zwischen ebenjenen. Da der Inhalt der Dokumente nicht relevant für die Link Discovery mittels Kookkurenz sind, genügt es, die Tabellen der Tags und Verknüpfungen zu importieren.
+Die Daten liegen im Quellsystem in relationaler Form vor. Somit existieren Tabellen für die Tags, Dokumente und Verknüpfungen zwischen ebenjenen. Da der Inhalt der Dokumente nicht relevant für die Link Discovery mittels Kookkurrenz sind, genügt es, die Tabellen der Tags und Verknüpfungen zu importieren.
 
 Die Tags liegen in der Form \((i, s, l)\) vor, wobei \(i\) den eindeutigen Bezeichner des Tags, \(s\) die Zeichenkette und \(l\) die Sprache des Tags repräsentieren.
 
@@ -108,7 +108,7 @@ Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Diese
 }
 \end{lstlisting}
 
-Die Erzeugung der Kanten erfolgt dann wie in Abschnitt \ref{mapreduce_cooccurence} beschrieben. Dabei werden für jedes gemeinsame Auftreten von zwei Tags zwei Datenbankdokumente erzeugt. Dieses beschreiben gerichtete Kanten zwischen den Tags, die ein gemeinsames Auftreten der Tags repräsentieren. Neben Quell- und Zielknoten enthält eine Kante den Kantentyp sowie weitere Informationen über die Art der Verbindung. Im Fall von Kookkurenzkanten ist dies zum einen die absolute Anzahl gemeinsamer Vorkommen der Tags, zum anderen die in \ref{measures} beschriebenen Kookkurenzmaße. Der Kantentyp ist aus der Berechnung folgend der Typ der Tag-Kookkurenz. Der Aufbau der erzeugten Kanten ist in Abbildung \ref{fig:tag_transform_edge} dargestellt. Ein Beispiel JSON-Dokument für eine Kante ist in Listing \ref{lst:tag_transform_edge} zu sehen.
+Die Erzeugung der Kanten erfolgt dann wie in Abschnitt \ref{mapreduce_cooccurence} beschrieben. Dabei werden für jedes gemeinsame Auftreten von zwei Tags zwei Datenbankdokumente erzeugt. Dieses beschreiben gerichtete Kanten zwischen den Tags, die ein gemeinsames Auftreten der Tags repräsentieren. Neben Quell- und Zielknoten enthält eine Kante den Kantentyp sowie weitere Informationen über die Art der Verbindung. Im Fall von Kookkurrenzkanten ist dies zum einen die absolute Anzahl gemeinsamer Vorkommen der Tags, zum anderen die in \ref{measures} beschriebenen Kookkurrenzmaße. Der Kantentyp ist aus der Berechnung folgend der Typ der Tag-Kookkurrenz. Der Aufbau der erzeugten Kanten ist in Abbildung \ref{fig:tag_transform_edge} dargestellt. Ein Beispiel JSON-Dokument für eine Kante ist in Listing \ref{lst:tag_transform_edge} zu sehen.
 
 \begin{figure}
 \centering
@@ -132,7 +132,7 @@ Die Erzeugung der Kanten erfolgt dann wie in Abschnitt \ref{mapreduce_cooccurenc
 
 \subsection{Integration}
 
-Da der aus den Tag-Daten generierte Kookkurenzgraph die Ausgangsbasis für alle weiteren Operationen darstellt, muss im Sinne der Integration nichts getan werden. Die transformierten Daten müssen lediglich in die Zieldatenbank kopiert werden.
+Da der aus den Tag-Daten generierte Kookkurrenzgraph die Ausgangsbasis für alle weiteren Operationen darstellt, muss im Sinne der Integration nichts getan werden. Die transformierten Daten müssen lediglich in die Zieldatenbank kopiert werden.
 
 Durch die Schritte, die zur Link Discovery aus den Tag-Daten verwendet wurden, wurden insgesamt \num{314351} Knoten und \num{21834868} Kanten erzeugt, welche nun durch weitere Schritte angereichert werden sollen.
 
@@ -140,7 +140,7 @@ Durch die Schritte, die zur Link Discovery aus den Tag-Daten verwendet wurden, w
 
 Wie in \ref{problem:clicktracking} bereits einführend beschrieben, betreibt Spreadshirt ein Clicktracking-System, welches die Klicks der Benutzer auf Suchergebnisseiten aufzeichnet. Die von diesem System erzeugten Daten können für die Link Discovery von großer Bedeutung sein, da sie eine andere Perspektive auf die Begriffe im Graphen liefern. Die Tags liefern die Sicht der Partner, also der Personen, die Inhalte hochladen und verkaufen möchten. Die Klicks beschreiben die Sicht der Käufer, also der Personen, die nach Inhalten suchen. Durch die Auswertung der Clicktracking-Daten ergibt sich also die Möglichkeit, eine Form der Validierung der durch Partner vergebenen Metadaten zu erhalten. Die Annahme hierbei ist, dass Käufer nur auf Suchergebnisse klicken, die eine inhaltliche Relevanz zum eingegebenen Suchbegriff besitzen.
 
-Wie bereits für die Tag-Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration näher erläutert. Der Ansatz zur Erzeugung der Verbindungen ist ebenfalls kookkurenzbasiert.
+Wie bereits für die Tag-Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration näher erläutert. Der Ansatz zur Erzeugung der Verbindungen ist ebenfalls Kookkurrenzbasiert.
 
 \subsection{Import}
 \label{click_import}
@@ -186,7 +186,7 @@ Im Bereinigunsschritt werden so auch einfacher verarbeitbare Dokumente erzeugt, 
 
 Die Reduktion der Clicktracking-Daten besteht zum einen aus einer Duplikatentfernung, zum anderen aus der Einschränkung der Sprache.
 
-Im Sinne der Kookkurenz ist es nicht von Bedeutung, wenn Paare aus Suchbegriffen und geklickten Artikeln mehrfach auftauchen, da hierfür nur das gemeinsame Auftreten unterschiedlicher Suchbegriffe betrachtet wird. Somit besteht die Duplikatentfernung lediglich darin, aus mehrfach vorkommenden Artikel-/Klickpaaren genau eines auszuwählen.
+Im Sinne der Kookkurrenz ist es nicht von Bedeutung, wenn Paare aus Suchbegriffen und geklickten Artikeln mehrfach auftauchen, da hierfür nur das gemeinsame Auftreten unterschiedlicher Suchbegriffe betrachtet wird. Somit besteht die Duplikatentfernung lediglich darin, aus mehrfach vorkommenden Artikel-/Klickpaaren genau eines auszuwählen.
 
 Außerdem erfolgte, wie schon bei den Tag-Daten, eine Einschränkung auf Klicks, die als \emph{deutsch} gekennzeichnet sind.
 
@@ -213,7 +213,7 @@ Ziel der Transformation ist somit die Erzeugung von Knoten und Kanten. Die Knote
 
 Die Kanten besitzen die gleiche Form wie die Kookkurrenzkanten, die bei der Integration der Tag-Daten erzeugt wurden. Ein Beispiel für ein solches Kantendokument ist in Listing \ref{lst:click_edge} dargestellt.
 
-\begin{lstlisting}[language=json, label={lst:click_edge}, caption={Clicktracking-Kookkurenzkante}]
+\begin{lstlisting}[language=json, label={lst:click_edge}, caption={Clicktracking-Kookkurrenzkante}]
 {
     "_id": ObjectId("51e91aff3b6a20bfd68c468a")
     "source" : ObjectId("51e91af93b6a20bfd68b0bed"),
@@ -230,7 +230,7 @@ Die Durchführung des Transformationsschrittes erfolgte ebenfalls mittels MapRed
 
 \subsection{Integration}
 
-Die Integration der erzeugten Daten stellt eine Vereinigung des vorhandenen Zielgraphen mit dem im Transformationsschritt erzeugten Kookkurenzgraphen dar.
+Die Integration der erzeugten Daten stellt eine Vereinigung des vorhandenen Zielgraphen mit dem im Transformationsschritt erzeugten Kookkurrenzgraphen dar.
 
 Dabei wird die Knotenmenge derart vereinigt, dass die Knotenmenge des Zielgraphen die Eigenschaft behält, dass Paare aus Sprache und Zeichenkette eindeutig sind. Somit werden bei bereits vorhandenen Knoten die zusätzlichen Informationen bezüglich das Clicktrackings als Attribute hinzugefügt. Existiert eine Kombination aus Sprache und Zeichenkette noch nicht im Zielgraph, so wird der entsprechende Knoten kopiert.
 
@@ -270,4 +270,5 @@ Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Tag-Daten wurden
 
 \section{Wortschatz der Universität Leipzig}
 
-Die Universität Leipzig betreibt ein Wortschatz-Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften und Beziehungen zu anderen Wörtern aufgebaut.
+Die Universität Leipzig betreibt ein Wortschatz-Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften, Häufigkeiten und Kookkurrenzen in Texten und Beziehungen zu anderen Wörtern aufgebaut.
+Die Universität Leipzig betreibt ein Wortschatz-Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften, Häufigkeiten und Kookkurrenzen in Texten und Beziehungen zu anderen Wörtern aufgebaut.

@@ -32,7 +32,7 @@ Listing \ref{lst:json} zeigt ein Beispiel für ein Dokument in MongoDB. Das Feld
 
 MongoDB unterstützt Anfragen über ein Binärprotokoll, welches über so genannte \emph{Treiber} in vielen Programmiersprachen abstrahiert zur Verfügung steht. Dabei sind vielfältige Lese- und Schreiboperationen möglich, die komplexe Abfragen und Operationen auf den gespeicherten Daten zulassen. Außerdem bietet MongoDB eine Implementierung des MapReduce-Programmiermodells (siehe \ref{mapreduce}) sowie die Möglichkeit, Indizes auf allen Hierarchieebenen der Dokumente zu nutzen. Für interaktive Operationen steht die \emph{Mongo Shell} zur Verfügung, welche Abfragen mittels der Programmiersprache JavaScript erlaubt und somit einen Treiber für diese Sprache darstellt.
 
-Aufgrund der genannten Eigenschaften stellt MongoDB einen exzellenten Ausgangspunkt für die Link Discovery im Rahmen dieser Arbeit dar. Durch die vorhandene Schemaflexibilität können die Daten in der gerade benötigten Form gespeichert und abgefragt werden. Durch die Unterstützung von MapReduce mit mehreren Rechnern lassen sich Berechnungen wie die der Kookkurenz (siehe \ref{mapreduce_cooccurence}) parallelisieren und somit beschleunigen.
+Aufgrund der genannten Eigenschaften stellt MongoDB einen exzellenten Ausgangspunkt für die Link Discovery im Rahmen dieser Arbeit dar. Durch die vorhandene Schemaflexibilität können die Daten in der gerade benötigten Form gespeichert und abgefragt werden. Durch die Unterstützung von MapReduce mit mehreren Rechnern lassen sich Berechnungen wie die der Kookkurrenz (siehe \ref{mapreduce_cooccurence}) parallelisieren und somit beschleunigen.
 
 Aus diesen Gründen stellt MongoDB das zentrale technische Element für die Link Discovery im Rahmen dieser Arbeit dar. Sobald die Daten aus den externen und internen Quellen in MongoDB importiert wurden, können die folgenden Schritte direkt mit Datenbankabfragen realisiert werden.
 
@@ -87,7 +87,7 @@ Somit stellt sich anschließend die Frage, wie die Knoten und Kanten als Dokumen
 
 Im Fall der Knoten bietet sich daher an, die zusätzlichen Eigenschaften als Unterdokumente des Knotens zu behandeln. Der Schlüssel für diese Unterdokumente ist dabei der Name der zusätzlichen Eigenschaft. Dadurch lassen sich die Knoten gut filtern, da die Abfrage auf das Vorhandensein des jeweiligen Schlüssels angepasst sein kann. Listing \ref{lst:node_json} zeigt ein Beispiel für einen Knoten in JSON-Notation. Arrays mit vielen Elementen sind dabei verkürzt dargestellt.
 
-Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben sich zusätzliche Eigenschaften. Listing \ref{lst:edge_json} zeigt beispielhaft ein Kantendokument für eine Tag-Kookkurenz in JSON-Notation.
+Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben sich zusätzliche Eigenschaften. Listing \ref{lst:edge_json} zeigt beispielhaft ein Kantendokument für eine Tag-Kookkurrenz in JSON-Notation.
 
 \begin{lstlisting}[language=json, label={lst:node_json}, caption={Knotendokument in JSON}]
 {
@@ -160,7 +160,7 @@ Im nachfolgenden Bereinigungsschritt werden die Daten so gut wie möglich von de
 
 Der Reduktionsschritt dient zur Verkleinerung der Datenmenge. Dazu gehören beispielsweise Schritte zur Duplikatentfernung oder zur Auswahl relevanter Datensätze. In dieser Arbeit bestand die Haupteinschränkung der Datenmenge darin, nach Möglichkeit nur deutschsprachige Datensätze auszuwählen.
 
-Der Schritt der Transformation überführt die Daten schließlich in eine Graphenform. Dies kann entweder über Kookkurenz oder über eine andere, für die Art der importierten Daten geeignete, Methode erfolgen.
+Der Schritt der Transformation überführt die Daten schließlich in eine Graphenform. Dies kann entweder über Kookkurrenz oder über eine andere, für die Art der importierten Daten geeignete, Methode erfolgen.
 
 Das Integrationsskript für jede Datenquelle ist letztendlich für die Integration der Daten in den Zielgraphen verantwortlich. Dabei werden neue Informationen an die Knoten angefügt oder neue Kanten in den Graph integriert. In diesem Schritt passiert die Auflösung von eventuell vorhandenen temporären Bezeichnern in die entsprechenden im Graph vorhandenen eindeutigen Bezeichner.
 

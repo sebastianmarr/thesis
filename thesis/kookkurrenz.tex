@@ -1,6 +1,6 @@
-\chapter{Erstellung von Kookkurenzgraphen}
+\chapter{Erstellung von Kookkurrenzgraphen}
 
-Das folgende Kapitel beschreibt detailliert die Erstellung von Kookkurenzgraphen. Dabei werden die Grundprinzipien erläutert, die existierenden Ähnlichkeitsmaße diskutiert und die algorithmische Umsetzung mittels MapReduce dargestellt.
+Das folgende Kapitel beschreibt detailliert die Erstellung von Kookkurrenzgraphen. Dabei werden die Grundprinzipien erläutert, die existierenden Ähnlichkeitsmaße diskutiert und die algorithmische Umsetzung mittels MapReduce dargestellt.
 
 \section{Grundprinzipien}
 
@@ -16,15 +16,15 @@ Im Kontext dieser Arbeit wird also ein Ähnlichkeitsmaß gesucht, dass anhand de
 
 Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, dass den Kontext, in dem die Wörter und Wortgruppen im Quellsystem verwednet werden, berücksichtigt.
 
-\section{Kookkurenz}
+\section{Kookkurrenz}
 
 In \ref{data} wurden die für diese Arbeit verfügbaren internen Datenquellen beschrieben. Diese haben gemeinsam, dass zu den vorhandenen Wortgruppen nur wenig Kontext verfügbar ist. Im Falle des Tag-Systems ist bekannt, an welchen Dokumenten die Tags verwendet wurden. Das Clicktracking zeichnet die zu verwendeten Suchbegriffen geklickten Dokumente auf. Beide Datenquellen liefern also die Verwendungen von Wörtern und Wortgruppen zur inhaltlichen Beschreibung von Dokumenten.
 
-Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurenz} messen. Kookkurenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wir dabei ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
+Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wir dabei ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
 
-Dazu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen begriffe benutzen. Diese Annahme muss im Laufe der Evaluation der Ergebnisse validiert werden.
+Dazu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen begriffe benutzen. Diese Annahme muss im Laufe der Evaluation der Ergebnisse validiert werden.
 
-\section{Kookkurenzmaße}
+\section{Kookkurrenzmaße}
 \label{measures}
 
 Werden die Objekte, zwischen denen die Ähnlichkeit berechnet werden soll, als Mengen von Eigenschaften definiert, bieten sich die üblichen Kennzahlen für die Ähnlichkeiten von Mengen an. Ein Begriff kann also als Menge der Dokumente, für die er als Beschreibung verwendet wurde, definiert werden.
@@ -67,7 +67,7 @@ Die Kosinus-Ähnlichkeit \cite{hkp2012} ist ursprünglich ein Maß für die Ähn
 
 \section{Umsetzung}
 
-Im folgenden Abschnitt wird die Erstellung eines Graphen beschrieben, der die Kookkurenzmaße für alle Paare von Begriffen enthält. Die Knoten stellen in diesem Fall die Begriffe dar. Die Kanten repräsentieren eine Kookkurenz dieser Begriffe und werden mit den gewünschten Kookkurenzmaßen annotiert. Existiert keine Kante zwischen zwei Knoten, so beträgt die Kookkurenz zwischen den beiden repräsentierten Begriffen \num{0}.
+Im folgenden Abschnitt wird die Erstellung eines Graphen beschrieben, der die Kookkurrenzmaße für alle Paare von Begriffen enthält. Die Knoten stellen in diesem Fall die Begriffe dar. Die Kanten repräsentieren eine Kookkurrenz dieser Begriffe und werden mit den gewünschten Kookkurrenzmaßen annotiert. Existiert keine Kante zwischen zwei Knoten, so beträgt die Kookkurrenz zwischen den beiden repräsentierten Begriffen \num{0}.
 
 Der Aufwand, um diesen Graphen zu erstellen, hängt also von der Anzahl der Begriffe, Dokumente, und Verbindungen von Begriffen und Dokumenten ab.
 
@@ -91,7 +91,7 @@ Die MapReduce-Bibliothek übernimmt dabei sämtliche Kommunkation zwischen den K
 \subsection{Anwendung von MapReduce}
 \label{mapreduce_cooccurence}
 
-MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurenzgraphen genutzt werden. Dazu müss für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
+MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurrenzgraphen genutzt werden. Dazu müss für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
 
 Um die Berechnung zu vereinfachen, werden zuerst die Knoten erzeugt und mit allen Vorkommen der Begriffe annotiert. Somit kann daraufhin direkt aus der Knotenmenge die Kantenmenge erzeugt werden.
 
@@ -149,7 +149,7 @@ Algorithmus \ref{alg:edges1} zeigt die Umformung der Knoten mittels MapReduce. A
     \end{algorithmic}
 \end{algorithm}
 
-In Algorithmus \ref{alg:edges2} wird die Erzeugung der Kookkurenzkanten dargestellt. Im Map-Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist dabei eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurenzen zwischen beiden Begriffen. Im Reduce-Schritt werden alle Kanten zwischen zwei Termen zusammengefasst, die Summe der Kookkurenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \ref{measures} beschrieben.
+In Algorithmus \ref{alg:edges2} wird die Erzeugung der Kookkurrenzkanten dargestellt. Im Map-Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist dabei eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurrenzen zwischen beiden Begriffen. Im Reduce-Schritt werden alle Kanten zwischen zwei Termen zusammengefasst, die Summe der Kookkurrenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \ref{measures} beschrieben.
 
 \begin{algorithm}
 \caption{Kantenerzeugung mit MapReduce
