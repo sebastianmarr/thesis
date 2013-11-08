@@ -6,7 +6,16 @@ Das folgende Kapitel beschreibt detailliert die Erstellung von Kookkurrenzgraphe
 
 Um gewichtete inhaltliche Beziehungen zwischen Wörtern und Wortgruppen herstellen zu können, wird eine Definition von \emph{Ähnlichkeit} benötigt. Diese lässt sich auf vielfältige Arten bestimmen.
 
-Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, folgendermaßen definieren:
+Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Diese Definiton von Ähnlichkeit wird in Abbildung \ref{fig:similarity} veranschaulicht.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{similarity}
+\caption{Repräsentation von Dokumenten als Mengen von Eigenschaften}
+\label{fig:similarity}
+\end{figure}
+
+Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, folgendermaßen definieren:
 \[s(A,B) = F(A \cap B, A-B, B-A)\]
 \label{similarity}
 
