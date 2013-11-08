@@ -23,13 +23,13 @@ Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsbere
 
 Im Kontext dieser Arbeit wird also ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Wörtern und Wortgruppen eine Distanz zwischen ebenjenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen lingustische Ähnhlichkeitsmaße wie die Levenshtein-Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Zeichenketten, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können.
 
-Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, dass den Kontext, in dem die Wörter und Wortgruppen im Quellsystem verwednet werden, berücksichtigt.
+Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, dass den Kontext, in dem die Wörter und Wortgruppen im Quellsystem verwednet werden, berücksichtigt. Als dieses Maß wurde im Rahmen dieser Arbeit die Kookkurrenz gewählt, welche in den folgenden Abschnitten beschrieben wird.
 
 \section{Kookkurrenz}
 
-In \ref{data} wurden die für diese Arbeit verfügbaren internen Datenquellen beschrieben. Diese haben gemeinsam, dass zu den vorhandenen Wortgruppen nur wenig Kontext verfügbar ist. Im Falle des Tag-Systems ist bekannt, an welchen Dokumenten die Tags verwendet wurden. Das Clicktracking zeichnet die zu verwendeten Suchbegriffen geklickten Dokumente auf. Beide Datenquellen liefern also die Verwendungen von Wörtern und Wortgruppen zur inhaltlichen Beschreibung von Dokumenten.
+In \ref{data} wurden das für diese Arbeit verfügbare Tag-System beschrieben. In diesem System werden besitzen die Tags wenig Kontext. Die einzig verfügbare Information ist, an welchen Dokumenten die Tags verwendet wurden.
 
-Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wir dabei ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
+Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wird dabei ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
 
 Dazu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen begriffe benutzen. Diese Annahme muss im Laufe der Evaluation der Ergebnisse validiert werden.
 
@@ -82,7 +82,7 @@ Im folgenden Abschnitt wird die Erstellung eines Graphen beschrieben, der die Ko
 
 Der Aufwand, um diesen Graphen zu erstellen, hängt also von der Anzahl der Begriffe, Dokumente, und Verbindungen von Begriffen und Dokumenten ab.
 
-Für jedes Dokument muss, um die Ähnlichkeitsmaße zu berechnen, das Kreuzprodukt aller vergebenen Begriffe gebildet werden. Dabei muss das Auftreten jeder Paarung gezählt werden, um die Mächtigkeit der Menge \(A \cap B\) bestimmen zu können. Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet werden, um die Mächtigkeit der Mengen \(A\), \(B\) usw. zu bestimmen. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokument \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung daher liegt zwischen diesen Schranken.
+Für jedes Dokument muss, um die Ähnlichkeitsmaße zu berechnen, das Kreuzprodukt aller vergebenen Begriffe gebildet werden. Dabei muss das Auftreten jeder Paarung gezählt werden, um die Mächtigkeit aller Mengen \(A \cap B\) bestimmen zu können. Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet werden, um die Mächtigkeit der Mengen \(A\), \(B\) usw. zu bestimmen. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokument \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung daher liegt zwischen diesen Schranken.
 
 Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden.
 
@@ -108,12 +108,12 @@ Die MapReduce-Bibliothek übernimmt dabei sämtliche Kommunkation zwischen den K
 
 In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \ref{mongo}). Nach dieser grundsätzlichen Betrachtung des Programmiermodells wird im näachsten Abschnitt die Anwendung zur Berechnung von Kookkurenzen diskutiert.
 
-\subsection{Anwendung von MapReduce}
+\subsection{Anwendung von MapReduce zur Kookkurenzberechnung}
 \label{mapreduce_cooccurence}
 
 MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurrenzgraphen genutzt werden. Dazu müss für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
 
-Um die Berechnung zu vereinfachen, werden zuerst die Knoten erzeugt und mit allen Vorkommen der Begriffe annotiert. Somit kann daraufhin direkt aus der Knotenmenge die Kantenmenge erzeugt werden.
+Um die Berechnung zu vereinfachen, werden zuerst die Knoten erzeugt und mit allen Vorkommen der Begriffe annotiert. Somit kann daraufhin direkt aus der Knotenmenge die Kantenmenge erzeugt werden. Außerdem werden bei der Nutzung der Daten weniger Anfragen benötigt, um Informationen über einen Begriff selbst zu bekommen.
 
 \subsubsection{Berechnung der Knoten}
 
