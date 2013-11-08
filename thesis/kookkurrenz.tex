@@ -100,11 +100,13 @@ Die Reduce-Funktion wird also jeweils auf einen Schlüssel und eine Liste von We
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{mapreduce}
-\caption{MapReduce - Prozess}
+\caption{MapReduce-Prozess}
 \label{fig:mapreduce}
 \end{figure}
 
 Die MapReduce-Bibliothek übernimmt dabei sämtliche Kommunkation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
+
+In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \ref{mongo}). Nach dieser grundsätzlichen Betrachtung des Programmiermodells wird im näachsten Abschnitt die Anwendung zur Berechnung von Kookkurenzen diskutiert.
 
 \subsection{Anwendung von MapReduce}
 \label{mapreduce_cooccurence}
