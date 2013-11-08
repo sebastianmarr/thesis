@@ -23,7 +23,25 @@ Die Verknüpfungen sind durch Tupel der Form \((i, t, d_t, d_i)\) repräsentiert
 \label{fig:tag_source_erd}
 \end{figure}
 
-Die importierten Quelldaten sind in Abbildung \ref{fig:tag_source_erd} als Entity - Relationship Diagramm abgebildet. Nach dem Import stehen \num{2072079} Tags und \num{71938905} Verknüpfungen zur Verfügung.
+\begin{lstlisting}[language=json, label={lst:tag_import_tag}, caption={Beispiele für einen importierten Tag}]
+{
+    "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
+    "tag_id": 12345
+    "tag": "segeln",
+    "lang": "de"
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=json, label={lst:tag_import_link}, caption={Beispiele für eine importierte Verknüpfung eines Tags mit einem Dokument}]
+{
+    "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
+    "object_id": 45678
+    "object_type_id": 3,
+    "tag_id": 12345
+}
+\end{lstlisting}
+
+Die importierten Quelldaten sind beispielhaft in den Listings \ref{lst:tag_import_tag} und \ref{lst:tag_import_link} dargestellt. Nach dem Import stehen \num{2072079} Tags und \num{71938905} Verknüpfungen zur Verfügung.
 
 \subsection{Bereinigung}
 
