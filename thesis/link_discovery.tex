@@ -283,7 +283,19 @@ Die Integration der Spracherkennungs-Daten in den Graphen gestaltet sich einfach
 
 Eine Bereinigung der Ergebnisse ist nicht erforderlich. Somit müssen die Ergebnisse lediglich in den Ausgangsgraphen integriert werden. Die Spracherkennung an sich bringt keine Ähnlichkeitsbeziehungen mit sich, sondern verbessert gegebenenfalls nur die Knotenauswahl für spätere Operationen.
 
-In der Konsequenz genügt es also, die für die Abfrage verwendeten Knoten mit den Ergbenissen der Spracherkennung zu annotieren. Somit kann dann bei späteren Analysen anhand des Konfidenzwertes abgewogen werden, ob die erkannte Sprache oder die eventuell schon am Knoten vorhandene Sprache verwendet werden soll.
+In der Konsequenz genügt es also, die für die Abfrage verwendeten Knoten mit den Ergbenissen der Spracherkennung zu annotieren. Somit kann dann bei späteren Analysen anhand des Konfidenzwertes abgewogen werden, ob die erkannte Sprache oder die eventuell schon am Knoten vorhandene Sprache verwendet werden soll. Ein resultierender Knoten ist in Listing \ref{lst:google_node} abgebildet.
+
+\begin{lstlisting}[language=json, label={lst:google_node}, caption={Knoten mit Spracherkennungsdaten}]
+{
+    "_id" : ObjectId("51efc1dc47cae77dfc01ea43"),
+    "language" : "de",
+    "string" : "grey head",
+    "languageDetection" : {
+        "language" : "en",
+        "confidence" : 0.7105263000000001
+    }
+}
+\end{lstlisting}
 
 \section{Zerlegung von Wortgruppen}
 
