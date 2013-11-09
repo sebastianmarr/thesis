@@ -51,17 +51,18 @@ In den unbereinigten importierten Daten existieren keine Duplikate in der Art, d
 
 \begin{table}
 \centering
-\begin{tabular}{|l|l|}
-    \hline
-    Rohdaten & Bereinigte Daten \\
-    \hline
-    \textbackslash u0003\textbackslash r\textbackslash nregenbogen & regenbogen \\
-    RegenBogen & regenbogen \\
-    "Regenbogen" & regenbogen \\
-    regenbogen +einhorn & regenbogen einhorn\\
-    \hspace{10 mm} regenbogen & regenbogen \\
-    regenbogen & regenbogen \\
-    \hline
+% \arraystretch}{1.3}
+\begin{tabular}{lcl}
+    \toprule
+    Rohdaten & \phantom{abc} & Bereinigte Daten \\
+    \midrule
+    \textbackslash u0003\textbackslash r\textbackslash nregenbogen && regenbogen \\
+    RegenBogen && regenbogen \\
+    "Regenbogen" && regenbogen \\
+    regenbogen +einhorn && regenbogen einhorn\\
+    \phantom{abc} regenbogen && regenbogen \\
+    regenbogen && regenbogen \\
+    \bottomrule
 \end{tabular}
 \caption{Beispiele für die Tag-Bereinigung}
 \label{tab:tag_cleaning}
