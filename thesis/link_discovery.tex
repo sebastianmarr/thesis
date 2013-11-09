@@ -455,14 +455,12 @@ Im folgenden Abschnitt werden die quantitativen Ergebnisse der Link Discovery zu
 
 \begin{table}
 \centering
-% \arraystretch}{1.3}
 \begin{tabular}{lrcr}
     \toprule
     Schritt & Knoten & \phantom{abc} & Kanten \\
     \midrule
     Tags & \num{314351} && \num{21834868} \\
     Clicktracking & \num{78237} && \num{310860} \\
-    Google Translate & \num{0} && \num{0} \\
     Zerlegung & \num{38349} && \num{1238900} \\
     Wortschatz & \num{145023} && \num{50227965} \\
     \midrule
@@ -478,3 +476,29 @@ Tabelle \ref{tab:discovery_amounts} führt für jeden Schritt die hinzugefügten
 Bei der Verwendung der Clicktracking-Daten wurden im Verhältnis wenig neue Knoten und Kanten erzeugt. Dies ist im Wesentlichen auf den zum Zeitpunkt des Importes noch geringen Datenbestand zurückzuführen. Daher sollte dieser Schritt zukünftig wiederholt werden, da mit der längeren Laufzeit des Clicktracking-Systems auch ein größeres Potential für neue Verknüpfungen vorhanden ist.
 
 Die Integration von Google Translate brachte weder neue Knoten noch Kanten, da in diesem Schritt bewusst nur neue Attribute zu vorhandenen Knoten hinzugefügt wurden.
+
+Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der quantitativen Ergebnisse auch die Anzahl der Kanten, die von einem Knoten ausgehen, von Interesse. Tabelle \ref{tab:discovery_edges_per_node} zeigt die Entwicklung der Kantenanzahl pro Knoten nach jedem Link Discovery-Schritt. Dabei sind Minimum, das untere, mittlere (Median) und obere Quartil, das Maximum und der Durchschnitt dargestellt, um die Verteilung der Kantenanzahl zu verdeutlichen.
+
+\begin{table}
+\centering
+\begin{tabular}{lrrrrrr}
+    \toprule
+    Schritt & \(min\) & \(Q_{0.25}\) & \(Q_{0.5}\) & \(Q_{0.75}\) & \(max\) & \(avg\) \\
+    \midrule
+    Tags & \num{0} & \num{8} & \num{15} & \num{26} & \num{35170} & \num{69,64} \\
+    Clicktracking & \num{0} & \num{3} & \num{10} & \num{23} & \num{35170} & \num{56,41} \\
+    Zerlegung & \num{0} & \num{4} & \num{11} & \num{24} & \num{37940} & \num{54,26} \\
+    Wortschatz & \num{0} & \num{2} & \num{8} & \num{23} & \num{38380} & \num{127,8} \\
+    \bottomrule
+\end{tabular}
+\caption{Entwicklung der Anzahl der Kanten von einem Knoten ausgehend}
+\label{tab:discovery_edges_per_node}
+\end{table}
+
+Auffällig ist hierbei, dass die Integration von Clicktracking- und Wortschatz-Daten zu einer Herabsenkung des Medians führten. Dies bedeutet, dass verhältnismäßig nach Durchführung dieser Schritte weniger vielverbundene Knoten im Datenbestand existierten als davor. Jedoch deutet die Entwicklung des Durchschnittes nach der Integration der Wortschatz-Daten darauf hin, dass die Knotenanzahl vielverbundener Knoten nach diesem Schritt deutlich größer geworden ist.
+
+Das Absinken des Durchschnittes nach Integration der Clicktracking-Daten kann dabei in der geringen Menge der Daten begründet werden. Durch die geringe Anzahl von Kookkurrenzen konnten vielverbundene Knoten keinen relevanten Zugewinn an Verbindungen verzeichnen, während für wenig verbundene Knoten verhältnismäßig mehr neue Verbindungen hinzukamen.
+
+Generall lässt sich festhalten, dass die Anzahl vielverbundener Knoten gemessen an der Gesamtanzahl relativ klein ist. Die Auswirkungen dessen hängen jedoch stark von der Anwendung der Daten ab und sind im Rahmen dieser Arbeit nicht beurteilbar.
+
+Nach der quantitativen Auswertung der Link Discovery-Schritte wird im nächsten Kapitel die Optimierung der Kantengewichtungen und die Evaluierung der erzeugten Kanten beschrieben.
