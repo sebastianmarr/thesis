@@ -445,4 +445,36 @@ Zusammenfassend werden bei der Transformation demnach Kanten der Typen \emph{Syn
 
 Zur Integration wird der im Transformationsschritt erzeugte Graph mit dem Zielgraphen vereinigt. Diese Vereinigung wird analog zur Integration der Clicktracking-Daten in Abschnitt \ref{click_integration} durchgeführt.
 
-Insgesamt wurden dadurch \num{144223} neue Knoten und \num{50227965} neue Kanten erzeugt.  Dabei entfallen \num{48399466} Kanten auf Kookkurrenz von Kategorien, \num{550270} Kanten auf Wortformen, \num{149381} Kanten auf Grundformen, \num{279118} Kanten auf Synonyme und \num{849730} Kanten auf Thesaurus-Beziehungen.
+Insgesamt wurden dadurch \num{145023} neue Knoten und \num{50227965} neue Kanten erzeugt.  Dabei entfallen \num{48399466} Kanten auf Kookkurrenz von Kategorien, \num{550270} Kanten auf Wortformen, \num{149381} Kanten auf Grundformen, \num{279118} Kanten auf Synonyme und \num{849730} Kanten auf Thesaurus-Beziehungen.
+
+Nachdem alle vorgenommen Schritte zur Link Discovery beschrieben wurden, beschäftigt sich der nächste Abschnitt mit einer Zusammenfassung der Ergebnisse.
+
+\section{Ergebnisse}
+
+Im folgenden Abschnitt werden die quantitativen Ergebnisse der Link Discovery zusammenfassend dargestellt und diskutiert.
+
+\begin{table}
+\centering
+% \arraystretch}{1.3}
+\begin{tabular}{lrcr}
+    \toprule
+    Schritt & Knoten & \phantom{abc} & Kanten \\
+    \midrule
+    Tags & \num{314351} && \num{21834868} \\
+    Clicktracking & \num{78237} && \num{310860} \\
+    Google Translate & \num{0} && \num{0} \\
+    Zerlegung & \num{38349} && \num{1238900} \\
+    Wortschatz & \num{145023} && \num{50227965} \\
+    \midrule
+    Gesamt & \num{575960} && \num{73612593} \\
+    \bottomrule
+\end{tabular}
+\caption{Quantitative Ergebnisse der Link Discovery-Schritte}
+\label{tab:discovery_amounts}
+\end{table}
+
+Tabelle \ref{tab:discovery_amounts} führt für jeden Schritt die hinzugefügten Knoten und Kanten sowie die nach Durchführung der Link Discovery insgesamt im Graphen enthaltene Datenmenge auf. Dabei zeigt sich, dass die Integration der Wortschatzdaten mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
+
+Bei der Verwendung der Clicktracking-Daten wurden im Verhältnis wenig neue Knoten und Kanten erzeugt. Dies ist im Wesentlichen auf den zum Zeitpunkt des Importes noch geringen Datenbestand zurückzuführen. Daher sollte dieser Schritt zukünftig wiederholt werden, da mit der längeren Laufzeit des Clicktracking-Systems auch ein größeres Potential für neue Verknüpfungen vorhanden ist.
+
+Die Integration von Google Translate brachte weder neue Knoten noch Kanten, da in diesem Schritt bewusst nur neue Attribute zu vorhandenen Knoten hinzugefügt wurden.
