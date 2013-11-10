@@ -20,8 +20,21 @@ Durch die Notwendigkeit menschlicher Beteiligung und der großen Anzahl an Param
 
 Im Rahmen dieser Arbeit wurde aus den genannten Gründen ein Optimierungsansatz mittels interaktiver evolutionärer Algorithmen gewählt. Die Grundlagen evolutionärer Algorithmen und die gewählte Implementierung werden in den folgenden Abschnitten beschrieben.
 
-\subsection{Evolutionäre Algorithmen}
+\section{Evolutionäre Algorithmen}
 
-\subsection{Umsetzung im Rahmen der Link Discovery}
+Als evolutionäre Algorithmen wird eine Klasse von Optimierungsverfahren bezeichnet, deren Funktionsweise an die Evolution natürlicher Lebewesen angelehnt ist. Sie versuchen, Probleme durch die Simulation von Evolution mittels der Auswahl der erfolgreichten Individuen zu lösen. Dabei kommen ebenfalls aus der Biologie entlehnte Mechanismen wie Mutation und Rekombination zum Einsatz, um iterativ eine Population von Lösungskandidaten zu verbessern \cite{tw2008}.
+
+Es handelt sich dabei um heuristische Algorithmen, die das Finden einer optimalen Lösung nicht garantieren können.
+
+Grundsätzlich folgt das Vorgehen dabei einem Kreislauf mit den Komponenten \emph{Evaluierung}, \emph{Selektion} und \emph{Reproduktion}. Nach Generierung einer anfänglichen Population (\emph{Initalisierung}) wird dieser Kreislauf so lange durchlaufen, bis ein vorher definiertes Abbruchkriterium eintritt. Ein Durchlauf wird dabei als \emph{Generation} bezeichnet. Das Abbruchkriterium kann beispielweise ein bestimmter Schwellwert für die Güte der Lösung oder eine feste Anzahl von Generationen sein. Der beschriebene Ablauf ist in Abbildung \ref{fig:evo_basic} dargestellt.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{evo_basic}
+\caption{Ablauf evolutionärer Algorithmen}
+\label{fig:evo_basic}
+\end{figure}
+
+\section{Umsetzung im Rahmen der Link Discovery}
 
 \section{Auswertung der Ergebnisse}
