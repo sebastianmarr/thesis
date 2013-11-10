@@ -25,12 +25,6 @@
 \usepackage{algpseudocode}
 \usepackage{algorithm}
 
-% colors
-\usepackage{xcolor}
-\colorlet{punct}{red!60!black}
-\definecolor{delim}{RGB}{20,105,176}
-\colorlet{numb}{magenta!60!black}
-
 % captions and numbering
 \usepackage[font=small,labelfont=bf]{caption}
 \captionsetup{%
@@ -43,7 +37,12 @@
 \lstset{
     basicstyle=\ttfamily\scriptsize,
     captionpos=b,
-    frame=single,
+    frame=bt,
+    numbers=left,
+    numberstyle=\rmfamily\tiny\color{gray!50!black},
+    aboveskip=1cm,
+    xleftmargin=8mm,
+    framexleftmargin=8mm,
     aboveskip=1cm
 }
 \lstdefinelanguage{json}{}

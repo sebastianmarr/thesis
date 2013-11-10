@@ -124,7 +124,6 @@ Die Reduce-Funktion fasst die einelementigen Listen zusammen, addiert die Vorkom
 Die Map- und Reduce-Funktionen für die Knotenberechnung sind in Listings \ref{lst:mapred_nodes} als Pseudocode dargestellt.
 
 \begin{lstlisting}[language=pseudo, label={lst:mapred_nodes}, caption={Knotenerzeugung mit MapReduce}]
-
 function map(document, term) {
     emit(term, {documents: [document], count: 1});
 }
