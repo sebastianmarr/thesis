@@ -12,7 +12,7 @@ Nutzbare Beziehungen können vielfältiger Art sein. Denkbar sind beispielsweise
     \item inhaltliche Zusammenhänge, die mittels Clustering-Algorithmen später zu Themengebieten zusammengefasst werden
     \item Worthierarchien, aus denen Kategoriebäume erzeugt werden
     \item Wortformen, die dazu genutzt werden, mehrere Begriffe zusammenzufassen und somit mehr als nur eine wörtliche Suche zu ermöglichen
-    \item Verknüpfungen von Wörtern, die über inhaltliche Zusammenhänge hinausgehen, beispielsweise Verbindungen Von Themengebieten mit bestimmten Emotionen, Produkten oder Personen
+    \item Verknüpfungen von Wörtern, die über inhaltliche Zusammenhänge hinausgehen, beispielsweise Verbindungen von Themengebieten mit bestimmten Emotionen, Produkten oder Personen
 \end{itemize}
 
 Ausgangsbasis für alle Überlegungen und Berechnungen sind die gesammelten Tag-Daten der Online-Plattform Spreadshirt, deren Struktur und Qualität im nächsten Abschnitt erläutert und diskutiert wird.
@@ -29,7 +29,7 @@ Ein Tag-System besteht im Allgemeinen aus den Mengen \(D\), \(T\) und \(U\). \(D
 
 Die Benutzer können beliebige Dokumente mit beliebigen Tags versehen. Der Vorgang des \emph{Taggens} kann also durch die Relation \(R = D \times U \times T\) beschrieben werden, welche Tupel der Form \((d, u, t)\) enthält.
 
-Der Betreiber der Online-Plattform kann bestimmte Aspekte des Tag-Systems begrenzen. Können alle Benutzer beliebige Tags an beliebigen Dokumente vergeben, spricht man von einer \emph{Folksonomy} \cite{ip2009}. In Abbildung \ref{fig:tagsystem} ist ein solches Tag-System als Entity-Relationship-Diagramm dargestellt.
+Der Betreiber der Online-Plattform kann bestimmte Aspekte des Tag-Systems begrenzen. Können alle Benutzer beliebige Tags an beliebige Dokumente vergeben, spricht man von einer \emph{Folksonomy} \cite{ip2009}. In Abbildung \ref{fig:tagsystem} ist ein solches Tag-System als Entity-Relationship-Diagramm dargestellt.
 
 \begin{figure}
 \centering
@@ -57,7 +57,7 @@ Diese Datenmenge stellt zur Verarbeitung besondere technische Anforderungen. Die
 \subsection{Datenqualität}
 \label{quality}
 
-Die Qualität von Daten wird im Allgemeinen unter mehreren Gesichtspunkten beurteilt \cite{hkp2012}. Dazu gehören unter Anderem \emph{Korrektheit}, \emph{Vollständigkeit}, und \emph{Redundanzfreiheit}. Nachfolgend werden die bei Spreadshirt vorhandenen Tag-Daten nach diesen Kriterien betrachtet und die Quellen eventueller Fehler \cite[43 ff]{jo2003} diskutiert.
+Die Qualität von Daten wird im Allgemeinen unter mehreren Gesichtspunkten beurteilt \cite{hkp2012}. Dazu gehören unter anderem \emph{Korrektheit}, \emph{Vollständigkeit}, und \emph{Redundanzfreiheit}. Nachfolgend werden die bei Spreadshirt vorhandenen Tag-Daten nach diesen Kriterien betrachtet und die Quellen eventueller Fehler \cite[43 ff]{jo2003} diskutiert.
 
 \paragraph{Korrektheit}
 
@@ -75,7 +75,7 @@ Die Unvollständigkeit der Daten rührt in erster Linie daher, dass zum Zeitpunk
 
 \paragraph{Redundanzfreiheit}
 
-Bedingt durch die Form der Dateneingabe besteht für das Vokabular des Tag-System ein großes Potential für redundante Daten. Da eingegebene Tags durch einen Separator getrennt eingegeben werden müssen, besteht hier Potential zur Fehleingabe. Wird der falsche Separator verwendet, werden die eigentlich getrennten Tags als eine einzige Entität abgespeichert.
+Bedingt durch die Form der Dateneingabe besteht für das Vokabular des Tag-Systems ein großes Potential für redundante Daten. Da eingegebene Tags durch einen Separator getrennt eingegeben werden müssen, besteht hier Potential zur Fehleingabe. Wird der falsche Separator verwendet, werden die eigentlich getrennten Tags als eine einzige Entität abgespeichert.
 
 Technisch kann jeder Tag genau ein Mal in der Datenbank vorkommen. Jedoch führen Rechtschreibfehler, unterschiedliche Groß- und Kleinschreibung, verschiedene Arten zusammengesetzte Wörter zu schreiben, Leerräume vor, nach und zwischen Wörtern eines Tags und Tippfehler dazu, dass das gleiche Wort mehrfach in der Datenbank gespeichert wurde.
 
@@ -97,7 +97,7 @@ Die grundsätzliche Lösungsidee besteht in der Erstellung eines Graphen, dessen
 
 Um einen solchen Graphen zu erstellen, ist eine Grundmenge von Daten nötig. Diese Grundmenge stellen die Daten des Tag-Systems (\ref{tag-system}) von Spreadshirt dar. Die bereinigten Tags stellen die Knotenmenge dar. Die Kanten werden mittels Kookkurrenz ermittelt.
 
-Um die Qualität des Graphen danach schrittweise zu verbessern, werden daraufhin im Laufe der Arbeit weitere externe und interne Datenquellen integriert. Hierbei werden, soweit möglich, ebenfalls Kookkurrenzbasierte Ansätze gewählt. Diesem Vorgehen liegt die Annahme zu Grunde, dass oft gemeinsam auftauchende Begriffe auch eine inhaltliche Nähe zueinander aufweisen.
+Um die Qualität des Graphen danach schrittweise zu verbessern, werden daraufhin im Laufe der Arbeit weitere externe und interne Datenquellen integriert. Hierbei werden, soweit möglich, ebenfalls kookkurrenzbasierte Ansätze gewählt. Diesem Vorgehen liegt die Annahme zu Grunde, dass oft gemeinsam auftauchende Begriffe auch eine inhaltliche Nähe zueinander aufweisen.
 
 Bei jeder neuen Datenquelle muss zunächst der Import, die Bereinigung, die Reduktion, die Transformation und die Integration der Daten durchgeführt werden \cite{hkp2012}. Diese Schritte gewährleisten die Datenqualität des Ergebnisgraphen.
 

@@ -19,19 +19,19 @@ Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die
 \[s(A,B) = F(A \cap B, A-B, B-A)\]
 \label{similarity}
 
-Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein-Distanz \cite{vl1966} die Ähnlichkeit zweier Zwichenketten durch die minmale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
+Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein-Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
 
 Im Kontext dieser Arbeit wird also ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Wörtern und Wortgruppen eine Distanz zwischen ebenjenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen lingustische Ähnlichkeitsmaße wie die Levenshtein-Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Zeichenketten, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können.
 
-Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, dass den Kontext, in dem die Wörter und Wortgruppen im Quellsystem verwendet werden, berücksichtigt. Als dieses Maß wurde im Rahmen dieser Arbeit die Kookkurrenz gewählt, welche in den folgenden Abschnitten beschrieben wird.
+Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, das den Kontext, in dem die Wörter und Wortgruppen im Quellsystem verwendet werden, berücksichtigt. Als dieses Maß wurde im Rahmen dieser Arbeit die Kookkurrenz gewählt, welche in den folgenden Abschnitten beschrieben wird.
 
 \section{Kookkurrenz}
 
-In \ref{data} wurden das für diese Arbeit verfügbare Tag-System beschrieben. In diesem System werden besitzen die Tags wenig Kontext. Die einzig verfügbare Information ist, an welchen Dokumenten die Tags verwendet wurden.
+In \ref{data} wurden das für diese Arbeit verfügbare Tag-System beschrieben. In diesem System besitzen die Tags wenig Kontext. Die einzig verfügbare Information ist, an welchen Dokumenten die Tags verwendet wurden.
 
-Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wird dabei ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
+Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wird ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
 
-Dazu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen Begriffe benutzen. Diese Annahme muss im Laufe der Evaluation der Ergebnisse validiert werden.
+Hierzu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen Begriffe benutzen. Diese Annahme muss im Laufe der Evaluation der Ergebnisse validiert werden.
 
 \section{Kookkurrenzmaße}
 \label{measures}
@@ -80,9 +80,9 @@ Nachdem die Ähnlichkeit mittels Kookkurrenz und die entsprechenden Maße vorges
 
 Im folgenden Abschnitt wird die Erstellung eines Graphen beschrieben, der die Kookkurrenzmaße für alle Paare von Begriffen enthält. Die Knoten stellen in diesem Fall die Begriffe dar. Die Kanten repräsentieren eine Kookkurrenz dieser Begriffe und werden mit den gewünschten Kookkurrenzmaßen annotiert. Existiert keine Kante zwischen zwei Knoten, so beträgt die Kookkurrenz zwischen den beiden repräsentierten Begriffen \num{0}.
 
-Der Aufwand, um diesen Graphen zu erstellen, hängt also von der Anzahl der Begriffe, Dokumente, und Verbindungen von Begriffen und Dokumenten ab.
+Der Aufwand, um diesen Graphen zu erstellen, hängt also von der Anzahl der Begriffe, Dokumente und Verbindungen von Begriffen und Dokumenten ab.
 
-Für jedes Dokument muss, um die Ähnlichkeitsmaße zu berechnen, das Kreuzprodukt aller vergebenen Begriffe gebildet werden. Dabei muss das Auftreten jeder Paarung gezählt werden, um die Mächtigkeit aller Mengen \(A \cap B\) bestimmen zu können. Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet wird, um die Mächtigkeit der Mengen \(A\), \(B\) usw. zu bestimmen. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokument \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung daher liegt zwischen diesen Schranken.
+Für jedes Dokument muss, um die Ähnlichkeitsmaße zu berechnen, das Kreuzprodukt aller vergebenen Begriffe gebildet werden. Dabei muss das Auftreten jeder Paarung gezählt werden, um die Mächtigkeit aller Mengen \(A \cap B\) bestimmen zu können. Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet wird, um die Mächtigkeit der Mengen \(A\), \(B\) usw. zu bestimmen. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokumente \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung liegt daher zwischen diesen Schranken.
 
 Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden.
 
@@ -91,11 +91,11 @@ Da das Problem der Ähnlichkeitsberechnung nur lokale Berechnungen verwendet, is
 \subsection{MapReduce}
 \label{mapreduce}
 
-MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Der Grundgedanke dieses Modells besteht in der Zerlegung der Berechnung in zwei Funktionen: \emph{Map} und \emph{Reduce}. Die Ein- und Ausgabedaten sind dabei Schlüssel-/Wertpaare. Beide Funktionen werden vom Benutzer spezifiziert.
+MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Der Grundgedanke dieses Modells besteht in der Zerlegung der Berechnung in zwei Funktionen: \emph{Map} und \emph{Reduce}. Die Ein- und Ausgabedaten sind Schlüssel-/Wertpaare. Beide Funktionen werden vom Benutzer spezifiziert.
 
-Die Map-Funktion dient zur Erzeugung von Zwischenergebnissen, ebenfalls in der Form von Schlüssel-/Wertpaaren. Die Funktion wird dabei einzeln auf jedes Paar der Eingabedaten angewandt und kann eine beliebige Anzahl von Zwischenergebnissen \emph{emittieren}. Die MapReduce-Bibliothek gruppiert daraufhin alle Paare mit dem gleichen Schlüssel und übergibt diese an die Reduce-Funktion.
+Die Map-Funktion dient zur Erzeugung von Zwischenergebnissen, ebenfalls in der Form von Schlüssel-/Wertpaaren. Die Funktion wird einzeln auf jedes Paar der Eingabedaten angewandt und kann eine beliebige Anzahl von Zwischenergebnissen \emph{emittieren}. Die MapReduce-Bibliothek gruppiert daraufhin alle Paare mit dem gleichen Schlüssel und übergibt diese an die Reduce-Funktion.
 
-Die Reduce-Funktion wird also jeweils auf einen Schlüssel und eine Liste von Werten angewandt. Ziel dieser Funktion ist, für jeden Schlüssel kein oder ein Ergebnis zurückzugeben. Dabei werden die zu reduzierenden Werte für gewöhnlich als Iterator übergeben, um auch Datenmengen verarbeiten zu können, die nicht in den Arbeitsspeicher des Rechenknotens passen. Die Reduce-Funktion wird nur angewandt, wenn nach dem Map-Schritt mehr als ein Wert für einen Schlüssel emittiert wurde. Somit sollten Map- und Reduce-Funktion das gleiche Ausgabeformat besitzen. Das grundsätzliche Vorgehen von MapReduce ist in Abbildung \ref{fig:mapreduce} abgebildet.
+Die Reduce-Funktion wird also jeweils auf einen Schlüssel und eine Liste von Werten angewandt. Ziel dieser Funktion ist, für jeden Schlüssel kein oder ein Ergebnis zurückzugeben. Die zu reduzierenden Werte werden für gewöhnlich als Iterator übergeben, um auch Datenmengen verarbeiten zu können, die nicht in den Arbeitsspeicher des Rechenknotens passen. Die Reduce-Funktion wird nur angewandt, wenn nach dem Map-Schritt mehr als ein Wert für einen Schlüssel emittiert wurde. Somit sollten Map- und Reduce-Funktion das gleiche Ausgabeformat besitzen. Das grundsätzliche Vorgehen von MapReduce ist in Abbildung \ref{fig:mapreduce} abgebildet.
 
 \begin{figure}
 \centering
@@ -104,14 +104,14 @@ Die Reduce-Funktion wird also jeweils auf einen Schlüssel und eine Liste von We
 \label{fig:mapreduce}
 \end{figure}
 
-Die MapReduce-Bibliothek übernimmt dabei sämtliche Kommunkation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
+Die MapReduce-Bibliothek übernimmt sämtliche Kommunkation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass sich der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
 
 In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \ref{mongo}). Nach dieser grundsätzlichen Betrachtung des Programmiermodells wird im nächsten Abschnitt die Anwendung zur Berechnung von Kookkurenzen diskutiert.
 
 \subsection{Anwendung von MapReduce zur Kookkurenzberechnung}
 \label{mapreduce_cooccurence}
 
-MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurrenzgraphen genutzt werden. Dazu müss für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
+MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurrenzgraphen genutzt werden. Dazu müssen für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
 
 Um die Berechnung zu vereinfachen, werden zuerst die Knoten erzeugt und mit allen Vorkommen der Begriffe annotiert. Somit kann daraufhin direkt aus der Knotenmenge die Kantenmenge erzeugt werden. Außerdem werden bei der Nutzung der Daten weniger Anfragen benötigt, um Informationen über einen Begriff selbst zu bekommen.
 
@@ -140,9 +140,9 @@ function reduce(term, values) {
 
 \subsubsection{Berechnung der Kanten}
 
-Die Berechnung der Kantenmenge kann mit den vorher berechneten Knoten als Eingabedaten erfolgen. Dabei wird die Berechnung in 2 Bearbeitungsschritte aufgeteilt. Zuerst werden die annotierten Knoten so umgeformt, dass zu einem Dokument alle vergebenen Begriffe bekannt sind. Im zweiten Schritt werden alle Paare von miteinander auftretenden Begriffen gebildet und die Ähnlichkeitsmaße berechnet.
+Die Berechnung der Kantenmenge kann mit den vorher berechneten Knoten als Eingabedaten erfolgen und wird in 2 Bearbeitungsschritte aufgeteilt. Zuerst werden die annotierten Knoten so umgeformt, dass zu einem Dokument alle vergebenen Begriffe bekannt sind. Im zweiten Schritt werden alle Paare von miteinander auftretenden Begriffen gebildet und die Ähnlichkeitsmaße berechnet.
 
-Algorithmus \ref{lst:mapred_edges1} zeigt die Umformung der Knoten mittels MapReduce. Als Eingabe für die Map-Funktion dienen die Knoten. Diese werden so umgeformt, dass für jedes Dokument, dass am Knoten annotiert ist, ein neues Schlüssel-/Wertpaar emittiert wird. Die Reduce-Funktion fasst die emittierten Ergebnisse zusammen, sodass als Ergebnis alle Begriffe, die an ein Dokument vergeben wurden, gesammelt als Liste vorliegen.
+Algorithmus \ref{lst:mapred_edges1} zeigt die Umformung der Knoten mittels MapReduce. Als Eingabe für die Map-Funktion dienen die Knoten. Diese werden so umgeformt, dass für jedes Dokument, das am Knoten annotiert ist, ein neues Schlüssel-/Wertpaar emittiert wird. Die Reduce-Funktion fasst die emittierten Ergebnisse zusammen, sodass als Ergebnis alle Begriffe, die an ein Dokument vergeben wurden, gesammelt als Liste vorliegen.
 
 \begin{lstlisting}[language=pseudo, label={lst:mapred_edges1}, caption={Umformung der Knoten mit MapReduce}]
 function map(node) {
@@ -160,7 +160,7 @@ function reduce(term, values) {
 }
 \end{lstlisting}
 
-In Algorithmus \ref{lst:mapred_edges2} wird die Erzeugung der Kookkurrenzkanten dargestellt. Im Map-Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist dabei eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurrenzen zwischen beiden Begriffen. Im Reduce-Schritt werden alle Kanten zwischen zwei Termen zusammengefasst, die Summe der Kookkurrenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \ref{measures} beschrieben.
+In Algorithmus \ref{lst:mapred_edges2} wird die Erzeugung der Kookkurrenzkanten dargestellt. Im Map-Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurrenzen zwischen beiden Begriffen. Im Reduce-Schritt werden alle Kanten zwischen zwei Termen zusammengefasst, die Summe der Kookkurrenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \ref{measures} beschrieben.
 
 \begin{lstlisting}[language=pseudo, label={lst:mapred_edges2}, caption={Kantenerzeugung mit MapReduce}]
 function map(document) {
