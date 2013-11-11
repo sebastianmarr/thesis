@@ -131,7 +131,7 @@ Die fünf selektierten Individuen werden zur Reproduktion herangezogen, um fünf
 
 \paragraph{Rekombination}
 
-Als Rekombinationsalgorithmus wurde der \emph{Ein-Punkt-Crossover} \cite{kw2007} gewählt. Dazu werden zufällig zwei Elternindividuen ausgewählt und ein zufälliger Crossover-Punkt berechnet. Werden die Genotypen der beiden Elternindividen als Arrays dargestellt, werden bis zum Crossover-Punkt die Variablen des ersten Individuums, nach dem Crossover-Punk die Variablen des zweiten Individuums übernommen. Der Crossover ist in Abbildung \ref{fig:crossover} dargestellt.
+Als Verfahren zur Rekombination wurde der \emph{Ein-Punkt-Crossover} \cite{kw2007} gewählt. Dazu werden zufällig zwei Elternindividuen ausgewählt und ein zufälliger Crossover-Punkt berechnet. Werden die Genotypen der beiden Elternindividen als Arrays dargestellt, werden bis zum Crossover-Punkt die Variablen des ersten Individuums, nach dem Crossover-Punk die Variablen des zweiten Individuums übernommen. Der Crossover ist in Abbildung \ref{fig:crossover} dargestellt.
 
 \begin{figure}
 \centering
@@ -139,5 +139,11 @@ Als Rekombinationsalgorithmus wurde der \emph{Ein-Punkt-Crossover} \cite{kw2007}
 \caption{Ein-Punkt-Crossover}
 \label{fig:crossover}
 \end{figure}
+
+\paragraph{Mutation}
+
+Zur Mutation der reellwertigen Kantengewichtungen wurde das Verfahren der \emph{Gauss-Mutation} \cite{kw2007} gewählt. Dabei wird zu jeder rellwertigen Variablen des Genotyps ein normalverteilter Zufallswert addiert. Verlässt der entstehende Wert dabei das zulässige Intervall, so wird er auf die entsprechende Intervallschranke angepasst. Die Gauß-Mutation macht daher große Änderungen der Variable möglich, aber weniger Wahrscheinlich als kleine Änderungen. Sie eignet sich somit gut, um Diversität in der Population zu erzeugen. Konkret wurde in der Umsetzung der Optimierung eine auf das Intervall \((0,1)\) angepasste Normalverteilung mit Erwartungswert \(\mu=0\) und Varianz \(\sigma=0.5\) gewählt. Die Variablen für die Kookkurenzmaße werden nicht mutiert.
+
+Nachdem in diesem Abschnitt die konkrete Umsetzung der Optimierung mittels interaktiver evolutionärer Algorithmen beschrieben wurde, folgt im nächsten Abschnitt die Darstellung und Diskussion der Ergebnisse.
 
 \section{Auswertung der Ergebnisse}
