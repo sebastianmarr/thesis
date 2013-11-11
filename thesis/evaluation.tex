@@ -70,7 +70,7 @@ Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{genotype}
+\includegraphics[width=0.9\textwidth]{genotype}
 \caption{Genotyp}
 \label{fig:genotype}
 \end{figure}
@@ -97,6 +97,11 @@ Die reellwertigen Attribute stellen dabei ein Gewicht des jeweiligen Kantentyps 
 \subsection{Initialisierung}
 
 \subsection{Evaluierung}
+Im Initialisierungsschritt wird die anfängliche Population für jede der Stichproben gebildet. Dazu muss zuerst eine geeignet erscheinende Populationsgröße festgelegt werden.
+
+In jeder Generation müssen im Evaluationsschritt alle Individuen bewertet werden. Wie einführend bereits erläutert wurde, kann dies nur mit menschlicher Interaktion erfolgen. Somit sollte die Populationsgröße möglichst gering sein, um mit der gleichen Anzahl Bewertungen eine größere Anzahl von Generationen zu durchlaufen. Dies geschieht auf Kosten der Diversität in der Population. Jedoch wurde im Rahmen dieser Arbeit dieser Ansatz gewählt, um möglichst viele Möglichkeiten zu haben, die Parameter zu optimieren.
+
+Es wurde eine Populationsgröße von zehn Individuen je Stichprobe gewählt. Somit müssen in jeder Generation einhundertfünzig Individuen bewertet werden. Bei der Initialisierung wurden die Variablen jedes erzeugten Individuums zufällig gewählt.
 
 \subsection{Selektion}
 
