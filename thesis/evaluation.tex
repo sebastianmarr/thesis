@@ -62,4 +62,44 @@ Zunächst soll die Methode zur Auswahl der Stichproben erläutert werden. Insges
 
 Ziel dieser Auswahl war, eine möglichst vielfältige Verteilung der einzelnen Kantentypen zu erreichen, aus welcher sich nach Durchführung der Optimierung möglicherweise Erkenntnisse ableiten lassen, ob die Optimierung nur lokal oder auch global druchgeführt werden kann.
 
+Nach Auswahl der Stichproben muss der Genotyp der am evolutionären Algorithmus teilnehmenden Individuen spezifiziert werden. Daraufin muss definiert werden, wie die Komponenten des Algorithmus zu implementieren sind.
+
+\subsection{Genotyp}
+
+Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die die Gewichtung der Kantentypen unteraneinder beeinflussen. Daher wird jedes Individuum als Objekt repräsentiert, dass zwölf Attribute besitzt. Davon sind neun Attribute reellwertig und drei Attribute vom Aufzählunstyp \emph{Kookkurenzmaß}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{genotype}
+\caption{Genotyp}
+\label{fig:genotype}
+\end{figure}
+
+Die reellwertigen Attribute stellen dabei ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute wird auf das Intervall \((0,1)\) eingeschränkt. Die Kookkurenzmaße entsprechen den in Abschnitt \ref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in Abbildung \ref{fig:genotype} als UML-Klassendiagramm und in Listing \ref{lst:genotyope} beispielhaft in JSON-Notation dargestellt.
+
+\begin{lstlisting}[language=json, label={lst:genotyope}, caption={Beispiel für ein Individuum}]
+{
+    "tagCoOccMeasure" : 0,
+    "tagCoOccWeight" : 0.6878115427680314,
+    "clickCoOccMeasure" : 2,
+    "clickCoOccWeight" : 0.1533144270069897,
+    "synonymWeight" : 0.2355003503616899,
+    "thesaurusWeight" : 0.9918724503368139,
+    "baseformWeight" : 0.2843543488997966,
+    "wordformWeight" : 0.93317318148911,
+    "sharedDomainsMeasure" : 2,
+    "sharedDomainsWeight" : 0.462230023695156,
+    "compositionWeight" : 0.07963851140812039,
+    "decompositionWeight" : 0.4740817183628678
+}
+\end{lstlisting}
+
+\subsection{Initialisierung}
+
+\subsection{Evaluierung}
+
+\subsection{Selektion}
+
+\subsection{Reproduktion}
+
 \section{Auswertung der Ergebnisse}
