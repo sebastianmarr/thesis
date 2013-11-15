@@ -41,3 +41,46 @@ Die grundlegenden Phasen des Prozesses sind die \emph{Erzeugung} des initialen W
 Die Schritte der Anreicherung und Priosierung können beliebig oft wiederholt werden, um das Ergebnis zu verbessern und auf die gewünschte Anwendung anzupassen. Die Anreicherung kann grundsätzlich durch das Mining der bereits im Weltausschnitt vorhandenen Daten oder durch die Integration neuer Datenquellen erfolgen.
 
 Die genannten Schritte werden in den folgenden Abschnitten erläutert.
+
+\subsection{Integration von Datenquellen}
+\label{integration_generic}
+
+Für die Link Discovery wird ein einheitliches Vorgehen zur Integration von Datenquellen benötigt. Die Datenquellen stellen grundsätzlich für die Link Discovery nützliche Daten zur Verfügung, die jedoch im Allgemeinen noch nicht direkt dem Modell des Weltausschnittes entsprechen. Demzufolge müssen diese Daten entsprechend vorverarbeitet werden.
+
+Die zur Integration von externen Datenquellen nötigen Schritte entsprechen im Wesentlichen den von \textcite[S. 48f.]{hkp2012} beschriebenen Aufgaben der Datenvorverarbeitung: \emph{Bereinigung}, \emph{Reduktion}, \emph{Transformation} und \emph{Integration}. Diesen wird in dieser Arbeit der Schritt \emph{Import} vorangestellt, da es nicht immer möglich ist, den gesamten Datenbestand einer Datenquelle zu nutzen. Somit sollten im Importschritt auch die Anfragen an die Datenquelle spezifiziert werden. Die genannten Schritte werden zur Link Discovery immer in der genannten Reihenfolge ausgeführt und werden im folgenden kurz beschrieben.
+
+\paragraph{Import}
+
+Im Importschritt werden die Rohdaten aus der Datenquelle extrahiert. Dabei wird die Form der Daten nicht verändert. Ist es nicht möglich, den gesamten Datenbestand einer Quelle zu importieren, so muss eine Auswahl der anzufragenden Daten formuliert werden. Diese Auswahl richtet sich nach Möglichkeit nach den bereits im Weltausschnitt vorhandenen Daten.
+
+\paragraph{Bereinigung}
+
+Im nachfolgenden Bereinigungsschritt werden die importierten Daten so gut wie möglich von eventuell vorhandenen Defekten bezüglich der Datenqualität (siehe auch \ref{quality}) befreit. Dazu zählen beispielsweise das Entfernen nicht nutzbarer Zeichen oder von unvollständigen Datensätzen.
+
+\paragraph{Reduktion}
+
+Der Reduktionsschritt dient zur Verkleinerung der Datenmenge. Dazu gehören beispielsweise Schritte zur Duplikatentfernung oder zur Auswahl relevanter Datensätze. In dieser Arbeit bestand die Haupteinschränkung der Datenmenge darin, nach Möglichkeit nur deutschsprachige Datensätze auszuwählen.
+
+\paragraph{Transformation}
+
+Der Schritt der Transformation überführt die Daten schließlich in das Modell des Weltausschnittes. Dies bedeutet, dass die Datensätze in Begriffe und Beziehungen umgewandelt werden. Dabei sollten so viele Informationen über den Kontext der Begriffe erhalten bleiben. Die Methode, wie diese Transformation vorgenommen wird, hängt von der Datenquelle ab. Generell werden die Beziehungen meist aus dem Kontext der Begriffe, wie er in der Datenquelle vorliegt, gebildet. Somit stellt der Transformationsschritt die wichtigste Komponente für die Integration einer Datenquelle dar.
+
+\paragraph{Integration}
+
+Der Integrationsschritt für jede Datenquelle dient letztendlich der Zusammenführung des im Transformationsschritt erzeugten Weltausschnittes mit dem bereits vorhandenen Weltausschnitt. Dabei werden bereits existierende Begriffe zusammengeführt und die neu erzeugten Beziehungen übernommen. Die Zusammenführung der Begriffe erfolgt über die Annotation des existierenden Begriffes mit dem neu erzeugten Kontext, den die Datenquelle zu einem Begriff liefert.
+
+\subsection{Initiale Erzeugung des Weltausschnittes}
+
+Der erste Schritt der Link Discovery besteht in der Auswahl einer geeigneten Datenquelle für die initiale Erzeugung des Weltausschnittes. In dieser Arbeit ist diese Datenquelle das Tagging-System von Spreadshirt (siehe \ref{tag_sprd}).
+
+Die Auswahl der Datenquelle richtet sich im wesentlichen danach, ob der Kontext, den die Datenquelle potentiell zu Begriffen liefern kann, für die Link Discovery geeignet ist. Der Kontext sollte außerdem für die geplante Anwendung der Link--Discovery--Ergebnisse relevant sein.
+
+Nach der Auswahl einer geeigneten Quelle werden die in Abschnitt \ref{integration_generic} beschriebenen Schritte zur Integration durchgeführt. Der letzte Schritt ist trivial, da zu diesem Zeitpunkt noch keine Daten vorhanden sind.
+
+\subsection{Anreicherung des Weltausschnittes}
+
+\subsubsection{Anreicherung durch Mining vorhandener Daten}
+
+\subsubsection{Anreicherung durch Integration externer Datenquellen}
+
+\subsection{Priorisierung von Beziehungen}
