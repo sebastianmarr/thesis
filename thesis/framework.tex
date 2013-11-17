@@ -89,7 +89,6 @@ Grundsätzlich kann die Anreicherung des Weltausschnittes auf zwei Arten erfolge
 
 Die Erzeugung neuer Begriffe und Zusammenhänge kann aus den vorhandenen Daten mittels Methoden des Data Minings vorgenommen werden. Dazu werden die bereits im Weltausschnitt vorhandenen Begriffe mit ihren Kontexten und Beziehungen analysiert, um bisher unbekannte Zusammenhänge zu finden.
 
-Beispiele für anwendbare Methoden sind hierbei Assoziationsanalyse \cite[S. 328f.]{pt2013} oder Clusteranalyse \cite[S. 443f.]{hkp2012}, um bestimmte bereits in den Daten vorhandene, aber nicht explizit abgebildete, Zusammenhänge zu ermitteln. Jedoch können auch einfachere Methoden wie die Zerlegung von Wortgruppen in Einzelwörter (siehe \ref{decomposition}) erfolgreich sein, um neue Begriffe und Beziehungen in den Datenbestand einzuführen.
 Beispiele für anwendbare Methoden sind hierbei Assoziationsanalyse \cite[S. 328f.]{pt2013} oder Clusteranalyse \cite[S. 443f.]{hkp2012}, um bestimmte bereits in den Daten vorhandene, aber nicht explizit abgebildete, Zusammenhänge zu ermitteln. Jedoch können auch einfachere Methoden wie die Zerlegung von Wortgruppen in Einzelwörter (siehe \ref{decomposition}) oder das Einfügen von bisher nur transitiv vorhandenen Beziehungen erfolgreich sein, um neue Begriffe und Beziehungen in den Datenbestand einzuführen.
 
 \subsubsection{Anreicherung durch Integration externer Datenquellen}
@@ -99,3 +98,20 @@ Sofern weitere Datenquellen verfügbar sind, stellt die Integration dieser einen
 Um die zusätzliche Datenquelle zur Link Discovery zu nutzen, werden die gleichen Schritte, die schon zur initialen Erzeugung des Weltausschnittes zum Einsatz kamen, genutzt (siehe \ref{integration_generic}). Dazu werden im Transformationsschritt Daten erzeugt, die dem Modell des Weltausschnittes entsprechen. Im Integrationsschritt werden sie mit den bereits vorhandenen Daten zusammengeführt.
 
 \subsection{Prioisierung von Beziehungen}
+
+Ziel des Prioisierungsschrittes der Link Discovery ist das Finden einer Gewichtung der Zusammenhangstypen, die für einen Anwendungsfall relevante Nachbarn zu einem Begriff liefert. Die Relevanz kann jedoch nur von einem Benutzer bewertet werden. Abbildung \ref{fig:prioritization} stellt den Prioisierungsprozess dar.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{prioritization}
+\caption{FMC--Petri--Netz der Prioisierung}
+\label{fig:prioritization}
+\end{figure}
+
+Grundsätzlich kann nicht davon ausgegangen werden, dass eine Prioisierung für alle im Weltausschnitt gespeicherten Begriffe relevante Nachbarn liefert. Daher sollte die Prioisierung stichprobenhaft für einzelne Begriffe durchgeführt werden, um dann möglicherweise eine global gute Ergebnisse liefernde Prioisierung zu ermitteln.
+
+Der Prioisierungsprozess beginnt mit der Auswahl einer Stichprobe anhand geeigneter Kriterien für das Anwendungsszenario. Beispielhaft für Kriterien sind externe Faktoren wie die Popularität des Begriffes in der Anwendungsdomäne oder im Weltausschnitt gespeicherte Faktoren wie die Anzahl der Zusammenhänge eines Begriffes. Wird der Prozess mit mehreren Stichprobe durchgeführt, sollte auf eine möglichst breite Streuung des jeweiligen Kriteriums geachtet werden, um die Güte der Prioisierungen abhängig vom Begriff beurteilen zu können.
+
+Nach der Auswahl der Stichprobe wird vom Link--Discovery--System eine Prioisierung erzeugt. Wie diese Erzeugung konkret implementiert ist, hängt von der Anwendung ab. Im Rahmen dieser Arbeit wurden Evolutionäre Algorithmen (siehe \ref{evo}) gewählt. Die erzeugte Prioisierung wird auf den Begriff angewandt und von einem Benutzer bewertet. Der Benutzer sollte Wissen über die Anwendungsdomäne besitzen.
+
+Ist die Bewertung der Prioisierung positiv, ist der Prioisierungsprozess beendet. Bei nicht zufriedenstellendem Ergebnis wird die Erzeugung einer neuen Prioisierung und die anschließende Bewertung wiederholt. Stellt sich auch nach einer im Voraus gewählten Anzahl von Iterationen dieser Art kein zufriedendstellendes Ergebnis ein, so sollte die Prioisierung abgebrochen werden und die Gründe für das Fehlschlagen analysiert werden. Diese können beispielsweise in einer schlechten Qualität der Beziehungen des Weltausschnittes, in einer unpassenden Stichprobenauswahl oder fehlendem Wissen des Benutzers gefunden werden.
