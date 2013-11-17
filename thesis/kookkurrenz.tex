@@ -6,7 +6,7 @@ Das folgende Kapitel beschreibt detailliert die Erstellung von Kookkurrenzgraphe
 
 Um gewichtete inhaltliche Beziehungen zwischen Wörtern und Wortgruppen herstellen zu können, wird eine Definition von \emph{Ähnlichkeit} benötigt. Diese lässt sich auf vielfältige Arten bestimmen.
 
-Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Diese Definiton von Ähnlichkeit wird in Abbildung \ref{fig:similarity} veranschaulicht.
+Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Diese Definition von Ähnlichkeit wird in Abbildung \ref{fig:similarity} veranschaulicht.
 
 \begin{figure}
 \centering
@@ -21,7 +21,7 @@ Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die
 
 Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein-Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
 
-Im Kontext dieser Arbeit wird also ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Wörtern und Wortgruppen eine Distanz zwischen ebenjenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen lingustische Ähnlichkeitsmaße wie die Levenshtein-Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Zeichenketten, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können.
+Im Kontext dieser Arbeit wird also ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Wörtern und Wortgruppen eine Distanz zwischen eben jenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen linguistische Ähnlichkeitsmaße wie die Levenshtein-Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Zeichenketten, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können.
 
 Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, das den Kontext, in dem die Wörter und Wortgruppen im Quellsystem verwendet werden, berücksichtigt. Als dieses Maß wurde im Rahmen dieser Arbeit die Kookkurrenz gewählt, welche in den folgenden Abschnitten beschrieben wird.
 
@@ -74,7 +74,7 @@ Die Kosinus-Ähnlichkeit \cite{hkp2012} ist ursprünglich ein Maß für die Ähn
 \delta_{Cosine}(a, b) = \frac{|A \cap B|}{\sqrt{|A| \times |B|}}
 \]
 
-Nachdem die Ähnlichkeit mittels Kookkurrenz und die entsprechenden Maße vorgestellt wurden, wird im nächsten Abschnitt die technische Umsetzung der Kookkurenzberechnung diskutiert.
+Nachdem die Ähnlichkeit mittels Kookkurrenz und die entsprechenden Maße vorgestellt wurden, wird im nächsten Abschnitt die technische Umsetzung der Kookkurrenzberechnung diskutiert.
 
 \section{Umsetzung}
 
@@ -104,11 +104,11 @@ Die Reduce-Funktion wird also jeweils auf einen Schlüssel und eine Liste von We
 \label{fig:mapreduce}
 \end{figure}
 
-Die MapReduce-Bibliothek übernimmt sämtliche Kommunkation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass sich der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
+Die MapReduce-Bibliothek übernimmt sämtliche Kommunikation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass sich der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
 
-In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \ref{mongo}). Nach dieser grundsätzlichen Betrachtung des Programmiermodells wird im nächsten Abschnitt die Anwendung zur Berechnung von Kookkurenzen diskutiert.
+In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \ref{mongo}). Nach dieser grundsätzlichen Betrachtung des Programmiermodelles wird im nächsten Abschnitt die Anwendung zur Berechnung von Konkurrenzen diskutiert.
 
-\subsection{Anwendung von MapReduce zur Kookkurenzberechnung}
+\subsection{Anwendung von MapReduce zur Kookkurrenzberechnung}
 \label{mapreduce_cooccurence}
 
 MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurrenzgraphen genutzt werden. Dazu müssen für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
@@ -121,7 +121,7 @@ Als Eingabedaten für die Berechnung der Knotenmenge dienen Tupel der Form \((d,
 
 Die Reduce-Funktion fasst die einelementigen Listen zusammen, addiert die Vorkommen und erzeugt somit den Knoten, der für einen Begriff alle Dokumente, die mit diesem Begriff versehen wurden, sowie die Anzahl der Vorkommen insgesamt enthält.
 
-Die Map- und Reduce-Funktionen für die Knotenberechnung sind in Listings \ref{lst:mapred_nodes} als Pseudocode dargestellt.
+Die Map- und Reduce-Funktionen für die Knotenberechnung sind in Listings \ref{lst:mapred_nodes} als Pseudo--Code dargestellt.
 
 \begin{lstlisting}[language=pseudo, label={lst:mapred_nodes}, caption={Knotenerzeugung mit MapReduce}]
 function map(document, term) {
@@ -140,7 +140,7 @@ function reduce(term, values) {
 
 \subsubsection{Berechnung der Kanten}
 
-Die Berechnung der Kantenmenge kann mit den vorher berechneten Knoten als Eingabedaten erfolgen und wird in 2 Bearbeitungsschritte aufgeteilt. Zuerst werden die annotierten Knoten so umgeformt, dass zu einem Dokument alle vergebenen Begriffe bekannt sind. Im zweiten Schritt werden alle Paare von miteinander auftretenden Begriffen gebildet und die Ähnlichkeitsmaße berechnet.
+Die Berechnung der Kantenmenge kann mit den vorher berechneten Knoten als Eingabedaten erfolgen und wird in 2 Verarbeitungsschritte aufgeteilt. Zuerst werden die annotierten Knoten so umgeformt, dass zu einem Dokument alle vergebenen Begriffe bekannt sind. Im zweiten Schritt werden alle Paare von miteinander auftretenden Begriffen gebildet und die Ähnlichkeitsmaße berechnet.
 
 Algorithmus \ref{lst:mapred_edges1} zeigt die Umformung der Knoten mittels MapReduce. Als Eingabe für die Map-Funktion dienen die Knoten. Diese werden so umgeformt, dass für jedes Dokument, das am Knoten annotiert ist, ein neues Schlüssel-/Wertpaar emittiert wird. Die Reduce-Funktion fasst die emittierten Ergebnisse zusammen, sodass als Ergebnis alle Begriffe, die an ein Dokument vergeben wurden, gesammelt als Liste vorliegen.
 
@@ -183,4 +183,4 @@ function reduce(edge, values) {
 }
 \end{lstlisting}
 
-Nachdem in diesem Kapitel die theoretischen Grundlagen für die Link Discovery mittels Kookkurenz beschrieben wurden, beschäftigt sich das folgende Kapitel mit dem technischen System zur Umsetzung des Lösungsansatzes.
+Nachdem in diesem Kapitel die theoretischen Grundlagen für die Link Discovery mittels Kookkurrenz beschrieben wurden, beschäftigt sich das folgende Kapitel mit dem technischen System zur Umsetzung des Lösungsansatzes.

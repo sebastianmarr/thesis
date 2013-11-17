@@ -11,7 +11,7 @@ Um den Ausgangsgraphen zu berechnen, sind die Schritte des Imports, der Bereinig
 
 \subsection{Import}
 
-Die Daten liegen im Quellsystem, einer MySQL-Datenbank, in relationaler Form vor. Somit existieren Tabellen für die Tags, Dokumente und Verknüpfungen zwischen ebenjenen. Da der Inhalt der Dokumente nicht relevant für die Link Discovery mittels Kookkurrenz sind, genügt es, die Tabellen der Tags und Verknüpfungen zu importieren.
+Die Daten liegen im Quellsystem, einer MySQL-Datenbank, in relationaler Form vor. Somit existieren Tabellen für die Tags, Dokumente und Verknüpfungen zwischen eben jenen. Da der Inhalt der Dokumente nicht relevant für die Link Discovery mittels Kookkurrenz sind, genügt es, die Tabellen der Tags und Verknüpfungen zu importieren.
 
 Die Tags liegen in der Form \((i, s, l)\) vor, wobei \(i\) den eindeutigen Bezeichner des Tags, \(s\) die Zeichenkette und \(l\) die Sprache des Tags repräsentieren.
 
@@ -77,7 +77,7 @@ Der Reduktionsschritt dient zur Einschränkung der Gesamtdaten auf eine nützlic
 
 Im Fall der Tag-Daten liegt das Hauptaugenmerk im Reduktionsschritt auf der Entfernung von Duplikaten, die bei der Bereinigung entstanden sind. Dabei muss gleichzeitig sicher gestellt werden, dass keine Informationen über die Verwendung der Tags verloren gehen. Somit besteht die Duplikatentfernung der Tags im Zusammenführen von Datensätzen mit gleichen Zeichenketten und Sprachen. Gleichzeitig werden auch die Verwendungen der Tags zusammengeführt.
 
-Werden die Verknüpfungen zweier Tags mit Dokumenten zusammengeführt, können auch dabei wieder Duplikate entstehen. Diese müssen in diesem Fall entfernt werden, da ein Tag nicht mehrmals mit einem Dokument verknüpft werden kann. Das Zusammenfürhen von Tags ist exemplarisch in Abbildung \ref{fig:tag_reduction} dargestellt.
+Werden die Verknüpfungen zweier Tags mit Dokumenten zusammengeführt, können auch dabei wieder Duplikate entstehen. Diese müssen in diesem Fall entfernt werden, da ein Tag nicht mehrmals mit einem Dokument verknüpft werden kann. Das Zusammenführen von Tags ist exemplarisch in Abbildung \ref{fig:tag_reduction} dargestellt.
 
 \begin{figure}
 \centering
@@ -115,7 +115,7 @@ Nach der beschriebenen Reduktion befinden sich noch \num{314351} Tags und \num{2
 
 \subsection{Transformation}
 
-Der Transformationsschritt beschreibt die Überführung der Daten in die Form, die für das Ergebnis benötigt wird. Im Falle der Tag-Daten bedeutet dies eine Umformung in die Form des Kokkurrenzgraphen, also die Erzeugung von Knoten- und Kantenobjekten. Die Umsetzung dieser Transformation mittels des Programmiermodells MapReduce wurde in \ref{mapreduce_cooccurence} genauer beschrieben.
+Der Transformationsschritt beschreibt die Überführung der Daten in die Form, die für das Ergebnis benötigt wird. Im Falle der Tag-Daten bedeutet dies eine Umformung in die Form des Kookkurrenzgraphen, also die Erzeugung von Knoten- und Kantenobjekten. Die Umsetzung dieser Transformation mittels des Programmiermodelles MapReduce wurde in \ref{mapreduce_cooccurence} genauer beschrieben.
 
 Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Dieses besitzt als Attribute zum einen die Zeichenkette und die Sprache des Tags, aus dem es erzeugt wurde. Zum anderen wird ein Unterdokument hinzugefügt, welches weitere Eigenschaften des Ausgangstags beschreibt. Dies umfasst die Anzahl der Verwendungen und die eindeutigen Bezeichner der Dokumente, also Artikel oder Designs, die mit dem Tag getaggt wurden. Außerdem wird im Transformationsschritt für jeden Knoten ein global eindeutiger Bezeichner erzeugt, um das spätere Referenzieren der Knoten einfacher zu machen. Zeichenkette und Sprache des Knotens stellen einen zusammengesetzten Schlüssel dar und sind in der Knotenmenge eindeutig. Listing \ref{lst:tag_transform_node} zeigt ein Beispiel für ein in der Datenbank abgelegtes Knotendokument.
 
@@ -203,7 +203,7 @@ Da das Clicktracking-System zum Zeitpunkt des Imports erst 3 Monate Daten aufzei
 
 Im Bereinigungsschritt müssen zunächst die genannten Defekte der Klickdaten beseitigt werden. Dazu gehört die Entfernung der eckigen Klammern in Suchbegriff und Gebietsschema und die Extraktion des eindeutigen Bezeichners des geklickten Artikels. Aus dem Gebietsschema ist nur die Sprache von Interesse. Außerdem wurden für den Suchbegriff die gleichen Bereinigungsoperationen wie für die Tag-Daten vorgenommen, also die Entfernung von überflüssigen Leerzeichen, Groß-/Kleinschreibung, nicht druckbarer Sonderzeichen und Satzzeichen.
 
-Im Bereinigunsschritt werden so auch einfacher verarbeitbare Dokumente erzeugt, da die Möglichkeiten des JSON-Formates besser ausgenutzt werden. Listing \ref{lst:tag_cleanup} zeigt das Ergebnis der Bereinigung des in \ref{click_import} gezeigten Beispieldokumentes.
+Im Bereinigungsschritt werden so auch einfacher verarbeitbare Dokumente erzeugt, da die Möglichkeiten des JSON-Formates besser ausgenutzt werden. Listing \ref{lst:tag_cleanup} zeigt das Ergebnis der Bereinigung des in \ref{click_import} gezeigten Beispieldokumentes.
 
 \begin{lstlisting}[language=json, label={lst:tag_cleanup}, caption={Bereinigtes Clicktracking-Dokument}]
 {
@@ -269,13 +269,13 @@ Die Integration der erzeugten Daten stellt eine Vereinigung des vorhandenen Ziel
 
 Die Knotenmenge wird derart vereinigt, dass die Knotenmenge des Zielgraphen die Eigenschaft behält, dass Paare aus Sprache und Zeichenkette eindeutig sind. Somit werden bei bereits vorhandenen Knoten die zusätzlichen Informationen bezüglich des Clicktrackings als Attribute hinzugefügt. Existiert eine Kombination aus Sprache und Zeichenkette noch nicht im Zielgraph, so wird der entsprechende Knoten kopiert.
 
-Da die erzeugten Kanten einen noch nicht im Graph vorhandenen Typ besitzen, müssen keine Kanten zusammengeführt werden. Jedoch werden die Bezeichner der Ziel- und Quellquoten entsprechend angepasst, wenn bei der Integration der Knoten eine Zusammenführung stattgefunden hat.
+Da die erzeugten Kanten einen noch nicht im Graph vorhandenen Typ besitzen, müssen keine Kanten zusammengeführt werden. Jedoch werden die Bezeichner der Ziel- und Quellknoten entsprechend angepasst, wenn bei der Integration der Knoten eine Zusammenführung stattgefunden hat.
 
 Durch dieses Vorgehen konnten der Knotenmenge \num{78237} Knoten, und somit auch neue Begriffe hinzugefügt werden. Die Kantenmenge wurde, wie bereits erläutert, um \num{310860} Kanten erweitert.
 
 \section{Google Translate}
 
-Google bietet im Rahmen seines \emph{Translate}-Services \cite{gt2013} eine kostenpfichtige API für Spracherkennung an. Diese ermöglicht es, die Sprache beliebiger Zeichenketten automatisch erkennen zu lassen. Google stellt hierzu eine API zur Verfügung.
+Google bietet im Rahmen seines \emph{Translate}-Services \cite{gt2013} eine kostenpflichtige API für Spracherkennung an. Diese ermöglicht es, die Sprache beliebiger Zeichenketten automatisch erkennen zu lassen. Google stellt hierzu eine API zur Verfügung.
 
 Diese Schnittstelle liefert Ergebnisse der Form \((l, c)\), wobei \(l\) die für die Zeichenkette erkannte Sprache und \(c\) einen Konfidenzwert für die Spracherkennung repräsentiert. Der Konfidenzwert liegt im Intervall zwischen \num{0} und \num{1} und stellt die Verlässlichkeit der Spracherkennung dar.
 
@@ -396,7 +396,7 @@ Zur Bereinigung der importierten Wortschatz-Daten muss in einem ersten Schritt d
 
 Weiterhin werden die Kategorien ``Vorname'' und ``Nachname'' entfernt, da diese an über \num{25000} Wörter vergeben sind und somit für die Verwendung zur Link Discovery ungeeignet sind und zu viele irrelevante Kanten erzeugen würden.
 
-Ein letzer Bereinigungsschritt besteht in der VeränderungD des Formates der Grundform des Wortes. Die Wortschatz-API liefert lediglich ein Array, in dem das erste Element die Grundform und das zweite Element die Wortart ist. Zur Bereinigung wird diese Eigenschaft in ein geeignetes JSON-Format überführt, welches in Listing \ref{lst:word_baseform} dargestellt ist.
+Ein letzter Bereinigungsschritt besteht in der Veränderung des Formates der Grundform des Wortes. Die Wortschatz-API liefert lediglich ein Array, in dem das erste Element die Grundform und das zweite Element die Wortart ist. Zur Bereinigung wird diese Eigenschaft in ein geeignetes JSON-Format überführt, welches in Listing \ref{lst:word_baseform} dargestellt ist.
 
 \begin{lstlisting}[language=json, label={lst:word_baseform}, caption={Grundform eines Wortes}]
 {
@@ -473,7 +473,7 @@ Im folgenden Abschnitt werden die quantitativen Ergebnisse der Link Discovery zu
 \label{tab:discovery_amounts}
 \end{table}
 
-Tabelle \ref{tab:discovery_amounts} führt für jeden Schritt die hinzugefügten Knoten und Kanten sowie die nach Durchführung der Link Discovery insgesamt im Graphen enthaltene Datenmenge auf. Dabei zeigt sich, dass die Integration der Wortschatzdaten mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
+Tabelle \ref{tab:discovery_amounts} führt für jeden Schritt die hinzugefügten Knoten und Kanten sowie die nach Durchführung der Link Discovery insgesamt im Graphen enthaltene Datenmenge auf. Dabei zeigt sich, dass die Integration der Daten des Wortschatzes mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
 
 Bei der Verwendung der Clicktracking-Daten wurden im Verhältnis wenig neue Knoten und Kanten erzeugt. Dies ist im Wesentlichen auf den zum Zeitpunkt des Importes noch geringen Datenbestand zurückzuführen. Daher sollte dieser Schritt zukünftig wiederholt werden, da mit der längeren Laufzeit des Clicktracking-Systems auch ein größeres Potential für neue Verknüpfungen vorhanden ist.
 
@@ -497,10 +497,10 @@ Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der 
 \label{tab:discovery_edges_per_node}
 \end{table}
 
-Auffällig ist hierbei, dass die Integration von Clicktracking- und Wortschatz-Daten zu einer Herabsenkung des Medians führten. Dies bedeutet, dass verhältnismäßig nach Durchführung dieser Schritte weniger vielverbundene Knoten im Datenbestand existierten als davor. Jedoch deutet die Entwicklung des Durchschnittes nach der Integration der Wortschatz-Daten darauf hin, dass die Knotenanzahl vielverbundener Knoten nach diesem Schritt deutlich größer geworden ist.
+Auffällig ist hierbei, dass die Integration von Clicktracking- und Wortschatz-Daten zu einer Herabsetzung des Medians führten. Dies bedeutet, dass verhältnismäßig nach Durchführung dieser Schritte weniger viel verbundene Knoten im Datenbestand existierten als davor. Jedoch deutet die Entwicklung des Durchschnittes nach der Integration der Wortschatz-Daten darauf hin, dass die Knotenanzahl viel verbundener Knoten nach diesem Schritt deutlich größer geworden ist.
 
-Das Absinken des Durchschnittes nach Integration der Clicktracking-Daten kann in der geringen Menge der Daten begründet werden. Durch die geringe Anzahl von Kookkurrenzen konnten vielverbundene Knoten keinen relevanten Zugewinn an Verbindungen verzeichnen, während für wenig verbundene Knoten verhältnismäßig mehr neue Verbindungen hinzukamen.
+Das Absinken des Durchschnittes nach Integration der Clicktracking-Daten kann in der geringen Menge der Daten begründet werden. Durch die geringe Anzahl von Kookkurrenzen konnten viel verbundene Knoten keinen relevanten Zugewinn an Verbindungen verzeichnen, während für wenig verbundene Knoten verhältnismäßig mehr neue Verbindungen hinzukamen.
 
-Generall lässt sich festhalten, dass die Anzahl vielverbundener Knoten gemessen an der Gesamtanzahl relativ klein ist. Die Auswirkungen dessen hängen jedoch stark von der Anwendung der Daten ab und sind im Rahmen dieser Arbeit nicht beurteilbar.
+Generell lässt sich festhalten, dass die Anzahl viel verbundener Knoten gemessen an der Gesamtanzahl relativ klein ist. Die Auswirkungen dessen hängen jedoch stark von der Anwendung der Daten ab und sind im Rahmen dieser Arbeit nicht beurteilbar.
 
 Nach der quantitativen Auswertung der Link Discovery-Schritte wird im nächsten Kapitel die Optimierung der Kantengewichtungen und die Evaluierung der erzeugten Kanten beschrieben.

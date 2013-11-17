@@ -8,7 +8,7 @@ Ein charakteristisches Merkmal von Tags ist, dass sie nur einen bestimmten Aspek
 
 Bei der Arbeit mit Tag-Daten ist zu beachten, dass Benutzer bei der Eingabe von Tags unterschiedliche Ziele verfolgen. Idealerweise werden Tags so vergeben, dass sie das getaggte Objekt inhaltlich beschreiben. Jedoch werden vom Benutzer bei der Eingabe des Tags weitere Assoziationen hergestellt. Beispielsweise kann der Benutzer mit einem Objekt bestimmte Emotionen oder Wertungen verbinden, die sich in den vergebenen Tags widerspiegeln.
 
-Auf Marktplätzen, bei denen Verkäufern die Möglichkeit des Taggings ihrer Produkte gegeben wird, besteht eine weitere Motivation in der Erhöhung der Auffindbarkeit des Produktes. Die inhaltliche Qualität des Tags wird möglicherweiße außer Acht gelassen, wenn bei Vergabe einer falschen Beschreibung die Sichtbarkeit des Produktes erhöht wird. Auch der Marktplatzbetreiber selbst kann so vorgehen, um zu versuchen, die Gesamtverkäufe zu steigern.
+Auf Marktplätzen, bei denen Verkäufern die Möglichkeit des Taggings ihrer Produkte gegeben wird, besteht eine weitere Motivation in der Erhöhung der Auffindbarkeit des Produktes. Die inhaltliche Qualität des Tags wird möglicherweise außer Acht gelassen, wenn bei Vergabe einer falschen Beschreibung die Sichtbarkeit des Produktes erhöht wird. Auch der Marktplatzbetreiber selbst kann so vorgehen, um zu versuchen, die Gesamtverkäufe zu steigern.
 
 Die verschiedenen Motivationen bei der Benutzung von Tags erschweren die nachträgliche Suche nach Assoziationen. Die vorliegende Masterarbeit beschäftigt sich mit Strategien zur Datenaufbereitung und Nutzung externer und interner Datenquellen und deren Integration mit Tag-Daten. Aus diesen Datenquellen wird eine Datenstruktur mit einem Kookkurrenzgraphen als Basis aufgebaut. Außerdem wird eine Optimierung der verwendeten Parameter und die Evaluation der Ergebnisse durchgeführt.
 
@@ -16,7 +16,7 @@ Die verschiedenen Motivationen bei der Benutzung von Tags erschweren die nachtr�
 
 Die nachträgliche Herstellung von Assoziationen in vorhandenen Tag-Daten bietet einige Nutzungsmöglichkeiten für den Betreiber der Online-Plattform.
 
-Die Beziehungen zwischen Tags können genutzt werden, um Suchergebnisse zu verbessern. Wenn zu einem Suchbegiff weitere relevante Begriffe bekannt sind, können diese im Suchergebnis mit enthalten sein um somit auch Objekte zu finden, die nicht direkt mit dem Suchbegriff getaggt sind. Außerdem können Suchen vom Benutzer mit Hilfe von verwandten Tags verfeinert werden.
+Die Beziehungen zwischen Tags können genutzt werden, um Suchergebnisse zu verbessern. Wenn zu einem Suchbegriff weitere relevante Begriffe bekannt sind, können diese im Suchergebnis mit enthalten sein um somit auch Objekte zu finden, die nicht direkt mit dem Suchbegriff getaggt sind. Außerdem können Suchen vom Benutzer mit Hilfe von verwandten Tags verfeinert werden.
 
 Über die Zusammenfassung von Tags zu Themen lässt sich außerdem die Navigation einer Website verbessern. Aus den Themen lassen sich Kategorien oder Hierarchien von Kategorien erzeugen, die besser den Denkmustern von Benutzern entsprechen. So sind auch Navigationskonzepte denkbar, die nicht hierarchisch, sondern assoziativ aufgebaut sind. Des weiteren können Tag-Assoziationen für Empfehlungssysteme genutzt werden, die einem Kunden zu einem bestimmten Artikel passende andere Artikel vorschlagen.
 
@@ -67,7 +67,7 @@ Die Herstellung von semantischen Beziehungen in Tag-Daten ist Gegenstand vieler 
 
 \textcite{bks2006} beschreiben einen auf Kookkurrenz basierenden Ansatz, miteinander verwandte Tags zu Clustern zusammenzufassen. Die Ähnlichkeit wird nicht nur durch die Menge, sondern auch durch die Verteilung der Häufigkeiten der gemeinsamen Vorkommen der Tags definiert. Dadurch ergeben sich bereits bei Berechnung des Ähnlichkeitsmaßes Cluster, die dann mit einem partitionierenden Algorithmus weiter geteilt werden.
 
-In der Arbeit von \textcite{ps2006} wird ein Ansatz beschrieben, eine Ontologie aus den Daten der Foto-Plattform \emph{Flickr} herzustellen. Dazu wird versucht, ebenfalls auf Basis von Kookkurrenzen, nicht nur Cluster von Tags, sondern hierarchische Beziehungen zwischen eben jenen zu ermitteln. Diese Beziehungen werden durch die Analyse der getaggten Inhalte hergestellt, indem ermittelt wird, welche der Inhalte Teilmengen voneinander sind.
+In der Arbeit von \textcite{ps2006} wird ein Ansatz beschrieben, eine Ontologie aus den Daten der Foto-Plattform \emph{Flickr} herzustellen. Dazu wird versucht, ebenfalls auf Basis von Kookkurrenz, nicht nur Cluster von Tags, sondern hierarchische Beziehungen zwischen eben jenen zu ermitteln. Diese Beziehungen werden durch die Analyse der getaggten Inhalte hergestellt, indem ermittelt wird, welche der Inhalte Teilmengen voneinander sind.
 
 \textcite{kss2010} arbeiten ebenfalls mit dem Ansatz, auf Basis eines Kookkurrenzgraphen Cluster von Tags zu bilden. Die Kookkurrenz wird mit den bekannten Maßen Dice, Jaccard und Cosinus berechnet. Als Clusteringalgorithmen kommen Single-Link, Complete-Link und Group-Average zum Einsatz. Die Arbeit legt besonderen Wert auf die Rolle der Cluster zur Verbesserung von Suchoberflächen. Daher werden auch Tests mit Benutzern durchgeführt und die Ergebnisse evaluiert.
 

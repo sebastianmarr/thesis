@@ -32,7 +32,7 @@ Listing \ref{lst:json} zeigt ein Beispiel für ein Dokument in MongoDB. Das Feld
 }
 \end{lstlisting}
 
-MongoDB unterstützt Anfragen über ein Binärprotokoll, welches über so genannte \emph{Treiber} in vielen Programmiersprachen abstrahiert zur Verfügung steht. Dieses Protokoll unterstützt vielfältige Lese- und Schreiboperationen, die komplexe Abfragen und Operationen auf den gespeicherten Daten zulassen. Außerdem bietet MongoDB eine Implementierung des MapReduce-Programmiermodells (siehe \ref{mapreduce}) sowie die Möglichkeit, Indizes auf allen Hierarchieebenen der Dokumente zu nutzen. Für interaktive Operationen steht die \emph{Mongo Shell} zur Verfügung, welche Abfragen mittels der Programmiersprache JavaScript erlaubt und somit einen Treiber für diese Sprache darstellt.
+MongoDB unterstützt Anfragen über ein Binärprotokoll, welches über so genannte \emph{Treiber} in vielen Programmiersprachen abstrahiert zur Verfügung steht. Dieses Protokoll unterstützt vielfältige Lese- und Schreiboperationen, die komplexe Abfragen und Operationen auf den gespeicherten Daten zulassen. Außerdem bietet MongoDB eine Implementierung des MapReduce-Programmiermodelles (siehe \ref{mapreduce}) sowie die Möglichkeit, Indizes auf allen Hierarchieebenen der Dokumente zu nutzen. Für interaktive Operationen steht die \emph{Mongo Shell} zur Verfügung, welche Abfragen mittels der Programmiersprache JavaScript erlaubt und somit einen Treiber für diese Sprache darstellt.
 
 Aufgrund der genannten Eigenschaften stellt MongoDB einen exzellenten Ausgangspunkt für die Link Discovery im Rahmen dieser Arbeit dar. Durch die vorhandene Schemaflexibilität können die Daten in der gerade benötigten Form gespeichert und abgefragt werden. Durch die Unterstützung von MapReduce mit mehreren Rechnern lassen sich Berechnungen wie die der Kookkurrenz (siehe \ref{mapreduce_cooccurence}) parallelisieren und somit beschleunigen.
 
@@ -60,13 +60,13 @@ Das resultierende Knotenmodell ist in Abbildung \ref{fig:node_erd} dargestellt.
 \begin{figure}
 \centering
 \includegraphics[width=0.6\textwidth]{node_erd}
-\caption{FMC--Entity--Relationship--Diagramm des Knotenmodells}
+\caption{FMC--Entity--Relationship--Diagramm des Knotenmodelles}
 \label{fig:node_erd}
 \end{figure}
 
 \subsection{Kanten}
 
-Eine Kante ist im Wesentlichen durch die Knoten, die sie verbindet, beschrieben. Sie stellt einen irgendwie gearteten Zusammenhang zwischen zwei Knoten dar. Sie ist gerichtet, um auch asymetrische Zusammenhänge zwischen Knoten abbilden zu können.
+Eine Kante ist im Wesentlichen durch die Knoten, die sie verbindet, beschrieben. Sie stellt einen irgendwie gearteten Zusammenhang zwischen zwei Knoten dar. Sie ist gerichtet, um auch asymmetrische Zusammenhänge zwischen Knoten abbilden zu können.
 
 Somit sind die einzig immer benötigten Attribute der Quell- und Zielknoten und der Typ der Kante. Zusätzlich erhält jede Kante einen eindeutigen Bezeichner.
 
@@ -77,7 +77,7 @@ Das beschriebene Kantenmodell ist in Abbildung \ref{fig:edge_erd} dargestellt.
 \begin{figure}
 \centering
 \includegraphics[width=0.2\textwidth]{edge_erd}
-\caption{FMC--Entity--Relationship--Diagramm des Kantenmodells}
+\caption{FMC--Entity--Relationship--Diagramm des Kantenmodelles}
 \label{fig:edge_erd}
 \end{figure}
 
@@ -158,7 +158,7 @@ Die Schritte zur Link Discovery sind im Wesentlichen für jede zu integrierende 
 
 Abbildung \ref{fig:architecture} zeigt die komplette Architektur des implementierten Link Discovery Systems. Darin sind alle genutzten Datenquellen und die Daten, die sie bereit stellen, aufgeführt.
 
-Für jede Datenquelle exisitiert ein Importskript, welches die Rohdaten importiert und in MongoDB speichert. Bei relationalen Datenquellen wie der Spreadshirt MySQL-Datenbank für die Tag-Daten wird pro Tabelle eine Collection und pro Zeile ein Dokument angelegt. Können nicht alle Daten importiert werden, wie beispielsweise bei der Wortschatz-API (siehe \ref{wortschatz}, kann das Importskript auch aufgrund der bisher im Graph vorhandenen Daten eine Auswahl an Anfragen an die externe Datenquelle erzeugen.
+Für jede Datenquelle existiert ein Importskript, welches die Rohdaten importiert und in MongoDB speichert. Bei relationalen Datenquellen wie der Spreadshirt MySQL-Datenbank für die Tag-Daten wird pro Tabelle eine Collection und pro Zeile ein Dokument angelegt. Können nicht alle Daten importiert werden, wie beispielsweise bei der Wortschatz-API (siehe \ref{wortschatz}, kann das Importskript auch aufgrund der bisher im Graph vorhandenen Daten eine Auswahl an Anfragen an die externe Datenquelle erzeugen.
 
 Im nachfolgenden Bereinigungsschritt werden die Daten so gut wie möglich von eventuell vorhandenen Defekten befreit. Dazu zählen beispielsweise das Entfernen nicht nutzbarer Zeichen oder von unvollständigen Datensätzen.
 
