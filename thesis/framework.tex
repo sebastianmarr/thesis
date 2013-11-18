@@ -66,8 +66,9 @@ Im nachfolgenden Bereinigungsschritt werden die importierten Daten so gut wie m�
 Der Reduktionsschritt dient zur Verkleinerung der Datenmenge. Dazu gehören beispielsweise Schritte zur Duplikatentfernung oder zur Auswahl relevanter Datensätze. In dieser Arbeit bestand die Haupteinschränkung der Datenmenge darin, nach Möglichkeit nur deutschsprachige Datensätze auszuwählen.
 
 \paragraph{Transformation}
+\label{transformation}
 
-Der Schritt der Transformation überführt die Daten schließlich in das Modell des Weltausschnittes. Dies bedeutet, dass die Datensätze in Begriffe und Beziehungen umgewandelt werden. Dabei sollten so viele Informationen über den Kontext der Begriffe erhalten bleiben. Die Methode, wie diese Transformation vorgenommen wird, hängt von der Datenquelle ab. Generell werden die Beziehungen meist aus dem Kontext der Begriffe, wie er in der Datenquelle vorliegt, gebildet. Somit stellt der Transformationsschritt die wichtigste Komponente für die Integration einer Datenquelle dar.
+Der Schritt der Transformation überführt die Daten schließlich in das Modell des Weltausschnittes. Dies bedeutet, dass die Datensätze in Begriffe und Beziehungen umgewandelt werden. Dabei sollten so viele Informationen über den Kontext der Begriffe erhalten bleiben. Die Methode, wie diese Transformation vorgenommen wird, hängt von der Datenquelle ab. Generell werden die Beziehungen meist aus dem Kontext der Begriffe, wie er in der Datenquelle vorliegt, gebildet. Ein Mittel für die Beziehungserzeugung ist die Kookkurrenz, welche in Abschnitt \ref{co-occurence} erläutert wird. Somit stellt der Transformationsschritt die wichtigste Komponente für die Integration einer Datenquelle dar.
 
 \paragraph{Integration}
 
@@ -119,3 +120,103 @@ Der Prioisierungsprozess beginnt mit der Auswahl einer Stichprobe anhand geeigne
 Nach der Auswahl der Stichprobe wird vom Link--Discovery--System eine Prioisierung erzeugt. Wie diese Erzeugung konkret implementiert ist, hängt von der Anwendung ab. Im Rahmen dieser Arbeit wurden Evolutionäre Algorithmen (siehe \ref{evo}) gewählt. Die erzeugte Prioisierung wird auf den Begriff angewandt und von einem Benutzer bewertet. Der Benutzer sollte Wissen über die Anwendungsdomäne besitzen.
 
 Ist die Bewertung der Prioisierung positiv, ist der Prioisierungsprozess beendet. Bei nicht zufriedenstellendem Ergebnis wird die Erzeugung einer neuen Prioisierung und die anschließende Bewertung wiederholt. Stellt sich auch nach einer im Voraus gewählten Anzahl von Iterationen dieser Art kein zufriedendstellendes Ergebnis ein, so sollte die Prioisierung abgebrochen werden und die Gründe für das Fehlschlagen analysiert werden. Diese können beispielsweise in einer schlechten Qualität der Beziehungen des Weltausschnittes, in einer unpassenden Stichprobenauswahl oder fehlendem Wissen des Benutzers gefunden werden.
+
+\section{Kookkurrenz als Mittel zur Beziehungserzeugung}
+\label{co-occurence}
+
+Im Transformationsschritt der Link Discovery (\ref{transformation}) wird eine Methode benötigt, aus dem Kontext von Begriffen Beziehungen zwischen eben jenen zu berechnen. Eine der möglichen Methoden ist die Berechnung von \emph{Kookkurrenz}. Diese wird im folgenden Abschnitt näher erläutert.
+
+\subsection{Grundlagen von Kookkurrenz}
+
+Um gewichtete inhaltliche Beziehungen zwischen Begriffen herstellen zu können, wird eine Definition von \emph{Ähnlichkeit} benötigt. Diese lässt sich auf vielfältige Arten bestimmen.
+
+Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Diese Definition von Ähnlichkeit wird in Abbildung \ref{fig:similarity} veranschaulicht.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{similarity}
+\caption{Repräsentation von Dokumenten als Mengen von Eigenschaften}
+\label{fig:similarity}
+\end{figure}
+
+Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, definieren durch
+\[s(A,B) = F(A \cap B, A-B, B-A)\]
+\label{similarity}
+
+Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein-Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
+
+Im Rahmen dieser Arbeit wird ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Begriffen eine Distanz zwischen eben jenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen linguistische Ähnlichkeitsmaße wie die Levenshtein-Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Begriffen, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können. Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, das den Kontext, in dem die Begriffe im Quellsystem verwendet werden, berücksichtigt.
+
+In \ref{data} wurde das für diese Arbeit verfügbare Tagging-System beschrieben. In diesem System besitzen die Tags wenig Kontext. Die einzig verfügbare Information ist, an welche Dokumente die Tags vergeben wurden.
+
+Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wird ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
+
+Hierzu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen Begriffe benutzen. Diese Annahme muss im Laufe der Evaluierung der Ergebnisse validiert werden.
+
+\subsection{Kookkurrenzmaße}
+\label{measures}
+
+Werden die Objekte, zwischen denen die Ähnlichkeit berechnet werden soll, als Mengen von Eigenschaften definiert, bieten sich die üblichen Kennzahlen für die Ähnlichkeiten von Mengen an. Ein Begriff kann also als Menge der Dokumente, für die er als Beschreibung verwendet wurde, definiert werden.
+
+Um die Ähnlichkeit zwischen zwei Begriffen zu ermitteln, lassen sich die Vereinigungsmenge, Schnittmenge und Kreuzprodukte der jeweiligen Mengen bilden, die die Begriffe repräsentieren. Ist also \(A\) die Menge der Dokumente, die mit einem Begriff \(a\) versehen wurden, \(B\) die Menge der Dokumente mit einem Begriff \(b\), so ergeben sich die Mengen:
+
+\begin{itemize}
+    \item \(A \cap B\), alle Dokumente die mit \(a\) und \(b\) versehen wurden
+    \item \(A \cup B\), alle Dokumente die mit \(a\) oder \(b\) versehen wurden
+    \item \(A \times B\), alle Dokumentenpaare, die sich aus den Mengen \(A\) und \(B\) bilden lassen
+\end{itemize}
+
+Die Mächtigkeiten dieser Mengen können dann zur Berechnung verschiedener Ähnlichkeitsmaße verwendet werden. Drei der üblichsten Maße wurden im Rahmen dieser Arbeit verwendet und werden im Folgenden genannt.
+
+\subsubsection{Sørensen-Dice}
+
+Der Sørensen-Dice-Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur Dice-Koeffizient, stammt ursprünglich aus der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
+
+\[
+\delta_{Dice}(a, b) = \frac{2|A \cap B|}{|A|+|B|}
+\]
+
+Der Wertebereich des Koeffizienten liegt zwischen \num{0} und \num{1}.
+
+\subsubsection{Jaccard}
+
+Der Jaccard-Index \cite{pj19012} wurde ursprünglich mit dem gleichen Zweck wie der Dice-Koeffizient verwendet. Sein Wertebereich liegt ebenfalls zwischen \num{0} und \num{1} und er ist definiert durch:
+
+\[
+\delta_{Jaccard}(a,b) = \frac{|A \cap B|}{|A \cup B|}
+\]
+
+\subsubsection{Kosinus}
+
+Die Kosinus-Ähnlichkeit \cite{hkp2012} ist ursprünglich ein Maß für die Ähnlichkeit zweier Vektoren. Sie ist eine Maßzahl dafür, ob die Vektoren ungefähr in die gleiche Richtung zeigen. Sie kann jedoch genauso auf Mengen angewendet werden, da das Vorhandensein der Elemente in der Menge auch durch einen Vektor in einem \(n\)-dimensionalen Raum dargestellt werden kann, wobei \(n\) die Anzahl aller möglichen Eigenschaften ist. Der Wertebereich der Kosinus-Ähnlichkeit liegt ebenfalls zwischen \num{0} und \num{1}. Sie ist auf den in \ref{measures} definierten Mengen definiert durch:
+
+\[
+\delta_{Cosine}(a, b) = \frac{|A \cap B|}{\sqrt{|A| \times |B|}}
+\]
+
+Nachdem die Ähnlichkeit mittels Kookkurrenz und die entsprechenden Maße vorgestellt wurden, wird im nächsten Abschnitt die Berechnung und damit verbundene Komplexität diskutiert.
+
+\subsection{Berechnung von Kookkurrenz}
+
+Um die in \ref{measures} genannten Kookkurrenzmaße zu berechnen, muss das Kreuzprodukt aller Begriffe gebildet werden. Dabei muss für jedes Paar von Begriffen die Häufigkeit gezählt werden, wie oft die Begriffe gemeinsam zur Verschlagwortung von Dokumenten verwendet wurden. Diese Häufigkeit beschreibt die Mächtigkeit der Mengen \(A \cap B\). Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet wird, um die Mächtigkeit der Mengen \(A, B, \dots\) zu bestimmen. Danach können über die genannten Formeln die Kookkurrenzmaße berecnet werden. In Listing \ref{lst:coocc-pseudo} ist die Berechnung als Pseudo--Code dargestellt.
+
+\begin{lstlisting}[language=pseudo, label={lst:coocc-pseudo}, caption={Kookkurrenzberechnung}]
+var occurences = {};
+
+foreach (term in terms) {
+    occurences[term] = countOccurrences(term);
+}
+
+foreach (termA in terms) {
+    foreach (termB in terms) {
+        ab = countCoOccurences(termA, termB);
+    }
+    dice = dice(occurences[termA], occurences[termB], ab);
+    jaccard = jaccard(occurences[termA], occurences[termB], ab);
+    cosine = cosine(occurences[termA], occurences[termB], ab);
+}
+\end{lstlisting}
+
+Der Aufwand, um die Kookkurrenzmaße für alle Paare von Begriffen zu berechnen, hängt also von der Anzahl der Begriffe, Dokumente und Verwendungen ab. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokumente \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung liegt daher zwischen diesen Schranken.
+
+Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden. Eine mögliche Umsetzung der parallelen Berechnung der Kookkurrenz mittels des MapReduce-Programmiermodelles wird in \ref{mapreduce_cooccurence} erläutert.

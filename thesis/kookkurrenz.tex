@@ -1,94 +1,6 @@
 \chapter{Erstellung von Kookkurrenzgraphen}
 
-Das folgende Kapitel beschreibt detailliert die Erstellung von Kookkurrenzgraphen. Dabei werden die Grundprinzipien erläutert, die existierenden Ähnlichkeitsmaße diskutiert und die algorithmische Umsetzung mittels MapReduce dargestellt.
-
-\section{Grundprinzipien}
-
-Um gewichtete inhaltliche Beziehungen zwischen Wörtern und Wortgruppen herstellen zu können, wird eine Definition von \emph{Ähnlichkeit} benötigt. Diese lässt sich auf vielfältige Arten bestimmen.
-
-Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Diese Definition von Ähnlichkeit wird in Abbildung \ref{fig:similarity} veranschaulicht.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.8\textwidth]{similarity}
-\caption{Repräsentation von Dokumenten als Mengen von Eigenschaften}
-\label{fig:similarity}
-\end{figure}
-
-Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, folgendermaßen definieren:
-\[s(A,B) = F(A \cap B, A-B, B-A)\]
-\label{similarity}
-
-Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein-Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
-
-Im Kontext dieser Arbeit wird also ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Wörtern und Wortgruppen eine Distanz zwischen eben jenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen linguistische Ähnlichkeitsmaße wie die Levenshtein-Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Zeichenketten, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können.
-
-Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, das den Kontext, in dem die Wörter und Wortgruppen im Quellsystem verwendet werden, berücksichtigt. Als dieses Maß wurde im Rahmen dieser Arbeit die Kookkurrenz gewählt, welche in den folgenden Abschnitten beschrieben wird.
-
-\section{Kookkurrenz}
-
-In \ref{data} wurden das für diese Arbeit verfügbare Tag-System beschrieben. In diesem System besitzen die Tags wenig Kontext. Die einzig verfügbare Information ist, an welchen Dokumenten die Tags verwendet wurden.
-
-Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wird ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
-
-Hierzu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen Begriffe benutzen. Diese Annahme muss im Laufe der Evaluation der Ergebnisse validiert werden.
-
-\section{Kookkurrenzmaße}
-\label{measures}
-
-Werden die Objekte, zwischen denen die Ähnlichkeit berechnet werden soll, als Mengen von Eigenschaften definiert, bieten sich die üblichen Kennzahlen für die Ähnlichkeiten von Mengen an. Ein Begriff kann also als Menge der Dokumente, für die er als Beschreibung verwendet wurde, definiert werden.
-
-Um die Ähnlichkeit zwischen zwei Begriffen zu ermitteln, lassen sich die Vereinigungsmenge, Schnittmenge und Kreuzprodukte der jeweiligen Mengen bilden, die die Begriffe repräsentieren. Ist also \(A\) die Menge der Dokumente, die mit einem Begriff \(a\) versehen wurden, \(B\) die Menge der Dokumente mit einem Begriff \(b\), so ergeben sich die Mengen:
-
-\begin{itemize}
-    \item \(A \cap B\), alle Dokumente die mit \(a\) und \(b\) versehen wurden
-    \item \(A \cup B\), alle Dokumente die mit \(a\) oder \(b\) versehen wurden
-    \item \(A \times B\), alle Dokumentenpaare, die sich aus den Mengen \(A\) und \(B\) bilden lassen
-\end{itemize}
-
-Die Mächtigkeiten dieser Mengen können dann zur Berechnung verschiedener Ähnlichkeitsmaße verwendet werden. Drei der üblichsten Maße wurden im Rahmen dieser Arbeit verwendet und werden im Folgenden genannt.
-
-\subsection{Sørensen-Dice}
-
-Der Sørensen-Dice-Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur Dice-Koeffizient, stammt ursprünglich aus der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
-
-\[
-\delta_{Dice}(a, b) = \frac{2|A \cap B|}{|A|+|B|}
-\]
-
-Der Wertebereich des Koeffizienten liegt zwischen \num{0} und \num{1}.
-
-\subsection{Jaccard}
-
-Der Jaccard-Index \cite{pj19012} wurde ursprünglich mit dem gleichen Zweck wie der Dice-Koeffizient verwendet. Sein Wertebereich liegt ebenfalls zwischen \num{0} und \num{1} und er ist definiert durch:
-
-\[
-\delta_{Jaccard}(a,b) = \frac{|A \cap B|}{|A \cup B|}
-\]
-
-\subsection{Kosinus}
-
-Die Kosinus-Ähnlichkeit \cite{hkp2012} ist ursprünglich ein Maß für die Ähnlichkeit zweier Vektoren. Sie ist eine Maßzahl dafür, ob die Vektoren ungefähr in die gleiche Richtung zeigen. Sie kann jedoch genauso auf Mengen angewendet werden, da das Vorhandensein der Elemente in der Menge auch durch einen Vektor in einem \(n\)-dimensionalen Raum dargestellt werden kann, wobei \(n\) die Anzahl aller möglichen Eigenschaften ist. Der Wertebereich der Kosinus-Ähnlichkeit liegt ebenfalls zwischen \num{0} und \num{1}. Sie ist auf den in \ref{measures} definierten Mengen folgendermaßen definiert:
-
-\[
-\delta_{Cosine}(a, b) = \frac{|A \cap B|}{\sqrt{|A| \times |B|}}
-\]
-
-Nachdem die Ähnlichkeit mittels Kookkurrenz und die entsprechenden Maße vorgestellt wurden, wird im nächsten Abschnitt die technische Umsetzung der Kookkurrenzberechnung diskutiert.
-
-\section{Umsetzung}
-
-Im folgenden Abschnitt wird die Erstellung eines Graphen beschrieben, der die Kookkurrenzmaße für alle Paare von Begriffen enthält. Die Knoten stellen in diesem Fall die Begriffe dar. Die Kanten repräsentieren eine Kookkurrenz dieser Begriffe und werden mit den gewünschten Kookkurrenzmaßen annotiert. Existiert keine Kante zwischen zwei Knoten, so beträgt die Kookkurrenz zwischen den beiden repräsentierten Begriffen \num{0}.
-
-Der Aufwand, um diesen Graphen zu erstellen, hängt also von der Anzahl der Begriffe, Dokumente und Verbindungen von Begriffen und Dokumenten ab.
-
-Für jedes Dokument muss, um die Ähnlichkeitsmaße zu berechnen, das Kreuzprodukt aller vergebenen Begriffe gebildet werden. Dabei muss das Auftreten jeder Paarung gezählt werden, um die Mächtigkeit aller Mengen \(A \cap B\) bestimmen zu können. Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet wird, um die Mächtigkeit der Mengen \(A\), \(B\) usw. zu bestimmen. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokumente \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung liegt daher zwischen diesen Schranken.
-
-Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden.
-
-Da das Problem der Ähnlichkeitsberechnung nur lokale Berechnungen verwendet, ist eine Parallelisierung mittels des MapReduce-Programmiermodelles sinnvoll.
-
-\subsection{MapReduce}
+\section{MapReduce}
 \label{mapreduce}
 
 MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Der Grundgedanke dieses Modells besteht in der Zerlegung der Berechnung in zwei Funktionen: \emph{Map} und \emph{Reduce}. Die Ein- und Ausgabedaten sind Schlüssel-/Wertpaare. Beide Funktionen werden vom Benutzer spezifiziert.
@@ -108,14 +20,14 @@ Die MapReduce-Bibliothek übernimmt sämtliche Kommunikation zwischen den Knoten
 
 In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \ref{mongo}). Nach dieser grundsätzlichen Betrachtung des Programmiermodelles wird im nächsten Abschnitt die Anwendung zur Berechnung von Konkurrenzen diskutiert.
 
-\subsection{Anwendung von MapReduce zur Kookkurrenzberechnung}
+\section{Anwendung von MapReduce zur Kookkurrenzberechnung}
 \label{mapreduce_cooccurence}
 
 MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurrenzgraphen genutzt werden. Dazu müssen für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
 
 Um die Berechnung zu vereinfachen, werden zuerst die Knoten erzeugt und mit allen Vorkommen der Begriffe annotiert. Somit kann daraufhin direkt aus der Knotenmenge die Kantenmenge erzeugt werden. Außerdem werden bei der Nutzung der Daten weniger Anfragen benötigt, um Informationen über einen Begriff selbst zu bekommen.
 
-\subsubsection{Berechnung der Knoten}
+\subsection{Berechnung der Knoten}
 
 Als Eingabedaten für die Berechnung der Knotenmenge dienen Tupel der Form \((d, t)\), wobei \(d\) ein Dokument und \(t\) einen Begriff darstellt. Die Map-Funktion wird nun auf jeden dieser Tupel angewandt und emittiert Schlüssel-/Wertpaare mit dem Begriff als Schlüssel und einer einelementigen Liste, die das Dokument des Tupels enthält sowie der Zahl \num{1} als Anzahl Vorkommen dieses Begriffs. Dieses Vorgehen ist notwendig, da die Ausgabe der Map- und Reduce-Funktionen das gleiche Datenformat haben sollten.
 
@@ -138,7 +50,7 @@ function reduce(term, values) {
 }
 \end{lstlisting}
 
-\subsubsection{Berechnung der Kanten}
+\subsection{Berechnung der Kanten}
 
 Die Berechnung der Kantenmenge kann mit den vorher berechneten Knoten als Eingabedaten erfolgen und wird in 2 Verarbeitungsschritte aufgeteilt. Zuerst werden die annotierten Knoten so umgeformt, dass zu einem Dokument alle vergebenen Begriffe bekannt sind. Im zweiten Schritt werden alle Paare von miteinander auftretenden Begriffen gebildet und die Ähnlichkeitsmaße berechnet.
 
