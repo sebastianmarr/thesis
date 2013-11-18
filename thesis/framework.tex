@@ -2,7 +2,7 @@
 
 \emph{Link Discovery} \cite{na2011, vbgk2009}, oder \emph{Link Prediction} \cite{twak2003, nk2007}, bezeichnet Methoden des Data Minings \cite{hkp2012}, die zum Ziel haben, Verbindungen zwischen Objekten herzustellen. Diese Verbindungen werden aus vorhandenen Daten abgeleitet.
 
-Das folgende Kapitel beschreibt das Framework, dass für die Link Discovery im Rahmen dieser Arbeit angewendet wurde. Das Framework beschreibt die Kombination aus dem modellierten Weltausschnitt, dem Prozess zur Herstellung der Beziehungen, Kookkurrenz als Maß für Beziehungem, Graphen als Mittel zur Beschreibung des Weltausschnittes, möglichen Datenquellen und evolutionären Algorithmen als Mittel zur Prioisierung der erzeugten Beziehungen.
+Das folgende Kapitel beschreibt das Framework, dass für die Link Discovery im Rahmen dieser Arbeit angewendet wurde. Das Framework beschreibt die Kombination aus dem modellierten Weltausschnitt, dem Prozess zur Herstellung der Beziehungen, Kookkurrenz als Maß für Beziehungen, Graphen als Mittel zur Beschreibung des Weltausschnittes, möglichen Datenquellen und evolutionären Algorithmen als Mittel zur Prioisierung der erzeugten Beziehungen.
 
 \section{Modell des Weltausschnittes}
 \label{world_model}
@@ -198,7 +198,7 @@ Nachdem die Ähnlichkeit mittels Kookkurrenz und die entsprechenden Maße vorges
 
 \subsection{Berechnung von Kookkurrenz}
 
-Um die in \ref{measures} genannten Kookkurrenzmaße zu berechnen, muss das Kreuzprodukt aller Begriffe gebildet werden. Dabei muss für jedes Paar von Begriffen die Häufigkeit gezählt werden, wie oft die Begriffe gemeinsam zur Verschlagwortung von Dokumenten verwendet wurden. Diese Häufigkeit beschreibt die Mächtigkeit der Mengen \(A \cap B\). Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet wird, um die Mächtigkeit der Mengen \(A, B, \dots\) zu bestimmen. Danach können über die genannten Formeln die Kookkurrenzmaße berecnet werden. In Listing \ref{lst:coocc-pseudo} ist die Berechnung als Pseudo--Code dargestellt.
+Um die in \ref{measures} genannten Kookkurrenzmaße zu berechnen, muss das Kreuzprodukt aller Begriffe gebildet werden. Dabei muss für jedes Paar von Begriffen die Häufigkeit gezählt werden, wie oft die Begriffe gemeinsam zur Verschlagwortung von Dokumenten verwendet wurden. Diese Häufigkeit beschreibt die Mächtigkeit der Mengen \(A \cap B\). Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet wird, um die Mächtigkeit der Mengen \(A, B, \dots\) zu bestimmen. Danach können über die genannten Formeln die Kookkurrenzmaße berechnet werden. In Listing \ref{lst:coocc-pseudo} ist die Berechnung als Pseudo--Code dargestellt.
 
 \begin{lstlisting}[language=pseudo, label={lst:coocc-pseudo}, caption={Kookkurrenzberechnung}]
 var occurences = {};
