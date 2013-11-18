@@ -4,7 +4,7 @@ Im folgenden Kapitel werden die vorgenommenen Optimierungsmaßnahmen und die dam
 
 \section{Optimierung}
 
-Zuerst muss definiert werden, welcher Aspekt genau optimiert werden soll. Die in Kapitel \ref{link_discovery} beschriebenen Schritte haben einen Graphen erzeugt, in dem neun verschiedene Kantentypen existieren. Diese lauten \emph{Tag-Kookkurrenz}, \emph{Klick-Kookkurrenz}, \emph{Zusammensetzung}, \emph{Zerlegung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Kategorie-Kookkurrenz} und \emph{Thesaurus-Beziehung}.
+Zuerst muss definiert werden, welcher Aspekt genau optimiert werden soll. Die in Kapitel \ref{link_discovery} beschriebenen Schritte haben einen Graphen erzeugt, in dem neun verschiedene Kantentypen existieren. Diese lauten \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Zerlegung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Kategorie--Kookkurrenz} und \emph{Thesaurus--Beziehung}.
 
 Werden nun inhaltlich relevante Nachbarn zu einem gegebenen Begriff gesucht, müssen alle ausgehenden Kanten des entsprechenden Knotens nach Relevanz geordnet werden. Dazu muss jede Kante ein Kantengewicht besitzen. Die Addition aller Kantengewichte zwischen zwei Knoten stellt somit das Maß für ihre Nähe dar.
 
@@ -57,7 +57,7 @@ In der Literatur \cite{kw2007, tw2008, dj2006} finden sich für Selektion, Mutat
 
 \section{Umsetzung}
 
-Nachdem im vorhergehenden Abschnitt die Grundlagen und Komponenten evolutionärer Algorithmen beschrieben wurden, werden im Folgenden die für die Optimierung der Link Discovery-Ergebnisse angewendeten Methoden erläutert.
+Nachdem im vorhergehenden Abschnitt die Grundlagen und Komponenten evolutionärer Algorithmen beschrieben wurden, werden im Folgenden die für die Optimierung der Link Discovery--Ergebnisse angewendeten Methoden erläutert.
 
 Zunächst soll die Methode zur Auswahl der Stichproben erläutert werden. Insgesamt wurden fünfzehn Knoten ausgewählt, deren Beziehungen optimiert werden sollen. Die Auswahl der Knoten richtete sich nach der Popularität von Suchbegriffen auf der Website von Spreadshirt. Dazu wurden alle Begriffe mit mehr als eintausend Suchen herangezogen und diese nach Häufigkeit der Suchen geordnet. Daraus wurden zufällig je fünf Begriffe bis zum unteren Quartil, fünf Begriffe zwischen unterem und oberen Quartil und fünf Begriffe über dem oberen Quartil ausgewählt. Die ausgewählten Begriffe, deren Kantengewichtungen lokal optimiert werden sollen, lauten: \emph{Kopfkissenbezug}, \emph{Student}, \emph{Volkswagen}, \emph{Marathon}, \emph{Wow}, \emph{Krankenschwester}, \emph{Mountainbike}, \emph{Hammer}, \emph{Polska}, \emph{Regenbogen}, \emph{Minecraft}, \emph{Kind}, \emph{Dubstep}, \emph{Leipzig} und \emph{Valentinstag}.
 
@@ -76,7 +76,7 @@ Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die 
 \label{fig:genotype}
 \end{figure}
 
-Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute wird auf das Intervall \((0,1)\) eingeschränkt. Die Kookkurrenzmaße entsprechen den in Abschnitt \ref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in Abbildung \ref{fig:genotype} als UML-Klassendiagramm und in Listing \ref{lst:genotyope} beispielhaft in JSON-Notation dargestellt.
+Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute wird auf das Intervall \((0,1)\) eingeschränkt. Die Kookkurrenzmaße entsprechen den in Abschnitt \ref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in Abbildung \ref{fig:genotype} als UML--Klassendiagramm und in Listing \ref{lst:genotyope} beispielhaft in JSON--Notation dargestellt.
 
 \begin{lstlisting}[language=json, label={lst:genotyope}, caption={Beispiel für ein Individuum}]
 {
@@ -132,12 +132,12 @@ Die fünf selektierten Individuen werden zur Reproduktion herangezogen, um fünf
 
 \paragraph{Rekombination}
 
-Als Verfahren zur Rekombination wurde der \emph{Ein-Punkt-Crossover} \cite{kw2007} gewählt. Dazu werden zufällig zwei Elternindividuen ausgewählt und ein zufälliger Crossover-Punkt berechnet. Werden die Genotypen der beiden Elternindividuen als Arrays dargestellt, werden bis zum Crossover-Punkt die Variablen des ersten Individuums, nach dem Crossover-Punk die Variablen des zweiten Individuums übernommen. Der Crossover ist in Abbildung \ref{fig:crossover} dargestellt.
+Als Verfahren zur Rekombination wurde der \emph{Ein--Punkt--Crossover} \cite{kw2007} gewählt. Dazu werden zufällig zwei Elternindividuen ausgewählt und ein zufälliger Crossover--Punkt berechnet. Werden die Genotypen der beiden Elternindividuen als Arrays dargestellt, werden bis zum Crossover--Punkt die Variablen des ersten Individuums, nach dem Crossover--Punkt die Variablen des zweiten Individuums übernommen. Der Crossover ist in Abbildung \ref{fig:crossover} dargestellt.
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{crossover}
-\caption{Ein-Punkt-Crossover}
+\caption{Ein--Punkt--Crossover}
 \label{fig:crossover}
 \end{figure}
 
@@ -181,13 +181,13 @@ Da nach jeder Selektion je Stichprobe fünf Individuen in der Population verblei
 \caption{Mediane der Kantengewichte nach der finalen Selektion}
 \caption*{
     \begin{tabular}{ll}
-        \(k_t\) & Tag-Kookkurrenz\\
-        \(k_{kl}\) & Klick-Kookkurrenz\\
+        \(k_t\) & Tag--Kookkurrenz\\
+        \(k_{kl}\) & Klick--Kookkurrenz\\
         \(s\) & Synonyme \\
         \(t\) & Thesaurus \\
         \(g\) & Grundform \\
         \(w\) & Wortform \\
-        \(k_{ka}\) & Kategorie-Kookkurrenz\\
+        \(k_{ka}\) & Kategorie--Kookkurrenz\\
         \(zu\) & Zusammensetzung\\
     \end{tabular}
 }

@@ -12,7 +12,7 @@ Der folgende Abschnitt beschäftigt sich mit der Modellierung des im Rahmen dies
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{abstract_world_model}
-\caption{FMC--Entity-Relationship--Diagramm des Modells des Weltausschnittes}
+\caption{FMC--Entity--Relationship--Diagramm des Modells des Weltausschnittes}
 \label{fig:world_model}
 \end{figure}
 
@@ -24,7 +24,7 @@ Ein Zusammenhang besteht immer zwischen genau zwei Begriffen und besitzt einen b
 
 Je nach Nutzungsform der Daten wird unter Umständen eine andere Sicht auf die Beziehungen benötigt. Eine \emph{Prioisierung} stellt eine Gewichtung der Beziehungen eines Begriffes nach Typ dar. Sie teilt jeder Zusammenhangsart ein Gewicht relativ zu den anderen Arten zu. Somit werden durch die Prioisierung bestimmte Zusammenhänge höher gewichtet als andere. Die Prioisierung wird zu einer auf den Anwendungsfall abgestimmten Ordnung der Beziehungen eines Begriffes genutzt.
 
-Dies Verwendung eines Begriffes wird durch den \emph{Kontext} beschrieben. Dieser Kontext repräsentiert, \emph{wo}, \emph{wie} und \emph{wann} der Begriff innerhalb einer bestimmten Anwendungsdomäne verwendet wurde. Daher sind die Attribute, die ein Kontext besitzen kann, nicht vorab spezifizierbar. Sie hängen von der jeweiligen Anwendungsdomäne ab. Beispiele für Kontexte sind die Verwendung eines Begriffes in einem Tag-System oder in einer Ontologie.
+Dies Verwendung eines Begriffes wird durch den \emph{Kontext} beschrieben. Dieser Kontext repräsentiert, \emph{wo}, \emph{wie} und \emph{wann} der Begriff innerhalb einer bestimmten Anwendungsdomäne verwendet wurde. Daher sind die Attribute, die ein Kontext besitzen kann, nicht vorab spezifizierbar. Sie hängen von der jeweiligen Anwendungsdomäne ab. Beispiele für Kontexte sind die Verwendung eines Begriffes in einem Tag--System oder in einer Ontologie.
 
 Dieses Modell bildet die Grundlage für  im folgenden Abschnitt beschriebenen Link--Discovery--Prozess.
 
@@ -76,7 +76,7 @@ Der Integrationsschritt für jede Datenquelle dient letztendlich der Zusammenfü
 
 \subsection{Initiale Erzeugung des Weltausschnittes}
 
-Der erste Schritt der Link Discovery besteht in der Auswahl einer geeigneten Datenquelle für die initiale Erzeugung des Weltausschnittes. In dieser Arbeit ist diese Datenquelle das Tagging-System von Spreadshirt (siehe \ref{tag_sprd}).
+Der erste Schritt der Link Discovery besteht in der Auswahl einer geeigneten Datenquelle für die initiale Erzeugung des Weltausschnittes. In dieser Arbeit ist diese Datenquelle das Tagging--System von Spreadshirt (siehe \ref{tag_sprd}).
 
 Die Auswahl der Datenquelle richtet sich im wesentlichen danach, ob der Kontext, den die Datenquelle potentiell zu Begriffen liefern kann, für die Link Discovery geeignet ist. Der Kontext sollte außerdem für die geplante Anwendung der Link--Discovery--Ergebnisse relevant sein.
 
@@ -143,11 +143,11 @@ Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die
 \[s(A,B) = F(A \cap B, A-B, B-A)\]
 \label{similarity}
 
-Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein-Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
+Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein--Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
 
-Im Rahmen dieser Arbeit wird ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Begriffen eine Distanz zwischen eben jenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen linguistische Ähnlichkeitsmaße wie die Levenshtein-Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Begriffen, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können. Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, das den Kontext, in dem die Begriffe im Quellsystem verwendet werden, berücksichtigt.
+Im Rahmen dieser Arbeit wird ein Ähnlichkeitsmaß gesucht, dass anhand der Eigenschaften von Begriffen eine Distanz zwischen eben jenen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen linguistische Ähnlichkeitsmaße wie die Levenshtein--Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Begriffen, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können. Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, das den Kontext, in dem die Begriffe im Quellsystem verwendet werden, berücksichtigt.
 
-In \ref{data} wurde das für diese Arbeit verfügbare Tagging-System beschrieben. In diesem System besitzen die Tags wenig Kontext. Die einzig verfügbare Information ist, an welche Dokumente die Tags vergeben wurden.
+In \ref{data} wurde das für diese Arbeit verfügbare Tagging--System beschrieben. In diesem System besitzen die Tags wenig Kontext. Die einzig verfügbare Information ist, an welche Dokumente die Tags vergeben wurden.
 
 Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden. Dies wird ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \ref{similarity}.
 
@@ -168,9 +168,9 @@ Um die Ähnlichkeit zwischen zwei Begriffen zu ermitteln, lassen sich die Verein
 
 Die Mächtigkeiten dieser Mengen können dann zur Berechnung verschiedener Ähnlichkeitsmaße verwendet werden. Drei der üblichsten Maße wurden im Rahmen dieser Arbeit verwendet und werden im Folgenden genannt.
 
-\subsubsection{Sørensen-Dice}
+\subsubsection{Sørensen--Dice}
 
-Der Sørensen-Dice-Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur Dice-Koeffizient, stammt ursprünglich aus der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
+Der Sørensen--Dice--Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur Dice--Koeffizient, enstand ursprünglich in der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
 
 \[
 \delta_{Dice}(a, b) = \frac{2|A \cap B|}{|A|+|B|}
@@ -180,7 +180,7 @@ Der Wertebereich des Koeffizienten liegt zwischen \num{0} und \num{1}.
 
 \subsubsection{Jaccard}
 
-Der Jaccard-Index \cite{pj19012} wurde ursprünglich mit dem gleichen Zweck wie der Dice-Koeffizient verwendet. Sein Wertebereich liegt ebenfalls zwischen \num{0} und \num{1} und er ist definiert durch:
+Der Jaccard--Index \cite{pj19012} wurde ursprünglich mit dem gleichen Zweck wie der Dice--Koeffizient verwendet. Sein Wertebereich liegt ebenfalls zwischen \num{0} und \num{1} und er ist definiert durch:
 
 \[
 \delta_{Jaccard}(a,b) = \frac{|A \cap B|}{|A \cup B|}
@@ -219,4 +219,12 @@ foreach (termA in terms) {
 
 Der Aufwand, um die Kookkurrenzmaße für alle Paare von Begriffen zu berechnen, hängt also von der Anzahl der Begriffe, Dokumente und Verwendungen ab. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokumente \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung liegt daher zwischen diesen Schranken.
 
-Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden. Eine mögliche Umsetzung der parallelen Berechnung der Kookkurrenz mittels des MapReduce-Programmiermodelles wird in \ref{mapreduce_cooccurence} erläutert.
+Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden. Eine mögliche Umsetzung der parallelen Berechnung der Kookkurrenz mittels des MapReduce--Programmiermodelles wird in \ref{mapreduce_cooccurence} erläutert.
+
+\section{Graphen als Beschreibungsmittel des Weltausschnittes}
+
+\section{Datenquellen zur Anreicherung}
+
+\section{Evolutionäre Algorithmen als Mittel zur Prioisierung}
+
+\section{Zusammenfassung}
