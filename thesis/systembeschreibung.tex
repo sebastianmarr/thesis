@@ -38,48 +38,7 @@ Aufgrund der genannten Eigenschaften stellt MongoDB einen exzellenten Ausgangspu
 
 MongoDB stellt das zentrale technische Element für die Link Discovery im Rahmen dieser Arbeit dar. Sobald die Daten aus den externen und internen Quellen in MongoDB importiert wurden, können die folgenden Schritte direkt mit Datenbankabfragen realisiert werden.
 
-\section{Datenmodell}
 
-Nach der Auswahl eines geeigneten Datenbanksystems sollte das Datenmodell des Ergebnisses genauer spezifiziert werden. Ist dieses vor der Link Discovery klar, können die einzelnen benötigten Schritte zur Erreichung des Zieles einfacher definiert werden.
-
-Generell handelt es sich bei dem gewünschten Ergebnis um einen gerichteten Multigraph. Dieser repräsentiert Objekte, oder auch \emph{Knoten}, zwischen denen paarweise Verbindungen, die \emph{Kanten} bestehen. Die Besonderheit eines Multigraphen ist dabei, dass zwischen zwei Knoten auch mehrere Kanten existieren dürfen \cite{rd2012}. Dies ist dem gewählten Lösungsansatz geschuldet, da zwischen Wörtern und Wortgruppen verschiedenartige Beziehungen existieren können.
-
-Somit müssen für das Datenmodell die beiden Entitäten \emph{Knoten} und \emph{Kante} modelliert werden.
-Das komplette Datenmodell des Graphen nach der Integration aller Datenquellen ist in \cref{complete_data_model} dargestellt.
-
-\subsection{Knoten}
-
-Die Knoten repräsentieren die Wörter und Wortgruppen, zwischen denen durch Link Discovery Verbindungen hergestellt werden sollen. Sie enthalten als benötigte Attribute eine Zeichenkette und ein Attribut Sprache. Die Kombination dieser beiden Attribute ist innerhalb der Knotenmenge eindeutig. Außerdem erhält jeder Knoten zur einfacheren Referenzierung einen eindeutigen Bezeichner.
-
-Neben diesen immer vorhandenen Attributen kann ein Knoten beliebig viele weitere Eigenschaften besitzen. Diese Eigenschaften dienen dazu, den Begriffen, die die Knoten repräsentieren, für spätere Verwendungen zusätzlichen Kontext zu geben. Im Wesentlichen definieren sich diese zusätzlichen Eigenschaften aus den Datenquellen, die zum Zweck der Link Discovery in den Graph integriert werden.
-
-Zur besseren Kapselung und Übersicht sollten die zusätzlichen Eigenschaften in weitere Entitäten gekapselt werden. Die Struktur dieser zusätzlichen Typen kann dann zum Zeitpunkt der Integration der jeweiligen Datenquelle definiert werden.
-
-Das resultierende Knotenmodell ist in \cref{fig:node_erd} dargestellt.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.6\textwidth]{node_erd}
-\caption{FMC--Entity--Relationship--Diagramm des Knotenmodelles}
-\label{fig:node_erd}
-\end{figure}
-
-\subsection{Kanten}
-
-Eine Kante ist im Wesentlichen durch die Knoten, die sie verbindet, beschrieben. Sie stellt einen irgendwie gearteten Zusammenhang zwischen zwei Knoten dar. Sie ist gerichtet, um auch asymmetrische Zusammenhänge zwischen Knoten abbilden zu können.
-
-Somit sind die einzig immer benötigten Attribute der Quell- und Zielknoten und der Typ der Kante. Zusätzlich erhält jede Kante einen eindeutigen Bezeichner.
-
-Alle weiteren Eigenschaften der Kante hängen vom Typ ab. Dies können beispielsweise Maße sein, die ein Kantengewicht darstellen. Da eine Kante nur genau einen Typ haben kann, werden die zusätzlichen Kanteneigenschaften einfach als Attribute an der Kante annotiert.
-
-Das beschriebene Kantenmodell ist in \cref{fig:edge_erd} dargestellt.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.2\textwidth]{edge_erd}
-\caption{FMC--Entity--Relationship--Diagramm des Kantenmodelles}
-\label{fig:edge_erd}
-\end{figure}
 
 \subsection{Technische Umsetzung}
 

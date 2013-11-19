@@ -170,7 +170,7 @@ Die Mächtigkeiten dieser Mengen können dann zur Berechnung verschiedener Ähnl
 
 \subsubsection{Sørensen--Dice}
 
-Der Sørensen--Dice--Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur Dice--Koeffizient, enstand ursprünglich in der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
+Der Sørensen--Dice--Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur Dice--Koeffizient, entstand ursprünglich in der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
 
 \[
 \delta_{Dice}(a, b) = \frac{2|A \cap B|}{|A|+|B|}
@@ -223,9 +223,10 @@ Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ans
 
 \section{Graphen als Beschreibungsmittel des Weltausschnittes}
 
-Nachdem in \cref{world_model} der zur Link Discovery verwendete Weltausschnitt modelliert wurde, wird zur Umsetzung eine Datenstruktur benötigt, die diesen Ausschnit konkret abbildet. Da im Wesentlichen Objekte, ziwschen denen Verbindungen bestehen, abgebildet werden, bietet sich die Verwendung eines Graphen an. Die Grundlagen von Graphen, sowie die konkrete Abbildung des Weltausschnittes auf eine Graph--Datenstruktur werden in den folgenden Abschnitten erläutert.
+Nachdem in \cref{world_model} der zur Link Discovery verwendete Weltausschnitt modelliert wurde, wird zur Umsetzung eine Datenstruktur benötigt, die diesen Ausschnitt konkret abbildet. Da im Wesentlichen Objekte, zwischen denen Verbindungen bestehen, abgebildet werden, bietet sich die Verwendung eines Graphen an. Die Grundlagen von Graphen, sowie die konkrete Abbildung des Weltausschnittes auf eine Graph--Datenstruktur werden in den folgenden Abschnitten erläutert.
 
 \subsection{Grundlagen}
+\label{graph_basics}
 
 Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Mengen, für die gilt: \(E \subseteq\ [V]^2\). Dies bedeutet, dass alle Elemente aus \(E\) 2-elementige Teilmengen von \(V\) sind \cite[S. 2]{rd2012}. Die Menge \(V\) repräsentiert die \emph{Knoten} und die Menge \(E\) die \emph{Kanten} des Graphen. Eine Kante stellt eine Verbindung von zwei Knoten dar. Zwei Knoten werden als \emph{Nachbarn} bezeichnet, wenn zwischen ihnen eine Kante existiert. \cref{fig:basic_graph} zeigt ein Beispiel für einen ungerichteten Graphen.
 
@@ -259,6 +260,36 @@ Die Knoten und Kanten eines Graphen sind Objekte mit beliebigen weiteren Eigensc
 Nachdem Graphen grundsätzlich erläutert wurden, beschäftigt sich der folgende Abschnitt mit der konkreten Umsetzung des Modelles des Weltausschnittes auf eine solche Graphen--Struktur.
 
 \subsection{Graphenrepräsentation des Weltausschnittes}
+
+Um den Weltausschnitt in \cref{world_model} in eine Graphenform zur transformieren, muss zunächst modelliert werden, welche Objekte die Knoten und Kanten des Graphen repräsentieren.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{graph_model}
+\caption{FMC--Entity--Relationship--Diagramm des Weltausschnittes in Graphenform}
+\label{fig:graph_model}
+\end{figure}
+
+Die Knoten repräsentieren die Begriffe, zwischen denen durch die Link Discovery Zusammenhänge hergestellt werden sollen. Sie enthalten als benötigte Attribute eine Zeichenkette und ein Attribut Sprache. Die Kombination dieser beiden Attribute ist innerhalb der Knotenmenge eindeutig, um je verwendetem Begriff in einer Sprache genau einen Knoten zu erhalten.
+
+Der Kontext der Begriffe wird über Eigenschaften von Knoten abgebildet. Dabei kann ein Begriff beliebig viele Eigenschaften besitzen. Da die Kontexte der Begriffe aus jeweils einer Datenquelle stammen, bietet es sich an, pro Datenquelle eine Entität für die kontextuellen Eigenschaften, die diese Datenquelle liefert, anzulegen.
+
+Eine Kante repräsentiert einen irgendwie gearteten Zusammenhang zwischen zwei Begriffen. Sie besitzt einen \emph{Typ}, der die Art des Zusammenhangs spezifiziert, sowie je einen Quell- und Zielknoten. Zusätzlich kann sie weitere Attribute besitzen. Bei Kanten, die durch Kookkurrenzberechnung (siehe \cref{co-occurence}) erzeugt wurden, sind dies beispielsweise die Anzahl des gemeinsamen Auftretens zweier Begriffe und die berechneten Kookkurrenzmaße. Im Rahmen dieser Arbeit wurden keine weiteren Attribute für Kanten benötigt, diese sind generell jedoch denkbar.
+
+Zwischen zwei Knoten können beliebig viele, je Typ jedoch höchstens eine, Kanten existieren. Daher handelt es sich bei dem Graphen des Weltausschnittes um einen gerichteten Multigraph (siehe \cref{graph_basics}).
+
+Das resultierende komplette Modell des Graphen ist in \cref{fig:graph_model} dargestellt. Dieses beinhaltet sämtliche zum Zeitpunkt der Bearbeitung bekannten und integrierten Datenquellen und die damit verbundenen Kontexte und Kantentypen. Die Datenquelle des Tagging-Systems und der damit verbundene Kontext wird in \cref{tag-system} näher beschrieben. Das Clicktracking--System wird in \cref{clicktracking} und der Wortschatz der Universität Leipzig in \cref{wortschatz} näher beleuchtet. Details über die Erzeugung der entsprechenden Kantentypen werden in \cref{link_discovery} erläutert.
+
+Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher darzustellen, ist in \cref{fig:example_graph} ein beispielhafter Ausschnitt des nach Durchführung der Link Discovery entstehenden Graphen abgebildet. Auf Darstellung der Kontexte und Kantenattribute wurde aus Platzgründen verzichtet.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{example_graph}
+\caption{Beispiel--Graphausschnitt für das Ergebnis der Link Discovery}
+\label{fig:example_graph}
+\end{figure}
+
+Nach der Definition der verwendeten Graphenstruktur werden im folgenden Abschnitt die möglichen Datenquellen diskutiert.
 
 \section{Datenquellen zur Anreicherung}
 

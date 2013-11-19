@@ -88,14 +88,7 @@ Außerdem führten in der Vergangenheit Systemfehler und Implementierungsfehler 
 
 Die Beziehungen, die zwischen Wörtern und Wortgruppen hergestellt werden können, hängen stark von Umfang, Vielfältigkeit und Qualität der vorhandenen Datenquellen ab. Daher wurde zur Realisierung der Zielstellung ein iterativer Ansatz gewählt.
 
-Die grundsätzliche Lösungsidee besteht in der Erstellung eines Graphen, dessen Knoten Wörter oder Wortgruppen darstellen. Die Kanten zwischen diesen Knoten repräsentieren inhaltliche Beziehungen. Ein erstrebenswertes Ziel ist also ein Graph mit möglichst vielen, duplikatfreien Knoten und vielen, nach inhaltlicher Nähe gewichteten, Kanten. Die hohe Knotenanzahl kommt zum Tragen, um möglichst alle Suchbegriffe und Themen des Anwendungsgebietes abzubilden. Kantenanzahl und -gewichte spielen dann eine Rolle, wenn nach den inhaltlich nächsten Nachbarn eines Knotens gesucht wird. Ein anschauliches Beispiel für einen solchen Zielgraphen ist in \cref{fig:solution_idea} dargestellt.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.8\textwidth]{solution_idea}
-\caption{Beispiel für den Zielgraph}
-\label{fig:solution_idea}
-\end{figure}
+Die grundsätzliche Lösungsidee besteht in der Erstellung eines Graphen, dessen Knoten Wörter oder Wortgruppen darstellen. Die Kanten zwischen diesen Knoten repräsentieren inhaltliche Beziehungen. Ein erstrebenswertes Ziel ist also ein Graph mit möglichst vielen, duplikatfreien Knoten und vielen, nach inhaltlicher Nähe gewichteten, Kanten. Die hohe Knotenanzahl kommt zum Tragen, um möglichst alle Suchbegriffe und Themen des Anwendungsgebietes abzubilden. Kantenanzahl und -gewichte spielen dann eine Rolle, wenn nach den inhaltlich nächsten Nachbarn eines Knotens gesucht wird. Ein anschauliches Beispiel für einen solchen Zielgraphen ist in \cref{fig:example_graph} dargestellt.
 
 Um einen solchen Graphen zu erstellen, ist eine Grundmenge von Daten nötig. Diese Grundmenge stellen die Daten des Tagging--Systems (\cref{tag-system}) von Spreadshirt dar. Die bereinigten Tags stellen die Knotenmenge dar. Die Kanten werden mittels Kookkurrenz ermittelt.
 
