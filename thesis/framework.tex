@@ -227,6 +227,37 @@ Nachdem in \cref{world_model} der zur Link Discovery verwendete Weltausschnitt m
 
 \subsection{Grundlagen}
 
+Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Mengen, für die gilt: \(E \subseteq\ [V]^2\). Dies bedeutet, dass alle Elemente aus \(E\) 2-elementige Teilmengen von \(V\) sind \cite[S. 2]{rd2012}. Die Menge \(V\) repräsentiert die \emph{Knoten} und die Menge \(E\) die \emph{Kanten} des Graphen. Eine Kante stellt eine Verbindung von zwei Knoten dar. Zwei Knoten werden als \emph{Nachbarn} bezeichnet, wenn zwischen ihnen eine Kante existiert. \cref{fig:basic_graph} zeigt ein Beispiel für einen ungerichteten Graphen.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.2\textwidth]{basic_graph}
+\caption{Ungerichteter Graph}
+\label{fig:basic_graph}
+\end{figure}
+
+Ein \emph{gerichteter Graph} ist ein Graph, der neben den Mengen \(V\) und \(E\) die zwei Abbildungen \(quelle: E \rightarrow V\) und \(ziel: E \rightarrow V\) enthält \cite[S. 25]{rd2012}. Diese weisen jeder Kante \(e\) einen Quell- und Zielknoten zu. Die Kante ist somit von \(quelle(e)\) nach \(ziel(e)\) gerichtet. \cref{fig:directed_graph} zeigt einen gerichteten Graphen.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.2\textwidth]{directed_graph}
+\caption{Gerichteter Graph}
+\label{fig:directed_graph}
+\end{figure}
+
+Als \emph{Multigraph} wird schließlich ein Graph bezeichnet, bei dem zwischen zwei Knoten mehrere Kanten bestehen \cite[S. 25]{rd2012}. Sind diese gerichtet, spricht man vom einen \emph{gerichteten Multigraph}. \cref{fig:directed_multigraph} illustriert einen solchen gerichteten Multigraph.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.2\textwidth]{directed_multigraph}
+\caption{Gerichteter Multigraph}
+\label{fig:directed_multigraph}
+\end{figure}
+
+Die Knoten und Kanten eines Graphen sind Objekte mit beliebigen weiteren Eigenschaften. Kanten besitzen üblicherweise ein Gewicht, dass ihre Wichtigkeit oder Kosten im Anwendungskontext des Graphen angibt.
+
+Nachdem Graphen grundsätzlich erläutert wurden, beschäftigt sich der folgende Abschnitt mit der konkreten Umsetzung des Modelles des Weltausschnittes auf eine solche Graphen--Struktur.
+
 \subsection{Graphenrepräsentation des Weltausschnittes}
 
 \section{Datenquellen zur Anreicherung}
