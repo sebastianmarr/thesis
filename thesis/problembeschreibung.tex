@@ -29,7 +29,7 @@ Ein Tagging--System besteht im Allgemeinen aus den Mengen \(D\), \(T\) und \(U\)
 
 Die Benutzer können beliebige Dokumente mit beliebigen Tags versehen. Der Vorgang des \emph{Taggens} kann also durch die Relation \(R = D \times U \times T\) beschrieben werden, welche Tupel der Form \((d, u, t)\) enthält.
 
-Der Betreiber der Online--Plattform kann bestimmte Aspekte des Tagging--Systems begrenzen. Können alle Benutzer beliebige Tags an beliebige Dokumente vergeben, spricht man von einer \emph{Folksonomy} \cite{ip2009}. In Abbildung \ref{fig:tagsystem} ist ein solches Tagging--System als Entity--Relationship--Diagramm dargestellt.
+Der Betreiber der Online--Plattform kann bestimmte Aspekte des Tagging--Systems begrenzen. Können alle Benutzer beliebige Tags an beliebige Dokumente vergeben, spricht man von einer \emph{Folksonomy} \cite{ip2009}. In \cref{fig:tagsystem} ist ein solches Tagging--System als Entity--Relationship--Diagramm dargestellt.
 
 \begin{figure}
 \centering
@@ -39,7 +39,7 @@ Der Betreiber der Online--Plattform kann bestimmte Aspekte des Tagging--Systems 
 \end{figure}
 
 
-Im Fall von Spreadshirt ist die Vergabe von Tags auf die Menge der Partner \(P \subseteq U\) begrenzt (siehe auch \ref{spreadshirt}). Die Dokumente, die von den Partnern getaggt werden können, sind auf die Designs und Artikel beschränkt, die der Partner selbst angelegt hat. Eine Beschreibung kann also ausschließlich durch den Autor des Inhaltes erfolgen. Deshalb fehlt im Vergleich zu anderen Tagging--Systemen auch die Information, welcher Benutzer den Tag vergeben hat.
+Im Fall von Spreadshirt ist die Vergabe von Tags auf die Menge der Partner \(P \subseteq U\) begrenzt (siehe auch \cref{spreadshirt}). Die Dokumente, die von den Partnern getaggt werden können, sind auf die Designs und Artikel beschränkt, die der Partner selbst angelegt hat. Eine Beschreibung kann also ausschließlich durch den Autor des Inhaltes erfolgen. Deshalb fehlt im Vergleich zu anderen Tagging--Systemen auch die Information, welcher Benutzer den Tag vergeben hat.
 
 \label{tag_sprd}
 
@@ -54,7 +54,7 @@ Zum Zeitpunkt der Bearbeitung dieser Arbeit befanden sich in der Datenbank der e
     \item \num{71938905} Taggings
 \end{itemize}
 
-Diese Datenmenge stellt zur Verarbeitung besondere technische Anforderungen. Diese werden in Kapitel \ref{system} diskutiert.
+Diese Datenmenge stellt zur Verarbeitung besondere technische Anforderungen. Diese werden in \cref{system} diskutiert.
 
 \subsection{Datenqualität}
 \label{quality}
@@ -71,7 +71,7 @@ Die Quelle beider Fehler ist also die bewusste Falscheingabe von Informationen, 
                                                                                                                                                                                                                                                                                                                                                                                                               
 \paragraph{Vollständigkeit}
 
-Wie bereits in \ref{tag-system} beschrieben, fehlen in den Spreadshirt--Daten der Zeitpunkt und der Benutzer eines Taggings. Dies führt in der Konsequenz dazu, dass Spam schwerer erkannt werden kann. Zwar ist bekannt, wann ein Tag das erste Mal verwendet wurde, alle weiteren Verwendungen des Tags haben jedoch keinen Zeitstempel. Der Benutzer, der den Tag angelegt und verwendet hat, kann nur daraus abgeleitet werden, wer den getaggten Artikel angelegt hat.
+Wie bereits in \cref{tag-system} beschrieben, fehlen in den Daten des Spreadshirt--Systems der Zeitpunkt und der Benutzer eines Taggings. Dies führt in der Konsequenz dazu, dass Spam schwerer erkannt werden kann. Zwar ist bekannt, wann ein Tag das erste Mal verwendet wurde, alle weiteren Verwendungen des Tags haben jedoch keinen Zeitstempel. Der Benutzer, der den Tag angelegt und verwendet hat, kann nur daraus abgeleitet werden, wer den getaggten Artikel angelegt hat.
 
 Die Unvollständigkeit der Daten rührt in erster Linie daher, dass zum Zeitpunkt der Implementierung des Tagging--Systems noch nicht bedacht wurde, dass die fehlenden Attribute später nützlich sein können.
 
@@ -88,7 +88,7 @@ Außerdem führten in der Vergangenheit Systemfehler und Implementierungsfehler 
 
 Die Beziehungen, die zwischen Wörtern und Wortgruppen hergestellt werden können, hängen stark von Umfang, Vielfältigkeit und Qualität der vorhandenen Datenquellen ab. Daher wurde zur Realisierung der Zielstellung ein iterativer Ansatz gewählt.
 
-Die grundsätzliche Lösungsidee besteht in der Erstellung eines Graphen, dessen Knoten Wörter oder Wortgruppen darstellen. Die Kanten zwischen diesen Knoten repräsentieren inhaltliche Beziehungen. Ein erstrebenswertes Ziel ist also ein Graph mit möglichst vielen, duplikatfreien Knoten und vielen, nach inhaltlicher Nähe gewichteten, Kanten. Die hohe Knotenanzahl kommt zum Tragen, um möglichst alle Suchbegriffe und Themen des Anwendungsgebietes abzubilden. Kantenanzahl und -gewichte spielen dann eine Rolle, wenn nach den inhaltlich nächsten Nachbarn eines Knotens gesucht wird. Ein anschauliches Beispiel für einen solchen Zielgraphen ist in Abbildung \ref{fig:solution_idea} dargestellt.
+Die grundsätzliche Lösungsidee besteht in der Erstellung eines Graphen, dessen Knoten Wörter oder Wortgruppen darstellen. Die Kanten zwischen diesen Knoten repräsentieren inhaltliche Beziehungen. Ein erstrebenswertes Ziel ist also ein Graph mit möglichst vielen, duplikatfreien Knoten und vielen, nach inhaltlicher Nähe gewichteten, Kanten. Die hohe Knotenanzahl kommt zum Tragen, um möglichst alle Suchbegriffe und Themen des Anwendungsgebietes abzubilden. Kantenanzahl und -gewichte spielen dann eine Rolle, wenn nach den inhaltlich nächsten Nachbarn eines Knotens gesucht wird. Ein anschauliches Beispiel für einen solchen Zielgraphen ist in \cref{fig:solution_idea} dargestellt.
 
 \begin{figure}
 \centering
@@ -97,7 +97,7 @@ Die grundsätzliche Lösungsidee besteht in der Erstellung eines Graphen, dessen
 \label{fig:solution_idea}
 \end{figure}
 
-Um einen solchen Graphen zu erstellen, ist eine Grundmenge von Daten nötig. Diese Grundmenge stellen die Daten des Tagging--Systems (\ref{tag-system}) von Spreadshirt dar. Die bereinigten Tags stellen die Knotenmenge dar. Die Kanten werden mittels Kookkurrenz ermittelt.
+Um einen solchen Graphen zu erstellen, ist eine Grundmenge von Daten nötig. Diese Grundmenge stellen die Daten des Tagging--Systems (\cref{tag-system}) von Spreadshirt dar. Die bereinigten Tags stellen die Knotenmenge dar. Die Kanten werden mittels Kookkurrenz ermittelt.
 
 Um die Qualität des Graphen danach schrittweise zu verbessern, werden daraufhin im Laufe der Arbeit weitere externe und interne Datenquellen integriert. Hierbei werden, soweit möglich, ebenfalls kookkurrenzbasierte Ansätze gewählt. Diesem Vorgehen liegt die Annahme zu Grunde, dass oft gemeinsam auftauchende Begriffe auch eine inhaltliche Nähe zueinander aufweisen.
 
@@ -107,6 +107,6 @@ Zusammengefasst bedeutet dies, dass, abgeleitet von der vorhandenen Knotenmenge,
 
 Die gewichtete Kombination mehrerer Kanten zwischen zwei Knoten des Graphen stellt also im Ergebnis die inhaltliche Nähe der Begriffe dar, die durch die Knoten repräsentiert werden. Somit muss des weiteren eine geeignete Gewichtung der Kantentypen gefunden werden. Dies ist aufgrund der Natur des Problems nur mit Hilfe von menschlicher Bewertung möglich. Diese Optimierung kann somit gleichzeitig mit der Evaluation statt finden.
 
-Um den Lösungsansatz technisch umzusetzen, soll, wenn möglich, das Programmiermodell MapReduce \cite{dg2004}  (siehe Abschnitt \ref{mapreduce}) eingesetzt werden, da dieses die Skalierung des Vorgehens auf große Datenmengen ermöglicht. Speziell die Erstellung von Kookkurrenzgraphen kann deutlich von der Verwendung dieses Verfahrens profitieren.
+Um den Lösungsansatz technisch umzusetzen, soll, wenn möglich, das Programmiermodell MapReduce \cite{dg2004}  (siehe \cref{mapreduce}) eingesetzt werden, da dieses die Skalierung des Vorgehens auf große Datenmengen ermöglicht. Speziell die Erstellung von Kookkurrenzgraphen kann deutlich von der Verwendung dieses Verfahrens profitieren.
 
 In den nachfolgenden Kapiteln werden die Umsetzung dieses Lösungsansatzes und die Ergebnisse detailliert beschrieben.
