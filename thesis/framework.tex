@@ -104,6 +104,7 @@ Sofern weitere Datenquellen verfügbar sind, stellt die Integration dieser einen
 Um die zusätzliche Datenquelle zur Link Discovery zu nutzen, werden die gleichen Schritte, die schon zur initialen Erzeugung des Weltausschnittes zum Einsatz kamen, genutzt (siehe \cref{integration_generic}). Dazu werden im Transformationsschritt Daten erzeugt, die dem Modell des Weltausschnittes entsprechen. Im Integrationsschritt werden sie mit den bereits vorhandenen Daten zusammengeführt.
 
 \subsection{Prioisierung von Beziehungen}
+\label{prioritization}
 
 Ziel des Prioisierungsschrittes der Link Discovery ist das Finden einer Gewichtung der Zusammenhangstypen, die für einen Anwendungsfall relevante Nachbarn zu einem Begriff liefert. Die Relevanz kann jedoch nur von einem Benutzer bewertet werden. \cref{fig:prioritization} stellt den Prioisierungsprozess dar.
 
@@ -342,5 +343,45 @@ Zu jedem Begriff stellt der Wortschatz die folgenden Informationen bereit:
 Die Informationen über Grundform, Wortformen, Thesaurus--Beziehungen, Synonyme und Kategorien wurden im Rahmen dieser Arbeit ausgewertet und entsprechen den in \cref{fig:graph_model} gezeigten Kantentypen. Die Durchführung der Link Discovery anhand dieser Daten wird ausführlich in \cref{wortschatz} beschrieben.
 
 \section{Evolutionäre Algorithmen als Mittel zur Prioisierung}
+
+Um die in \cref{prioritization} beschriebene Prioisierung der Beziehungen durchführen zu könnnen, wird ein Verfahren zur Erzeugung der Prioisierungen benötigt. Im Rahmen dieser Arbeit wurden dazu \emph{evolutionäre Algorithmen} gewählt. Die Grundprinzipien sowie die Anwendung dieser Algorithmen zur Prioisierung werden im folgenden Abschnitt erläutert.
+
+\subsection{Grundlagen}
+\label{evo}
+
+Als evolutionäre Algorithmen wird eine Klasse von Optimierungsverfahren bezeichnet, deren Funktionsweise an die Evolution natürlicher Lebewesen angelehnt ist. Sie versuchen, Probleme durch die Simulation von Evolution mittels der Auswahl der erfolgreichsten Individuen zu lösen. Dabei kommen ebenfalls aus der Biologie entlehnte Mechanismen wie Mutation und Rekombination zum Einsatz, um iterativ eine Population von Lösungskandidaten zu verbessern \cite{tw2008}.
+
+Es handelt sich um heuristische Algorithmen, die das Finden einer optimalen Lösung nicht garantieren können.
+
+Grundsätzlich folgt das Vorgehen einem Kreislauf mit den Komponenten \emph{Evaluierung}, \emph{Selektion} und \emph{Reproduktion}. Nach Generierung einer anfänglichen Population (\emph{Initialisierung}) wird dieser Kreislauf so lange durchlaufen, bis ein vorher definiertes Abbruchkriterium eintritt. Ein Durchlauf wird als \emph{Generation} bezeichnet. Das Abbruchkriterium kann beispielsweise ein bestimmter Schwellwert für die Güte der Lösung oder eine feste Anzahl von Generationen sein. Der beschriebene Ablauf ist in \cref{fig:evo_basic} dargestellt.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{evo_basic}
+\caption{Ablauf evolutionärer Algorithmen}
+\label{fig:evo_basic}
+\end{figure}
+
+Die einzelnen Komponenten eines evolutionären Algorithmus werden im Folgenden beschrieben. Die Definitionen folgen im Wesentlichen denen von \textcite{tw2008}.
+
+\paragraph{Initialisierung}
+
+Die Population \(P\) stellt eine Menge von Lösungskandidaten dar. Ein Lösungskandidat \(i\) wird als \emph{Individuum} bezeichnet und durch seinen \emph{Genotyp} repräsentiert. Der Genotyp ist die kodierte Repräsentation aller Variablen, die den Lösungskandidaten spezifizieren. Die Variablen werden \emph{Gene} genannt. Während der Initialisierung werden Lösungskandidaten erzeugt, die die Startpopulation des evolutionären Algorithmus bilden. Die Gene jedes Individuums werden üblicherweise zufällig gewählt.
+
+\paragraph{Evaluierung}
+
+Der Evaluierungsschritt dient zur Bestimmung der \emph{Fitness} der Individuen, die noch in der Population enthalten sind. Die Fitness stellt einen Wert dar, der die Güte der durch das Individuum repräsentierten Lösung bezüglich der Problemstellung beschreibt. Die Fitness kann, je nach Optimierungsproblem, entweder absolut oder bezüglich der anderen Individuen der Population bestimmt werden. Somit lässt sich die Funktion zur Bestimmung der Fitness auf die Form \(fitness(i, P)\) generalisieren.
+
+\paragraph{Selektion}
+
+Im Selektionsschritt werden die fittesten Individuen der Population ausgewählt. Alle nicht ausgewählten Lösungskandidaten werden verworfen. Die Selektion kann als Funktion der Form \(select(P, f, s)\) dargestellt werden, wobei \(s\) eine festgelegte Anzahl von Individuen darstellt, die ausgewählt werden sollen.
+
+\paragraph{Reproduktion}
+
+Die Reproduktion dient dazu, aus den im Selektionsschritt ausgewählten Individuen neue Lösungskandidaten zu erzeugen. Dabei werden üblicherweise die Operationen \emph{Rekombination} und \emph{Mutation} verwendet. Eine Rekombination erzeugt, analog zur Biologie, aus zwei Elternindividuen ein neues Kindindividuum. Sie lässt sich als Funktion der Form \(i_n = recombine(i_a, i_b)\) darstellen, wobei \(i_n\) das neue Individuum und \(i_a\) und \(i_b\) die Elternindividuen darstellen. Eine Mutation erzeugt ein neues Individuen durch die Modifikation eines anderen und ist daher durch die Funktion \(i_n = mutate(i_a)\) spezifiziert.
+
+In der Literatur \cite{kw2007, tw2008, dj2006} finden sich für Selektion, Mutation und Rekombination Standardverfahren, die in Hinblick auf das zu lösende Optimierungsproblem ausgewählt werden können.
+
+\subsection{Anwendung zur Prioisierung}
 
 \section{Zusammenfassung}
