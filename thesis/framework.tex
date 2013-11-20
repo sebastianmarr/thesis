@@ -97,6 +97,7 @@ Die Erzeugung neuer Begriffe und Zusammenhänge kann aus den vorhandenen Daten m
 Beispiele für anwendbare Methoden sind hierbei Assoziationsanalyse \cite[S. 328f.]{pt2013} oder Clusteranalyse \cite[S. 443f.]{hkp2012}, um bestimmte bereits in den Daten vorhandene, aber nicht explizit abgebildete, Zusammenhänge zu ermitteln. Jedoch können auch einfachere Methoden wie die Zerlegung von Wortgruppen in Einzelwörter (siehe \cref{decomposition}) oder das Einfügen von bisher nur transitiv vorhandenen Beziehungen erfolgreich sein, um neue Begriffe und Beziehungen in den Datenbestand einzuführen.
 
 \subsubsection{Anreicherung durch Integration externer Datenquellen}
+\label{enrichment_external}
 
 Sofern weitere Datenquellen verfügbar sind, stellt die Integration dieser einen weiteren erfolgversprechenden Weg dar, um die Daten anzureichern. Neue Datenquellen beschreiben immer einen neuen Kontext, in dem Begriffe genutzt werden. Ist der Kontext dieser Begriffe für die spätere Anwendung relevant, ist die Integration der jeweiligen Datenquelle zu Zwecken der Link Discovery von großem Interesse.
 
@@ -292,6 +293,25 @@ Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher da
 Nach der Definition der verwendeten Graphenstruktur werden im folgenden Abschnitt die möglichen Datenquellen diskutiert.
 
 \section{Datenquellen zur Anreicherung}
+
+Der initiale Weltausschnitt wird im Rahmen dieser Arbeit aus den Daten des Tagging--Systems von Spreadshirt erzeugt. Wie in \cref{enrichment_external} bereits einführend erläutert, kann danach zur Anreicherung die Integration weiterer Datenquellen erfolgen. Diese Datenquellen können eine andere Sicht auf die Begriffe des Weltausschnittes liefern und somit zur Erzeugung neuer Beziehungen nützlich sein. In diesem Abschnitt werden mögliche Datenquellen genannt und erläutert, sowie die letztendlich verwendeten Datenquellen näher beschrieben.
+
+\subsection{Lexikalische Quellen}
+
+Da die Hauptentität des Weltausschnittes Begriffe einer Sprache darstellt, liegt nahe, auf lexikalische Quellen zurückzugreifen. Diese existieren in unterschiedlichen Ausprägungen, haben jedoch alle gemeinsam, dass sie Wörter beschreiben und in Beziehung zu anderen Wörtern setzen. Damit eignen sie sich gut zur Integration in den Weltausschnitt. Einige der üblichen Formen von lexikalischen Quellen werden im folgenden genannt und erläutert.
+
+Ein \emph{Wörterbuch} ist ein Nachschlagewerk, dass erklärende Informationen über Wörter enthält \cite{hk2003}. Dabei kann es sich um Sach- oder Sprachwissen handeln, also einerseits die inhaltliche Bedeutung eines Wortes oder andererseits die linguistischen und grammatikalischen Eigenschaften des Wortes beschreiben. Beispiele für Wörterbücher sind der \emph{Duden} \cite{duden} oder das \emph{Oxford English Dictionary} \cite{oed2010}.
+
+Als \emph{Thesaurus} wird ein kontrolliertes Vokabular von Wörtern bezeichnet, die nach ihrer inhaltlichen Bedeutung geordnet sind \cite[S. 2]{ac2004}. Er stellt demnach eine Sammlung von \emph{Synonymen}, also Wörtern mit gleicher Bedeutung, dar und enthält keine Definitionen der Wörter. Oft enthalten Thesauri ebenfalls Ober- und Unterbegriffe und beschreiben somit \emph{Taxonomien}. Beispiele für Thesauri sind OpenThesaurus \cite{ot2013} für die deutsche und Thesaurus.com \cite{tc2013} für die englische Sprache. Thesauri sind eine spezielle Form von Wörterbüchern.
+
+\emph{Wortschätze} sind eine Mischform aus Sprach- und Sachwörterbüchern. Sie enthalten zu möglichst vielen im Gebrauch befindlichen Wörtern einer Sprache Informationen über Verwendung, Bedeutung, Über- und Unterbegriffe, grammatikalische Eigenschaften und mehr.
+Für die englische Sprache existiert die \emph{WordNet}--Datenbank \cite{wn2013, fc1998}, die Synonyme, Wortformen, Bedeutungen, Über- und Unterbegriffe, Beispiele und mehr für englische Wörter katalogisiert. Für die deutsche Sprache betreibt die Universität Leipzig mit dem \emph{Deutschen Wortschatz} ein ähnliches Projekt \cite{ws2013}.
+
+Generell sind lexikalische Quellen also geeignet, um den Weltausschnitt mit Allgemeinwissen über die enthaltenen Begriffe anzureichern. Sie bieten allgemeine Informationen über Wörter und sind somit in vielen Anwendungsszenarien nutzbar.
+
+\subsection{Clicktracking--System}
+
+\subsection{Verwendete Datenquellen}
 
 \section{Evolutionäre Algorithmen als Mittel zur Prioisierung}
 
