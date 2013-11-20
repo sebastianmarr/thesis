@@ -318,6 +318,28 @@ Besonders in Verbindung mit eingegebenen Suchbegriffen kann Clicktracking ein ho
 Clicktracking--Systeme bieten also großes Potential, den Kontext von Begriffen innerhalb einer bestimmten Anwendungsdomäne zu integrieren und daraus Zusammenhänge zu extrahieren.
 
 \subsection{Verwendete Datenquellen}
+\label{used_sources}
+
+Im Rahmen dieser Arbeit wurden für die Anreicherung mittels Integration weiterer Datenquellen das Clicktracking--System von Spreadshirt und das Wortschatz--Projekt der Universität Leipzig verwendet.
+
+Das Clicktracking--System von Spreadshirt zeichnet auf, auf welche Suchergebnisse die  Benutzer auf Suchergebnisseiten klicken und eignet sich damit zur Kookkurrenzberechnung zwischen den verwendeten Suchbegriffen. Die Struktur und der genaue Ablauf der Link Discovery aus diesen Daten wird in \cref{clicktracking} detailliert beschrieben.
+
+Der Wortschatz der Universität Leipzig \cite{ws2013} wurde ausgewählt, da er frei verfügbar ist und zu deutschen Wörtern viele inhaltliche, linguistische und grammatikalische Informationen bereit stellt. Die Informationen werden dabei zu einem großen Teil aus automatisch analysierten deutschen Texten generiert \cite{gh2011}.
+
+Zu jedem Begriff stellt der Wortschatz die folgenden Informationen bereit:
+
+\begin{itemize}
+    \item Grundform des Wortes
+    \item Wortformen
+    \item Kookkurrenzen in den analysierten Texten
+    \item Kategorien, in die das Wort eingeordnet werden kann
+    \item Synonyme
+    \item Thesaurus--Beziehungen
+    \item Häufigkeit des Auftretens
+    \item Sätze, die das Wort enthalten
+\end{itemize}
+
+Die Informationen über Grundform, Wortformen, Thesaurus--Beziehungen, Synonyme und Kategorien wurden im Rahmen dieser Arbeit ausgewertet und entsprechen den in \cref{fig:graph_model} gezeigten Kantentypen. Die Durchführung der Link Discovery anhand dieser Daten wird ausführlich in \cref{wortschatz} beschrieben.
 
 \section{Evolutionäre Algorithmen als Mittel zur Prioisierung}
 
