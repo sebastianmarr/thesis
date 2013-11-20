@@ -384,4 +384,23 @@ In der Literatur \cite{kw2007, tw2008, dj2006} finden sich für Selektion, Mutat
 
 \subsection{Anwendung zur Prioisierung}
 
+Mit Hilfe von evolutionären Algorithmen kann der Prozess der Prioisierung aus \cref{prioritization} genauer beschrieben werden. \cref{fig:prioritization_evo} zeigt den Prozess mit den Komponenten evolutionärer Algorithmen.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{prioritization_evo}
+\caption{FMC--Petri--Netz der Prioisierung mittels evolutionärer Algorithmen}
+\label{fig:prioritization_evo}
+\end{figure}
+
+Im Gegensatz zu \cref{fig:prioritization} ist zu erkennen, dass die Schritte zur Prioisierungserzeugung mit den Komponenten evolutionärer Algorithmen Initalisierung, Rekombination und Mutation ausgetauscht wurden. Die Selektion wird vom Benutzer vorgenommen, welcher anschließend bewertet, ob die ausgewählten Lösungskandidaten eine zufriedenstellende Prioisierung der Beziehungstypen darstellen.
+
+Nach der Stichprobenauswahl wird für die Stichprobe eine Population von Lösungskandidaten erzeugt. Der Genotyp eines Individuums sollte pro Zusammenhangstyp ein Gewicht enthalten. Jedes Individuum stellt somit eine Gewichtung der Zusammenhangstypen dar.
+
+Da der Algorithmus den Eingriff eines Benutzers erfordert, handelt es sich um einen \emph{interaktiven evolultionären Algorithmus} \cite{ht2001}. Die interaktive Komponente ist hierbei die Selektion, wodurch der Schritt der Evaluierung übersprungen werden kann. Wird die Selektion direkt vom Benutzer ausgeführt, erübrigt sich die Bestimmung eines Fitnesswertes.
+
+Die Schritte der Rekombination und Mutation dienen zur Erzeugung neuer Lösungskandidaten auf Basis der vom Benutzer selektierten Prioisierungen. Sie sollten so gewählt werden, dass genügend unterschiedliche Prioisierungen erzeugt werden, aber dennoch eine Verbesserung über die Generationen erkennbar ist.
+
+Zusammenfassend stellen evolutionäre Algorithmen eine geeignete Methode dar, um die Prioisierung durchzuführen, da die Schritte der Prioisierungserzeugung darauf abgebildet werden können. Die Stichprobenauswahl, die konkret implementierten Komponenten, die Durchführung der Selektion und die Ergebnisse werden in \cref{evo_implementation} detailliert erläutert.
+
 \section{Zusammenfassung}

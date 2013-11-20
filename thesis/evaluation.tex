@@ -23,6 +23,7 @@ Im Rahmen dieser Arbeit wurde aus den genannten Gründen ein Optimierungsansatz 
 
 
 \section{Umsetzung}
+\label{evo_implementation}
 
 Nachdem im vorhergehenden Abschnitt die Grundlagen und Komponenten evolutionärer Algorithmen beschrieben wurden, werden im Folgenden die für die Optimierung der Link Discovery--Ergebnisse angewendeten Methoden erläutert.
 
@@ -73,8 +74,6 @@ Es wurde eine Populationsgröße von zehn Individuen je Stichprobe gewählt. Som
 \subsection{Selektion}
 
 Die Bestimmung einer Fitnessfunktion für die Optimierung der Link Discovery gestaltet sich durch die Notwendigkeit menschlicher Beurteilung als schwierig. Eine solche Fitnessbestimmung müsste derart erfolgen, dass ein Benutzer jedem Individuum einen reellwertigen Fitnesswert zuweist. Dies gestaltet ist jedoch auf Grund der hohen Anzahl von Individuen nicht praktikabel.
-
-Jedoch ist das menschliche Eingreifen zwingend notwendig, weshalb es sich beim implementierten Algorithmus um einen \emph{interaktiven} evolutionären Algorithmus \cite{ht2001} handelt. Die interaktive Komponente ist hierbei die Selektion, wodurch der Schritt der Evaluation übersprungen werden kann. Wird die Selektion direkt vom Benutzer ausgeführt, erübrigt sich die Bestimmung eines Fitnesswertes.
 
 Die umgesetzte Selektion erfolgt durch die Durchführung von Wettkämpfen. Hierzu werden in jeder Generation je fünf Paare von Individuen gebildet. Diese Paarungen stellen die Wettkämpfe dar, bei denen der Benutzer den Gewinner bestimmt. Alle Gewinner werden selektiert und im Reproduktionsschritt weiter verwendet.
 
