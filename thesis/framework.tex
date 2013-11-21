@@ -9,7 +9,7 @@ Das folgende Kapitel beschreibt das Framework, dass für die Link Discovery im R
 
 Der folgende Abschnitt beschäftigt sich mit der Modellierung des im Rahmen dieser Arbeit verwendeten Weltausschnittes. Das Entity--Relationship--Diagramm des resultierenden Modelles ist in \cref{fig:world_model} dargstellt.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{abstract_world_model}
 \caption{FMC--Entity--Relationship--Diagramm des Modells des Weltausschnittes}
@@ -29,14 +29,14 @@ Dieses Modell bildet die Grundlage für  im folgenden Abschnitt beschriebenen Li
 \section{Link--Discovery--Prozess}
 \label{ld_process}
 
-Der Link--Discovery--Prozess beschreibt die Abfolge von Schritten, die zur Erzeugung und Anreicherung des in \cref{world_model} beschriebenen Weltausschnittes angewendet werden. Dieser Prozess dient also zur Erzeugung von Begriffen und deren Zusammenhängen. \cref{fig:link_discovery_process} zeigt den Prozess als Petri--Netz.
-
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{link_discovery_process}
 \caption{FMC--Petri--Netz des Link--Discovery--Prozesses}
 \label{fig:link_discovery_process}
 \end{figure}
+
+Der Link--Discovery--Prozess beschreibt die Abfolge von Schritten, die zur Erzeugung und Anreicherung des in \cref{world_model} beschriebenen Weltausschnittes angewendet werden. Dieser Prozess dient also zur Erzeugung von Begriffen und deren Zusammenhängen. \cref{fig:link_discovery_process} zeigt den Prozess als Petri--Netz.
 
 Die grundlegenden Phasen des Prozesses sind die \emph{Erzeugung} des initialen Weltausschnittes, dessen \emph{Anreicherung} und die \emph{Prioisierung} der Beziehungen. Sowohl bei der initialen Erzeugung, als auch bei der Anreicherung wird ein Prozess zur Integration von Datenquellen benötigt.
 
@@ -130,14 +130,14 @@ Im Transformationsschritt der Link Discovery (\cref{transformation}) wird eine M
 
 Um gewichtete inhaltliche Beziehungen zwischen Begriffen herstellen zu können, wird eine Definition von \emph{Ähnlichkeit} benötigt. Diese lässt sich auf vielfältige Arten bestimmen.
 
-Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Diese Definition von Ähnlichkeit wird in \cref{fig:similarity} veranschaulicht.
-
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.6\textwidth]{similarity}
 \caption{Repräsentation von Dokumenten als Mengen von Eigenschaften}
 \label{fig:similarity}
 \end{figure}
+
+Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Diese Definition von Ähnlichkeit wird in \cref{fig:similarity} veranschaulicht.
 
 Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, definieren durch
 \[s(A,B) = F(A \cap B, A-B, B-A)\]
@@ -230,7 +230,7 @@ Nachdem in \cref{world_model} der zur Link Discovery verwendete Weltausschnitt m
 
 Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Mengen, für die gilt: \(E \subseteq\ [V]^2\). Dies bedeutet, dass alle Elemente aus \(E\) 2-elementige Teilmengen von \(V\) sind \cite[S. 2]{rd2012}. Die Menge \(V\) repräsentiert die \emph{Knoten} und die Menge \(E\) die \emph{Kanten} des Graphen. Eine Kante stellt eine Verbindung von zwei Knoten dar. Zwei Knoten werden als \emph{Nachbarn} bezeichnet, wenn zwischen ihnen eine Kante existiert. \cref{fig:basic_graph} zeigt ein Beispiel für einen ungerichteten Graphen.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.2\textwidth]{basic_graph}
 \caption{Ungerichteter Graph}
@@ -239,7 +239,7 @@ Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Me
 
 Ein \emph{gerichteter Graph} ist ein Graph, der neben den Mengen \(V\) und \(E\) die zwei Abbildungen \(quelle: E \rightarrow V\) und \(ziel: E \rightarrow V\) enthält \cite[S. 25]{rd2012}. Diese weisen jeder Kante \(e\) einen Quell- und Zielknoten zu. Die Kante ist somit von \(quelle(e)\) nach \(ziel(e)\) gerichtet. \cref{fig:directed_graph} zeigt einen gerichteten Graphen.
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.2\textwidth]{directed_graph}
 \caption{Gerichteter Graph}
@@ -248,7 +248,7 @@ Ein \emph{gerichteter Graph} ist ein Graph, der neben den Mengen \(V\) und \(E\)
 
 Als \emph{Multigraph} wird schließlich ein Graph bezeichnet, bei dem zwischen zwei Knoten mehrere Kanten bestehen \cite[S. 25]{rd2012}. Sind diese gerichtet, spricht man vom einen \emph{gerichteten Multigraph}. \cref{fig:directed_multigraph} illustriert einen solchen gerichteten Multigraph.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.2\textwidth]{directed_multigraph}
 \caption{Gerichteter Multigraph}
@@ -280,14 +280,14 @@ Zwischen zwei Knoten können beliebig viele, je Typ jedoch höchstens eine, Kant
 
 Das resultierende komplette Modell des Graphen ist in \cref{fig:graph_model} dargestellt. Dieses beinhaltet sämtliche zum Zeitpunkt der Bearbeitung bekannten und integrierten Datenquellen und die damit verbundenen Kontexte und Kantentypen. Die Datenquelle des Tagging-Systems und der damit verbundene Kontext wird in \cref{tag-system} näher beschrieben. Das Clicktracking--System wird in \cref{clicktracking} und der Wortschatz der Universität Leipzig in \cref{wortschatz} näher beleuchtet. Details über die Erzeugung der entsprechenden Kantentypen werden in \cref{link_discovery} erläutert.
 
-Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher darzustellen, ist in \cref{fig:example_graph} ein beispielhafter Ausschnitt des nach Durchführung der Link Discovery entstehenden Graphen abgebildet. Auf Darstellung der Kontexte und Kantenattribute wurde aus Platzgründen verzichtet.
-
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{example_graph}
 \caption{Beispiel--Graphausschnitt für das Ergebnis der Link Discovery}
 \label{fig:example_graph}
 \end{figure}
+
+Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher darzustellen, ist in \cref{fig:example_graph} ein beispielhafter Ausschnitt des nach Durchführung der Link Discovery entstehenden Graphen abgebildet. Auf Darstellung der Kontexte und Kantenattribute wurde aus Platzgründen verzichtet.
 
 Nach der Definition der verwendeten Graphenstruktur werden im folgenden Abschnitt die möglichen Datenquellen diskutiert.
 
@@ -354,7 +354,7 @@ Es handelt sich um heuristische Algorithmen, die das Finden einer optimalen Lös
 
 Grundsätzlich folgt das Vorgehen einem Kreislauf mit den Komponenten \emph{Evaluierung}, \emph{Selektion} und \emph{Reproduktion}. Nach Generierung einer anfänglichen Population (\emph{Initialisierung}) wird dieser Kreislauf so lange durchlaufen, bis ein vorher definiertes Abbruchkriterium eintritt. Ein Durchlauf wird als \emph{Generation} bezeichnet. Das Abbruchkriterium kann beispielsweise ein bestimmter Schwellwert für die Güte der Lösung oder eine feste Anzahl von Generationen sein. Der beschriebene Ablauf ist in \cref{fig:evo_basic} dargestellt.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.8\textwidth]{evo_basic}
 \caption{Ablauf evolutionärer Algorithmen}
@@ -406,6 +406,4 @@ Zusammenfassend stellen evolutionäre Algorithmen eine geeignete Methode dar, um
 
 \section{Zusammenfassung}
 
-In diesem Kapitel wurde das Framework zur Link Discovery erläutert. Dies beinhaltete den modellierten Weltausschnitt und dessen konkrete Umsetzung auf eine Graph--Datenstruktur. Außerdem wurde der Prozess der Erzeugung, Anreicherung und Prioisierung der Beziehungen dieses Weltausschnittes definiert und beschrieben. Kookkurrenz wurde als Mittel zur Beziehungserzeugung vorgestellt, die gängigen Maße genannt und die Berechnung erläutert. Ferner wurden mögliche Datenquellen für die Anreicherung der Daten diskutiert sowie der Einsatz evolutionärer Algorithmen zur Beziehungsprioisierung detailliert beschrieben.
-
-Nachdem in diesem Kapitel das Link--Discovery--Framework umfassend behandelt wurde, beschreibt das nächste Kapitel die konkrete Durchführung der Link Discovery.
+In diesem Kapitel wurde das Framework zur Link Discovery erläutert. Dies beinhaltet den modellierten Weltausschnitt und dessen Umsetzung auf eine Graph--Datenstruktur. Der Prozess der Erzeugung, Anreicherung und Prioisierung der Beziehungen dieses Modelles wurde definiert und beschrieben. Kookkurrenz wurde als Mittel zur Beziehungserzeugung vorgestellt, die gängigen Maße genannt und die Berechnung erläutert. Ferner wurden mögliche Datenquellen für die Anreicherung diskutiert sowie der Einsatz evolutionärer Algorithmen zur Beziehungsprioisierung beschrieben. Nachdem in diesem Kapitel das Link--Discovery--Framework umfassend behandelt wurde, beschreibt das nächste Kapitel die konkrete Durchführung der Link Discovery.
