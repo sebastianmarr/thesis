@@ -273,30 +273,6 @@ Da die erzeugten Kanten einen noch nicht im Graph vorhandenen Typ besitzen, müs
 
 Durch dieses Vorgehen konnten der Knotenmenge \num{78237} Knoten, und somit auch neue Begriffe hinzugefügt werden. Die Kantenmenge wurde, wie bereits erläutert, um \num{310860} Kanten erweitert.
 
-\section{Google Translate}
-
-Google bietet im Rahmen seines \emph{Translate}-Services \cite{gt2013} eine kostenpflichtige API für Spracherkennung an. Diese ermöglicht es, die Sprache beliebiger Zeichenketten automatisch erkennen zu lassen. Google stellt hierzu eine API zur Verfügung.
-
-Diese Schnittstelle liefert Ergebnisse der Form \((l, c)\), wobei \(l\) die für die Zeichenkette erkannte Sprache und \(c\) einen Konfidenzwert für die Spracherkennung repräsentiert. Der Konfidenzwert liegt im Intervall zwischen \num{0} und \num{1} und stellt die Verlässlichkeit der Spracherkennung dar.
-
-Die Integration der Spracherkennungs--Daten in den Graphen gestaltet sich einfach. Dazu werden die durch die bereits vorhandenen Knoten repräsentierten Zeichenketten extrahiert und als Eingabedaten für die Spracherkennungs--API verwendet. Die Ergebnisse werden abgespeichert, um weitere kostenpflichtige Abfragen zu vermeiden.
-
-Eine Bereinigung der Ergebnisse ist nicht erforderlich. Somit müssen die Ergebnisse lediglich in den Ausgangsgraphen integriert werden. Die Spracherkennung an sich bringt keine Ähnlichkeitsbeziehungen mit sich, sondern verbessert gegebenenfalls nur die Knotenauswahl für spätere Operationen.
-
-In der Konsequenz genügt es also, die für die Abfrage verwendeten Knoten mit den Ergebnissen der Spracherkennung zu annotieren. Somit kann dann bei späteren Analysen anhand des Konfidenzwertes abgewogen werden, ob die erkannte Sprache oder die eventuell schon am Knoten vorhandene Sprache verwendet werden soll. Ein resultierender Knoten ist in \cref{lst:google_node} abgebildet.
-
-\begin{lstlisting}[language=json, label={lst:google_node}, caption={Knoten mit Spracherkennungsdaten}]
-{
-    "_id" : ObjectId("51efc1dc47cae77dfc01ea43"),
-    "language" : "de",
-    "string" : "grey head",
-    "languageDetection" : {
-        "language" : "en",
-        "confidence" : 0.7105263000000001
-    }
-}
-\end{lstlisting}
-
 \section{Zerlegung von Wortgruppen}
 \label{decomposition}
 
@@ -461,8 +437,6 @@ Im folgenden Abschnitt werden die quantitativen Ergebnisse der Link Discovery zu
 \cref{tab:discovery_amounts} führt für jeden Schritt die hinzugefügten Knoten und Kanten sowie die nach Durchführung der Link Discovery insgesamt im Graphen enthaltene Datenmenge auf. Dabei zeigt sich, dass die Integration der Daten des Wortschatzes mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
 
 Bei der Verwendung der Clicktracking--Daten wurden im Verhältnis wenig neue Knoten und Kanten erzeugt. Dies ist im Wesentlichen auf den zum Zeitpunkt des Importes noch geringen Datenbestand zurückzuführen. Daher sollte dieser Schritt zukünftig wiederholt werden, da mit der längeren Laufzeit des Clicktracking--Systems auch ein größeres Potential für neue Verknüpfungen vorhanden ist.
-
-Die Integration von Google Translate brachte weder neue Knoten noch Kanten, da in diesem Schritt bewusst nur neue Attribute zu vorhandenen Knoten hinzugefügt wurden.
 
 Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der quantitativen Ergebnisse auch die Anzahl der Kanten, die von einem Knoten ausgehen, von Interesse. \cref{tab:discovery_edges_per_node} zeigt die Entwicklung der Kantenanzahl pro Knoten nach jedem Link--Discovery--Schritt. Dabei sind Minimum, das untere, mittlere (Median) und obere Quartil, das Maximum und der Durchschnitt dargestellt, um die Verteilung der Kantenanzahl zu verdeutlichen.
 
