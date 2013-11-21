@@ -2,11 +2,9 @@
 
 \documentclass[a4paper, 12pt, DIV=10, ngerman, abstracton, toc=bibliography, toc=listof]{scrreprt}
 
-% silence KOMA warnings about float (for compatibility with listings, algorithm etc.)
-\usepackage{scrhack}
-
-% fixes certain things for use with XeTeX
-\usepackage{xltxtra}
+% compatibility
+\usepackage{scrhack} % silences certain KOMA warnings
+\usepackage{xltxtra} % fixes XeTeX stuff
 
 % language support
 \usepackage[ngerman]{babel}
@@ -15,15 +13,21 @@
 \usepackage[backend=biber, style=alphabetic]{biblatex}
 \bibliography{bibliography.bib}
 
-% quotations
-\usepackage[strict=true]{csquotes}
+% fonts
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{Minion Pro}
+\setsansfont{Myriad Pro}
 
-% numbers and units
-\usepackage{siunitx}
+% line spacing
+\usepackage{setspace} 
+\setstretch{1.3}
 
-% pseudocode
-\usepackage{algpseudocode}
-\usepackage{algorithm}
+% no paragraph indentation
+\parskip 6pt
+\parindent 0pt
+
+% no widows
+\usepackage[all]{nowidow}
 
 % listings
 \usepackage{listings}
@@ -41,55 +45,27 @@
 \lstdefinelanguage{json}{}
 \lstdefinelanguage{pseudo}{}
 
-% plots
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.9}
-
-% line spacing
-\usepackage{setspace} 
-\setstretch{1.3}
-
-% font stuff
-\defaultfontfeatures{Ligatures=TeX}
-\setmainfont{Minion Pro}
-\setsansfont{Myriad Pro}
-\typearea{last}
-\usepackage{dashrule}
-
-% graphics directory
-\graphicspath{{assets/}}
-
-% absätze nicht einrücken
-\parskip 6pt
-\parindent 0pt
-
-% Vermeiden von Schusterjungen und Hurenkindern
-\usepackage[all]{nowidow}
-
-% links
+% referencing stuff
+\usepackage[strict=true]{csquotes}
 \PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
-
-% good references
 \usepackage{cleveref}
-
-% captions and numbering
 \usepackage[font=small,labelfont=bf]{caption}
 \captionsetup{%
   figurewithin=chapter,
   tablewithin=chapter
 }
 
-% good looking tables
-\usepackage{booktabs}
+% various extensions
+\usepackage{siunitx} % numbers and units
+\usepackage{booktabs} % good looking tables
+\usepackage{dashrule} % dotted lines
 
-%hyphenation rules
-\hyphenation{Spread-shirt}
-\hyphenation{Re-lat-ion-ship}
-\hyphenation{Tag-ging}
-
+% no warnings for underfull boxes in bibliography
 \usepackage{etoolbox}
-% Variant A
 \apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
+
+% graphics directory
+\graphicspath{{assets/}}
 
 \begin{document}
 
@@ -104,6 +80,7 @@
 \tableofcontents
 
 \cleardoublepage
+
 \pagenumbering{arabic}
 
 \include{einleitung}
