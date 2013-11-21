@@ -20,7 +20,7 @@ Der folgende Abschnitt beschäftigt sich mit der Modellierung des im Rahmen dies
 
 Zentrale Entität ist des Modells der \emph{Begriff}. Ein Begriff repräsentiert ein Einzelwort oder eine Wortgruppe in einer bestimmten Sprache. Dies berücksichtigt den Umstand, dass Wörter in mehreren Sprachen vorkommen können, jedoch verschiedene Bedeutungen besitzen können. Wortgruppen können aus beliebig vielen Einzelwörtern zusammengesetzt sein. Mit Hilfe der Link Discovery sollen zwischen diesen Begriffen verschiedenartige \emph{Zusammenhänge} gefunden werden.
 
-Ein Zusammenhang besteht immer zwischen genau zwei Begriffen und besitzt einen bestimmten \emph{Typ}. Der Typ bezeichnet die Art des Zusammenhangs zwischen diesen beiden Begriffen. Beispiele für Zusammenhangsarten sind inhaltliche Zusammenhänge wie Synonyme, grammatikalische Zusammenhänge wie Wortformen und Grundformen oder kontextuelle Zusammenhänge, die sich aus der Verwendung des Begriffes ergeben. Dabei kann ein Zusammenhang abhängig vom Typ Attribute besitzen, die den Zusammenhang genauer spezifizieren. Dies kann beispielsweise ein Gewicht des Zusammenhangs sein, dass die Wichtigkeit gegenüber anderen Beziehungen gleichen Typs angibt.
+Ein Zusammenhang besteht immer zwischen genau zwei Begriffen und besitzt einen bestimmten \emph{Typ}. Der Typ bezeichnet die Art des Zusammenhangs zwischen diesen beiden Begriffen. Beispiele für Zusammenhangsarten sind inhaltliche Zusammenhänge wie Synonyme, grammatikalische Zusammenhänge wie Wort-- und Grundformen oder kontextuelle Zusammenhänge, die sich aus der Verwendung des Begriffes ergeben. Dabei kann ein Zusammenhang abhängig vom Typ Attribute besitzen, die den Zusammenhang genauer spezifizieren. Dies kann beispielsweise ein Gewicht des Zusammenhangs sein, dass die Wichtigkeit gegenüber anderen Beziehungen gleichen Typs angibt.
 
 Je nach Nutzungsform der Daten wird unter Umständen eine andere Sicht auf die Beziehungen benötigt. Eine \emph{Prioisierung} stellt eine Gewichtung der Beziehungen eines Begriffes nach Typ dar. Sie teilt jeder Zusammenhangsart ein Gewicht relativ zu den anderen Arten zu. Somit werden durch die Prioisierung bestimmte Zusammenhänge höher gewichtet als andere. Die Prioisierung wird zu einer auf den Anwendungsfall abgestimmten Ordnung der Beziehungen eines Begriffes genutzt.
 
@@ -78,7 +78,7 @@ Der Integrationsschritt für jede Datenquelle dient letztendlich der Zusammenfü
 
 Der erste Schritt der Link Discovery besteht in der Auswahl einer geeigneten Datenquelle für die initiale Erzeugung des Weltausschnittes. In dieser Arbeit ist diese Datenquelle das Tagging--System von Spreadshirt (siehe \cref{tag_sprd}).
 
-Die Auswahl der Datenquelle richtet sich im wesentlichen danach, ob der Kontext, den die Datenquelle potentiell zu Begriffen liefern kann, für die Link Discovery geeignet ist. Der Kontext sollte außerdem für die geplante Anwendung der Link--Discovery--Ergebnisse relevant sein.
+Die Auswahl der Datenquelle richtet sich im wesentlichen danach, ob der Kontext, den die Datenquelle potentiell zu Begriffen liefern kann, für die Link Discovery geeignet ist. Der Kontext sollte außerdem für die geplante Anwendung der Ergebnisse der Link Discovery relevant sein.
 
 Nach der Auswahl einer geeigneten Quelle werden die in \cref{integration_generic} beschriebenen Schritte zur Integration durchgeführt. Der letzte Schritt ist trivial, da zu diesem Zeitpunkt noch keine Daten im Weltausschnitt vorhanden sind.
 
@@ -101,7 +101,7 @@ Beispiele für anwendbare Methoden sind hierbei Assoziationsanalyse \cite[S. 328
 
 Sofern weitere Datenquellen verfügbar sind, stellt die Integration dieser einen weiteren erfolgversprechenden Weg dar, um die Daten anzureichern. Neue Datenquellen beschreiben immer einen neuen Kontext, in dem Begriffe genutzt werden. Ist der Kontext dieser Begriffe für die spätere Anwendung relevant, ist die Integration der jeweiligen Datenquelle zu Zwecken der Link Discovery von großem Interesse.
 
-Um die zusätzliche Datenquelle zur Link Discovery zu nutzen, werden die gleichen Schritte, die schon zur initialen Erzeugung des Weltausschnittes zum Einsatz kamen, genutzt (siehe \cref{integration_generic}). Dazu werden im Transformationsschritt Daten erzeugt, die dem Modell des Weltausschnittes entsprechen. Im Integrationsschritt werden sie mit den bereits vorhandenen Daten zusammengeführt.
+Um die zusätzliche Datenquelle zur Link Discovery zu nutzen, werden die Schritte, die schon zur initialen Erzeugung des Weltausschnittes zum Einsatz kamen, genutzt (siehe \cref{integration_generic}). Dazu werden im Transformationsschritt Daten erzeugt, die dem Modell des Weltausschnittes entsprechen. Im Integrationsschritt werden sie mit den bereits vorhandenen Daten zusammengeführt.
 
 \subsection{Prioisierung von Beziehungen}
 \label{prioritization}
@@ -221,7 +221,7 @@ foreach (termA in terms) {
 
 Der Aufwand, um die Kookkurrenzmaße für alle Paare von Begriffen zu berechnen, hängt also von der Anzahl der Begriffe, Dokumente und Verwendungen ab. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokumente \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung liegt daher zwischen diesen Schranken.
 
-Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden. Eine mögliche Umsetzung der parallelen Berechnung der Kookkurrenz mittels des MapReduce--Programmiermodelles wird in \cref{mapreduce_cooccurence} erläutert.
+Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden. Eine mögliche Umsetzung der parallelen Berechnung der Kookkurrenz mittels des Programmiermodelles  MapReduce wird in \cref{mapreduce_cooccurence} erläutert.
 
 \section{Graphen als Beschreibungsmittel des Weltausschnittes}
 
@@ -232,7 +232,7 @@ Nachdem in \cref{world_model} der zur Link Discovery verwendete Weltausschnitt m
 
 Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Mengen, für die gilt: \(E \subseteq\ [V]^2\). Dies bedeutet, dass alle Elemente aus \(E\) 2-elementige Teilmengen von \(V\) sind \cite[S. 2]{rd2012}. Die Menge \(V\) repräsentiert die \emph{Knoten} und die Menge \(E\) die \emph{Kanten} des Graphen. Eine Kante stellt eine Verbindung von zwei Knoten dar. Zwei Knoten werden als \emph{Nachbarn} bezeichnet, wenn zwischen ihnen eine Kante existiert. \cref{fig:basic_graph} zeigt ein Beispiel für einen ungerichteten Graphen.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.2\textwidth]{basic_graph}
 \caption{Ungerichteter Graph}
@@ -241,7 +241,7 @@ Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Me
 
 Ein \emph{gerichteter Graph} ist ein Graph, der neben den Mengen \(V\) und \(E\) die zwei Abbildungen \(quelle: E \rightarrow V\) und \(ziel: E \rightarrow V\) enthält \cite[S. 25]{rd2012}. Diese weisen jeder Kante \(e\) einen Quell- und Zielknoten zu. Die Kante ist somit von \(quelle(e)\) nach \(ziel(e)\) gerichtet. \cref{fig:directed_graph} zeigt einen gerichteten Graphen.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
 \includegraphics[width=0.2\textwidth]{directed_graph}
 \caption{Gerichteter Graph}
@@ -250,7 +250,7 @@ Ein \emph{gerichteter Graph} ist ein Graph, der neben den Mengen \(V\) und \(E\)
 
 Als \emph{Multigraph} wird schließlich ein Graph bezeichnet, bei dem zwischen zwei Knoten mehrere Kanten bestehen \cite[S. 25]{rd2012}. Sind diese gerichtet, spricht man vom einen \emph{gerichteten Multigraph}. \cref{fig:directed_multigraph} illustriert einen solchen gerichteten Multigraph.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.2\textwidth]{directed_multigraph}
 \caption{Gerichteter Multigraph}
@@ -378,7 +378,7 @@ Im Selektionsschritt werden die fittesten Individuen der Population ausgewählt.
 
 \paragraph{Reproduktion}
 
-Die Reproduktion dient dazu, aus den im Selektionsschritt ausgewählten Individuen neue Lösungskandidaten zu erzeugen. Dabei werden üblicherweise die Operationen \emph{Rekombination} und \emph{Mutation} verwendet. Eine Rekombination erzeugt, analog zur Biologie, aus zwei Elternindividuen ein neues Kindindividuum. Sie lässt sich als Funktion der Form \(i_n = recombine(i_a, i_b)\) darstellen, wobei \(i_n\) das neue Individuum und \(i_a\) und \(i_b\) die Elternindividuen darstellen. Eine Mutation erzeugt ein neues Individuen durch die Modifikation eines anderen und ist daher durch die Funktion \(i_n = mutate(i_a)\) spezifiziert.
+Die Reproduktion dient dazu, aus den im Selektionsschritt ausgewählten Individuen neue Lösungskandidaten zu erzeugen. Dabei werden üblicherweise die Operationen \emph{Rekombination} und \emph{Mutation} verwendet. Bei der Rekombination wird, analog zur Biologie, aus zwei Elternindividuen ein neues Kindindividuum erzeugt. Sie lässt sich als Funktion der Form \(i_n = recombine(i_a, i_b)\) darstellen, wobei \(i_n\) das neue Individuum und \(i_a\) und \(i_b\) die Elternindividuen darstellen. Eine Mutation erzeugt ein neues Individuen durch die Modifikation eines anderen und ist daher durch die Funktion \(i_n = mutate(i_a)\) spezifiziert.
 
 In der Literatur \cite{kw2007, tw2008, dj2006} finden sich für Selektion, Mutation und Rekombination Standardverfahren, die in Hinblick auf das zu lösende Optimierungsproblem ausgewählt werden können.
 

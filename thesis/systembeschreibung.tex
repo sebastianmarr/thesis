@@ -6,7 +6,7 @@ Das nachfolgende Kapitel befasst sich mit der Beschreibung der Technologien und 
 \section{MongoDB}
 \label{mongo}
 
-Zur Umsetzung der Link Discovery wurde das Datenbankmanagementsystem MongoDB \cite{mo2013} gewählt. Bei MongoDB handelt es sich um eine quelloffene dokumentenorientierte Datenbank.
+Zur Umsetzung der Link Discovery wurde das Datenbanksystem MongoDB \cite{mo2013} gewählt. Bei MongoDB handelt es sich um eine quelloffene dokumentenorientierte Datenbank.
 
 Im Gegensatz zu traditionellen relationalen Datenbanksystemen verzichtet MongoDB auf eine tabellenförmige Struktur der Daten und speichert Datensätze in Form von so genannten \emph{Dokumenten}. Dabei handelt es sich um hierarchische Schlüssel-/Wertpaare, die schemalos in so genannten \emph{Collections} gespeichert werden. Schemalos bedeutet, dass die Dokumente innerhalb einer Collection nicht alle dieselbe Struktur besitzen müssen.
 
@@ -117,11 +117,11 @@ Die Schritte zur Link Discovery sind im Wesentlichen für jede zu integrierende 
 
 \cref{fig:architecture} zeigt die komplette Architektur des implementierten Link Discovery Systems. Darin sind alle genutzten Datenquellen und die Daten, die sie bereit stellen, aufgeführt.
 
-Für jede Datenquelle existiert ein Importskript, welches die Rohdaten importiert und in MongoDB speichert. Bei relationalen Datenquellen wie der Spreadshirt MySQL--Datenbank für die Tag--Daten wird pro Tabelle eine Collection und pro Zeile ein Dokument angelegt. Können nicht alle Daten importiert werden, wie beispielsweise bei der Wortschatz--API (siehe \cref{wortschatz}, kann das Importskript auch aufgrund der bisher im Graph vorhandenen Daten eine Auswahl an Anfragen an die externe Datenquelle erzeugen.
+Für jede Datenquelle existiert ein Importskript, welches die Rohdaten importiert und in MongoDB speichert. Bei relationalen Datenquellen wie der MySQL--Datenbank von Spreadshirt für die Tag--Daten wird pro Tabelle eine Collection und pro Zeile ein Dokument angelegt. Können nicht alle Daten importiert werden, wie beispielsweise bei der Wortschatz--API (siehe \cref{wortschatz}, kann das Importskript auch aufgrund der bisher im Graph vorhandenen Daten eine Auswahl an Anfragen an die externe Datenquelle erzeugen.
 
 Im nachfolgenden Bereinigungsschritt werden die Daten so gut wie möglich von eventuell vorhandenen Defekten befreit. Dazu zählen beispielsweise das Entfernen nicht nutzbarer Zeichen oder von unvollständigen Datensätzen.
 
-Der Reduktionsschritt dient zur Verkleinerung der Datenmenge. Dazu gehören beispielsweise Schritte zur Duplikatentfernung oder zur Auswahl relevanter Datensätze. In dieser Arbeit bestand die Haupteinschränkung der Datenmenge darin, nach Möglichkeit nur deutschsprachige Datensätze auszuwählen.
+Der Reduktionsschritt dient zur Verkleinerung der Datenmenge. Dazu gehören zum Beispiel Schritte zur Duplikatentfernung oder zur Auswahl relevanter Datensätze. In dieser Arbeit bestand die Haupteinschränkung der Datenmenge darin, nach Möglichkeit nur deutschsprachige Datensätze auszuwählen.
 
 Der Schritt der Transformation überführt die Daten schließlich in eine Graphenform. Dies kann entweder über Kookkurrenz oder über eine andere, für die Art der importierten Daten geeignete, Methode erfolgen.
 

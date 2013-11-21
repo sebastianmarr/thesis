@@ -4,7 +4,7 @@ Im folgenden Kapitel werden die vorgenommenen Optimierungsmaßnahmen und die dam
 
 \section{Optimierung}
 
-Zuerst muss definiert werden, welcher Aspekt genau optimiert werden soll. Die in \cref{link_discovery} beschriebenen Schritte haben einen Graphen erzeugt, in dem neun verschiedene Kantentypen existieren. Diese lauten \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Zerlegung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Kategorie--Kookkurrenz} und \emph{Thesaurus--Beziehung}.
+Zuerst muss definiert werden, welcher Aspekt genau optimiert werden soll. Die in \cref{link_discovery} beschriebenen Schritte haben einen Graphen erzeugt, in dem neun verschiedene Kantentypen existieren. Diese lauten \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Thesaurus--Beziehung}, \emph{Kategorie--Kookkurrenz} und \emph{Zerlegung}.
 
 Werden nun inhaltlich relevante Nachbarn zu einem gegebenen Begriff gesucht, müssen alle ausgehenden Kanten des entsprechenden Knotens nach Relevanz geordnet werden. Dazu muss jede Kante ein Kantengewicht besitzen. Die Addition aller Kantengewichte zwischen zwei Knoten stellt somit das Maß für ihre Nähe dar.
 

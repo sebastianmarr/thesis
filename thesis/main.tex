@@ -1,6 +1,6 @@
 \RequirePackage[l2tabu, orthodox]{nag}
 
-\documentclass[a4paper, ngerman, abstracton, DIV=calc, toc=bibliography, toc=listof]{scrreprt}
+\documentclass[a4paper, 12pt, DIV=10, ngerman, abstracton, toc=bibliography, toc=listof]{scrreprt}
 
 % silence KOMA warnings about float (for compatibility with listings, algorithm etc.)
 \usepackage{scrhack}
@@ -53,6 +53,7 @@
 \defaultfontfeatures{Ligatures=TeX}
 \setmainfont{Minion Pro}
 \setsansfont{Myriad Pro}
+\typearea{last}
 \usepackage{dashrule}
 
 % graphics directory
@@ -85,6 +86,10 @@
 \hyphenation{Spread-shirt}
 \hyphenation{Re-lat-ion-ship}
 \hyphenation{Tag-ging}
+
+\usepackage{etoolbox}
+% Variant A
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
 
 \begin{document}
 

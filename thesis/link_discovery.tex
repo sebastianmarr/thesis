@@ -304,9 +304,9 @@ Die Zerlegung von Tags, die aus mehr als einem Wort bestehen, stellt zwar keine 
 
 Zum Zeitpunkt des Importes befanden sich \num{147364} Tags in der Datenbank, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozent aller bereinigten deutschen Tags. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Tags auch Wörter enthalten sind, die nicht als Einzelwörter existieren.
 
-Werden diese Tags in ihre Einzelwörter zerlegt, entstehen einerseits unter Umständen neue Knoten, andererseits können in diesem Schritt Kanten vom Typ \emph{Zerlegung} beziehungsweise \emph{Zusammensetzung} eingefügt werden. Somit sind nach dem Zerlegungsschritt weitere Informationen über den Kontext, in dem Wörter verwendet werden, verfügbar. \cref{fig:decomposition} zeigt beispielhaft das Ergebnis einer solchen Zerlegung.
+Werden diese Tags in ihre Einzelwörter zerlegt, entstehen einerseits unter Umständen neue Knoten, andererseits können in diesem Schritt Kanten vom Typ \emph{Zerlegung} beziehungsweise \emph{Zusammensetzung} eingefügt werden. Somit sind nach dem Schritt der Zerlegung weitere Informationen über den Kontext, in dem Wörter verwendet werden, verfügbar. \cref{fig:decomposition} zeigt beispielhaft das Ergebnis einer solchen Zerlegung.
 
-Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Tagging--Daten wurden insgesamt \num{38349} Knoten und \num{1238900} Kanten erzeugt, die für spätere Analyseschritte genutzt werden können.
+Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Begriffe aus den Tagging-Daten wurden insgesamt \num{38349} Knoten und \num{1238900} Kanten erzeugt, die für spätere Analyseschritte genutzt werden können.
 
 \begin{figure}
 \centering
@@ -320,7 +320,7 @@ Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Tagging--Daten w
 
 Wie in \cref{used_sources} bereits einführend beschrieben, betreibt ein Wortschatz--Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften, Häufigkeiten und Kookkurrenzen in Texten und Beziehungen zu anderen Wörtern aufgebaut. Somit stellt dieses Projekt eine sehr gute Möglichkeit dar, weitere Beziehungen zwischen den schon im Graph vorhandenen Knoten herzustellen. Neben den Daten, die im Spreadshirt--Kontext entstehen, können somit auch allgemeine lexikalische Daten hinzugefügt und für spätere Analysen genutzt werden.
 
-Neben dem Webportal stellt dieses Projekt eine API bereit, über die die Daten des Wortschatzes programmatisch abgefragt werden können. Diese API wurde mittels einer Ruby--Bibliothek \cite{wlapi2013} im Rahmen dieser Arbeit für einen weiteren Integrationsschritt zur Link Discovery genutzt. Dazu wurden die Informationen \emph{Grundform}, \emph{Wortformen}, \emph{Kategorien}, \emph{Synonyme} und \emph{Thesaurus--Beziehungen} ausgewertet.
+Neben dem Webportal stellt dieses Projekt eine API bereit, über die die Daten des Wortschatzes programmatisch abgefragt werden können. Diese API wurde mittels einer Bibliothek für die Programmiersprache Ruby \cite{wlapi2013} im Rahmen dieser Arbeit für einen weiteren Integrationsschritt zur Link Discovery genutzt. Dazu wurden die Informationen \emph{Grundform}, \emph{Wortformen}, \emph{Kategorien}, \emph{Synonyme} und \emph{Thesaurus--Beziehungen} ausgewertet.
 
 Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben.
 
@@ -426,7 +426,7 @@ in gemeinsame Kategorien eingeordnet sind.
 
 Somit werden bei der Transformation mittels MapReduce (siehe \cref{mapreduce_cooccurence}) Kanten mit den Kookkurrenzmaßen Dice, Jaccard und Kosinus erzeugt.
 
-Zusammenfassend werden bei der Transformation demnach Kanten der Typen \emph{Synonym}, \emph{Thesaurus}, \emph{Wortform}, \emph{Grundform} und \emph{Kategorie--Kookkurrenz} erzeugt. \cref{fig:wortschatz_transformation} zeigt beispielhaft einen Ausschnitt des resultierenden Graphen. Dabei fällt auf, dass mit Ausnahme der Grundform--Kanten jede Kante in beide Richtungen existiert. Dies ist der Art der Beziehungen geschuldet, da diese in beide Richtungen gültig sind.
+Zusammenfassend werden bei der Transformation demnach Kanten mit den Typen \emph{Synonym}, \emph{Thesaurus}, \emph{Wortform}, \emph{Grundform} und \emph{Kategorie--Kookkurrenz} erzeugt. In \cref{fig:wortschatz_transformation} wird beispielhaft ein Ausschnitt des resultierenden Graphen gezeigt. Dabei fällt auf, dass mit Ausnahme der Grundform--Kanten jede Kante in beide Richtungen existiert. Dies ist der Art der Beziehungen geschuldet, da diese in beide Richtungen gültig sind.
 
 \subsection{Integration}
 
@@ -482,7 +482,7 @@ Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der 
 \label{tab:discovery_edges_per_node}
 \end{table}
 
-Auffällig ist hierbei, dass die Integration von Clicktracking- und Wortschatz--Daten zu einer Herabsetzung des Medians führten. Dies bedeutet, dass verhältnismäßig nach Durchführung dieser Schritte weniger viel verbundene Knoten im Datenbestand existierten als davor. Jedoch deutet die Entwicklung des Durchschnittes nach der Integration der Wortschatz--Daten darauf hin, dass die Knotenanzahl viel verbundener Knoten nach diesem Schritt deutlich größer geworden ist.
+Auffällig ist hierbei, dass die Integration von Clicktracking- und Wortschatz--Daten zu einer Herabsetzung des Medians führten. Dies bedeutet, dass nach Durchführung dieser Schritte verhältnismäßig weniger viel verbundene Knoten im Datenbestand existierten als davor. Jedoch deutet die Entwicklung des Durchschnittes nach der Integration der Wortschatz--Daten darauf hin, dass die Knotenanzahl viel verbundener Knoten nach diesem Schritt deutlich größer geworden ist.
 
 Das Absinken des Durchschnittes nach Integration der Clicktracking--Daten kann in der geringen Menge der Daten begründet werden. Durch die geringe Anzahl von Kookkurrenzen konnten viel verbundene Knoten keinen relevanten Zugewinn an Verbindungen verzeichnen, während für wenig verbundene Knoten verhältnismäßig mehr neue Verbindungen hinzukamen.
 
