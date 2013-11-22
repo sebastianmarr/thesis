@@ -1,0 +1,39 @@
+\chapter{Problembeschreibung}
+
+Das folgende Kapitel beschäftigt sich mit der Beschreibung der Problemstellung. Dazu wird zuerst das Ziel der Arbeit formuliert. Es folgen grundsätzliche Definitionen und die Beschreibung des zu bearbeitenden Datenbestandes. Abschließend wird die gewählte Lösungsstrategie konzeptionell beschrieben.
+
+\section{Zielstellung}
+
+Das Ziel dieser Arbeit besteht darin, aus vorhandenen Tagging--Daten, unter Zuhilfenahme von Integration anderer Daten, Assoziationen zu extrahieren. Diese Beziehungen sollten im Optimalfall Zusammenhänge widerspiegeln, die zur Verbesserung der Benutzererfahrung beim Suchen nach bestimmten Themen, für Marketingmaßnahmen und generell für ein besseres Verständnis der auf einer Online--Plattform angebotenen Inhalte genutzt werden können.
+
+Nutzbare Beziehungen können vielfältiger Art sein. Denkbar sind beispielsweise
+
+\begin{itemize}
+    \item inhaltliche Zusammenhänge, die mittels Clustering--Algorithmen später zu Themengebieten zusammengefasst werden
+    \item Worthierarchien, aus denen Kategoriebäume erzeugt werden
+    \item Wortformen, die dazu genutzt werden, mehrere Begriffe zusammenzufassen und somit mehr als nur eine wörtliche Suche zu ermöglichen
+    \item Verknüpfungen von Wörtern, die über inhaltliche Zusammenhänge hinausgehen, beispielsweise Verbindungen von Themengebieten mit bestimmten Emotionen, Produkten oder Personen
+\end{itemize}
+
+Ausgangsbasis für alle Überlegungen und Berechnungen sind die gesammelten Daten des Tagging--Systems der Online--Plattform Spreadshirt, deren Struktur und Qualität im nächsten Abschnitt erläutert und diskutiert wird.
+
+\section{Lösungsansatz}
+\label{solution}
+
+Die Beziehungen, die zwischen Wörtern und Wortgruppen hergestellt werden können, hängen stark von Umfang, Vielfältigkeit und Qualität der vorhandenen Datenquellen ab. Daher wurde zur Realisierung der Zielstellung ein iterativer Ansatz gewählt.
+
+Die grundsätzliche Lösungsidee besteht in der Erstellung eines Graphen, dessen Knoten Wörter oder Wortgruppen darstellen. Die Kanten zwischen diesen Knoten repräsentieren inhaltliche Beziehungen. Ein erstrebenswertes Ziel ist also ein Graph mit möglichst vielen, duplikatfreien Knoten und vielen, nach inhaltlicher Nähe gewichteten, Kanten. Die hohe Knotenanzahl kommt zum Tragen, um möglichst alle Suchbegriffe und Themen des Anwendungsgebietes abzubilden. Kantenanzahl und -gewichte spielen dann eine Rolle, wenn nach den inhaltlich nächsten Nachbarn eines Knotens gesucht wird. Ein anschauliches Beispiel für einen solchen Zielgraphen ist in \cref{fig:example_graph} dargestellt.
+
+Um einen solchen Graphen zu erstellen, ist eine Grundmenge von Daten nötig. Diese Grundmenge stellen die Daten des Tagging--Systems (\cref{tag-system}) von Spreadshirt dar. Die bereinigten Tags stellen die Knotenmenge dar. Die Kanten werden mittels Kookkurrenz ermittelt.
+
+Um die Qualität des Graphen danach schrittweise zu verbessern, werden daraufhin im Laufe der Arbeit weitere externe und interne Datenquellen integriert. Hierbei werden, soweit möglich, ebenfalls kookkurrenzbasierte Ansätze gewählt. Diesem Vorgehen liegt die Annahme zu Grunde, dass oft gemeinsam auftauchende Begriffe auch eine inhaltliche Nähe zueinander aufweisen.
+
+Bei jeder neuen Datenquelle muss zunächst der Import, die Bereinigung, die Reduktion, die Transformation und die Integration der Daten durchgeführt werden \cite{hkp2012}. Diese Schritte gewährleisten die Datenqualität des Ergebnisgraphen.
+
+Zusammengefasst bedeutet dies, dass, abgeleitet von der vorhandenen Knotenmenge, weitere Graphen aus anderen Datenquellen erstellt und diese dann in den ursprünglichen Graphen überführt werden. Dies führt einerseits unter Umständen zu einer Erweiterung der Knotenmenge und andererseits zu neuen Kanten mit neuen Gewichten.
+
+Die gewichtete Kombination mehrerer Kanten zwischen zwei Knoten des Graphen stellt also im Ergebnis die inhaltliche Nähe der Begriffe dar, die durch die Knoten repräsentiert werden. Somit muss des weiteren eine geeignete Gewichtung der Kantentypen gefunden werden. Dies ist aufgrund der Natur des Problems nur mit Hilfe von menschlicher Bewertung möglich. Diese Optimierung kann somit gleichzeitig mit der Evaluation statt finden.
+
+Um den Lösungsansatz technisch umzusetzen, soll, wenn möglich, das Programmiermodell MapReduce \cite{dg2004}  (siehe \cref{mapreduce}) eingesetzt werden, da dieses die Skalierung des Vorgehens auf große Datenmengen ermöglicht. Speziell die Erstellung von Kookkurrenzgraphen kann deutlich von der Verwendung dieses Verfahrens profitieren.
+
+In den nachfolgenden Kapiteln werden die Umsetzung dieses Lösungsansatzes und die Ergebnisse detailliert beschrieben.
