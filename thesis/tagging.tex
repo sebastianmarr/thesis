@@ -3,12 +3,20 @@
 Das folgende Kapitel beschäftigt sich mit Tagging--Systemen. Dabei werden die Grundlagen von Tagging--Systemen erläutert sowie das System von Spreadshirt, das in dieser Arbeit verwendet wurde, genauer erklärt. Dies umfasst die spezifischen Eigenschaften dieses Systems, die Diskussion der Datenqualität sowie das Mengengerüst der vorhandenen Daten.
 
 \section{Grundlagen}
+\label{tag-system}
 
-\subsection{Architektur von Tagging--Systemen}
+Ein Tagging--System besteht im Allgemeinen aus den Mengen \(D\), \(T\) und \(U\). \(D\) bezeichnet die Menge der Dokumente. Ein Dokument \(d\) kann ein beliebiger Datensatz sein, beispielsweise ein Design, Artikel oder Produkt. Die Menge \(U\) stellt alle Benutzer des Systems dar. Ein Benutzer \(u\) kann neben einem eindeutigen Bezeichner weitere Informationen besitzen, die jedoch an dieser Stelle im Kontext des Tagging--Systems nicht tiefer gehend behandelt werden. \(T\) ist die Menge der Tags. Ein Tag \(t\) ist eine beliebige Zeichenkette. \(T\) bildet also das \emph{Vokabular} des Tagging--Systems.
 
-\subsection{Datenmodell von Tagging--Systemen}
+Die Benutzer können beliebige Dokumente mit beliebigen Tags versehen. Der Vorgang des \emph{Taggens} kann also durch die Relation \(R = D \times U \times T\) beschrieben werden, welche Tupel der Form \((d, u, t)\) enthält.
 
-\subsection{Arten von Tagging--Systemen}
+Der Betreiber der Online--Plattform kann bestimmte Aspekte des Tagging--Systems begrenzen. Können alle Benutzer beliebige Tags an beliebige Dokumente vergeben, spricht man von einer \emph{Folksonomy} \cite{ip2009}. In \cref{fig:tagsystem} ist ein solches Tagging--System als Entity--Relationship--Diagramm dargestellt.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{tag_system}
+\caption{FMC--Entity--Relationship--Diagramm eines Tagging--Systems}
+\label{fig:tagsystem}
+\end{figure}
 
 \section{Tagging--System von Spreadshirt}
 
@@ -40,6 +48,11 @@ Das Suchergebnis für Suchen auf dem Marktplatz hängt maßgeblich von den Metad
 Spreadshirt betreibt aus historischen Gründen zwei Plattformen, deren Datenbestände größtenteils voneinander getrennt sind. Jeweils eine Plattform ist für den nordamerikanischen und den europäischen Markt zuständig. Im Kontext dieser Arbeit wird die europäische Plattform als Ausgangsbasis für alle Betrachtungen gewählt. Der Datenbestand dieser Plattform besteht aus circa 2 Millionen Tags, 6 Millionen Designs, 14 Millionen Produkten, 6 Millionen registrierten Nutzern und \num{750000} eröffneten Partner--Shops.
 
 \subsection{Einschränkungen des Tagging--Systems}
+\label{tag_sprd}
+
+Im Fall von Spreadshirt ist die Vergabe von Tags auf die Menge der Partner \(P \subseteq U\) begrenzt (siehe auch \cref{spreadshirt}). Die Dokumente, die von den Partnern getaggt werden können, sind auf die Designs und Artikel beschränkt, die der Partner selbst angelegt hat. Eine Beschreibung kann also ausschließlich durch den Autor des Inhaltes erfolgen. Deshalb fehlt im Vergleich zu anderen Tagging--Systemen auch die Information, welcher Benutzer den Tag vergeben hat.
+
+Des Weiteren besitzen Tags in der Spreadshirt--Datenbank ein Attribut \emph{Sprache} aus der Menge \(L\). Die Sprache spielt bei der Eingabe und Anzeige der Tags zu Dokumenten eine Rolle. Je nach eingestellter Sprache auf der Website erstellt und sieht der Benutzer nur Tags, die mit dieser Sprache markiert sind.   
 
 \subsection{Datenqualität des Tagging--Systems}
 \label{quality}
