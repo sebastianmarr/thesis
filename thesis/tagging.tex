@@ -1,24 +1,65 @@
 \chapter{Tagging--Systeme}
+\label{tagging}
 
-Das folgende Kapitel beschäftigt sich mit Tagging--Systemen. Dabei werden die Grundlagen von Tagging--Systemen erläutert sowie das System von Spreadshirt, das in dieser Arbeit verwendet wurde, genauer erklärt. Dies umfasst die spezifischen Eigenschaften dieses Systems, die Diskussion der Datenqualität sowie das Mengengerüst der vorhandenen Daten.
+Das folgende Kapitel beschäftigt sich mit Tagging--Systemen. Dabei werden die Grundlagen, das Datenmodell und die Arten von Tagging--Systemen erläutert sowie das System von Spreadshirt, das in dieser Arbeit verwendet wurde, genauer erklärt. Dies umfasst die spezifischen Eigenschaften dieses Systems, die Diskussion der Datenqualität sowie das Mengengerüst der vorhandenen Daten.
 
 \section{Grundlagen}
-\label{tag-system}
+\label{tagging_basics}
 
-Ein Tagging--System besteht im Allgemeinen aus den Mengen \(D\), \(T\) und \(U\). \(D\) bezeichnet die Menge der Dokumente. Ein Dokument \(d\) kann ein beliebiger Datensatz sein, beispielsweise ein Design, Artikel oder Produkt. Die Menge \(U\) stellt alle Benutzer des Systems dar. Ein Benutzer \(u\) kann neben einem eindeutigen Bezeichner weitere Informationen besitzen, die jedoch an dieser Stelle im Kontext des Tagging--Systems nicht tiefer gehend behandelt werden. \(T\) ist die Menge der Tags. Ein Tag \(t\) ist eine beliebige Zeichenkette. \(T\) bildet also das \emph{Vokabular} des Tagging--Systems.
+\emph{Tags} sind eine Form von Metadaten, also ``Daten über Daten''. Sie erfüllen die Funktion der \emph{Beschreibung} von Dokumenten und werden im Allgemeinen von Benutzern angelegt. Dies steht im Gegensatz zu professionell kuratierten Metadaten wie beispielsweise Bibliothekskatalogen \cite{ma2004}.
 
-Die Benutzer können beliebige Dokumente mit beliebigen Tags versehen. Der Vorgang des \emph{Taggens} kann also durch die Relation \(R = D \times U \times T\) beschrieben werden, welche Tupel der Form \((d, u, t)\) enthält.
+Im Allgemeinen sind Tags kurze Schlagworte, die von dem Benutzer, der sie vergibt, frei gewählt werden können. Jedes Dokument kann mit beliebig vielen Tags versehen werden. Dies steht im Gegensatz zu einer festen, vorgegebenen Klassifikation mittels Kategoriebäumen, wie sie beispielsweise in E--Commerce--Systemen üblich sind, um Artikel zu ordnen. In solchen Kategoriebäumen kann ein Dokument üblicherweise nur in einer begrenzten Anzahl von Kategorien, meistens nur in einer, eingeordnet werden.
 
-Der Betreiber der Online--Plattform kann bestimmte Aspekte des Tagging--Systems begrenzen. Können alle Benutzer beliebige Tags an beliebige Dokumente vergeben, spricht man von einer \emph{Folksonomy} \cite{ip2009}. In \cref{fig:tagsystem} ist ein solches Tagging--System als Entity--Relationship--Diagramm dargestellt.
+Die Menge der Tags eines Systems ist nicht hierarchisch geordnet und es bestehen keine explizit formulierten Beziehungen zwischen einzelnen Tags. Somit ergibt sich eine lose Kategorisierung der Dokumente, die, im Gegensatz zu formalen Taxonomien und Ontologien, ständig von den Benutzern erweitert und verändert wird \cite{sc2005}. \textcite{je2004} beschäftigt sich tiefergehend mit dem Unterschied zwischen starrer Klassifikation und loser Kategorisierung.
+
+Aus dieser Eigenschaft ergeben sich bestimmte Schwächen und Stärken von Tagging--Systemen, die von \textcite{ma2004} definiert wurden. Demnach liegen die Schwächen in der Mehrdeutigkeit von Tags und der mangelnden Kontrolle von Synonymen. Mehrdeutigkeit bezeichnet den Umstand, dass gleiche Tags zur Beschreibung von sehr unterschiedlichen Dokumenten genutzt werden können, da keine Systematik vorgegeben ist. Die mangelnde Kontrolle von Synonymen führt dazu, dass verschiedene Tags verwendet werden, um den gleichen Sachverhalt zu beschreiben.
+
+Zu den von \textcite{ma2004} formulierten Stärken gehören die starke Ausrichtung von Tags an den Gedankengängen der Benutzer und dem einfacheren Durchstöbern von Dokumenten. Da die Tags von den Benutzern eines Systems formuliert werden, spiegeln sie deren Vokabular und deren Gedankengänge wieder. Werden Tags statt zum Finden von konkreten Dokumenten zum Durchstöbern genutzt, bieten sie größere Möglichkeiten, interessante Inhalte zu finden, als in einer starren Kategorisierung.
+
+Tagging--Systeme enthalten also implizites Wissen, dass durch Data Mining extrahiert und genutzt werden kann. Im Rahmen dieser Arbeit wurden Tagging--Systeme als Ausgangspunkt für die Link Discovery mittels Kookkurrenz genutzt genutzt (siehe \cref{co-occurence,ld_tags}).
+
+\subsection{Datenmodell von Tagging--Systemen}
+\label{tagging_data}
+
+Ein Tagging--System ist allgemein durch ein Tripel \(S=(D, T, U)\) von Mengen, sowie durch die Relation \(R = D \times U \times T\) definiert. 
+
+\(D\) repräsentiert eine Menge von Dokumenten. Ein Dokument \(d\) kann ein beliebiger Datensatz sein, beispielsweise ein Design, Artikel oder Produkt. Die Menge \(U\) stellt alle Benutzer des Systems dar. Ein Benutzer \(u\) ist eine Entität mit beliebigen weiteren Attributen, die jedoch im Kontext des Tagging--Systems nicht weiter betrachtet werden. \(T\) repräsentiert die Menge der Tags. Ein Tag \(t\) ist eine Entität, die als benötigtes Attribut eine Zeichenkette besitzt, die zur Beschreibung von Dokumenten genutzt werden kann. \(T\) bildet das \emph{Vokabular} des Tagging--Systems.
+
+Die Relation \(R\) beschreibt den Vorgang des \emph{Taggings}. Ein Benutzer \(u\) des Systems vergibt dabei einen Tag \(t\) an ein Dokument \(d\), um den Inhalt von \(d\) mit der Zeichenkette von \(t\) zu beschreiben. \(R\) enthält demnach Tripel der Form \((d,t,u)\).
 
 \begin{figure}
 \centering
-\includegraphics[width=0.6\textwidth]{tag_system}
+\includegraphics[width=0.75\textwidth]{tag_system}
 \caption{FMC--Entity--Relationship--Diagramm eines Tagging--Systems}
-\label{fig:tagsystem}
+\label{fig:tagging_erd}
 \end{figure}
 
+Das beschriebene Tagging--System lässt sich somit in ein Datenmodell mit den Entitäten \emph{Benutzer}, \emph{Dokument}, \emph{Tag} und  der ternären Beziehung \emph{Tagging} überführen. Dieses Modell ist in \cref{fig:tagging_erd} als Entity--Relationship--Diagramm dargestellt. Alle genannten Entitäten können weitere Attribute besitzen, die von der Anwendungsdomäne des konkret betrachteten Taggging--Systems abhängen.
+
+\subsection{Arten von Tagging--Systemen}
+\label{tagging_types}
+
+Abhängig vom gewünschten Einsatzzweck des Tagging--Systems kann der Betreiber bestimmte Aspekte des Systems beschränken. Außerdem können die Benutzer einen vorherrschenden Umgang mit dem System entwickeln. Aus diesen Faktoren ergeben sich verschiedene Arten und Nutzungsmuster von Tagging-Systemen. Hauptsächlich kann zwischen offenen Tagging--Systemen, den so gennannten \emph{Folksonomies} und den teilweise geschlossenen Tagging--Systemen unterschieden werden.
+
+\subsubsection{Folksonomies}
+
+Eine Folksonomy beschreibt ein weitestgehend offenes Tagging--System \cite{ma2004}. Bei dieser Art von System kann grundsätzlich jeder Benutzer jeden Tag an jedes Dokument vergeben. Außerdem stammen die Dokumente selbst meist ebenfalls von den Benutzern. Beispiele für Folksonomies sind der Bookmarking--Dienst \emph{Delicious} \cite{deli} und die Foto-Plattform \emph{Flickr} \cite{flickr}.
+
+Der Begriff \emph{Folksonomy} steht dabei im Gegensatz zur \emph{Taxonomie} und beschreibt den Umstand, dass die Kategorisierung und Ordnung von Inhalten vom \emph{folk}, also den Benutzern selbst vorgenommen werden \cite{vt2007}.
+
+\subsubsection{Teilweise geschlossene Tagging--Systeme}
+
+In teilweise geschlossenen Tagging--Systemen beschränkt der Betreiber des Systems bestimmte Aspekte. Dies können die Benutzer, die Tags vergeben dürfen, die Dokumente oder auch das Vokabular sein.
+
+Eine häufige Form der Einschränkung, der auch das in dieser Arbeit verwendete System unterliegt (siehe \cref{tag_sprd}), ist die Einschränkung der Benutzer die ein Dokument taggen können. Oftmals ist dies nur den Autoren des Dokumentes selbst oder Benutzern mit besonderen Rechten, beispielsweise Moderatoren oder Angestellten des Betreibers, erlaubt.
+
+In den meisten Tagging--Systemen stammen die Dokumente ebenfalls von den Benutzern des Systems, beispielsweise Artikel, Fotos oder Musikstücke. Jedoch kann die Erstellung der Dokumente eingeschränkt werden, wenn dies in der Anwendungsdomäne sinnvoll ist. Beispiele hierfür sind produke in Online--Shops. Diese werden nicht von den Benutzern erstellt, jedoch kann die Vergabe von Tags an diese einen Mehrwert liefern.
+
+Die Einschränkung des Vokabulars kann vorgenommen werden, um Rechtschreibfehler und Fehleingaben der Tags zu vermeiden. Sie bringt jedoch den Nachteil mit sich, dass die Tags dann unter Umständen nicht mehr das Vokabular der Benutzer widerspiegeln und somit Inhalte für diese schwerer auffindbar sind.
+
 \section{Tagging--System von Spreadshirt}
+
+Nachdem im vorherigen Abschnitt die Grundlagen von Tagging--Systemen diskutiert wurden, beschäftigt sich dieser Abschnitt mit dem konkreten Tagging--Systems der Website \emph{Spreadshirt}, welches in dieser Arbeit für den initialen Schritt der Link Discovery genutzt wurde (siehe \cref{ld_tags}).
 
 \subsection{Spreadshirt}
 \label{spreadshirt}
@@ -33,9 +74,9 @@ Partner sind Benutzer, die Designs oder Produkte erstellen und diese zum Verkauf
 
 Neben den von Kunden für sich selbst erstellten Produkten und den Partner--Shops existiert mit dem Spreadshirt--Marktplatz ein weiterer Vertriebskanal. Auf dem Marktplatz können Partner nach ihrer Zustimmung ihre Designs vertreiben. Kunden können nach Motiven suchen, die ihrem Geschmack entsprechen und diese bestellen, mit anderen Motiven kombinieren oder mit Texten versehen. Ein Produkt, das entweder in einem Partner--Shop oder auf dem Marktplatz positioniert und mit einem Preis versehen wurde, wird Artikel genannt.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
-\includegraphics[width=0.7\textwidth]{how_spreadshirt_works}
+\includegraphics[width=0.65\textwidth]{how_spreadshirt_works}
 \caption{FMC--Blockdiagramm der Spreadshirt--Bereiche und Benutzer}
 \label{fig:howspreadshirtworks}
 \end{figure}
@@ -47,12 +88,16 @@ Das Suchergebnis für Suchen auf dem Marktplatz hängt maßgeblich von den Metad
 \label{platforms}
 Spreadshirt betreibt aus historischen Gründen zwei Plattformen, deren Datenbestände größtenteils voneinander getrennt sind. Jeweils eine Plattform ist für den nordamerikanischen und den europäischen Markt zuständig. Im Kontext dieser Arbeit wird die europäische Plattform als Ausgangsbasis für alle Betrachtungen gewählt. Der Datenbestand dieser Plattform besteht aus circa 2 Millionen Tags, 6 Millionen Designs, 14 Millionen Produkten, 6 Millionen registrierten Nutzern und \num{750000} eröffneten Partner--Shops.
 
-\subsection{Einschränkungen des Tagging--Systems}
+\subsection{Eigenschaften des Tagging--Systems}
 \label{tag_sprd}
 
-Im Fall von Spreadshirt ist die Vergabe von Tags auf die Menge der Partner \(P \subseteq U\) begrenzt (siehe auch \cref{spreadshirt}). Die Dokumente, die von den Partnern getaggt werden können, sind auf die Designs und Artikel beschränkt, die der Partner selbst angelegt hat. Eine Beschreibung kann also ausschließlich durch den Autor des Inhaltes erfolgen. Deshalb fehlt im Vergleich zu anderen Tagging--Systemen auch die Information, welcher Benutzer den Tag vergeben hat.
+Im Fall von Spreadshirt ist die Vergabe von Tags auf die Menge der Partner \(P \subseteq U\) begrenzt (siehe auch \cref{spreadshirt}). Es handelt sich demnach um ein in \cref{tagging_types} beschriebenes teilweise geschlossenes Tagging--System.
 
-Des Weiteren besitzen Tags in der Spreadshirt--Datenbank ein Attribut \emph{Sprache} aus der Menge \(L\). Die Sprache spielt bei der Eingabe und Anzeige der Tags zu Dokumenten eine Rolle. Je nach eingestellter Sprache auf der Website erstellt und sieht der Benutzer nur Tags, die mit dieser Sprache markiert sind.   
+Die Dokumente, die von den Partnern getaggt werden können, sind auf die Designs und Artikel beschränkt, die der Partner selbst angelegt hat. Eine Beschreibung kann also ausschließlich durch den Autor des Inhaltes erfolgen. Deshalb fehlt im Vergleich zu anderen Tagging--Systemen auch die Information, welcher Benutzer den Tag vergeben hat, da diese implizit durch den Autor des Dokumentes gegeben ist.
+
+Des Weiteren besitzen Tags in der Spreadshirt--Datenbank ein Attribut \emph{Sprache} aus der Menge \(L\). Die Sprache spielt bei der Eingabe und Anzeige der Tags zu Dokumenten eine Rolle. Je nach eingestellter Sprache auf der Website erstellt und sieht der Benutzer nur Tags, die mit dieser Sprache markiert sind.
+
+Das Vokabular der Tags ist nicht eingeschränkt. Dies bringt zwangsläufig Probleme der Datenqualität mit sich, welche im folgenden Abschnitt erläutert werden.
 
 \subsection{Datenqualität des Tagging--Systems}
 \label{quality}
@@ -69,7 +114,7 @@ Die Quelle beider Fehler ist also die bewusste Falscheingabe von Informationen, 
                                                                                                                                                                                                                                                                                                                                                                                                               
 \subsubsection{Vollständigkeit}
 
-Wie bereits in \cref{tag-system} beschrieben, fehlen in den Daten des Spreadshirt--Systems der Zeitpunkt und der Benutzer eines Taggings. Dies führt in der Konsequenz dazu, dass Spam schwerer erkannt werden kann. Zwar ist bekannt, wann ein Tag das erste Mal verwendet wurde, alle weiteren Verwendungen des Tags haben jedoch keinen Zeitstempel. Der Benutzer, der den Tag angelegt und verwendet hat, kann nur daraus abgeleitet werden, wer den getaggten Artikel angelegt hat.
+Wie bereits in \cref{tag_sprd} beschrieben, fehlen in den Daten des Spreadshirt--Systems der Zeitpunkt und der Benutzer eines Taggings. Dies führt in der Konsequenz dazu, dass Spam schwerer erkannt werden kann. Zwar ist bekannt, wann ein Tag das erste Mal verwendet wurde, alle weiteren Verwendungen des Tags haben jedoch keinen Zeitstempel. Der Benutzer, der den Tag angelegt und verwendet hat, kann nur daraus abgeleitet werden, wer den getaggten Artikel angelegt hat.
 
 Die Unvollständigkeit der Daten rührt in erster Linie daher, dass zum Zeitpunkt der Implementierung des Tagging--Systems noch nicht bedacht wurde, dass die fehlenden Attribute später nützlich sein können.
 
@@ -77,11 +122,11 @@ Die Unvollständigkeit der Daten rührt in erster Linie daher, dass zum Zeitpunk
 
 Bedingt durch die Form der Dateneingabe besteht für das Vokabular des Tag--Systems ein großes Potential für redundante Daten. Da eingegebene Tags durch einen Separator getrennt eingegeben werden müssen, besteht hier Potential zur Fehleingabe. Wird der falsche Separator verwendet, werden die eigentlich getrennten Tags als eine einzige Entität abgespeichert.
 
-Technisch kann jeder Tag genau ein Mal in der Datenbank vorkommen. Jedoch führen Tipp-- und Rechtschereibfehler, unterschiedliche Groß- und Kleinschreibung, verschiedene Arten zusammengesetzte Wörter zu schreiben, Leerräume vor, nach und zwischen Wörtern eines Tags und Tippfehler dazu, dass das gleiche Wort mehrfach in der Datenbank gespeichert wurde.
+Technisch kann jeder Tag genau ein Mal in der Datenbank vorkommen. Jedoch führen Tipp-- und Rechtschreibfehler, unterschiedliche Groß- und Kleinschreibung, verschiedene Arten zusammengesetzte Wörter zu schreiben, Leerräume vor, nach und zwischen Wörtern eines Tags und Tippfehler dazu, dass das gleiche Wort mehrfach in der Datenbank gespeichert wurde.
 
 Außerdem führten in der Vergangenheit Systemfehler und Implementierungsfehler dazu, dass falsche, nicht druckbare Zeichen in den Tags enthalten waren. Nach Beseitigung der Fehler blieben die fehlerhaften Tags bestehen, so dass bei einer erneuten Eingabe des gleichen Wortes ein neuer Tag in der Datenbank angelegt wurde.
 
-\subsection{Mengengerüst}
+\subsection{Mengengerüst des Tagging--Systems}
 
 Zum Zeitpunkt der Bearbeitung dieser Arbeit befanden sich im Datenbestand der europäischen Spreadshirt--Plattform:
 
@@ -95,3 +140,9 @@ Zum Zeitpunkt der Bearbeitung dieser Arbeit befanden sich im Datenbestand der eu
 Diese Datenmengen stellen besondere Anforderungen an die Verarbeitung. Wie diese umgesetzt wurden, wird in \cref{system} diskutiert.
 
 \section{Zusammenfassung}
+
+Dieses Kapitel befasste sich mit Tagging--Systemen. Dazu wurden die Grundlagen und Begriffe genannt, die Vor-- und Nachteile von Tagging--System erläutert, das Datenmodell formalisiert und die grundsätzlichen Arten Folksonomy und teilweisene geschlossenenes Tagging--System unterschieden.
+
+Außerdem wurde das im weiteren Verlauf dieser Arbeit verwendete Tagging--System von Spreadshirt \cite{sprd2013} näher betrachtet. Dazu wurden die speziellen Eigenschaften dieses Systems, die Datenqualität und die Menge der vorhandenen Daten beschrieben.
+
+Das nachfolgende Kaptiel beschäftigt sich mit dem zur Link Discovery angewandten Framework.
