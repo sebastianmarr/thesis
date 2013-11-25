@@ -17,6 +17,7 @@
 \defaultfontfeatures{Ligatures=TeX}
 \setmainfont{Minion Pro}
 \setsansfont{Myriad Pro}
+\setmonofont{Consolas}
 \urlstyle{same}
 
 % line spacing
@@ -30,6 +31,9 @@
 % no widows
 \usepackage[all]{nowidow}
 
+\usepackage{xcolor}
+\definecolor{lightgray}{gray}{0.96}
+
 % listings
 \usepackage{listings}
 \lstset{
@@ -38,13 +42,24 @@
     frame=bt,
     numbers=left,
     numberstyle=\rmfamily\tiny\color{gray!50!black},
+    keywordstyle=\bfseries,
+    % backgroundcolor=\color{lightgray},
+    stringstyle=\slshape,
     aboveskip=1cm,
     xleftmargin=8mm,
     framexleftmargin=8mm,
-    aboveskip=1cm
+    aboveskip=1cm,
+    showspaces=false,
+    showtabs=false
 }
-\lstdefinelanguage{json}{}
-\lstdefinelanguage{pseudo}{}
+
+\lstdefinelanguage{json}{
+  morestring=[b]",
+}
+
+\lstdefinelanguage{pseudo}{
+    keywords={var, foreach, in, function, return, end, do},
+}
 
 % referencing stuff
 \usepackage[strict=true]{csquotes}

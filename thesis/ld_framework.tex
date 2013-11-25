@@ -210,11 +210,11 @@ foreach (term in terms) {
 
 foreach (termA in terms) {
     foreach (termB in terms) {
-        ab = countCoOccurences(termA, termB);
+        var ab = countCoOccurences(termA, termB);
     }
-    dice = dice(occurences[termA], occurences[termB], ab);
-    jaccard = jaccard(occurences[termA], occurences[termB], ab);
-    cosine = cosine(occurences[termA], occurences[termB], ab);
+    var diceAB = dice(occurences[termA], occurences[termB], ab);
+    var jaccardAB = jaccard(occurences[termA], occurences[termB], ab);
+    var cosineAB = cosine(occurences[termA], occurences[termB], ab);
 }
 \end{lstlisting}
 
