@@ -6,42 +6,40 @@ Dieses Kapitel beschäftigt sich mit den konkret durchgeführten Schritten zur L
 \section{Initiale Erstellung des Weltausschnittes aus Tagging--Daten}
 \label{ld_tags}
 
-Die initiale Erstellung des Weltausschnittes stellt den ersten Schritt des in \cref{ld_process} definerten Link--Discovery--Prozesses dar. Die konkrete Datenquelle, die im Rahmen dieser Arbeit für diesen Schritt verwendet wurde, ist das Tagging--System des Unternehmens Spreadshirt, welches in \cref{tag_sprd} beschrieben wurde. Aus diesen Daten wird ein Graph erstellt, der der in \cref{world_graph} erläuterten Repräsentation des Weltausschnittes entspricht. Dieser stellt die Grundlage für alle folgenden Anreicherungsschritte dar. Um diesen initalen Graphen zu berechnen, sind die in \cref{integration_generic} aufgeführten Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration nötig. Die Umsetzung dieser Schritte wird im folgenden Abschnitt beschrieben.
+Die initiale Erstellung des Weltausschnittes stellt den ersten Schritt des in \cref{ld_process} definerten Link--Discovery--Prozesses dar. Die konkrete Datenquelle, die im Rahmen dieser Arbeit für diesen Schritt verwendet wurde, ist das Tagging--System des Unternehmens Spreadshirt, welches in \cref{tag_sprd} beschrieben wurde. Aus diesen Daten wird mittels Kookkurrenz (siehe \cref{co-occurence}) ein Graph erstellt, der der in \cref{world_graph} erläuterten Repräsentation des Weltausschnittes entspricht. Dieser stellt die Grundlage für alle folgenden Anreicherungsschritte dar. Um diesen initalen Graphen zu berechnen, sind die in \cref{integration_generic} aufgeführten Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration nötig. Die Umsetzung dieser Schritte wird im folgenden Abschnitt beschrieben.
 
 \subsection{Import}
 
-Die Daten liegen im Quellsystem, einer MySQL--Datenbank, in relationaler Form vor. Somit existieren Tabellen für die Tags, Dokumente und Verknüpfungen zwischen eben jenen. Da der Inhalt der Dokumente nicht relevant für die Link Discovery mittels Kookkurrenz sind, genügt es, die Tabellen der Tags und Verknüpfungen zu importieren.
+Die Daten liegen im Quellsystem, einer MySQL--Datenbank, in relationaler Form vor. Somit existieren, dem Datenmodell von Tagging--Systemen in \cref{tagging_data} folgend, Tabellen für Benutzer, Tags, Dokumente und Taggings. Da der Inhalt der Dokumente sowie die Benutzer für die Kookkurrenzberechnung nicht relevant sind, genügt der Import der Tabellen \emph{Tags} und \emph{Taggings}. Das Datenmodell der für den Import benötigten Daten ist in \cref{fig:tag_source_erd} dargestellt.
 
-Die Tags liegen in der Form \((i, s, l)\) vor, wobei \(i\) den eindeutigen Bezeichner des Tags, \(s\) die Zeichenkette und \(l\) die Sprache des Tags repräsentieren.
-
-Die Verknüpfungen sind durch Tupel der Form \((i, t, d_t, d_i)\) repräsentiert, wobei \(i\) der eindeutige Bezeichner der Verknüpfung selbst ist. \(t\) ist der Bezeichner des Tags, \(d_t\) der Typ des Dokuments und \(d_i\) der Bezeichner des Dokumentes. \(d_t\) und \(d_i\) bilden also den zusammengesetzten Schlüssel des getaggten Dokumentes. 
- 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.6\textwidth]{tag_source_erd}
 \caption{FMC--Entity--Relationship--Diagramm der Tagging--Quelldaten}
 \label{fig:tag_source_erd}
 \end{figure}
 
-\begin{lstlisting}[language=json, label={lst:tag_import_tag}, caption={Beispiele für einen importierten Tag}]
+Die Tags besitzen, neben einem eindeutigen Bezeichner, die Attribute \emph{tag} für die Zeichenkette und \emph{lang} für die Sprache des Tags. \cref{lst:tag_import_tag} zeigt beispielhaft eine solche Tag--Entität.
+
+\begin{lstlisting}[language=json, label={lst:tag_import_tag}, caption={JSON--Beispiel für einen importierten Tag}, float=h]
 {
-    "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
-    "tag_id": 12345
+    "tag_id": 12345,
     "tag": "segeln",
     "lang": "de"
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=json, label={lst:tag_import_link}, caption={Beispiele für eine importierte Verknüpfung eines Tags mit einem Dokument}]
+Ein Tagging ist über den eindeutigen Bezeichner des Tags und den eindeutigen Bezeichner des getaggten Dokumentes definiert. Der Schlüssel des Dokumentes setzt sich dabei aus den Attributen \emph{object\_type\_id} und \emph{object\_id} zusammen, da die Dokumente der Spreadshirt--Plattform verschiedene Typen wie  ``Artikel'' oder ``Design'' besitzen können. In \cref{lst:tag_import_link} ist ein Tagging beispielhaft dargestellt.
+
+\begin{lstlisting}[language=json, label={lst:tag_import_link}, caption={JSON--Beispiel für ein importiertes Tagging}, float=ht]
 {
-    "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
     "object_id": 45678
     "object_type_id": 3,
     "tag_id": 12345
 }
 \end{lstlisting}
 
-Die importierten Quelldaten sind beispielhaft in \cref{lst:tag_import_tag,lst:tag_import_link} dargestellt. Nach dem Import stehen \num{2072079} Tags und \num{71938905} Verknüpfungen zur Verfügung.
+Gemäß des Mengengerüstes aus \cref{tag_amount} stehen nach dem Import \num{2072079} Tags und \num{71938905} Taggings für die folgenden Integrationsschritte zur Verfügung.
 
 \subsection{Bereinigung}
 
