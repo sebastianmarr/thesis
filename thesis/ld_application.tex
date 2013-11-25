@@ -3,7 +3,7 @@
 
 Das folgende Kapitel beschäftigt sich mit den im Rahmen dieser Arbeit unternommenen Schritten zur Link Discovery, also dem Finden von Beziehungen zwischen Wörtern und Wortgruppen. Dazu zählen die Erzeugung eines initalen Graphen aus den Daten Tagging--Systems, sowie dessen Anreicherung durch die Integration weiterer interner und externer Datenquellen.
 
-\section{Tags}
+\section{Initiale Erstellung aus Tagging--Daten}
 \label{ld_tags}
 
 Den Ausgangspunkt für den in \cref{ld_process} beschriebenen Prozess stellen die Daten des Tagging--Systems dar. Diese werden in \cref{tag_sprd} ausführlich beschrieben. Aus diesen Daten wird im ersten Schritt der Zielgraph erstellt, in welchen in allen weiteren Schritten weitere Daten integriert werden. Die in diesem Graph enthaltenen Knoten stellen ebenfalls die Kriterien für die Abfrage der weiteren Datenquellen dar.
@@ -161,7 +161,9 @@ Da der aus den Tagging--Daten generierte Kookkurrenzgraph die Ausgangsbasis für
 
 Durch die Schritte, die zur Link Discovery aus den Tagging--Daten verwendet wurden, wurden insgesamt \num{314351} Knoten und \num{21834868} Kanten erzeugt, welche nun durch weitere Schritte angereichert werden sollen.
 
-\section{Clicktracking}
+\subsection{Ergebnisse}
+
+\section{Anreicherung mit Clicktracking-Daten}
 \label{clicktracking}
 
 Spreadshirt betreibt ein Clicktracking--System, welches die Klicks der Benutzer auf Artikel und Designs auf Suchergebnisseiten aufzeichnet. Dabei ist unerheblich, ob der Benutzer bei Spreadshirt registriert und angemeldet ist. Dieses System sammelt Daten von beiden Spreadshirt--Plattformen (siehe \cref{platforms}). In \cref{fig:search_result} ist beispielhaft eine Suchergebnisseite der Spreadshirt--Plattform abgebildet, welches die gefundenen Designs für eine Suchanfrage auflistet.
@@ -274,7 +276,9 @@ Da die erzeugten Kanten einen noch nicht im Graph vorhandenen Typ besitzen, müs
 
 Durch dieses Vorgehen konnten der Knotenmenge \num{78237} Knoten, und somit auch neue Begriffe hinzugefügt werden. Die Kantenmenge wurde, wie bereits erläutert, um \num{310860} Kanten erweitert.
 
-\section{Zerlegung von Wortgruppen}
+\subsection{Ergebnisse}
+
+\section{Anreicherung durch Zerlegung von Wortgruppen}
 \label{decomposition}
 
 Die Zerlegung von Tags, die aus mehr als einem Wort bestehen, stellt zwar keine Integration anderer Datenquellen dar, kann aber trotzdem zum Auffinden neuer Verknüpfungen nützlich sein. Außerdem kann es für weitere Integrationsschritte von Nutzen sein, möglichst viele Einzelwörter im Datenbestand zu haben (siehe \cref{wortschatz}).
@@ -292,7 +296,11 @@ Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Begriffe aus den
 \label{fig:decomposition}
 \end{figure}
 
-\section{Wortschatz der Universität Leipzig}
+\subsection{Vorgehensweise}
+
+\subsection{Ergebnisse}
+
+\section{Anreicherung mit Wortschatz-Daten}
 \label{wortschatz}
 
 Wie in \cref{used_sources} bereits einführend beschrieben, betreibt ein Wortschatz--Projekt \cite{ws2013}. Im Rahmen dieses Projektes wird durch die Analyse von großen Textmengen eine Datenbank deutscher Wörter, deren Bedeutungen, grammatikalische Eigenschaften, Häufigkeiten und Kookkurrenzen in Texten und Beziehungen zu anderen Wörtern aufgebaut. Somit stellt dieses Projekt eine sehr gute Möglichkeit dar, weitere Beziehungen zwischen den schon im Graph vorhandenen Knoten herzustellen. Neben den Daten, die im Spreadshirt--Kontext entstehen, können somit auch allgemeine lexikalische Daten hinzugefügt und für spätere Analysen genutzt werden.
@@ -413,7 +421,15 @@ Insgesamt wurden dadurch \num{145023} neue Knoten und \num{50227965} neue Kanten
 
 Nachdem alle vorgenommen Schritte zur Link Discovery beschrieben wurden, beschäftigt sich der nächste Abschnitt mit einer Zusammenfassung der Ergebnisse.
 
-\section{Ergebnisse}
+\subsection{Ergebnisse}
+
+\section{Prioisierung der Beziehungem}
+
+\subsection{Vorgehensweise}
+
+\subsection{Ergebnisse}
+
+\section{Zusammenfassung der Ergebnisse}
 
 Im folgenden Abschnitt werden die quantitativen Ergebnisse der Link Discovery zusammenfassend dargestellt und diskutiert.
 
