@@ -1,9 +1,9 @@
 \chapter{Link--Discovery--Durchführung}
 \label{link_discovery}
 
-Das folgende Kapitel beschäftigt sich mit den im Rahmen dieser Arbeit unternommenen Schritten zur Link Discovery, also dem Finden von Beziehungen zwischen Wörtern und Wortgruppen. Dazu zählen die Erzeugung eines initalen Graphen aus den Daten Tagging--Systems, sowie dessen Anreicherung durch die Integration weiterer interner und externer Datenquellen.
+Dieses Kapitel beschäftigt sich mit den konkret durchgeführten Schritten zur Link Discovery an Beispieldaten. Das Vorgehen und die verwendete Modellierung des Weltausschnittes wurde umfassend in \cref{ld_framework} beschrieben. Im Folgenden wird die initiale Erstellung des Weltausschnittes aus den Daten des Tagging--Systems von Spreadshirt (\cref{tag_sprd}), die Anreicherung durch Clicktracking--Daten, Zerlegung von Wortgruppen in Einzelwörter und Integration des Wortschatzes der Universität Leipzig beschrieben. Anschließend wird die konkrete Prioisierung der Beziehungen mittels evolutionärer Algorithen erläutert und die Ergebnisse der Link Discovery ausgewertet.
 
-\section{Initiale Erstellung aus Tagging--Daten}
+\section{Initiale Erstellung des Weltausschnittes aus Tagging--Daten}
 \label{ld_tags}
 
 Den Ausgangspunkt für den in \cref{ld_process} beschriebenen Prozess stellen die Daten des Tagging--Systems dar. Diese werden in \cref{tag_sprd} ausführlich beschrieben. Aus diesen Daten wird im ersten Schritt der Zielgraph erstellt, in welchen in allen weiteren Schritten weitere Daten integriert werden. Die in diesem Graph enthaltenen Knoten stellen ebenfalls die Kriterien für die Abfrage der weiteren Datenquellen dar.
