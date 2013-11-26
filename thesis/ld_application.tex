@@ -111,11 +111,11 @@ Nach der beschriebenen Reduktion befinden sich noch \num{314351} Tags und \num{2
 
 \subsection{Transformation}
 
-Der Transformationsschritt beschreibt die Überführung der Daten in die Form, die für das Ergebnis benötigt wird. Im Falle der Tagging--Daten bedeutet dies eine Umformung in die Form des Kookkurrenzgraphen, also die Erzeugung von Knoten- und Kantenobjekten. Die Umsetzung dieser Transformation mittels des Programmiermodelles MapReduce wurde in \cref{mapreduce_cooccurence} genauer beschrieben.
+Der Transformationsschritt stellt die Überführung der Daten in die in \cref{world_graph} beschriebene Repräsentation des Weltausschnittes dar. Für die Tagging--Daten bedeutet dies eine Umformung in eine Graphenform, wobei die Kanten des Graphen über Kookkurrenz ermittelt werden. Die genaue Umsetzung dieser Transformation mittels des MapReduce--Programmiermodells wird in \cref{mapreduce_cooccurence} detailliert beschrieben.
 
-Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Dieses besitzt als Attribute zum einen die Zeichenkette und die Sprache des Tags, aus dem es erzeugt wurde. Zum anderen wird ein Unterdokument hinzugefügt, welches weitere Eigenschaften des Ausgangstags beschreibt. Dies umfasst die Anzahl der Verwendungen und die eindeutigen Bezeichner der Dokumente, also Artikel oder Designs, die mit dem Tag getaggt wurden. Außerdem wird im Transformationsschritt für jeden Knoten ein global eindeutiger Bezeichner erzeugt, um das spätere Referenzieren der Knoten einfacher zu machen. Zeichenkette und Sprache des Knotens stellen einen zusammengesetzten Schlüssel dar und sind in der Knotenmenge eindeutig. \cref{lst:tag_transform_node} zeigt ein Beispiel für ein in der Datenbank abgelegtes Knotendokument.
+Je Tag wird ein während der Transformation ein Knotenobjekt erzeugt. Dieses besitzt als benötigte Attribute die \emph{Zeichenkette} und die \emph{Sprache} des Tags, aus dem es erzeugt wurde und repräsentiert somit einen Begriff des Weltausschnittes. Außerdem wird ein Kontext dieses Begriffes im Rahmen des Tagging--Systems erzeugt. Dieser enthält die Anzahl der Verwendungen des Begriffes als Tag und die eindeutigen Bezeichner der Dokumente, also der Artikel und Designs, die mit dem Begriff getaggt wurden. Weiterhin wird für jedes Knotenobjekt ein global eindeutiger Bezeichner generiert, um die spätere Referenzierungs der Knoten zu ermöglichen. \cref{lst:tag_transform_node} zeigt ein Beispiel für ein so erzeugtes Knotenobjekt.
 
-\begin{lstlisting}[language=json, label={lst:tag_transform_node}, caption={Tag--Knoten als JSON--Dokument}]
+\begin{lstlisting}[language=json, label={lst:tag_transform_node}, caption={JSON--Beispiel für einen aus den Tagging--Daten erzeugten Knoten}, float=h]
 {
     "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
     "language" : "de",
@@ -135,9 +135,9 @@ Je Tag wird ein Datenbankdokument erzeugt, dass den Knoten repräsentiert. Diese
 }
 \end{lstlisting}
 
-Die Erzeugung der Kanten erfolgt wie in \cref{mapreduce_cooccurence} beschrieben. Für  jedes gemeinsame Auftreten von zwei Tags werden zwei Datenbankdokumente erzeugt. Dieses beschreiben gerichtete Kanten zwischen den Tags, die ein gemeinsames Auftreten der Tags repräsentieren. Neben Quell- und Zielknoten enthält eine Kante den Kantentyp sowie weitere Informationen über die Art der Verbindung. Im Fall von Kookkurrenzkanten ist dies zum einen die absolute Anzahl gemeinsamer Vorkommen der Tags, zum anderen die in \cref{measures} beschriebenen Kookkurrenzmaße. Der Kantentyp ist aus der Berechnung folgend der Typ der Tag--Kookkurrenz. Ein Beispiel JSON--Dokument für eine Kante ist in \cref{lst:tag_transform_edge} zu sehen.
+Die Erzeugung der Kanten erfolgt wie in \cref{mapreduce_cooccurence} beschrieben. Für jedes gemeinsame Auftreten von zwei Tags werden zwei Kantenobjekte erzeugt. Diese beschreiben gerichtete Kanten zwischen den Begriffen, die ein gemeinsames Auftreten der Tags repräsentieren. Neben den eindeutigen Bezeichnern der Quell- und Zielknoten enthält das Kantenobjekt den Kantentyp \emph{Tagging--Kookkurrenz} sowie die absolute Anzahl gemeinsamer Vorkommen der Tagsund die in \cref{measures} beschriebenen Kookkurrenzmaße. Außerdem erhält die Kante selbst einen global eindeutigen Bezeichner zur Referenzierung. Ein Beispiel für eine aus den Tagging--Daten erzeugte Kante ist in \cref{lst:tag_transform_edge} dargestellt.
 
-\begin{lstlisting}[language=json, label={lst:tag_transform_edge}, caption={Tag--Kante als JSON--Dokument}]
+\begin{lstlisting}[language=json, label={lst:tag_transform_edge}, caption={JSON--Beispiel für eine aus den Tagging--Daten erzeugte Kante}, float]
 {
     "_id" : ObjectId("51efd6f61177ff360605bd99"),
     "source" : ObjectId("51efc1af47cae77dfc00c3f8"),
