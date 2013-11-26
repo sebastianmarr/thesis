@@ -72,43 +72,42 @@ Somit besteht der Bereinigungsschritt darin, nicht verwertbare Zeichen zu entfer
 
 Der Reduktionsschritt dient zur Einschränkung der Gesamtdaten auf eine nützliche oder handhabbare Menge. Außerdem kann durch Reduktion auch die Datenqualität verbessert werden.
 
-Im Fall der Tagging--Daten liegt das Hauptaugenmerk im Reduktionsschritt auf der Entfernung von Duplikaten, die bei der Bereinigung entstanden sind. Gleichzeitig muss sicher gestellt werden, dass keine Informationen über die Verwendung der Tags verloren gehen. Somit besteht die Duplikatentfernung der Tags im Zusammenführen von Datensätzen mit gleichen Zeichenketten und Sprachen. Gleichzeitig werden auch die Verwendungen der Tags zusammengeführt.
+Im Fall der Tagging--Daten liegt das Hauptaugenmerk im Reduktionsschritt auf der Entfernung von Duplikaten, die bei der Bereinigung entstanden sind. Gleichzeitig muss sicher gestellt werden, dass keine Informationen über die Verwendung der Tags verloren gehen. Somit besteht die Duplikatentfernung der Tags im Zusammenführen von Datensätzen mit gleichen Zeichenketten und Sprachen. Gleichzeitig werden auch die Taggings zusammengeführt.
 
-Werden die Verknüpfungen zweier Tags mit Dokumenten zusammengeführt, können auch dabei wieder Duplikate entstehen. Diese müssen in diesem Fall entfernt werden, da ein Tag nicht mehrmals mit einem Dokument verknüpft werden kann. Das Zusammenführen von Tags ist exemplarisch in \cref{fig:tag_reduction} dargestellt.
-
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{tag_reduction}
+\includegraphics[width=0.9\textwidth]{tag_reduction}
 \caption{Beispiel für das Zusammenführen der bereinigten Tags}
 \label{fig:tag_reduction}
 \end{figure}
 
-Dabei findet ebenfalls eine Denormalisierung der Daten statt, da alle Dokumente, für die ein Tag vergeben werden, direkt mit in das Tag--Dokument gespeichert werden. Dies ist beispielhaft in \cref{lst:tag_denormalization} abgebildet. Das Attribut \emph{links} enthält alle Verknüpfungen des Tags mit Dokumenten.
+Werden die Verknüpfungen zweier Tags mit Dokumenten zusammengeführt, können auch dabei wieder Duplikate entstehen. Diese müssen in diesem Fall entfernt werden, da ein Tag nicht mehrmals mit einem Dokument verknüpft werden kann. Das Zusammenführen von Tags ist exemplarisch in \cref{fig:tag_reduction} dargestellt.
 
-\begin{lstlisting}[language=json, label={lst:tag_denormalization}, caption={Denormalisierte Tag-Daten}]
+Dabei findet ebenfalls eine Denormalisierung der Daten statt, da alle Dokumente, für die ein Tag vergeben werden, direkt mit in das Tag--Objekt gespeichert werden. Dies ist beispielhaft in \cref{lst:tag_denormalization} abgebildet. Das Attribut \emph{links} enthält alle Verknüpfungen des Tags mit Dokumenten.
+
+\begin{lstlisting}[language=json, label={lst:tag_denormalization}, caption={JSON--Beispiel für die denormalisierten Tagging-Daten}, float=t]
 {
-    "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
     "string": "segeln"
     "language": "de",
     "links": [
         {
-            object_id: 45678, 
-            object_type_id: 3
+            "object_id": 45678, 
+            "object_type_id": 3
         },
         {
-            object_id: 98764, 
-            object_type_id: 4
+            "object_id": 98764, 
+            "object_type_id": 4
         },
         ...
     ]
 }
 \end{lstlisting}
 
-Eine weitere im Rahmen dieser Arbeit unternommene Maßnahme zur Datenreduktion bestand darin, sich auf die Menge der Tags zu beschränken, deren Attribut \(l\) den Wert \emph{de} besitzt. Praktisch handelt es sich um alle Tags, die als deutsch gekennzeichnet in der Datenbank gespeichert sind. Diese Einschränkung wurde vorgenommen, um die zu verarbeitende Datenmenge überschaubar zu halten. Außerdem wird dadurch der nationale Kontext, in dem die Begriffe verwendet wurden, weitestgehend beibehalten.
+Eine weitere im Rahmen dieser Arbeit unternommene Maßnahme zur Datenreduktion bestand darin, sich auf die Menge der Tags zu beschränken, deren Attribut \(lang\) den Wert \emph{de} besitzt. Praktisch handelt es sich um alle Tags, die als deutsch gekennzeichnet in der Datenbank gespeichert sind. Diese Einschränkung wurde vorgenommen, um die zu verarbeitende Datenmenge überschaubar zu halten. Außerdem wird dadurch der nationale Kontext, in dem die Begriffe verwendet wurden, weitestgehend beibehalten.
 
 Ein letzter Reduktionsschritt besteht in der Entfernung der Tags, deren Zeichenketten eine Länge von \num{1} besitzen, da in der deutschen Sprache keine einbuchstabigen Wörter existieren.
 
-Nach der beschriebenen Reduktion befinden sich noch \num{314351} Tags und \num{23255714} Verknüpfungen in der Datenbank. Dies entspricht einer Reduktion von ca. \num{68} Prozent gegenüber der importierten Menge von Objekten.
+Nach der beschriebenen Reduktion befinden sich noch \num{314351} Tags und \num{23255714} Taggings in der Datenbank. Dies entspricht einer Reduktion von ca. \num{68} Prozent gegenüber der importierten Menge von Objekten.
 
 \subsection{Transformation}
 
