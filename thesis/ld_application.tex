@@ -156,7 +156,42 @@ Da es sich bei der Integration der Tagging--Daten um die initiale Erstellung des
 
 \subsection{Ergebnisse}
 
-Durch die Schritte, die zur Link Discovery aus den Tagging--Daten verwendet wurden, wurden insgesamt \num{314351} Knoten und \num{21834868} Kanten erzeugt, welche nun durch weitere Schritte angereichert werden sollen.
+Durch die Schritte, die zur Link Discovery aus den Tagging--Daten verwendet wurden, wurden insgesamt \num{314351} Knoten und \num{21834868} Kanten erzeugt.
+
+Eine mögliche Metrik für die quantitativen Eigenschaften der Ergebnisse ist die Verteilung der ausgehenden Kanten, die jeder Knoten besitzt. Diese ist als Histogramm in \cref{fig:hist_only_tags} dargestellt. Hierbei ist anzumerken, dass die Klassen des Histogrammes exponentiell breiter werden, um Knoten, die sehr viele Kanten besitzen, im Histogramm darstellen zu können.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{hist_only_tags}
+\caption{Histogramm der Kantenverteilung der Tagging--Kookkurrenz--Kanten}
+\label{fig:hist_only_tags}
+\end{figure}
+
+\cref{tab:only_tags} zeigt die statistischen Kennzahlen Minimum, erstes Quartil, Median, drittes Quartil, Maximum und Durchschnitt der Verteilung der Kanten nach Berechnung der Tagging--Kookkurrenz.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lr}
+    \toprule
+    Kennzahl & Wert \\
+    \midrule
+    \(min\) & \num{0} \\
+    \(Q_{0.25}\) & \num{9} \\
+    \(Q_{0.5}\) & \num{16} \\
+    \(Q_{0.75}\) & \num{29} \\
+    \(max\) &  \num{35169} \\
+    \(avg\) &  \num{74,64} \\
+    \bottomrule
+\end{tabular}
+\caption{Statistische Kennzahlen für die Kantenverteilung der Tagging--Kookkurrenz--Kanten}
+\label{tab:only_tags}
+\end{table}
+
+Bei der Interpretation dieser Daten fällt auf, dass die Anzahl der ausgehenden Kanten sehr ungleich verteilt ist. Es existieren sehr viele Knoten mit wenigen Kanten und sehr wenige Knoten mit vielen Kanten. Der verhältnismäßig hohe Median sagt allerdings ebenfalls aus, dass die Hälfte aller Knoten mehr als \num{16} ausgehende Kanten besitzen. Dies lässt jedoch keine Aussage über die inhaltliche Qualität der erzeugten Zusammenhänge zu. Diese kann nur auf Basis eines einzelnen Begriffes und dessen Beziehungen beurteilt werden.
+
+Der Begriff, der das Maximum von \num{35169} ausgehenden Kanten erreicht, ist der Begriff ``liebe''. Dieser Begriff zählt zu den meistgesuchten und verwendeten Tags auf der Spreadshirt--Plattform. Dies spiegelt sich offensichtlich auch darin wieder, dass er zusammen mit \num{35169} anderen unterschiedlichen Tags vergeben wurde.
+
+Nachdem in diesem Abschnitt die Integration der Tagging--Daten beschrieben wurde, beschäftigt sich der folgende Abschnitt mit der Anreichung des Weltausschnittes mit den Daten des Clicktracking--Systems von Spreadshirt.
 
 \section{Anreicherung mit Clicktracking-Daten}
 \label{clicktracking}
