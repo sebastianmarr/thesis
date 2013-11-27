@@ -342,27 +342,27 @@ Bei der Interpretation dieser Daten fällt auf, dass im Vergleich zu den Tagging
 
 Nachdem die Anreicherung der Clicktracking--Daten durchgeführt wurde, beschäftigt sich der folgende Abschnitt mit der Anrreichung durch die Zerlegung von Wortgruppen in Einzelwörter.
 
-\section{Anreicherung durch Zerlegung von Wortgruppen}
+\section{Anreicherung des Weltausschnittes durch Zerlegung von Wortgruppen}
 \label{decomposition}
 
-Die Zerlegung von Tags, die aus mehr als einem Wort bestehen, stellt zwar keine Integration anderer Datenquellen dar, kann aber trotzdem zum Auffinden neuer Verknüpfungen nützlich sein. Außerdem kann es für weitere Integrationsschritte von Nutzen sein, möglichst viele Einzelwörter im Datenbestand zu haben (siehe \cref{wortschatz}).
+Die Zerlegung von Tags, die aus mehr als einem Wort bestehen, ist ein Anreicherungsschritt durch das Mining von schon im Weltausschnitt vorhandenen Daten (siehe \cref{enrichment_mining}). Neben der Erzeugung zusätzlicher Verbindungen ist er für weitere Integrationsschritte von Nutzen, da es Vorteile bringt, wenn möglichst viele Einzelwörter im Weltausschnitt gespeichert sind (siehe \cref{wortschatz}).
 
-Zum Zeitpunkt des Importes befanden sich \num{147364} Tags in der Datenbank, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozent aller bereinigten deutschen Tags. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Tags auch Wörter enthalten sind, die nicht als Einzelwörter existieren.
+\subsection{Vorgehensweise}
 
-Werden diese Tags in ihre Einzelwörter zerlegt, entstehen einerseits unter Umständen neue Knoten, andererseits können in diesem Schritt Kanten vom Typ \emph{Zerlegung} beziehungsweise \emph{Zusammensetzung} eingefügt werden. Somit sind nach dem Schritt der Zerlegung weitere Informationen über den Kontext, in dem Wörter verwendet werden, verfügbar. \cref{fig:decomposition} zeigt beispielhaft das Ergebnis einer solchen Zerlegung.
+Zum Zeitpunkt des Importes befanden sich \num{147364} Begriffe im Weltausschnitt, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozent aller bereinigten deutschen Tags. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Tags auch Wörter enthalten sind, die nicht als Einzelwörter existieren.
 
-Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Begriffe aus den Tagging-Daten wurden insgesamt \num{38349} Knoten und \num{1238900} Kanten erzeugt, die für spätere Analyseschritte genutzt werden können.
-
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{decomposition}
 \caption{Beispielhafter Graphausschnitt nach der Zerlegung}
 \label{fig:decomposition}
 \end{figure}
 
-\subsection{Vorgehensweise}
+Werden diese Begriffe in ihre Einzelwörter zerlegt, entstehen einerseits unter Umständen neue Begriffe, andererseits können in diesem Schritt Zusammenhänge vom Typ \emph{Zerlegung} beziehungsweise \emph{Zusammensetzung} eingefügt werden. Somit sind nach dem Schritt der Zerlegung weitere Informationen über den Kontext, in dem Wörter verwendet werden, verfügbar. \cref{fig:decomposition} zeigt beispielhaft das Ergebnis einer solchen Zerlegung.
 
 \subsection{Ergebnisse}
+
+Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Begriffe wurden insgesamt \num{38349} neue Knoten und \num{1238900} neue Kanten erzeugt, die für spätere Analyseschritte genutzt werden können.
 
 \section{Anreicherung mit Wortschatz-Daten}
 \label{wortschatz}
