@@ -49,11 +49,11 @@ Die genannten Schritte werden in den folgenden Abschnitten erläutert.
 
 Für die Link Discovery wird ein einheitliches Vorgehen zur Integration von Datenquellen benötigt. Die Datenquellen stellen grundsätzlich für die Link Discovery nützliche Daten zur Verfügung, die jedoch im Allgemeinen noch nicht direkt dem Modell des Weltausschnittes entsprechen. Demzufolge müssen diese Daten entsprechend verarbeitet werden.
 
-Die zur Integration von externen Datenquellen nötigen Schritte entsprechen im Wesentlichen den von \textcite[S. 48f.]{hkp2012} beschriebenen Aufgaben der Datenvorverarbeitung: \emph{Bereinigung}, \emph{Reduktion}, \emph{Transformation} und \emph{Integration}. Diesen wird in dieser Arbeit der Schritt \emph{Import} vorangestellt, da es nicht immer möglich ist, den gesamten Datenbestand einer Datenquelle zu nutzen. Somit sollten im Importschritt auch die Anfragen an die Datenquelle spezifiziert werden. Die genannten Schritte werden zur Link Discovery immer in der genannten Reihenfolge ausgeführt und werden im folgenden kurz beschrieben.
+Die zur Integration von externen Datenquellen nötigen Schritte entsprechen im Wesentlichen den von \textcite[S. 48f.]{hkp2012} beschriebenen Aufgaben der Datenvorverarbeitung: \emph{Bereinigung}, \emph{Reduktion}, \emph{Transformation} und \emph{Integration}. Diesen wird in dieser Arbeit der Schritt \emph{Import} vorangestellt, da es nicht immer möglich oder nötig ist, den gesamten Datenbestand einer Datenquelle zu nutzen. Somit sollten im Importschritt auch die Anfragen an die Datenquelle spezifiziert werden. Die genannten Schritte werden zur Link Discovery immer in der genannten Reihenfolge ausgeführt und werden im folgenden kurz beschrieben.
 
 \paragraph{Import}
 
-Im Importschritt werden die Rohdaten aus der Datenquelle extrahiert. Dabei wird die Form der Daten nicht verändert. Ist es nicht möglich, den gesamten Datenbestand einer Quelle zu importieren, so muss eine Auswahl der anzufragenden Daten formuliert werden. Diese Auswahl richtet sich nach Möglichkeit nach den bereits im Weltausschnitt vorhandenen Daten. Beispielsweise können die Anfragen an die Datenquelle den bereits im Weltausschnitt gespeicherten Begriffen entsprechen.
+Im Importschritt werden die Rohdaten aus der Datenquelle extrahiert. Dabei wird die Form der Daten nicht verändert. Ist es nicht möglich oder nötig, den gesamten Datenbestand einer Quelle zu importieren, so muss eine Auswahl der anzufragenden Daten formuliert werden. Diese Auswahl richtet sich nach Möglichkeit nach den bereits im Weltausschnitt vorhandenen Daten. Beispielsweise können die Anfragen an die Datenquelle den bereits im Weltausschnitt gespeicherten Begriffen entsprechen.
 
 \paragraph{Bereinigung}
 
@@ -70,7 +70,7 @@ Der Schritt der Transformation überführt die Daten schließlich in das Modell 
 
 \paragraph{Integration}
 
-Der Integrationsschritt für jede Datenquelle dient letztendlich der Zusammenführung des im Transformationsschritt erzeugten Weltausschnittes mit dem bereits vorhandenen Weltausschnitt. Dabei werden bereits existierende Begriffe zusammengeführt und die neu erzeugten Beziehungen übernommen. Die Zusammenführung der Begriffe erfolgt über die Annotation des existierenden Begriffes mit dem neu erzeugten Kontext, den die Datenquelle zu einem Begriff liefert.
+Der Integrationsschritt für jede Datenquelle dient letztendlich der Zusammenführung des im Transformationsschritt erzeugten Weltausschnittes mit dem bereits vorhandenen Weltausschnitt. Dabei werden bereits existierende Begriffe zusammengeführt und die neu erzeugten Beziehungen übernommen. Die Zusammenführung der Begriffe erfolgt über die Verknüpfung des existierenden Begriffes mit dem neu erzeugten Kontext, den die Datenquelle zu einem Begriff liefert.
 
 \subsection{Initiale Erzeugung des Weltausschnittes}
 
@@ -84,7 +84,7 @@ Nach der Auswahl einer geeigneten Quelle werden die in \cref{integration_generic
 
 Nach der initialen Erzeugung des Weltausschnittes kann dieser mit beliebig vielen Anreicherungsschritten ergänzt werden. Unter Anreicherung wird die Erzeugung neuer Begriffe, Kontexte oder Zusammenhänge verstanden.
 
-Das Hinzufügen neuer Begriffe erweitert das Vokabular des Weltausschnittes. Somit können bei der Benutzung der Daten zu einer größeren Menge von Begriffen Zusammenhänge gefunden werden. Die Erzeugung von Kontexten zu vorhandenen oder neuen Begriffen erweitert das Wissen über die Benutzung eines Begriffes innerhalb einer bestimmten Anwendungsdomäne. Die Anreicherung des Weltausschnittes mit neuen Zusammenhängen ermöglicht einerseits das Finden von relevanten Nachbarn eines Begriffes, erfordert andererseits jedoch, abhängig von der Anwendung, auch eine andere Priorisierung der Zusammenhangstypen bei der Abfrage.
+Das Hinzufügen neuer Begriffe erweitert das Vokabular des Weltausschnittes. Somit können bei der Benutzung der Daten zu einer größeren Menge von Begriffen Zusammenhänge gefunden werden. Die Erzeugung von Kontexten zu vorhandenen oder neuen Begriffen erweitert das Wissen über die Benutzung eines Begriffes innerhalb einer bestimmten Anwendungsdomäne. Die Anreicherung des Weltausschnittes mit neuen Zusammenhängen ermöglicht einerseits das Finden von relevanten Nachbarn eines Begriffes, erfordert andererseits jedoch, abhängig von der Anwendung, auch eine andere Priorisierung der Zusammenhangstypen.
 
 Grundsätzlich kann die Anreicherung des Weltausschnittes auf zwei Arten erfolgen. Dies ist zum die Anreicherung durch das Mining der bereits vorhandenen Daten, zum anderen die Anreicherung durch Integration einer weiteren Datenquelle.
 
@@ -176,11 +176,11 @@ Der Sørensen--Dice--Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur Dice-
 \delta_{Dice}(a, b) = \frac{2|A \cap B|}{|A|+|B|}
 \]
 
-Der Wertebereich des Koeffizienten liegt zwischen \num{0} und \num{1}.
+Der Wertebereich \(W\) des Koeffizienten wird mit \(W=[0,1] \in \mathbb{R}\) angegeben.
 
 \subsubsection{Jaccard}
 
-Der Jaccard--Index \cite{pj19012} wurde ursprünglich mit dem gleichen Zweck wie der Dice--Koeffizient verwendet. Sein Wertebereich liegt ebenfalls zwischen \num{0} und \num{1} und er ist definiert durch:
+Der Jaccard--Index \cite{pj19012} wurde ursprünglich mit dem gleichen Zweck wie der Dice--Koeffizient verwendet. Sein Wertebereich wird ebenfalls mit \(W=[0,1] \in \mathbb{R}\) angegeben und er ist definiert durch:
 
 \[
 \delta_{Jaccard}(a,b) = \frac{|A \cap B|}{|A \cup B|}
@@ -188,7 +188,7 @@ Der Jaccard--Index \cite{pj19012} wurde ursprünglich mit dem gleichen Zweck wie
 
 \subsubsection{Kosinus}
 
-Die Kosinus-Ähnlichkeit \cite{hkp2012} ist ursprünglich ein Maß für die Ähnlichkeit zweier Vektoren. Sie ist eine Maßzahl dafür, ob die Vektoren ungefähr in die gleiche Richtung zeigen. Sie kann jedoch genauso auf Mengen angewendet werden, da das Vorhandensein der Elemente in der Menge auch durch einen Vektor in einem \(n\)-dimensionalen Raum dargestellt werden kann, wobei \(n\) die Anzahl aller möglichen Eigenschaften ist. Der Wertebereich der Kosinus-Ähnlichkeit liegt ebenfalls zwischen \num{0} und \num{1}. Sie ist auf den in \cref{measures} definierten Mengen definiert durch:
+Die Kosinus-Ähnlichkeit \cite{hkp2012} ist ursprünglich ein Maß für die Ähnlichkeit zweier Vektoren. Sie ist eine Maßzahl dafür, ob die Vektoren ungefähr in die gleiche Richtung zeigen. Sie kann jedoch genauso auf Mengen angewendet werden, da das Vorhandensein der Elemente in der Menge auch durch einen Vektor in einem \(n\)-dimensionalen Raum dargestellt werden kann, wobei \(n\) die Anzahl aller möglichen Eigenschaften ist. Der Wertebereich der Kosinus-Ähnlichkeit ist ebenfalls mit \(W=[0,1] \in \mathbb{R}\) angegeben. Sie ist auf den in \cref{measures} definierten Mengen definiert durch:
 
 \[
 \delta_{Cosine}(a, b) = \frac{|A \cap B|}{\sqrt{|A| \times |B|}}
@@ -369,11 +369,11 @@ Die Population \(P\) stellt eine Menge von Lösungskandidaten dar. Ein Lösungsk
 
 \paragraph{Evaluierung}
 
-Der Evaluierungsschritt dient zur Bestimmung der \emph{Fitness} der Individuen, die noch in der Population enthalten sind. Die Fitness stellt einen Wert dar, der die Güte der durch das Individuum repräsentierten Lösung bezüglich der Problemstellung beschreibt. Die Fitness kann, je nach Optimierungsproblem, entweder absolut oder bezüglich der anderen Individuen der Population bestimmt werden. Somit lässt sich die Funktion zur Bestimmung der Fitness auf die Form \(fitness(i, P)\) generalisieren.
+Der Evaluierungsschritt dient zur Bestimmung der \emph{Fitness} der Individuen, die noch in der Population enthalten sind. Die Fitness stellt einen Wert dar, der die Güte der durch das Individuum repräsentierten Lösung bezüglich der Problemstellung beschreibt. Die Fitness eines Individuums \(i\) kann, je nach Optimierungsproblem, entweder absolut oder bezüglich der anderen Individuen der Population \(P\) bestimmt werden. Somit lässt sich die Funktion zur Bestimmung der Fitness auf die Form \(fitness(i, P)\) generalisieren.
 
 \paragraph{Selektion}
 
-Im Selektionsschritt werden die fittesten Individuen der Population ausgewählt. Alle nicht ausgewählten Lösungskandidaten werden verworfen. Die Selektion kann als Funktion der Form \(select(P, f, s)\) dargestellt werden, wobei \(s\) eine festgelegte Anzahl von Individuen darstellt, die ausgewählt werden sollen.
+Im Selektionsschritt werden die fittesten Individuen der Population \(P\) ausgewählt. Alle nicht ausgewählten Lösungskandidaten werden verworfen. Die Selektion kann als Funktion der Form \(select(P, fitness, s)\) dargestellt werden, wobei \(s\) eine festgelegte Anzahl von Individuen darstellt, die ausgewählt werden sollen und.
 
 \paragraph{Reproduktion}
 
