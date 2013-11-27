@@ -318,9 +318,11 @@ Wie schon für die Tagging--Daten in \cref{tagging_results}, wird im folgenden d
 \label{fig:hist_only_clicktracking}
 \end{figure}
 
-\cref{tab:only_clicktracking} zeigt die statistischen Kennzahlen Minimum, erstes Quartil, Median, drittes Quartil, Maximum und Durchschnitt der Verteilung der Kanten nach Berechnung der Tagging--Kookkurrenz. Statistische Kennzahlen dieser Verteilung sind in \cref{tab:only_clicktracking} aufgeführt.
+\cref{tab:only_clicktracking} zeigt die statistischen Kennzahlen Minimum, erstes Quartil, Median, drittes Quartil, Maximum und Durchschnitt der Verteilung der Kanten nach Berechnung der Clicktracking--Kookkurrenz.
 
-\begin{table}[t]
+Bei der Interpretation dieser Daten fällt auf, dass im Vergleich zu den Tagging--Daten zum einen deutlich weniger Kanten, zum anderen auch durchschnittlich weniger Kanten pro Knoten erzeugt wurden. So muss bei circa einem Viertel der Knoten, die Kanten vom Typ Clicktracking--Kookkurrenz besitzen, mit zwei oder weniger Beziehungen gerechnet werden. Durch die geringe Kantenanzahl wird die Gesamtverteilung der Kanten jedoch nicht wesentlich beeinflusst (siehe \cref{lda_results}).
+
+\begin{table}[h]
 \centering
 \begin{tabular}{lr}
     \toprule
@@ -337,8 +339,6 @@ Wie schon für die Tagging--Daten in \cref{tagging_results}, wird im folgenden d
 \caption{Statistische Kennzahlen für die Verteilung der Clicktracking--Kookkurrenz--Kanten}
 \label{tab:only_clicktracking}
 \end{table}
-
-Bei der Interpretation dieser Daten fällt auf, dass im Vergleich zu den Tagging--Daten zum einen deutlich weniger Kanten, zum anderen auch durchschnittlich weniger Kanten pro Knoten erzeugt wurden. So muss bei circa einem Viertel der Knoten, die Kanten vom Typ Clicktracking--Kookkurrenz besitzen, mit zwei oder weniger Beziehungen gerechnet werden. Durch die geringe Kantenanzahl wird die Gesamtverteilung der Kanten jedoch nicht wesentlich beeinflusst (siehe \cref{lda_results}).
 
 Nachdem die Anreicherung der Clicktracking--Daten durchgeführt wurde, beschäftigt sich der folgende Abschnitt mit der Anrreichung durch die Zerlegung von Wortgruppen in Einzelwörter.
 
