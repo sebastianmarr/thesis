@@ -226,7 +226,7 @@ Das Clicktracking--System erzeugt Dateien im JSON--Format, die zu jedem Klick au
 }
 \end{lstlisting}
 
-Ein Clicktracking--Dokument enthält die Attribute \emph{Datum}, \emph{Pfad}, \emph{Gebietsschema}, \emph{Suchbegriff} und die Daten des eigentlichen Klicks, also den geklickten \emph{Artikel}, das geklickte \emph{Produkt} und den \emph{Index}, also die Position des geklickten Inhaltes auf der Suchergebnisseite. Die Unterscheidung zwischen Produkt und Artikel ist im Domänenmodell von Spreadshirt begründet (siehe auch \cref{spreadshirt} und für die Link Discovery nicht von Interesse. Es genügt, den geklickten Artikel im Weiteren näher zu betrachten.
+Ein Clicktracking--Dokument enthält die Attribute \emph{Datum}, \emph{Pfad}, \emph{Gebietsschema}, \emph{Suchbegriff} und die Daten des eigentlichen Klicks, also den geklickten \emph{Artikel}, das geklickte \emph{Produkt} und den \emph{Index}, also die Position des geklickten Inhaltes auf der Suchergebnisseite. Die Unterscheidung zwischen Produkt und Artikel ist im Domänenmodell von Spreadshirt begründet (siehe auch \cref{spreadshirt}) und für die Link Discovery nicht von Interesse. Es genügt, den geklickten Artikel im Weiteren näher zu betrachten.
 
 Auffällig ist, dass die Möglichkeiten des JSON--Formates bei der Speicherung der Klickdaten nicht vollständig ausgenutzt wurden. So sind die Werte, die das geklickte Dokument beschreiben, als Zeichenkette abgelegt und zusätzlich die eindeutigen Bezeichner mit einem Buchstaben versehen, der ihren Typ angibt. Des weiteren enthalten  das Gebietsschema und der Suchbegriff zusätzliche eckige Klammern. Diese Defekte sollten im Bereinigungsschritt beseitigt werden, um ein nutzbareres Datenformat zu erhalten.
 
@@ -234,11 +234,11 @@ Da das Clicktracking--System zum Zeitpunkt des Imports erst 3 Monate Daten aufze
 
 \subsection{Bereinigung}
 
-Im Bereinigungsschritt müssen zunächst die genannten Defekte der Klickdaten beseitigt werden. Dazu gehört die Entfernung der eckigen Klammern in Suchbegriff und Gebietsschema und die Extraktion des eindeutigen Bezeichners des geklickten Artikels. Aus dem Gebietsschema ist nur die Sprache von Interesse. Außerdem wurden für den Suchbegriff die gleichen Bereinigungsoperationen wie für die Tagging--Daten vorgenommen, also die Entfernung von überflüssigen Leerzeichen, Groß-/Kleinschreibung, nicht druckbarer Sonderzeichen und Satzzeichen.
+Im Bereinigungsschritt sollten zunächst die im vorherigen Abschnitt genannten Defekte an den Daten des Clicktracking--Systems beseitigt werden. Dazu gehört die Entfernung der eckigen Klammern in Suchbegriff und Gebietsschema und die Extraktion des eindeutigen Bezeichners des geklickten Artikels. Aus dem Gebietsschema ist nur die Sprache von Interesse. Außerdem wurden für den Suchbegriff die gleichen Bereinigungsoperationen wie für die Tagging--Daten vorgenommen, also die Entfernung von überflüssigen Leerzeichen, Groß-/Kleinschreibung, nicht druckbarer Sonderzeichen und Satzzeichen.
 
 Im Bereinigungsschritt werden so auch einfacher verarbeitbare Dokumente erzeugt, da die Möglichkeiten des JSON--Formates besser ausgenutzt werden. \cref{lst:tag_cleanup} zeigt das Ergebnis der Bereinigung des in \cref{click_import} gezeigten Beispieldokumentes.
 
-\begin{lstlisting}[language=json, label={lst:tag_cleanup}, caption={Bereinigtes Clicktracking--Dokument}]
+\begin{lstlisting}[language=json, label={lst:tag_cleanup}, caption={JSON--Beispiel für die Bereinigung der Clicktracking--Dokumente}, float]
 {
     "_id": ObjectId("51e7b1e0417498f9c6868939"),
     "query" : "biene",
