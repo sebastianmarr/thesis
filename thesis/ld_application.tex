@@ -193,21 +193,21 @@ Der Begriff, der das Maximum von \num{35169} ausgehenden Kanten erreicht, ist de
 
 Nachdem in diesem Abschnitt die Integration der Tagging--Daten beschrieben wurde, beschäftigt sich der folgende Abschnitt mit der Anreichung des Weltausschnittes mit den Daten des Clicktracking--Systems von Spreadshirt.
 
-\section{Anreicherung mit Clicktracking-Daten}
+\section{Anreicherung des Weltausschnittes mit Clicktracking--Daten}
 \label{clicktracking}
 
-Spreadshirt betreibt ein Clicktracking--System, welches die Klicks der Benutzer auf Artikel und Designs auf Suchergebnisseiten aufzeichnet. Dabei ist unerheblich, ob der Benutzer bei Spreadshirt registriert und angemeldet ist. Dieses System sammelt Daten von beiden Spreadshirt--Plattformen (siehe \cref{platforms}). In \cref{fig:search_result} ist beispielhaft eine Suchergebnisseite der Spreadshirt--Plattform abgebildet, welches die gefundenen Designs für eine Suchanfrage auflistet.
+Spreadshirt betreibt ein Clicktracking--System (siehe \cref{clicktracking_theo}), welches die Klicks der Benutzer auf Artikel und Designs auf Suchergebnisseiten aufzeichnet. Dabei ist unerheblich, ob der Benutzer bei Spreadshirt registriert und angemeldet ist. Dieses System sammelt Daten von beiden Spreadshirt--Plattformen (siehe \cref{platforms}). In \cref{fig:search_result} ist beispielhaft eine Suchergebnisseite der Spreadshirt--Plattform abgebildet, welche die gefundenen Designs für eine Suchanfrage auflistet.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[scale=0.25]{search_result}
-\caption{Suchergebnisseite}
+\caption{Beispiel für eine Spreadshirt--Suchergebnisseite}
 \label{fig:search_result}
 \end{figure}
 
 Die von diesem System erzeugten Daten können für die Link Discovery von großer Bedeutung sein, da sie eine andere Perspektive auf die Begriffe im Graphen liefern. Die Tags liefern die Sicht der Partner, also der Personen, die Inhalte hochladen und verkaufen möchten. Die Klicks beschreiben die Sicht der Käufer, also der Personen, die nach Inhalten suchen. Durch die Auswertung der Clicktracking--Daten ergibt sich also die Möglichkeit, eine Form der Validierung der durch Partner vergebenen Metadaten zu erhalten. Die Annahme hierbei ist, dass Käufer nur auf Suchergebnisse klicken, die eine inhaltliche Relevanz zum eingegebenen Suchbegriff besitzen und somit ihren Erwartungen bezüglich des Suchbegriffes gerecht werden.
 
-Wie bereits für die Tagging--Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration näher erläutert. Der Ansatz zur Erzeugung der Verbindungen ist ebenfalls kookkurrenzbasiert.
+Wie bereits für die Tagging--Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration (siehe \cref{integration_generic}) näher erläutert. Der Ansatz zur Erzeugung der Verbindungen ist, wie schon bei den Tagging--Daten, kookkurrenzbasiert.
 
 \subsection{Import}
 \label{click_import}
