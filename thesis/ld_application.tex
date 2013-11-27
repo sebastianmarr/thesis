@@ -364,6 +364,37 @@ Werden diese Begriffe in ihre Einzelwörter zerlegt, entstehen einerseits unter 
 
 Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Begriffe wurden insgesamt \num{38349} neue Knoten und \num{1238900} neue Kanten erzeugt, die für spätere Analyseschritte genutzt werden können.
 
+Die Verteilung der erzeugten Kanten über alle Knoten, die von der Zerlegung betroffen sind, ist in \cref{fig:hist_only_decomposition} als Histogramm dargestellt. Statistische Kennzahlen dieser Verteilung sind in \cref{tab:only_decomposition} aufgeführt.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{hist_only_decomposition}
+\caption{Histogramm der Verteilung der Zerlegungs-- und Zusammensetzungskanten}
+\label{fig:hist_only_decomposition}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lr}
+    \toprule
+    Kennzahl & Wert \\
+    \midrule
+    \(min\) & \num{1} \\
+    \(Q_{0.25}\) & \num{2} \\
+    \(Q_{0.5}\) & \num{2} \\
+    \(Q_{0.75}\) & \num{3} \\
+    \(max\) &  \num{5215} \\
+    \(avg\) &  \num{4,358} \\
+    \bottomrule
+\end{tabular}
+\caption{Statistische Kennzahlen für die Verteilung der Zerlegungs-- und Zusammensetzungskanten}
+\label{tab:only_decomposition}
+\end{table}
+
+Bei der Zerlegung wurden somit deutlich weniger Kanten pro Knoten erzeugt, als noch bei den Tagging-- und Clicktracking--Daten. Nur ein Viertel der betreffenden Knoten besitzen mehr als drei Kanten vom Typ \emph{Zerlegung} oder \emph{Zusammensetzung}. Der Einfluss der Zerlegung auf den gesamten Datenbestand wird in \cref{lda_results} dargestellt.
+
+Nachdem im Zerlegungsschritt Einzelwörter erzeugt wurden, können diese im folgenden Abschnitt für den Import der Wortschatz--Daten genutzt werden.
+
 \section{Anreicherung mit Wortschatz-Daten}
 \label{wortschatz}
 
