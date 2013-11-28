@@ -481,7 +481,7 @@ Der Reduktionsschritt besteht in der Zusammenführung von Objekten, die die glei
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{wortschatz_reduction}
+\includegraphics[width=\textwidth]{wortschatz_reduction}
 \caption{Reduktion der Wortschatz--Daten}
 \label{fig:wortschatz_reduction}
 \end{figure}
@@ -490,22 +490,20 @@ Durch die Reduktion wird die Anzahl der Dokumente wieder auf die ursprüngliche 
 
 \subsection{Transformation}
 
-Die Transformation der Wortschatz--Daten besteht, wie bereits bei den anderen Datenquellen, in einer Überführung in eine Graph--Datenstruktur. 
+Die Transformation der Wortschatz--Daten besteht, wie bereits bei den anderen Datenquellen, in einer Überführung in die Graphenrepräsentation des Weltausschnittes aus \cref{world_graph}. 
 
-Die Knoten sind alle Wörter, die durch die Benutzung der Wortschatz--API bekannt sind. Dazu zählen einerseits sowohl die angefragten Wörter, als auch die verbundenen Wörter, die die API liefert.
+Die Knoten repräsentieren alle Wörter, die durch die Benutzung der Wortschatz--API bekannt sind. Dazu zählen einerseits sowohl die angefragten Wörter, als auch die von der API zurückgegebenen Wortbeziehungen. Der Kontext dieser durch die Knoten repräsentierten Begriffe enthält die Rohdaten des Wortschatzes, um sie bei gegebenenfalls stattfindenden späteren Analysen nutzen zu können.
 
-Die Kanten werden jeweils für die Attribute \emph{Synonyme}, \emph{Thesaurus}, \emph{Grundform} und \emph{Wortformen} erzeugt und besitzen die entsprechenden Kantentypen. Sie enthalten keine weiteren Attribute, da über diese Beziehungen keine weiteren Informationen verfügbar sind.
+Die Kanten die Attribute \emph{Synonyme}, \emph{Thesaurus}, \emph{Grundform} und \emph{Wortformen} können direkt aus den entsprechenden Attributen erzeugt werden und besitzen die entsprechenden Kantentypen. Sie enthalten keine weiteren Attribute, da über diese Beziehungen keine weiteren Informationen verfügbar sind.
+
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{wortschatz_transformation}
-\caption{Wortschatz--Daten in Graphenform}
+\includegraphics[width=0.8\textwidth]{wortschatz_transformation}
+\caption{Beispiel--Graphausschnitt der transformierten Wortschatz--Daten}
 \label{fig:wortschatz_transformation}
 \end{figure}
 
-Einen Sonderfall stellen die Kategorien der Wörter dar. Diese können in der vorliegenden Form nicht zur Link Discovery genutzt werden. Daher werden diese Daten mittels der Ermittlung von Kookkurrenzen umgeformt. Von Interesse ist, wie oft Paare von Wörtern 
-in gemeinsame Kategorien eingeordnet sind. 
-
-Somit werden bei der Transformation mittels MapReduce (siehe \cref{mapreduce_cooccurence}) Kanten mit den Kookkurrenzmaßen Dice, Jaccard und Kosinus erzeugt.
+Einen Sonderfall stellen die Kategorien der Wörter dar. Diese können in der vorliegenden Form nicht direkt zur Link Discovery genutzt werden. Daher werden diese Daten mittels der Ermittlung von Kookkurrenzen umgeformt. Dabei ist die Kookkurrenz zweier Begriffe durch die gemeinsame Einordnung in Kategorien definiert. Somit werden bei der Transformation mittels Kookkurrenzberechnung Kanten mit den Kookkurrenzmaßen aus \cref{measures} und dem Kantentyp \emph{Kategorie--Kookkurrenz} erzeugt.
 
 Zusammenfassend werden bei der Transformation demnach Kanten mit den Typen \emph{Synonym}, \emph{Thesaurus}, \emph{Wortform}, \emph{Grundform} und \emph{Kategorie--Kookkurrenz} erzeugt. In \cref{fig:wortschatz_transformation} wird beispielhaft ein Ausschnitt des resultierenden Graphen gezeigt. Dabei fällt auf, dass mit Ausnahme der Grundform--Kanten jede Kante in beide Richtungen existiert. Dies ist der Art der Beziehungen geschuldet, da diese in beide Richtungen gültig sind.
 
