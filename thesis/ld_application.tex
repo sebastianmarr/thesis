@@ -637,22 +637,13 @@ Nach der quantitativen Auswertung der Link--Discovery--Schritte wird im nächste
 
 \section{Priorisierung der Beziehungen}
 
-Im folgenden Kapitel werden die vorgenommenen Optimierungsmaßnahmen und die damit einhergehende Evaluierung der Ergebnisse der Link Discovery beschrieben. Dazu gehören der gewählte Ansatz zur Optimierung, eine Erläuterung evolutionärer Algorithmen und deren Einsatz zur Optimierung sowie die Darstellung und Auswertung der Ergebnisse.
+Im Folgenden wird beschrieben, wie die in den Abschnitten \labelcref{ld_tags,clicktracking,decomposition,wortschatz} durch Link Discovery erzeugten Beziehungen zwischen den Begriffen des Weltausschnittes prioirisiert wurden. Der Prozess der Prioisierung folgt dabei grundsätzlich dem in \cref{prio_evo} skizzierten Prozess unter Zuhilfenahme evolutionärer Algorithmen. Dazu wird die Vorgehensweise und die Implementierung der Komponenten des evolutionären Algorithmus erläutert und die Ergebnisse ausgewertet.
 
-Zuerst muss definiert werden, welcher Aspekt genau optimiert werden soll. Die in \cref{link_discovery} beschriebenen Schritte haben einen Graphen erzeugt, in dem neun verschiedene Kantentypen existieren. Diese lauten \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Thesaurus--Beziehung}, \emph{Kategorie--Kookkurrenz} und \emph{Zerlegung}.
+Zum Zeitpunkt der Priosierung befanden sich nein verschiedene Beziehungstypen im Weltausschnitt: \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Thesaurus--Beziehung}, \emph{Kategorie--Kookkurrenz} und \emph{Zerlegung}.
 
-Werden nun inhaltlich relevante Nachbarn zu einem gegebenen Begriff gesucht, müssen alle ausgehenden Kanten des entsprechenden Knotens nach Relevanz geordnet werden. Dazu muss jede Kante ein Kantengewicht besitzen. Die Addition aller Kantengewichte zwischen zwei Knoten stellt somit das Maß für ihre Nähe dar.
+Der Prioisierungprozess versucht nun, diese Beziehungstypen gegeneinander zu gewichten, um für einen Anwendungsfall relevante Nachbarn eines Begriffes zu finden (siehe \cref{prioritization}). Dazu muss jedem Typ ein relatives Gewicht zu den anderen Typen zugeordnet werden. Beziehungen, die duch Kookkurrenz berechnet wurden, besitzen bereits aufgrund der angegebenen Kookkurrenzmaße ein Kantengewicht. Jedoch muss hierbei festgelegt werden, welches Maß für das Kantengewicht herangezogen werden und in welchem Verhältnis zu den Gewichten anderer Kantentypen es stehen soll.
 
-Die Kanten vom Typ Kookkurrenz besitzen bereits aufgrund der angegebenen Kookkurrenzmaße Kantengewichte. Jedoch muss hierbei festgelegt werden, welches Maß für das Kantengewicht herangezogen werden und in welchem Verhältnis zu den Gewichten anderer Kantentypen es stehen soll.
-
-Somit hängt die Berechnung der Relevanz zwischen zwei Knoten von zwölf Parametern ab. Jedem Kantentyp muss ein Gewicht zugewiesen und außerdem muss eine Auswahl von drei Kookkurrenzmaßen getroffen werden. Die Optimierung und Evaluierung dieser berechneten Relevanz ist Gegenstand dieses Kapitels.
-
-Die Einschätzung, ob die Ordnung der Nachbarn eine Ordnung der Relevanz zum Ausgangsbegriff darstellt, kann nicht automatisch, sondern nur von Menschen, getroffen werden. Somit stellt die Bewertung einer bestimmten Gewichtung der Kanten auch eine Evaluierung der Kantentypen dar.
-Generell kann außerdem nicht davon ausgegangen werden, dass eine einmal gefundene Gewichtung der Kanten für alle Knoten des Graphen verwertbare Ergebnisse erzeugt. Daher sollte die Optimierung nicht global, sondern für jeden Knoten einzeln erfolgen. Aufgrund der hohen Knotenanzahl wurde sich hierzu auf eine stichprobenartige Auswahl der Knotenmenge beschränkt.
-
-Durch die Notwendigkeit menschlicher Beteiligung und der großen Anzahl an Parametern ist eine Optimierung mittels des Ausprobierens aller Fälle nicht möglich. Außerdem kann die Einschätzung, welche Kantengewichtungen relevante Ergebnisse erzeugen, stark von Mensch zu Mensch variieren. Stattdessen muss zur Optimierung ein Ansatz gefunden werden, der sich einer, für den Großteil der Personen, optimalen Gewichtung möglichst nähert. 
-
-Im Rahmen dieser Arbeit wurde aus den genannten Gründen ein Optimierungsansatz mittels interaktiver evolutionärer Algorithmen gewählt. Die Grundlagen evolutionärer Algorithmen und die gewählte Implementierung werden in den folgenden Abschnitten beschrieben.
+Somit wird zum Zwecke der Priorisierung eine Gewichtung von zwölf verschiedenen Parametern gesucht. Der nächste Abschnitt beschäftigt sich mit dem zur Priorisierung implementierten evolutionären Algorithmus.
 
 \subsection{Vorgehensweise}
 \label{evo_implementation}
