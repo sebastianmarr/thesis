@@ -549,9 +549,13 @@ Nachdem alle Anreicherungsschritte durchgeführt und beschrieben wurde, beschäf
 \section{Ergebnisse der Integrations-- und Anreicherungsschritte}
 \label{lda_results}
 
-Im folgenden Abschnitt werden die quantitativen Ergebnisse der Link Discovery zusammenfassend dargestellt und diskutiert.
+In den bisherigen Auswertungen der Integrations-- und Anreicherungsschritte wurden lediglich die Eigenschaften der vom jeweiligen Schritt betroffenen Begriffe analysiert. Dieser Abschnitt beschäftigt sich mit der Veränderung des durch den Graphen repräsentierten Weltausschnittes bei jedem durchgeführten Link--Discovery--Schritt.
 
-\begin{table}
+\subsection{Anzahl der Knoten und Kanten}
+
+\cref{tab:discovery_amounts} zeigt zusammengefasst die quantitive Veränderung des Graphen nach jedem durchgeführten Schritt. Dabei zeigt sich, dass die Integration der Daten des Wortschatzes mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
+
+\begin{table}[h]
 \centering
 \begin{tabular}{lrcr}
     \toprule
@@ -565,17 +569,45 @@ Im folgenden Abschnitt werden die quantitativen Ergebnisse der Link Discovery zu
     Gesamt & \num{575960} && \num{73612593} \\
     \bottomrule
 \end{tabular}
-\caption{Quantitative Ergebnisse der Link--Discovery--Schritte}
+\caption{Entwicklung der Knoten-- und Kantenanzahl nach jedem Link--Discovery--Schritt}
 \label{tab:discovery_amounts}
 \end{table}
 
-\cref{tab:discovery_amounts} führt für jeden Schritt die hinzugefügten Knoten und Kanten sowie die nach Durchführung der Link Discovery insgesamt im Graphen enthaltene Datenmenge auf. Dabei zeigt sich, dass die Integration der Daten des Wortschatzes mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
-
 Bei der Verwendung der Clicktracking--Daten wurden im Verhältnis wenig neue Knoten und Kanten erzeugt. Dies ist im Wesentlichen auf den zum Zeitpunkt des Importes noch geringen Datenbestand zurückzuführen. Daher sollte dieser Schritt zukünftig wiederholt werden, da mit der längeren Laufzeit des Clicktracking--Systems auch ein größeres Potential für neue Verknüpfungen vorhanden ist.
 
-Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der quantitativen Ergebnisse auch die Anzahl der Kanten, die von einem Knoten ausgehen, von Interesse. \cref{tab:discovery_edges_per_node} zeigt die Entwicklung der Kantenanzahl pro Knoten nach jedem Link--Discovery--Schritt. Dabei sind Minimum, das untere, mittlere (Median) und obere Quartil, das Maximum und der Durchschnitt dargestellt, um die Verteilung der Kantenanzahl zu verdeutlichen.
+\subsection{Kantenverteilung}
 
-\begin{table}
+Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der quantitativen Ergebnisse auch die Anzahl der Kanten, die von einem Knoten ausgehen, von Interesse. Diese Verteilung der Kanten je Knoten nach jedem Schritt ist in den \cref{fig:hist_after_tags,fig:hist_after_clicktracking,fig:hist_after_decomposition,fig:hist_after_wortschatz} als Histogramm dargestellt.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.65\textwidth]{hist_after_tags}
+\caption{Histogramm der Kantenverteilung nach Integration der Tagging--Daten}
+\label{fig:hist_after_tags}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.65\textwidth]{hist_after_clicktracking}
+\caption{Histogramm der Kantenverteilung nach Integration der Clicktracking--Daten}
+\label{fig:hist_after_clicktracking}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.65\textwidth]{hist_after_decomposition}
+\caption{Histogramm der Kantenverteilung nach der Zerlegung von Wortgruppen}
+\label{fig:hist_after_decomposition}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.65\textwidth]{hist_after_wortschatz}
+\caption{Histogramm der Kantenverteilung nach Integration der Wortschatz--Daten}
+\label{fig:hist_after_wortschatz}
+\end{figure}
+
+\begin{table}[h]
 \centering
 \begin{tabular}{lrrrrrr}
     \toprule
@@ -587,17 +619,21 @@ Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der 
     Wortschatz & \num{0} & \num{2} & \num{8} & \num{23} & \num{38380} & \num{127,8} \\
     \bottomrule
 \end{tabular}
-\caption{Entwicklung der Anzahl der Kanten von einem Knoten ausgehend}
+\caption{Statistische Kennzahlen der Kantenverteilung nach jedem Link--Discovery--Schritt}
 \label{tab:discovery_edges_per_node}
 \end{table}
+
+\cref{tab:discovery_edges_per_node} zeigt die einige statistische Kennzahlen der Kantenverteilung nach jedem Schritt. Dabei sind das Minimum, das untere, mittlere (Median) und obere Quartil, das Maximum und der Durchschnitt dargestellt.
 
 Auffällig ist hierbei, dass die Integration von Clicktracking- und Wortschatz--Daten zu einer Herabsetzung des Medians führten. Dies bedeutet, dass nach Durchführung dieser Schritte verhältnismäßig weniger viel verbundene Knoten im Datenbestand existierten als davor. Jedoch deutet die Entwicklung des Durchschnittes nach der Integration der Wortschatz--Daten darauf hin, dass die Knotenanzahl viel verbundener Knoten nach diesem Schritt deutlich größer geworden ist.
 
 Das Absinken des Durchschnittes nach Integration der Clicktracking--Daten kann in der geringen Menge der Daten begründet werden. Durch die geringe Anzahl von Kookkurrenzen konnten viel verbundene Knoten keinen relevanten Zugewinn an Verbindungen verzeichnen, während für wenig verbundene Knoten verhältnismäßig mehr neue Verbindungen hinzukamen.
 
+Die Entwicklung der Verteilung zeigt, dass der Anteil wenig verbundener Knoten an der Knotenmenge ständig gewachsen ist. Daraus kann geschlussfolgert werden, mit jedem Schritt mehr Knoten existierten, die überhaupt Verbindungen besitzen. Speziell die Integration der Wortschatz--Daten hat gleichzeitig den Anteil der wenigverbundenen als auch der vielverbundenen Knoten erhöht.
+
 Generell lässt sich festhalten, dass die Anzahl viel verbundener Knoten gemessen an der Gesamtanzahl relativ klein ist. Die Auswirkungen dessen hängen jedoch stark von der Anwendung der Daten ab und sind im Rahmen dieser Arbeit nicht beurteilbar.
 
-Nach der quantitativen Auswertung der Link--Discovery-–Schritte wird im nächsten Kapitel die Optimierung der Kantengewichtungen und die Evaluierung der erzeugten Kanten beschrieben.
+Nach der quantitativen Auswertung der Link--Discovery-–Schritte wird im nächsten Abschnitt die konkret durchgeführte Prioisierung der Beziehungen beschrieben.
 
 \section{Prioisierung der Beziehungen}
 
