@@ -69,6 +69,7 @@ In den unbereinigten importierten Daten existieren keine Duplikate in der Art, d
 Somit besteht der Bereinigungsschritt darin, nicht verwertbare Zeichen zu entfernen und alle Großbuchstaben in Kleinbuchstaben umzuwandeln. Dadurch entstehen Duplikate, welche im darauf folgenden Reduktionsschritt zusammengeführt werden können. In \cref{tab:tag_cleaning} sind einige Beispiele für die Bereinigungen aufgeführt. Dabei ist gut zu erkennen, dass durch die Bereinigungen Duplikate erzeugt werden.
 
 \subsection{Reduktion}
+\label{tag_reduction}
 
 Der Reduktionsschritt dient zur Einschränkung der Gesamtdaten auf eine nützliche oder handhabbare Menge. Außerdem kann durch Reduktion auch die Datenqualität verbessert werden.
 
@@ -476,16 +477,16 @@ Ein letzter Bereinigungsschritt besteht in der Veränderung des Formates der Gru
 
 \subsection{Reduktion}
 
-Der Reduktionsschritt besteht in der Zusammenführung von Dokumenten mit gleichen Wörtern, welche im Bereinigungsschritt entstanden sind. Wie schon bei der Reduktion der Tagging--Daten, muss auch hierbei das Entstehen neuer Duplikate vermieden werden. Dies bedeutet, dass die gefundenen Wortbeziehungen ebenfalls zusammengeführt werden, wobei jedes verbundene Wort nur einmal enthalten sein darf. Die Reduktion ist beispielhaft in \cref{fig:wortschatz_reduction} dargestellt. Dabei ist zu beachten, dass bei der Zusammenführung mehrere Grundformen entstehen können, wodurch dieses Attribut in ein Array umgewandelt wird.
+Der Reduktionsschritt besteht in der Zusammenführung von Objekten, die die gleiche Zeichenkette enthalten. Diese Duplikate sind bei der Entfernung der Groß-- und Kleinschreibung im Bereinigungsschritt entstanden. Wie schon im Reduktionsschritt der Daten des Tagging--Systems (\cref{tag_reduction}), muss auch hierbei das Entstehen neuer Duplikate vermieden werden. Dies bedeutet, dass Listen der Wortbeziehungen ebenfalls zusammengeführt werden, wobei jedes Wort nur einmal enthalten sein darf. Die Reduktion ist beispielhaft in \cref{fig:wortschatz_reduction} dargestellt. Dabei ist zu beachten, dass bei der Zusammenführung mehrere Grundformen entstehen können, wodurch dieses Attribut in ein Array umgewandelt wird.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{wortschatz_reduction}
+\includegraphics[width=0.9\textwidth]{wortschatz_reduction}
 \caption{Reduktion der Wortschatz--Daten}
 \label{fig:wortschatz_reduction}
 \end{figure}
 
-Durch die Reduktion wird die Anzahl der Dokumente auf die Hälfte reduziert und beträgt danach \num{197614}.
+Durch die Reduktion wird die Anzahl der Dokumente wieder auf die ursprüngliche Menge von Einzelwörtern reduziert und beträgt demnach \num{197614}.
 
 \subsection{Transformation}
 
