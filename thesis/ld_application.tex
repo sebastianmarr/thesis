@@ -406,11 +406,7 @@ Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wor
 
 \subsection{Import}
 
-Da für die Anfrage an die Wortschatz--API nur Einzelwörter und keine Wortgruppen genutzt werden können, muss eine Auswahl der anzufragenden Daten getroffen werden. Im Rahmen dieser Arbeit wurden alle Einzelwörter, die zum Zeitpunkt des Importes der Wortschatz--API zur Verfügung standen, ausgewählt. Dabei handelt es sich um \num{197614} einzelne Wörter. Da die Daten in der Datenbank zu diesem Zeitpunkt keine Groß- und Kleinschreibung enthielten, die Wortschatz--API diese jedoch berücksichtigt, wurde jedes Wort jeweils groß und klein geschrieben angefragt. Somit wurde die doppelte Menge an Datensätzen, \num{395228} Dokumente, erzeugt.
-
-Die Ergebnisse wurden mittels eines Ruby--Skriptes in MongoDB importiert. Dabei wurde je angefragtem Wort ein Dokument erzeugt, dass die Informationen des Wortschatzes über dieses Wort enthält. Eines dieser Dokumente ist zu Illustrationszwecken in \cref{lst:wortschatz_import} dargestellt. Das Feld \emph{baseform} enthält die Grundform des Wortes mit der Wortart und \emph{domain} die Kategorien des Wortes.
-
-\begin{lstlisting}[language=json, label={lst:wortschatz_import}, caption={Wortschatz--Dokument nach dem Import}]
+\begin{lstlisting}[language=json, label={lst:wortschatz_import}, caption={JSON--Beispiel für Rohdaten aus dem Wortschatz}, float]
 {
     "_id" : ObjectId("51f7aa06eba16044e900015a"),
     "string" : "Kopf",
@@ -453,7 +449,11 @@ Die Ergebnisse wurden mittels eines Ruby--Skriptes in MongoDB importiert. Dabei 
 }
 \end{lstlisting}
 
-Hierbei ist zu beachten, dass nicht alle Attribute bei allen Wörtern vorhanden sind. Dies hängt davon ab, ob der Wortschatz die Informationen zur Verfügung stellen kann. Somit ist es auch möglich, dass Dokumente erzeugt werden, die keine zusätzlichen Informationen enthalten.
+Da für die Anfrage an die Wortschatz--API nur Einzelwörter und keine Wortgruppen genutzt werden können, muss eine Auswahl der anzufragenden Daten getroffen werden. Im Anreicherungsschritt der Zerlegung von Wortgruppen wurden aus allen zu diesem Zeitpunkt vorhandenen Begriffen Einzelwörter gebildet (siehe \cref{decomposition}). Diese können nun beim Import der Wortschatz--Daten genutzt werden, um die Anfragen zu formulieren. Zum Zeitpunkt des Importes standen \num{197614} Einzelwörter zur Verfügung. Da die im Weltausschnitt gespeicherten Daten keine Groß- und Kleinschreibung enthalten, die Wortschatz--API diese jedoch berücksichtigt, wurde jedes Wort jeweils mit großem und kleinem Anfangsbuchstaben angefragt. Somit wurde die doppelte Menge an Rohdaten, \num{395228} Objekte, erzeugt.
+
+\cref{lst:wortschatz_import} zeigt beispielhaft ein importiertes Objekt des Wortschatzes nach dem Import. Dieses enthält Listen von \emph{Grundformen} mit der entsprechenden Wortform als Kürzel, den \emph{Kategorien} des Wortes, \emph{Synonymen}, \emph{Thesaurus-Beziehungen} sowie \emph{Wortformen} als Attribute.
+
+Hierbei ist zu beachten, dass nicht alle Attribute bei allen Wörtern vorhanden sind. Dies hängt davon ab, ob der Wortschatz die Informationen zur Verfügung stellen kann. Somit ist es auch möglich, dass Objekte importiert werden, die keine zusätzlichen Informationen enthalten.
 
 \subsection{Bereinigung}
 
