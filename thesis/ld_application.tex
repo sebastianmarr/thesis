@@ -461,9 +461,7 @@ Zur Bereinigung der importierten Wortschatz--Daten muss in einem ersten Schritt 
 
 Weiterhin werden die Kategorien ``Vorname'' und ``Nachname'' entfernt, da diese an über \num{25000} Wörter vergeben sind und somit für die Verwendung zur Link Discovery ungeeignet sind und zu viele irrelevante Kanten erzeugen würden.
 
-Ein letzter Bereinigungsschritt besteht in der Veränderung des Formates der Grundform des Wortes. Die Wortschatz--API liefert lediglich ein Array, in dem das erste Element die Grundform und das zweite Element die Wortart ist. Zur Bereinigung wird diese Eigenschaft in ein geeignetes JSON--Format überführt, welches in \cref{lst:word_baseform} dargestellt ist.
-
-\begin{lstlisting}[language=json, label={lst:word_baseform}, caption={Grundform eines Wortes}]
+\begin{lstlisting}[language=json, label={lst:word_baseform}, caption={JSON--Beispiel für die Umformug der Grundform eines Wortes}, float]
 {
     _id: ...,
     string: "Kopfs",
@@ -473,6 +471,8 @@ Ein letzter Bereinigungsschritt besteht in der Veränderung des Formates der Gru
     }
 }
 \end{lstlisting}
+
+Ein letzter Bereinigungsschritt besteht in der Veränderung des Formates der Grundform des Wortes. Die Wortschatz--API liefert lediglich ein Array, in dem das erste Element die Grundform und das zweite Element die Wortart ist. Zur Bereinigung wird diese Eigenschaft in ein geeignetes JSON--Format überführt, welches in \cref{lst:word_baseform} dargestellt ist.
 
 \subsection{Reduktion}
 
