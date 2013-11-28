@@ -1,12 +1,12 @@
 \chapter{Link--Discovery--Durchführung}
 \label{link_discovery}
 
-Dieses Kapitel beschäftigt sich mit den konkret durchgeführten Schritten zur Link Discovery an Beispieldaten. Das Vorgehen und die verwendete Modellierung des Weltausschnittes wurde umfassend in \cref{ld_framework} beschrieben. Im Folgenden wird die initiale Erstellung des Weltausschnittes aus den Daten des Tagging--Systems von Spreadshirt, die Anreicherung durch Clicktracking--Daten, Zerlegung von Wortgruppen in Einzelwörter und Integration des Wortschatzes der Universität Leipzig beschrieben. Anschließend wird die konkrete Prioisierung der Beziehungen mittels evolutionärer Algorithmen erläutert und die Ergebnisse der Link Discovery zusammenfassend ausgewertet.
+Dieses Kapitel beschäftigt sich mit den konkret durchgeführten Schritten zur Link Discovery an Beispieldaten. Das Vorgehen und die verwendete Modellierung des Weltausschnittes wurde umfassend in \cref{ld_framework} beschrieben. Im Folgenden wird die initiale Erstellung des Weltausschnittes aus den Daten des Tagging--Systems von Spreadshirt, die Anreicherung durch Clicktracking--Daten, Zerlegung von Wortgruppen in Einzelwörter und Integration des Wortschatzes der Universität Leipzig beschrieben. Anschließend wird die konkrete Priorisierung der Beziehungen mittels evolutionärer Algorithmen erläutert und die Ergebnisse der Link Discovery zusammenfassend ausgewertet.
 
 \section{Initiale Erstellung des Weltausschnittes aus Tagging--Daten}
 \label{ld_tags}
 
-Die initiale Erstellung des Weltausschnittes stellt den ersten Schritt des in \cref{ld_process} definerten Link--Discovery--Prozesses dar. Die konkrete Datenquelle, die im Rahmen dieser Arbeit für diesen Schritt verwendet wurde, ist das Tagging--System des Unternehmens Spreadshirt, welches in \cref{tag_sprd} beschrieben wurde. Aus diesen Daten wird mittels Kookkurrenz (siehe \cref{co-occurence}) ein Graph erstellt, der der in \cref{world_graph} erläuterten Repräsentation des Weltausschnittes entspricht. Dieser stellt die Grundlage für alle folgenden Anreicherungsschritte dar. Um diesen initalen Graphen zu berechnen, sind die in \cref{integration_generic} aufgeführten Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration nötig. Die Umsetzung dieser Schritte wird im folgenden Abschnitt beschrieben.
+Die initiale Erstellung des Weltausschnittes stellt den ersten Schritt des in \cref{ld_process} definierten Link--Discovery--Prozesses dar. Die konkrete Datenquelle, die im Rahmen dieser Arbeit für diesen Schritt verwendet wurde, ist das Tagging--System des Unternehmens Spreadshirt, welches in \cref{tag_sprd} beschrieben wurde. Aus diesen Daten wird mittels Kookkurrenz (siehe \cref{co-occurence}) ein Graph erstellt, der der in \cref{world_graph} erläuterten Repräsentation des Weltausschnittes entspricht. Dieser stellt die Grundlage für alle folgenden Anreicherungsschritte dar. Um diesen initialen Graphen zu berechnen, sind die in \cref{integration_generic} aufgeführten Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration nötig. Die Umsetzung dieser Schritte wird im folgenden Abschnitt beschrieben.
 
 \subsection{Import}
 
@@ -112,9 +112,9 @@ Nach der beschriebenen Reduktion befinden sich noch \num{314351} Tags und \num{2
 
 \subsection{Transformation}
 
-Der Transformationsschritt stellt die Überführung der Daten in die in \cref{world_graph} beschriebene Repräsentation des Weltausschnittes dar. Für die Tagging--Daten bedeutet dies eine Umformung in eine Graphenform, wobei die Kanten des Graphen über Kookkurrenz ermittelt werden. Die genaue Umsetzung dieser Transformation mittels des MapReduce--Programmiermodells wird in \cref{mapreduce_cooccurence} detailliert beschrieben.
+Der Transformationsschritt stellt die Überführung der Daten in die in \cref{world_graph} beschriebene Repräsentation des Weltausschnittes dar. Für die Tagging--Daten bedeutet dies eine Umformung in eine Graphenform, wobei die Kanten des Graphen über Kookkurrenz ermittelt werden. Die genaue Umsetzung dieser Transformation mittels des MapReduce--Programmiermodelles wird in \cref{mapreduce_cooccurence} detailliert beschrieben.
 
-Je Tag wird ein während der Transformation ein Knotenobjekt erzeugt. Dieses besitzt als benötigte Attribute die \emph{Zeichenkette} und die \emph{Sprache} des Tags, aus dem es erzeugt wurde und repräsentiert somit einen Begriff des Weltausschnittes. Außerdem wird ein Kontext dieses Begriffes im Rahmen des Tagging--Systems erzeugt. Dieser enthält die Anzahl der Verwendungen des Begriffes als Tag und die eindeutigen Bezeichner der Dokumente, also der Artikel und Designs, die mit dem Begriff getaggt wurden. Weiterhin wird für jedes Knotenobjekt ein global eindeutiger Bezeichner generiert, um die spätere Referenzierungs der Knoten zu ermöglichen. \cref{lst:tag_transform_node} zeigt ein Beispiel für ein so erzeugtes Knotenobjekt.
+Je Tag wird ein während der Transformation ein Knotenobjekt erzeugt. Dieses besitzt als benötigte Attribute die \emph{Zeichenkette} und die \emph{Sprache} des Tags, aus dem es erzeugt wurde und repräsentiert somit einen Begriff des Weltausschnittes. Außerdem wird ein Kontext dieses Begriffes im Rahmen des Tagging--Systems erzeugt. Dieser enthält die Anzahl der Verwendungen des Begriffes als Tag und die eindeutigen Bezeichner der Dokumente, also der Artikel und Designs, die mit dem Begriff getaggt wurden. Weiterhin wird für jedes Knotenobjekt ein global eindeutiger Bezeichner generiert, um die spätere Referenzierung der Knoten zu ermöglichen. \cref{lst:tag_transform_node} zeigt ein Beispiel für ein so erzeugtes Knotenobjekt.
 
 \begin{lstlisting}[language=json, label={lst:tag_transform_node}, caption={JSON--Beispiel für einen aus den Tagging--Daten erzeugten Knoten}, float=h]
 {
@@ -193,7 +193,7 @@ Bei der Interpretation dieser Daten fällt auf, dass die Anzahl der ausgehenden 
 
 Der Begriff, der das Maximum von \num{35169} ausgehenden Kanten erreicht, ist der Begriff ``liebe''. Dieser Begriff zählt zu den meistgesuchten und verwendeten Tags auf der Spreadshirt--Plattform. Dies spiegelt sich offensichtlich auch darin wieder, dass er zusammen mit \num{35169} anderen unterschiedlichen Tags vergeben wurde.
 
-Nachdem in diesem Abschnitt die Integration der Tagging--Daten beschrieben wurde, beschäftigt sich der folgende Abschnitt mit der Anreichung des Weltausschnittes mit den Daten des Clicktracking--Systems von Spreadshirt.
+Nachdem in diesem Abschnitt die Integration der Tagging--Daten beschrieben wurde, beschäftigt sich der folgende Abschnitt mit der Anreicherung des Weltausschnittes mit den Daten des Clicktracking--Systems von Spreadshirt.
 
 \section{Anreicherung des Weltausschnittes mit Clicktracking--Daten}
 \label{clicktracking}
@@ -302,7 +302,7 @@ Die Durchführung des Transformationsschrittes erfolgte mittels MapReduce (siehe
 
 Die Integration der erzeugten Daten stellt eine Vereinigung des vorhandenen Weltausschnittes mit dem im Transformationsschritt erzeugten Graphen dar.
 
-Die Knotenmenge wird derart vereinigt, dasssie die Eigenschaft behält, dass Paare aus Sprache und Zeichenkette eindeutig sind. Somit werden bei bereits vorhandenen Knoten die zusätzlichen Informationen bezüglich des Clicktrackings als Attribute hinzugefügt. Existiert eine Kombination aus Sprache und Zeichenkette noch nicht im Zielgraph, so wird der entsprechende Knoten eingefügt.
+Die Knotenmenge wird derart vereinigt, das sie die Eigenschaft behält, dass Paare aus Sprache und Zeichenkette eindeutig sind. Somit werden bei bereits vorhandenen Knoten die zusätzlichen Informationen bezüglich des Clicktrackings als Attribute hinzugefügt. Existiert eine Kombination aus Sprache und Zeichenkette noch nicht im Zielgraph, so wird der entsprechende Knoten eingefügt.
 
 Da die erzeugten Kanten einen noch nicht im Graph vorhandenen Typ besitzen, müssen keine Kanten zusammengeführt werden. Jedoch werden die Bezeichner der Ziel- und Quellknoten entsprechend angepasst, wenn bei der Integration der Knoten eine Zusammenführung stattgefunden hat.
 
@@ -341,7 +341,7 @@ Bei der Interpretation dieser Daten fällt auf, dass im Vergleich zu den Tagging
 \label{tab:only_clicktracking}
 \end{table}
 
-Nachdem die Anreicherung der Clicktracking--Daten durchgeführt wurde, beschäftigt sich der folgende Abschnitt mit der Anrreichung durch die Zerlegung von Wortgruppen in Einzelwörter.
+Nachdem die Anreicherung der Clicktracking--Daten durchgeführt wurde, beschäftigt sich der folgende Abschnitt mit der Anreicherung durch die Zerlegung von Wortgruppen in Einzelwörter.
 
 \section{Anreicherung des Weltausschnittes durch Zerlegung von Wortgruppen}
 \label{decomposition}
@@ -462,7 +462,7 @@ Zur Bereinigung der importierten Wortschatz--Daten muss in einem ersten Schritt 
 
 Weiterhin werden die Kategorien ``Vorname'' und ``Nachname'' entfernt, da diese an über \num{25000} Wörter vergeben sind und somit für die Verwendung zur Link Discovery ungeeignet sind und zu viele irrelevante Kanten erzeugen würden.
 
-\begin{lstlisting}[language=json, label={lst:word_baseform}, caption={JSON--Beispiel für die Umformug der Grundform eines Wortes}, float]
+\begin{lstlisting}[language=json, label={lst:word_baseform}, caption={JSON--Beispiel für die Umformung der Grundform eines Wortes}, float]
 {
     _id: ...,
     string: "Kopfs",
@@ -515,7 +515,7 @@ Zur Integration wird der im Transformationsschritt erzeugte Graph mit dem vorhan
 
 Insgesamt wurden dadurch \num{145023} neue Knoten und \num{50227965} neue Kanten erzeugt.  Dabei entfallen \num{48399466} Kanten auf Kookkurrenz von Kategorien, \num{550270} Kanten auf Wortformen, \num{149381} Kanten auf Grundformen, \num{279118} Kanten auf Synonyme und \num{849730} Kanten auf Thesaurus--Beziehungen.
 
-In \cref{fig:hist_only_wortschatz} ist die Verteilung durch die Integration des Wortschatzes erzeugten Kanten also Histrogramm mit exponentiell wachsenden Klassen abgebildet. \cref{tab:only_wortschatz} zeigt statistische Kennzahlen dieser Verteilung.
+In \cref{fig:hist_only_wortschatz} ist die Verteilung durch die Integration des Wortschatzes erzeugten Kanten also Histogramm mit exponentiell wachsenden Klassen abgebildet. \cref{tab:only_wortschatz} zeigt statistische Kennzahlen dieser Verteilung.
 
 \begin{figure}[h]
 \centering
@@ -544,7 +544,7 @@ In \cref{fig:hist_only_wortschatz} ist die Verteilung durch die Integration des 
 
 Bei Inspektion der Daten fällt auf, dass der Großteil der betroffenen Knoten nur eine Wortschatz--Kante besitzt. Jedoch deutet der Hohe Durchschnitt, verbunden mit dem \(Q_{0.75}=10\) darauf hin, dass im Gegensatz zu den anderen Integrationsschritten deutlich mehr Knoten existieren, die viele Kanten besitzen.
 
-Nachdem alle Anreicherungsschritte durchgeführt und beschrieben wurde, beschäftigt sich der nächste Abschnitt mit den zusammengefassten Ergebnissen der Intergrations-- und Anreicherungsschritte.
+Nachdem alle Anreicherungsschritte durchgeführt und beschrieben wurde, beschäftigt sich der nächste Abschnitt mit den zusammengefassten Ergebnissen der Integrations-- und Anreicherungsschritte.
 
 \section{Ergebnisse der Integrations-- und Anreicherungsschritte}
 \label{lda_results}
@@ -553,7 +553,7 @@ In den bisherigen Auswertungen der Integrations-- und Anreicherungsschritte wurd
 
 \subsection{Anzahl der Knoten und Kanten}
 
-\cref{tab:discovery_amounts} zeigt zusammengefasst die quantitive Veränderung des Graphen nach jedem durchgeführten Schritt. Dabei zeigt sich, dass die Integration der Daten des Wortschatzes mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
+\cref{tab:discovery_amounts} zeigt zusammengefasst die quantitative Veränderung des Graphen nach jedem durchgeführten Schritt. Dabei zeigt sich, dass die Integration der Daten des Wortschatzes mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
 
 \begin{table}[h]
 \centering
@@ -629,13 +629,13 @@ Auffällig ist hierbei, dass die Integration von Clicktracking- und Wortschatz--
 
 Das Absinken des Durchschnittes nach Integration der Clicktracking--Daten kann in der geringen Menge der Daten begründet werden. Durch die geringe Anzahl von Kookkurrenzen konnten viel verbundene Knoten keinen relevanten Zugewinn an Verbindungen verzeichnen, während für wenig verbundene Knoten verhältnismäßig mehr neue Verbindungen hinzukamen.
 
-Die Entwicklung der Verteilung zeigt, dass der Anteil wenig verbundener Knoten an der Knotenmenge ständig gewachsen ist. Daraus kann geschlussfolgert werden, mit jedem Schritt mehr Knoten existierten, die überhaupt Verbindungen besitzen. Speziell die Integration der Wortschatz--Daten hat gleichzeitig den Anteil der wenigverbundenen als auch der vielverbundenen Knoten erhöht.
+Die Entwicklung der Verteilung zeigt, dass der Anteil wenig verbundener Knoten an der Knotenmenge ständig gewachsen ist. Daraus kann geschlussfolgert werden, mit jedem Schritt mehr Knoten existierten, die überhaupt Verbindungen besitzen. Speziell die Integration der Wortschatz--Daten hat gleichzeitig den Anteil der wenig verbundenen als auch der viel verbundenen Knoten erhöht.
 
 Generell lässt sich festhalten, dass die Anzahl viel verbundener Knoten gemessen an der Gesamtanzahl relativ klein ist. Die Auswirkungen dessen hängen jedoch stark von der Anwendung der Daten ab und sind im Rahmen dieser Arbeit nicht beurteilbar.
 
-Nach der quantitativen Auswertung der Link--Discovery-–Schritte wird im nächsten Abschnitt die konkret durchgeführte Prioisierung der Beziehungen beschrieben.
+Nach der quantitativen Auswertung der Link--Discovery--Schritte wird im nächsten Abschnitt die konkret durchgeführte Priorisierung der Beziehungen beschrieben.
 
-\section{Prioisierung der Beziehungen}
+\section{Priorisierung der Beziehungen}
 
 Im folgenden Kapitel werden die vorgenommenen Optimierungsmaßnahmen und die damit einhergehende Evaluierung der Ergebnisse der Link Discovery beschrieben. Dazu gehören der gewählte Ansatz zur Optimierung, eine Erläuterung evolutionärer Algorithmen und deren Einsatz zur Optimierung sowie die Darstellung und Auswertung der Ergebnisse.
 
