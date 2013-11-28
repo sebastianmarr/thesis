@@ -76,7 +76,7 @@
 \usepackage{dashrule} % dotted lines
 \usepackage{amssymb} % math stuff
 
-% no warnings for underfull boxes in bibliography
+% no warnings for underfull boxes in lof, lot, lol and bib
 \usepackage{etoolbox}
 \apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
 
@@ -107,11 +107,11 @@
 \include{systembeschreibung}
 \include{zusammenfassung}
 
+\sloppy
+
 \listoffigures
 \listoftables
 \lstlistoflistings
-
-\sloppy
 \printbibliography 
 
 \end{document}
