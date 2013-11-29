@@ -740,13 +740,13 @@ Nachdem in diesem Abschnitt die konkrete Umsetzung der Prioisierung mittels inte
 
 \subsection{Ergebnisse}
 
-Die Optimierung wurde über insgesamt \num{13} Generationen durchgeführt. Somit wurden über alle Stichproben hinweg \num{975} Selektionen von Benutzern vorgenommen. Die Benutzer waren allesamt Mitarbeiter von Spreadshirt. Aufgrund der anonymen Teilnahme lässt sich nicht angeben, wie viele Einzelpersonen an der Optimierung teilgenommen haben.
+Die Prioisierung wurde über insgesamt \num{13} Generationen durchgeführt. Somit wurden über alle Stichproben hinweg \num{975} Selektionen von Benutzern vorgenommen. Die Benutzer waren allesamt Mitarbeiter von Spreadshirt. Aufgrund der anonymen Teilnahme lässt sich nicht angeben, wie viele Einzelpersonen an der Prioisierung teilgenommen haben.
 
 \subsubsection{Kantengewichte}
 
 Da nach jeder Selektion je Stichprobe fünf Individuen in der Population verbleiben, werden zunächst deren Kantengewichtungen untersucht. \cref{tab:winners_total} zeigt für jede Variable aus dem Genotyp den Median der in der dreizehnten Generation selektierten Individuen. Das Kantengewicht für den Typ \emph{Zerlegung} ist nicht in der Tabelle enthalten, da es sich bei den Stichproben nur um Einzelwörter handelt.
 
-\begin{table}
+\begin{table}[ht]
 \centering
 \begin{tabular}{lcccccccc}
     \toprule
@@ -785,7 +785,7 @@ Da nach jeder Selektion je Stichprobe fünf Individuen in der Population verblei
 \label{tab:winners_total}
 \end{table}
 
-Bei Betrachtung dieser Ergebnisse fällt auf, dass sich die Gewichtungen der Kanten von Stichprobe zu Stichprobe stark unterscheiden. Somit bestätigt sich die Vermutung, dass eine globale Optimierung der Kantengewichtungen keine sinnvollen Ergebnisse erzielt. Jedoch ergaben sich für die Typen \emph{Wortform} und \emph{Grundform} in allen Stichproben relativ hohe Gewichte.
+Bei Betrachtung dieser Ergebnisse fällt auf, dass sich die Gewichtungen der Kanten von Stichprobe zu Stichprobe stark unterscheiden. Somit bestätigt sich die Vermutung, dass eine globale Prioisierung der Kantengewichtungen keine sinnvollen Ergebnisse erzielt. Jedoch ergaben sich für die Typen \emph{Wortform} und \emph{Grundform} in allen Stichproben relativ hohe Gewichte.
 
 \subsubsection{Kookkurrenzmaße}
 
@@ -816,6 +816,80 @@ In \cref{tab:measures_each} sind für alle Stichproben die nach der letzten Sele
 \end{tabular}
 \caption{Häufigste Kookkurrenzmaße nach der finalen Selektion}
 \label{tab:measures_each}
+\end{table}
+
+Die dabei auffälligste Beobachtung ist, dass für die Clicktracking--Kookkurrenz das Maß \emph{Dice} bei \num{80} Prozent der Stichproben am häufigsten vorkommt. Für die beiden Typen der Tag-- und Kateogie--Kookkurrenz ergeben sich keine so deutlich häufiger vorkommenden Maße.
+
+\subsubsection{Erzeugte Priorisierungen}
+
+Nach den quantativen Ergebnisen der Priorisierung werden nachfolgendend die konkret erzeugten Prioisierungen ausgewertet. In \crefrange{tab:prio_res_kind}{tab:prio_res_volkswagen} sind die nach den Ergebnissen der Priorisierung fünf höchstgewichteten Nachbarn einiger Stichproben beispielhaft dargestellt. Dazu wurden die Mediane der Gewichte der nach der letzten Selektion enthaltenen Individuen gebildet. Als Kookkurrenzmaße wurden die jeweils am häufigsten auftretenden Maße für die Stichprobe gewählt. Die Nachbarn der übrigen Stichproben sind in \cref{other_results} dargestellt. Diese Tabellen zeigen gleichzeitig die Ergebnisse der Link Discovery mittels Integration und Anreichung sowie die Ergebnisse der Priorisierung. Die inhaltliche Beurteilung der Qualität dieser Nachbarn hängt vom Anwendungszweck der Daten ab und kann somit im Rahmen dieser Arbeit nicht endgültig beurteilt werden. Jedoch lässt sich bei Betrachtung der Daten feststellen, dass für viele der Stichproben durchaus Nachbarn aufgelistet werden, die eine inhaltliche Nähe zum Ausgangsbegriff besitzen.
+
+\begin{table}[p]
+\centering
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill} } lr}
+    \toprule
+    Begriff & Gewicht \\
+    \midrule
+    kleinkind & \num{2.08} \\
+    säugling & \num{2.07} \\
+    junge & \num{2.02} \\
+    nachwuchs & \num{1.9} \\
+    dreikäsehoch & \num{1.87} \\
+    \bottomrule
+\end{tabular*}
+\caption{Nachbarn des Begriffes ``Kind'' nach der Prioisierung}
+\label{tab:prio_res_kind}
+\end{table}
+
+\begin{table}[p]
+\centering
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill} } lr}
+    \toprule
+    Begriff & Gewicht \\
+    \midrule
+    i heart leipzig & \num{1.18} \\
+    tshirts leizig & \num{1.17} \\
+    t-shirts leipzig & \num{1.17} \\
+    leipzig stadt & \num{1.09} \\
+    deutschland leipzig & \num{1.09} \\
+    \bottomrule
+\end{tabular*}
+\caption{Nachbarn des Begriffes ``Leipzig'' nach der Prioisierung}
+\label{tab:prio_res_leipzig}
+\end{table}
+
+\begin{table}[p]
+\centering
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill} } lr}
+    \toprule
+    Begriff & Gewicht \\
+    \midrule
+    mountainbikes & \num{1.02} \\
+    fahrrad & \num{0.98} \\
+    rennrad & \num{0.96} \\
+    rad & \num{0.93} \\
+    gangschaltung & \num{0.89} \\
+    \bottomrule
+\end{tabular*}
+\caption{Nachbarn des Begriffes ``Mountainbike'' nach der Prioisierung}
+\label{tab:prio_res_mountainbike}
+\end{table}
+
+\begin{table}[p]
+\centering
+\begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill} } lr}
+    \toprule
+    Begriff & Gewicht \\
+    \midrule
+    volkswagen bus & \num{1.1} \\
+    volkswagen type 14 & \num{1.06} \\
+    opel & \num{1.05} \\
+    bus volkswagen & \num{1.04} \\
+    volkswagen g60 & \num{1.04} \\
+    \bottomrule
+\end{tabular*}
+\caption{Nachbarn des Begriffes ``Volkswagen'' nach der Prioisierung}
+\label{tab:prio_res_volkswagen}
 \end{table}
 
 \section{Zusammenfassung}
