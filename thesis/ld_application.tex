@@ -637,11 +637,11 @@ Nach der quantitativen Auswertung der Link--Discovery--Schritte wird im nächste
 
 \section{Priorisierung der Beziehungen}
 
-Im Folgenden wird beschrieben, wie die in den Abschnitten \labelcref{ld_tags,clicktracking,decomposition,wortschatz} durch Link Discovery erzeugten Beziehungen zwischen den Begriffen des Weltausschnittes prioirisiert wurden. Der Prozess der Prioisierung folgt dabei grundsätzlich dem in \cref{prio_evo} skizzierten Prozess unter Zuhilfenahme evolutionärer Algorithmen. Dazu wird die Vorgehensweise und die Implementierung der Komponenten des evolutionären Algorithmus erläutert und die Ergebnisse ausgewertet.
+Im Folgenden wird beschrieben, wie die in den Abschnitten \labelcref{ld_tags,clicktracking,decomposition,wortschatz} durch Link Discovery erzeugten Beziehungen zwischen den Begriffen des Weltausschnittes priorisiert wurden. Der Prozess der Priorisierung folgt dabei grundsätzlich dem in \cref{prio_evo} skizzierten Prozess unter Zuhilfenahme evolutionärer Algorithmen. Dazu wird die Vorgehensweise und die Implementierung der Komponenten des evolutionären Algorithmus erläutert und die Ergebnisse ausgewertet.
 
-Zum Zeitpunkt der Priosierung befanden sich neun verschiedene Beziehungstypen im Weltausschnitt: \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Kategorie--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Thesaurus--Beziehung} und \emph{Zerlegung}.
+Zum Zeitpunkt der Priorisierung befanden sich neun verschiedene Beziehungstypen im Weltausschnitt: \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Kategorie--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Thesaurus--Beziehung} und \emph{Zerlegung}.
 
-Der Prioisierungprozess versucht nun, diese Beziehungstypen gegeneinander zu gewichten, um für einen Anwendungsfall relevante Nachbarn eines Begriffes zu finden (siehe \cref{prioritization}). Dazu muss jedem Typ ein relatives Gewicht zu den anderen Typen zugeordnet werden. Beziehungen, die duch Kookkurrenz berechnet wurden, besitzen bereits aufgrund der angegebenen Kookkurrenzmaße ein Kantengewicht. Jedoch muss hierbei festgelegt werden, welches Maß für das Kantengewicht herangezogen werden und in welchem Verhältnis zu den Gewichten anderer Kantentypen es stehen soll.
+Der Priorisierungsprozess versucht nun, diese Beziehungstypen gegeneinander zu gewichten, um für einen Anwendungsfall relevante Nachbarn eines Begriffes zu finden (siehe \cref{prioritization}). Dazu muss jedem Typ ein relatives Gewicht zu den anderen Typen zugeordnet werden. Beziehungen, die durch Kookkurrenz berechnet wurden, besitzen bereits aufgrund der angegebenen Kookkurrenzmaße ein Kantengewicht. Jedoch muss hierbei festgelegt werden, welches Maß für das Kantengewicht herangezogen werden und in welchem Verhältnis zu den Gewichten anderer Kantentypen es stehen soll.
 
 Somit wird zum Zwecke der Priorisierung eine Gewichtung von zwölf verschiedenen Parametern gesucht. Der nächste Abschnitt beschäftigt sich mit dem zur Priorisierung implementierten evolutionären Algorithmus.
 
@@ -654,7 +654,7 @@ Zur Erläuterung der Vorgehensweise wird zum einen die Stichprobenauswahl, zum a
 
 Zunächst sollte die Methode zur Auswahl der Stichproben erläutert werden. Insgesamt wurden fünfzehn Knoten ausgewählt, deren Beziehungen optimiert werden sollen. Die Auswahl der Knoten richtete sich nach der Popularität von Suchbegriffen auf der Website von Spreadshirt. Dazu wurden alle Begriffe mit mehr als eintausend Suchen herangezogen und diese nach Häufigkeit der Suchen geordnet. Daraus wurden zufällig je fünf Begriffe bis zum unteren Quartil, fünf Begriffe zwischen unterem und oberen Quartil und fünf Begriffe über dem oberen Quartil ausgewählt. Die ausgewählten Begriffe, deren Kantengewichtungen lokal optimiert werden sollen, lauten: \emph{Kopfkissenbezug}, \emph{Student}, \emph{Volkswagen}, \emph{Marathon}, \emph{Wow}, \emph{Krankenschwester}, \emph{Mountainbike}, \emph{Hammer}, \emph{Polska}, \emph{Regenbogen}, \emph{Minecraft}, \emph{Kind}, \emph{Dubstep}, \emph{Leipzig} und \emph{Valentinstag}.
 
-Ziel dieser Auswahl war, eine möglichst vielfältige Verteilung der einzelnen Kantentypen zu erreichen, aus welcher sich nach Durchführung der Piorisierung möglicherweise Erkenntnisse ableiten lassen, ob die Piorisierung nur lokal oder auch global durchgeführt werden kann.
+Ziel dieser Auswahl war, eine möglichst vielfältige Verteilung der einzelnen Kantentypen zu erreichen, aus welcher sich nach Durchführung der Priorisierung möglicherweise Erkenntnisse ableiten lassen, ob die Priorisierung nur lokal oder auch global durchgeführt werden kann.
 
 Nach Auswahl der Stichproben muss der Genotyp der am evolutionären Algorithmus teilnehmenden Individuen spezifiziert werden. Daraufhin muss definiert werden, wie die Komponenten des Algorithmus zu implementieren sind.
 
@@ -700,7 +700,7 @@ Es wurde eine Populationsgröße von zehn Individuen je Stichprobe gewählt. Som
 
 Die Bestimmung einer Fitnessfunktion für die Optimierung der Link Discovery gestaltet sich durch die Notwendigkeit menschlicher Beurteilung als schwierig. Eine solche Fitnessbestimmung müsste derart erfolgen, dass ein Benutzer jedem Individuum einen reellwertigen Fitnesswert zuweist. Dies gestaltet ist jedoch auf Grund der hohen Anzahl von Individuen nicht praktikabel.
 
-Aus diesem Grund werden die Individuen, die in die nächste Generation übermommen werden, direkt durch den bewertenden Benutzer umgesetzt. Die umgesetzte Selektion erfolgt durch die Durchführung von Wettkämpfen. Hierzu werden in jeder Generation je fünf Paare von Individuen gebildet. Diese Paarungen stellen die Wettkämpfe dar, bei denen der Benutzer den Gewinner bestimmt. Alle Gewinner werden selektiert und im Reproduktionsschritt weiter verwendet.
+Aus diesem Grund werden die Individuen, die in die nächste Generation übernommen werden, direkt durch den bewertenden Benutzer umgesetzt. Die umgesetzte Selektion erfolgt durch die Durchführung von Wettkämpfen. Hierzu werden in jeder Generation je fünf Paare von Individuen gebildet. Diese Paarungen stellen die Wettkämpfe dar, bei denen der Benutzer den Gewinner bestimmt. Alle Gewinner werden selektiert und im Reproduktionsschritt weiter verwendet.
 
 Der Vorteil dieses Vorgehens ist, dass der Benutzer nur jeweils zwei Lösungskandidaten vergleichen muss, anstatt direkt fünf der zehn Individuen auszuwählen. Somit verringert sich der zu einem Zeitpunkt zu leistende kognitive Aufwand für die Selektion.
 
@@ -734,13 +734,13 @@ Als Verfahren zur Rekombination wurde der \emph{Ein--Punkt--Crossover} \cite{kw2
 
 \paragraph{Mutation}
 
-Zur Mutation der reellwertigen Kantengewichtungen wurde das Verfahren der \emph{Gauß-Mutation} \cite{kw2007} gewählt. Dabei wird zu jeder reellwertigen Variablen des Genotyps ein normalverteilter Zufallswert addiert. Verlässt der entstehende Wert das zulässige Intervall, so wird er auf die entsprechende Intervallschranke angepasst. Die Gauß-Mutation macht daher große Änderungen der Variable möglich, aber weniger Wahrscheinlich als kleine Änderungen. Sie eignet sich somit gut, um Diversität in der Population zu erzeugen. Konkret wurde in der Umsetzung der Prioisierung eine auf das Intervall \((0,1)\) angepasste Normalverteilung mit Erwartungswert \(\mu=0\) und Varianz \(\sigma=0.5\) gewählt. Die Variablen für die Kookkurrenzmaße werden nicht mutiert.
+Zur Mutation der reellwertigen Kantengewichtungen wurde das Verfahren der \emph{Gauß-Mutation} \cite{kw2007} gewählt. Dabei wird zu jeder reellwertigen Variablen des Genotyps ein normalverteilter Zufallswert addiert. Verlässt der entstehende Wert das zulässige Intervall, so wird er auf die entsprechende Intervallschranke angepasst. Die Gauß-Mutation macht daher große Änderungen der Variable möglich, aber weniger Wahrscheinlich als kleine Änderungen. Sie eignet sich somit gut, um Diversität in der Population zu erzeugen. Konkret wurde in der Umsetzung der Priorisierung eine auf das Intervall \((0,1)\) angepasste Normalverteilung mit Erwartungswert \(\mu=0\) und Varianz \(\sigma=0.5\) gewählt. Die Variablen für die Kookkurrenzmaße werden nicht mutiert.
 
-Nachdem in diesem Abschnitt die konkrete Umsetzung der Prioisierung mittels interaktiver evolutionärer Algorithmen beschrieben wurde, folgt im nächsten Abschnitt die Darstellung und Diskussion der Ergebnisse.
+Nachdem in diesem Abschnitt die konkrete Umsetzung der Priorisierung mittels interaktiver evolutionärer Algorithmen beschrieben wurde, folgt im nächsten Abschnitt die Darstellung und Diskussion der Ergebnisse.
 
 \subsection{Ergebnisse}
 
-Die Prioisierung wurde über insgesamt \num{13} Generationen durchgeführt. Somit wurden über alle Stichproben hinweg \num{975} Selektionen von Benutzern vorgenommen. Die Benutzer waren allesamt Mitarbeiter von Spreadshirt. Aufgrund der anonymen Teilnahme lässt sich nicht angeben, wie viele Einzelpersonen an der Prioisierung teilgenommen haben.
+Die Priorisierung wurde über insgesamt \num{13} Generationen durchgeführt. Somit wurden über alle Stichproben hinweg \num{975} Selektionen von Benutzern vorgenommen. Die Benutzer waren allesamt Mitarbeiter von Spreadshirt. Aufgrund der anonymen Teilnahme lässt sich nicht angeben, wie viele Einzelpersonen an der Priorisierung teilgenommen haben.
 
 \subsubsection{Kantengewichte}
 
@@ -785,7 +785,7 @@ Da nach jeder Selektion je Stichprobe fünf Individuen in der Population verblei
 \label{tab:winners_total}
 \end{table}
 
-Bei Betrachtung dieser Ergebnisse fällt auf, dass sich die Gewichtungen der Kanten von Stichprobe zu Stichprobe stark unterscheiden. Somit bestätigt sich die Vermutung, dass eine globale Prioisierung der Kantengewichtungen keine sinnvollen Ergebnisse erzielt. Jedoch ergaben sich für die Typen \emph{Wortform} und \emph{Grundform} in allen Stichproben relativ hohe Gewichte.
+Bei Betrachtung dieser Ergebnisse fällt auf, dass sich die Gewichtungen der Kanten von Stichprobe zu Stichprobe stark unterscheiden. Somit bestätigt sich die Vermutung, dass eine globale Priorisierung der Kantengewichtungen keine sinnvollen Ergebnisse erzielt. Jedoch ergaben sich für die Typen \emph{Wortform} und \emph{Grundform} in allen Stichproben relativ hohe Gewichte.
 
 \subsubsection{Kookkurrenzmaße}
 
@@ -818,11 +818,11 @@ In \cref{tab:measures_each} sind für alle Stichproben die nach der letzten Sele
 \label{tab:measures_each}
 \end{table}
 
-Die dabei auffälligste Beobachtung ist, dass für die Clicktracking--Kookkurrenz das Maß \emph{Dice} bei \num{80} Prozent der Stichproben am häufigsten vorkommt. Für die beiden Typen der Tag-- und Kateogie--Kookkurrenz ergeben sich keine so deutlich häufiger vorkommenden Maße.
+Die dabei auffälligste Beobachtung ist, dass für die Clicktracking--Kookkurrenz das Maß \emph{Dice} bei \num{80} Prozent der Stichproben am häufigsten vorkommt. Für die beiden Typen der Tag-- und Kategorie--Kookkurrenz ergeben sich keine so deutlich häufiger vorkommenden Maße.
 
 \subsubsection{Erzeugte Priorisierungen}
 
-Nach den quantativen Ergebnisen der Priorisierung werden nachfolgendend die konkret erzeugten Prioisierungen ausgewertet. In \crefrange{tab:prio_res_kind}{tab:prio_res_volkswagen} sind die nach den Ergebnissen der Priorisierung fünf höchstgewichteten Nachbarn einiger Stichproben beispielhaft dargestellt. Dazu wurden die Mediane der Gewichte der nach der letzten Selektion enthaltenen Individuen gebildet. Als Kookkurrenzmaße wurden die jeweils am häufigsten auftretenden Maße für die Stichprobe gewählt. Die Nachbarn der übrigen Stichproben sind in \cref{other_results} dargestellt. Diese Tabellen zeigen gleichzeitig die Ergebnisse der Link Discovery mittels Integration und Anreichung sowie die Ergebnisse der Priorisierung. Die inhaltliche Beurteilung der Qualität dieser Nachbarn hängt vom Anwendungszweck der Daten ab und kann somit im Rahmen dieser Arbeit nicht endgültig beurteilt werden. Jedoch lässt sich bei Betrachtung der Daten feststellen, dass für viele der Stichproben durchaus Nachbarn aufgelistet werden, die eine inhaltliche Nähe zum Ausgangsbegriff besitzen.
+Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konkret erzeugten Priorisierungen ausgewertet. In \crefrange{tab:prio_res_kind}{tab:prio_res_volkswagen} sind die nach den Ergebnissen der Priorisierung fünf höchstgewichteten Nachbarn einiger Stichproben beispielhaft dargestellt. Dazu wurden die Mediane der Gewichte der nach der letzten Selektion enthaltenen Individuen gebildet. Als Kookkurrenzmaße wurden die jeweils am häufigsten auftretenden Maße für die Stichprobe gewählt. Die Nachbarn der übrigen Stichproben sind in \cref{other_results} dargestellt. Diese Tabellen zeigen gleichzeitig die Ergebnisse der Link Discovery mittels Integration und Anreicherung sowie die Ergebnisse der Priorisierung. Die inhaltliche Beurteilung der Qualität dieser Nachbarn hängt vom Anwendungszweck der Daten ab und kann somit im Rahmen dieser Arbeit nicht endgültig beurteilt werden. Jedoch lässt sich bei Betrachtung der Daten feststellen, dass für viele der Stichproben durchaus Nachbarn aufgelistet werden, die eine inhaltliche Nähe zum Ausgangsbegriff besitzen.
 
 \begin{table}[p]
 \centering
@@ -837,7 +837,7 @@ Nach den quantativen Ergebnisen der Priorisierung werden nachfolgendend die konk
     dreikäsehoch & \num{1.87} \\
     \bottomrule
 \end{tabular*}
-\caption{Nachbarn des Begriffes ``Kind'' nach der Prioisierung}
+\caption{Nachbarn des Begriffes ``Kind'' nach der Priorisierung}
 \label{tab:prio_res_kind}
 \end{table}
 
@@ -854,7 +854,7 @@ Nach den quantativen Ergebnisen der Priorisierung werden nachfolgendend die konk
     deutschland leipzig & \num{1.09} \\
     \bottomrule
 \end{tabular*}
-\caption{Nachbarn des Begriffes ``Leipzig'' nach der Prioisierung}
+\caption{Nachbarn des Begriffes ``Leipzig'' nach der Priorisierung}
 \label{tab:prio_res_leipzig}
 \end{table}
 
@@ -871,7 +871,7 @@ Nach den quantativen Ergebnisen der Priorisierung werden nachfolgendend die konk
     gangschaltung & \num{0.89} \\
     \bottomrule
 \end{tabular*}
-\caption{Nachbarn des Begriffes ``Mountainbike'' nach der Prioisierung}
+\caption{Nachbarn des Begriffes ``Mountainbike'' nach der Priorisierung}
 \label{tab:prio_res_mountainbike}
 \end{table}
 
@@ -888,7 +888,7 @@ Nach den quantativen Ergebnisen der Priorisierung werden nachfolgendend die konk
     volkswagen g60 & \num{1.04} \\
     \bottomrule
 \end{tabular*}
-\caption{Nachbarn des Begriffes ``Volkswagen'' nach der Prioisierung}
+\caption{Nachbarn des Begriffes ``Volkswagen'' nach der Priorisierung}
 \label{tab:prio_res_volkswagen}
 \end{table}
 
@@ -896,6 +896,6 @@ Nach den quantativen Ergebnisen der Priorisierung werden nachfolgendend die konk
 
 \section{Zusammenfassung}
 
-In diesem Kapitel wurde die am praktischen Beispiel die Anwendung des in \cref{ld_framework} beschriebenen Link--Discovery--Frameworks dargestellt. Dazu wurden die initiale Erstellung des Weltausschnittes aus den Tagging--Daten von Spreadshirt, die Anreicherung mit den Daten des Clicktracking--Systems, durch Zerlegung von Wortgruppen und Integration des Wortschatzes der Universität Leipzig ausführlich erläutert. Für jeden dieser Schritte wurden die quantitativen Ergebnisse dargestellt und diskutiert. Außerdem wurde die quantitative Entiwcklung des gesamten Weltausschnittes dargelegt. Anschließend wurden die erzeugten Beziehungen mittels eines interaktiven evolutionären Algorithmus priorisiert und die Ergebnisse ausgewertet.
+In diesem Kapitel wurde die am praktischen Beispiel die Anwendung des in \cref{ld_framework} beschriebenen Link--Discovery--Frameworks dargestellt. Dazu wurden die initiale Erstellung des Weltausschnittes aus den Tagging--Daten von Spreadshirt, die Anreicherung mit den Daten des Clicktracking--Systems, durch Zerlegung von Wortgruppen und Integration des Wortschatzes der Universität Leipzig ausführlich erläutert. Für jeden dieser Schritte wurden die quantitativen Ergebnisse dargestellt und diskutiert. Außerdem wurde die quantitative Entwicklung des gesamten Weltausschnittes dargelegt. Anschließend wurden die erzeugten Beziehungen mittels eines interaktiven evolutionären Algorithmus priorisiert und die Ergebnisse ausgewertet.
 
-Nachdem die pratktische Durchführung der Link Discovery beschrieben wurde, werden im folgenden Kapitel ausgewählte Aspekte der technischen Umsetzung erläutert.
+Nachdem die praktische Durchführung der Link Discovery beschrieben wurde, werden im folgenden Kapitel ausgewählte Aspekte der technischen Umsetzung erläutert.
