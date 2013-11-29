@@ -648,11 +648,13 @@ Somit wird zum Zwecke der Priorisierung eine Gewichtung von zwölf verschiedenen
 \subsection{Vorgehensweise}
 \label{evo_implementation}
 
-Nachdem im vorhergehenden Abschnitt die Grundlagen und Komponenten evolutionärer Algorithmen beschrieben wurden, werden im Folgenden die für die Optimierung der Link Discovery--Ergebnisse angewendeten Methoden erläutert.
+Zur Erläuterung der Vorgehensweise wird zum einen die Stichprobenauswahl, zum anderen die Komponenten Genotyp, Initialisierung, Selektion und Reproduktion des evolutionären Algorithmus (siehe \cref{evo_for_prio}) beschrieben.
 
-Zunächst soll die Methode zur Auswahl der Stichproben erläutert werden. Insgesamt wurden fünfzehn Knoten ausgewählt, deren Beziehungen optimiert werden sollen. Die Auswahl der Knoten richtete sich nach der Popularität von Suchbegriffen auf der Website von Spreadshirt. Dazu wurden alle Begriffe mit mehr als eintausend Suchen herangezogen und diese nach Häufigkeit der Suchen geordnet. Daraus wurden zufällig je fünf Begriffe bis zum unteren Quartil, fünf Begriffe zwischen unterem und oberen Quartil und fünf Begriffe über dem oberen Quartil ausgewählt. Die ausgewählten Begriffe, deren Kantengewichtungen lokal optimiert werden sollen, lauten: \emph{Kopfkissenbezug}, \emph{Student}, \emph{Volkswagen}, \emph{Marathon}, \emph{Wow}, \emph{Krankenschwester}, \emph{Mountainbike}, \emph{Hammer}, \emph{Polska}, \emph{Regenbogen}, \emph{Minecraft}, \emph{Kind}, \emph{Dubstep}, \emph{Leipzig} und \emph{Valentinstag}.
+\subsubsection{Stichprobenauswahl}
 
-Ziel dieser Auswahl war, eine möglichst vielfältige Verteilung der einzelnen Kantentypen zu erreichen, aus welcher sich nach Durchführung der Optimierung möglicherweise Erkenntnisse ableiten lassen, ob die Optimierung nur lokal oder auch global durchgeführt werden kann.
+Zunächst sollte die Methode zur Auswahl der Stichproben erläutert werden. Insgesamt wurden fünfzehn Knoten ausgewählt, deren Beziehungen optimiert werden sollen. Die Auswahl der Knoten richtete sich nach der Popularität von Suchbegriffen auf der Website von Spreadshirt. Dazu wurden alle Begriffe mit mehr als eintausend Suchen herangezogen und diese nach Häufigkeit der Suchen geordnet. Daraus wurden zufällig je fünf Begriffe bis zum unteren Quartil, fünf Begriffe zwischen unterem und oberen Quartil und fünf Begriffe über dem oberen Quartil ausgewählt. Die ausgewählten Begriffe, deren Kantengewichtungen lokal optimiert werden sollen, lauten: \emph{Kopfkissenbezug}, \emph{Student}, \emph{Volkswagen}, \emph{Marathon}, \emph{Wow}, \emph{Krankenschwester}, \emph{Mountainbike}, \emph{Hammer}, \emph{Polska}, \emph{Regenbogen}, \emph{Minecraft}, \emph{Kind}, \emph{Dubstep}, \emph{Leipzig} und \emph{Valentinstag}.
+
+Ziel dieser Auswahl war, eine möglichst vielfältige Verteilung der einzelnen Kantentypen zu erreichen, aus welcher sich nach Durchführung der Piorisierung möglicherweise Erkenntnisse ableiten lassen, ob die Piorisierung nur lokal oder auch global durchgeführt werden kann.
 
 Nach Auswahl der Stichproben muss der Genotyp der am evolutionären Algorithmus teilnehmenden Individuen spezifiziert werden. Daraufhin muss definiert werden, wie die Komponenten des Algorithmus zu implementieren sind.
 
@@ -667,9 +669,9 @@ Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die 
 \label{fig:genotype}
 \end{figure}
 
-Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute wird auf das Intervall \((0,1)\) eingeschränkt. Die Kookkurrenzmaße entsprechen den in \cref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in \cref{fig:genotype} als UML--Klassendiagramm und in \cref{lst:genotyope} beispielhaft in JSON--Notation dargestellt.
+Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute wird auf das Intervall \(W=[0,1] \in \mathbb{R}\) eingeschränkt. Die Kookkurrenzmaße entsprechen den in \cref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in \cref{fig:genotype} als UML--Klassendiagramm und in \cref{lst:genotyope} beispielhaft in JSON--Notation dargestellt.
 
-\begin{lstlisting}[language=json, label={lst:genotyope}, caption={Beispiel für ein Individuum}]
+\begin{lstlisting}[language=json, label={lst:genotyope}, caption={JSON--Beispiel für ein Individuum}, float=b]
 {
     "tagCoOccMeasure" : 0,
     "tagCoOccWeight" : 0.6878115427680314,
@@ -690,7 +692,7 @@ Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. S
 
 Im Initialisierungsschritt wird die anfängliche Population für jede der Stichproben gebildet. Dazu muss zuerst eine geeignet erscheinende Populationsgröße festgelegt werden.
 
-In jeder Generation müssen im Evaluierungsschritt alle Individuen bewertet werden. Wie einführend bereits erläutert wurde, kann dies nur mit menschlicher Interaktion erfolgen. Somit sollte die Populationsgröße möglichst gering sein, um mit der gleichen Anzahl Bewertungen eine größere Anzahl von Generationen zu durchlaufen. Dies geschieht auf Kosten der Diversität in der Population. Jedoch wurde im Rahmen dieser Arbeit dieser Ansatz gewählt, um möglichst viele Möglichkeiten zu haben, die Parameter zu optimieren.
+In jeder Generation müssen im Selektionsschritt alle Individuen bewertet werden. Wie in \cref{prio_evo} bereits erläutert wurde, kann dies nur mit menschlicher Interaktion erfolgen. Somit sollte die Populationsgröße möglichst gering sein, um mit der gleichen Anzahl Bewertungen eine größere Anzahl von Generationen zu durchlaufen. Dies geschieht auf Kosten der Diversität in der Population. Jedoch wurde im Rahmen dieser Arbeit dieser Ansatz gewählt, um möglichst viele Möglichkeiten zu haben, die Parameter zu optimieren.
 
 Es wurde eine Populationsgröße von zehn Individuen je Stichprobe gewählt. Somit müssen in jeder Generation einhundertfünfzig Individuen bewertet werden. Bei der Initialisierung wurden die Variablen jedes erzeugten Individuums zufällig gewählt.
 
@@ -698,14 +700,14 @@ Es wurde eine Populationsgröße von zehn Individuen je Stichprobe gewählt. Som
 
 Die Bestimmung einer Fitnessfunktion für die Optimierung der Link Discovery gestaltet sich durch die Notwendigkeit menschlicher Beurteilung als schwierig. Eine solche Fitnessbestimmung müsste derart erfolgen, dass ein Benutzer jedem Individuum einen reellwertigen Fitnesswert zuweist. Dies gestaltet ist jedoch auf Grund der hohen Anzahl von Individuen nicht praktikabel.
 
-Die umgesetzte Selektion erfolgt durch die Durchführung von Wettkämpfen. Hierzu werden in jeder Generation je fünf Paare von Individuen gebildet. Diese Paarungen stellen die Wettkämpfe dar, bei denen der Benutzer den Gewinner bestimmt. Alle Gewinner werden selektiert und im Reproduktionsschritt weiter verwendet.
+Aus diesem Grund werden die Individuen, die in die nächste Generation übermommen werden, direkt durch den bewertenden Benutzer umgesetzt. Die umgesetzte Selektion erfolgt durch die Durchführung von Wettkämpfen. Hierzu werden in jeder Generation je fünf Paare von Individuen gebildet. Diese Paarungen stellen die Wettkämpfe dar, bei denen der Benutzer den Gewinner bestimmt. Alle Gewinner werden selektiert und im Reproduktionsschritt weiter verwendet.
 
 Der Vorteil dieses Vorgehens ist, dass der Benutzer nur jeweils zwei Lösungskandidaten vergleichen muss, anstatt direkt fünf der zehn Individuen auszuwählen. Somit verringert sich der zu einem Zeitpunkt zu leistende kognitive Aufwand für die Selektion.
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{eva_interface}
-\caption{Oberfläche zur interaktiven Selektion}
+\includegraphics[scale=0.25]{eva_interface}
+\caption{Screenshot der Oberfläche zur interaktiven Selektion}
 \label{fig:eva_interface}
 \end{figure}
 
@@ -732,9 +734,9 @@ Als Verfahren zur Rekombination wurde der \emph{Ein--Punkt--Crossover} \cite{kw2
 
 \paragraph{Mutation}
 
-Zur Mutation der reellwertigen Kantengewichtungen wurde das Verfahren der \emph{Gauß-Mutation} \cite{kw2007} gewählt. Dabei wird zu jeder reellwertigen Variablen des Genotyps ein normalverteilter Zufallswert addiert. Verlässt der entstehende Wert das zulässige Intervall, so wird er auf die entsprechende Intervallschranke angepasst. Die Gauß-Mutation macht daher große Änderungen der Variable möglich, aber weniger Wahrscheinlich als kleine Änderungen. Sie eignet sich somit gut, um Diversität in der Population zu erzeugen. Konkret wurde in der Umsetzung der Optimierung eine auf das Intervall \((0,1)\) angepasste Normalverteilung mit Erwartungswert \(\mu=0\) und Varianz \(\sigma=0.5\) gewählt. Die Variablen für die Kookkurrenzmaße werden nicht mutiert.
+Zur Mutation der reellwertigen Kantengewichtungen wurde das Verfahren der \emph{Gauß-Mutation} \cite{kw2007} gewählt. Dabei wird zu jeder reellwertigen Variablen des Genotyps ein normalverteilter Zufallswert addiert. Verlässt der entstehende Wert das zulässige Intervall, so wird er auf die entsprechende Intervallschranke angepasst. Die Gauß-Mutation macht daher große Änderungen der Variable möglich, aber weniger Wahrscheinlich als kleine Änderungen. Sie eignet sich somit gut, um Diversität in der Population zu erzeugen. Konkret wurde in der Umsetzung der Prioisierung eine auf das Intervall \((0,1)\) angepasste Normalverteilung mit Erwartungswert \(\mu=0\) und Varianz \(\sigma=0.5\) gewählt. Die Variablen für die Kookkurrenzmaße werden nicht mutiert.
 
-Nachdem in diesem Abschnitt die konkrete Umsetzung der Optimierung mittels interaktiver evolutionärer Algorithmen beschrieben wurde, folgt im nächsten Abschnitt die Darstellung und Diskussion der Ergebnisse.
+Nachdem in diesem Abschnitt die konkrete Umsetzung der Prioisierung mittels interaktiver evolutionärer Algorithmen beschrieben wurde, folgt im nächsten Abschnitt die Darstellung und Diskussion der Ergebnisse.
 
 \subsection{Ergebnisse}
 
