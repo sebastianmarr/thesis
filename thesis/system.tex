@@ -37,48 +37,43 @@ Nachdem die Anforderungen an das System formuliert wurden, werden in den folgend
 
 \section{Architektur des Systems}
 
-Nach erfolgter Technologieauswahl und Modellierung der Daten soll im nächsten Abschnitt die technische Umsetzung der Link Discovery beschrieben werden.
+Aus den im vorherigen Abschnitt formulierten Anforderungen wurde die im Folgenden beschriebene Systemarchitektur entwickelt. \cref{fig:architecture} zeigt die komplette Architektur des implementierten Link--Discovery--Systems. Darin sind, neben der Architektur des Systems selbst, alle genutzten Datenquellen und die Daten, die sie bereit stellen, aufgeführt.
 
-Da die Mongo Shell eine vollwertige JavaScript--Laufzeitumgebung enthält und skriptbar ist, wurden die meisten Operationen im Rahmen dieser Arbeit als Skripte für diese Shell implementiert. Einzig der Import der Tag-, Clicktracking- und Wortschatzdaten wurde mit Ruby--Skripten realisiert.
-
-Die Schritte zur Link Discovery sind im Wesentlichen für jede zu integrierende Datenquelle gleich. Sie umfassen den Import, die Bereinigung, die Reduktion, die Transformation und die Integration der Daten \cite{hkp2012}.
-
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics[width=1\textwidth]{architecture}
 \caption{FMC--Blockdiagramm der gewählten Systemarchitektur}
 \label{fig:architecture}
 \end{figure}
 
-\cref{fig:architecture} zeigt die komplette Architektur des implementierten Link Discovery Systems. Darin sind alle genutzten Datenquellen und die Daten, die sie bereit stellen, aufgeführt.
+Zentraler Bestandteil der Architektur ist das Datenbanksystem, dass alle benötigten Daten speichert. Die Wahl des Datenbanksystems hat große Bedeutung für die Realisierung der funktionalen und nichtfunktionalen Anforderungen und wird in \cref{db_choice} diskutiert. Im Datenbanksystem werden die Rohdaten, Zwischenergebnisse und die Graphenrepräsentation des Weltausschnittes abgelegt. Das Datenmodell des Graphen folgt dabei der Definition aus \cref{world_graph}.
 
-Für jede Datenquelle existiert ein Importskript, welches die Rohdaten importiert und in MongoDB speichert. Bei relationalen Datenquellen wie der MySQL--Datenbank von Spreadshirt für die Tag--Daten wird pro Tabelle eine Collection und pro Zeile ein Dokument angelegt. Können nicht alle Daten importiert werden, wie beispielsweise bei der Wortschatz--API (siehe \cref{wortschatz}, kann das Importskript auch aufgrund der bisher im Graph vorhandenen Daten eine Auswahl an Anfragen an die externe Datenquelle erzeugen.
+Für jeden Schritt für die Integration von Datenquellen aus \cref{integration_generic} existiert in der Architektur eine Komponente, die den jeweiligen Schritt für die entsprechende Datenquelle ausführt. Diese Komponenten kommunizieren direkt mit dem Datenbanksystem, um die Rohdaten oder Zwischenergebnisse zu lesen, führen die Berechnungen durch und speichern die Ergebnisse wiederum in die Datenbank.
 
-Im nachfolgenden Bereinigungsschritt werden die Daten so gut wie möglich von eventuell vorhandenen Defekten befreit. Dazu zählen beispielsweise das Entfernen nicht nutzbarer Zeichen oder von unvollständigen Datensätzen.
+Für die Abfrage der im Graph gespeicherten Informationen existiert eine API, welche Informationen zu Knoten und deren Nachbarn per HTTP als JSON--Dokumente \cite{json2006} zur Verfügung stellt. Diese API kann für die Einbindung der erzeugten Informationen in andere Applikationen genutzt werden. Über Anfrageparameter kann die Gewichtung der einzelnen Kantentypen beeinflusst werden.
 
-Der Reduktionsschritt dient zur Verkleinerung der Datenmenge. Dazu gehören zum Beispiel Schritte zur Duplikatentfernung oder zur Auswahl relevanter Datensätze. In dieser Arbeit bestand die Haupteinschränkung der Datenmenge darin, nach Möglichkeit nur deutschsprachige Datensätze auszuwählen.
+Zum Zeitpunkt der Bearbeitung dieser Arbeit existierten zwei Anwendungen, die die API des Link--Discovery--Systems nutzten. Dies sind der \emph{Tag Explorer} und die Komponente zur Prioisierung der Beziehungen.
 
-Der Schritt der Transformation überführt die Daten schließlich in eine Graphenform. Dies kann entweder über Kookkurrenz oder über eine andere, für die Art der importierten Daten geeignete, Methode erfolgen.
-
-Das Integrationsskript für jede Datenquelle ist letztendlich für die Integration der Daten in den Zielgraphen verantwortlich. Dabei werden neue Knoten eingefügt, neue Informationen an vorhandene Knoten angefügt oder neue Kanten in den Graph integriert. In diesem Schritt passiert die Auflösung von eventuell vorhandenen temporären Bezeichnern in die entsprechenden im Graph vorhandenen eindeutigen Bezeichner.
-
-Für die Abfrage der im Graph gespeicherten Informationen existiert außerdem eine API, welche Informationen zu Knoten und deren Nachbarn per HTTP als JSON--Dokumente zur Verfügung stellt. Diese API kann für die Einbindung der erzeugten Informationen in andere Applikationen genutzt werden. Über Anfrageparameter kann die Gewichtung der einzelnen Kantentypen beeinflusst werden.
-
-Eine Beispielanwendung, die die API des Link--Discovery--Systems nutzt, ist der \emph{Tag Explorer}. Dabei handelt es sich um eine Browseranwendung, die die im Graph gespeicherten Beziehungen visualisiert und interaktiv erforschbar macht. Der Benutzer dieser Anwendung kann mit selbst gewählten Gewichtungen der Kanten den Graph durchsuchen. Außerdem werden, wenn vorhanden, über eine Anbindung der API von Spreadshirt zu der Zeichenkette des ausgewählten Knotens gefundene Designs angezeigt. In \cref{fig:tag_explorer} ist ein Screenshot dieses Werkzeugs zu sehen.
+Beim Tag Explorer handelt es sich um eine Browseranwendung, die die im Graph gespeicherten Beziehungen visualisiert und interaktiv erkundbar macht. Der Benutzer dieser Anwendung kann mit selbst gewählten Gewichtungen der Beziehungen den Graph durchsuchen. Außerdem werden, wenn vorhanden, die Designs auf der Spreadshirt--Plattform angezeigt, die mit dem gewählten Begriff getaggt sind. Somit wurde die funktionale Anforderung, den Kontext zu einem Begriff zu visualisieren, nur zum Teil umgesetzt, da der Tag Explorer lediglich den Tagging--Kontext eines Begriffes darstellt. In \cref{fig:tag_explorer} ist ein Screenshot der Anwendung abgebildet.
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{tag_explorer}
-\caption{Tag Explorer}
+\includegraphics[scale=0.25]{tag_explorer}
+\caption{Screenshot der Anwendung ``Tag Explorer''}
 \label{fig:tag_explorer}
 \end{figure}
 
-\section{Datenmodell des Systems}
+Die zweite Anwendung, die die API des Systems nutzt, ist die in \cref{evo_implementation} beschriebene Umsetzung der Prioisierung. Da diese die Daten des Weltausschnittes nicht verändern muss, ist eine entkoppelte Anbindung über die API sinnvoll.
+
+Nachdem die Architektur vorgestellt wurde, spezifiziert der nächste Abschnitt mit den konkreten Technologien, die zur Implementierung dieser Architektur ausgewählt wurden.
 
 \section{Technologieauswahl}
+\label{tech}
 
-\subsection{MongoDB}
-\label{mongo}
+Der folgende Abschnitt beschäftigt sich mit einer Auswahl der zur Umsetzung der Link Discovery eingesetzten Technologien. Kernelemente sind dabei das Datenbanksystem, die konkrete Implementierung der Architekturkomponenten sowie die Datenverarbeitung mittels des Programmiermodells MapReduce.
+
+\subsection{Datenbanksystem}
+\label{db_choice}
 
 Zur Umsetzung der Link Discovery wurde das Datenbanksystem MongoDB \cite{mo2013} gewählt. Bei MongoDB handelt es sich um eine quelloffene dokumentenorientierte Datenbank.
 
@@ -170,7 +165,10 @@ Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben
 }
 \end{lstlisting}
 
-\subsection{MapReduce}
+\subsection{Implementierung der Komponenten der Architektur}
+\label{arch_components_impl}
+
+\subsection{Datenverarbeitung}
 \label{mapreduce}
 
 MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Die Grundlagen dieses Modells und die Anwendung zur Berechnung von Kookkurrenz (siehe \cref{co-occurence}) werden im Folgenden erläutert.
@@ -193,7 +191,7 @@ Die Reduce--Funktion wird also jeweils auf einen Schlüssel und eine Liste von W
 
 Die MapReduce--Bibliothek übernimmt die Kommunikation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass sich der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
 
-In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \cref{mongo}). Nach dieser grundsätzlichen Betrachtung des Programmiermodelles wird im nächsten Abschnitt die Anwendung zur Berechnung von Konkurrenzen diskutiert.
+In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \cref{db_choice}). Nach dieser grundsätzlichen Betrachtung des Programmiermodelles wird im nächsten Abschnitt die Anwendung zur Berechnung von Konkurrenzen diskutiert.
 
 
 \subsubsection{Kookkurrenzberechnung mit MapReduce}
