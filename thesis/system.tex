@@ -1,11 +1,39 @@
 \chapter{Link--Discovery--System}
 \label{system}
 
+Das folgende Kapitel beschäftigt sich mit ausgewählten Aspekten der technischen Umsetzung der in \cref{link_discovery} beschriebenen Link--Discovery--Durchführung. Dazu gehören die Formulierung der Anforderungen an das System, die Systemarchitektur sowie die getroffene Technologieauswahl und einige Implementierungsaspekte.
+
 \section{Anforderungen an das System}
+
+Dieser Abschnitt formuliert die Anforderungen an ein System, dass zur Link Discovery eingesetzt werden kann. Die Anforderungen unterteilen sich hierbei in einen funktionalen und einen nichtfunktionalen Anteil. 
 
 \subsection{Funktionale Anforderungen}
 
+Nachfolgend werden die funktionalen Anforderungen an das System aufgeführt. Diese ergeben sich direkt aus dem in \cref{ld_framework} beschriebenen Link--Discovery--Framework.
+
+\paragraph{Datenimport} Das System muss in der Lage sein, Rohdaten aus verschiedenen Datenquellen zu importieren und zu speichern. Dazu zählen die MySQL--Datenbank von Spreadshirt, die JSON--Dokumente des Clicktracking--Systems und die API des Wortschatzes der Universität Leipzig. Das System sollte außerdem erweiterbar sein, um in Zukunft andere Datenquellen einbinden zu können.
+
+\paragraph{Datenspeicherung} Das System muss die importierten Rohdaten, Zwischenergebnisse der Link Discovery und die Graphenrepräsentation des Weltausschnittes permanent speichern können.
+
+\paragraph{Datenverarbeitung} Das System muss die importierten Daten entsprechend des Link--Discovery--Prozesses aus \cref{ld_process} verarbeiten können. Dazu zählen die Schritte Bereinigung, Reduktion, Transformation und Integration. Die Implementierung dieser Schritte sollte änderbar und erweiterbar sein. Im Rahmen des Transformationsschrittes muss das System in der Lage sein, Kookkurrenzmaße zu berechnen.
+
+\paragraph{Visualisierung} Das System soll eine Oberfläche für die Visualisierung der in der Graphenrepräsentation des Weltausschnittes gespeicherten Daten bieten. Dazu zählen die Darstellung der Begriffe, deren Kontext und Beziehungen und eine Möglichkeit der manuellen Priorisierung zum interaktiven Erkunden des Datenbestandes.
+
+\paragraph{Priorisierung} Das System muss den in \cref{evo_for_prio} beschriebenen Priorisierungsprozess mittels evolutionärer Algorithmen implementieren. Dazu gehören Komponenten des Algorithmus aus \cref{evo_implementation}, sowie eine Benutzeroberfläche zur interaktiven Selektion.
+
+\paragraph{Programmierschnittstelle} Das System muss eine Programmierschnittstelle (API) zur programmatischen Abfrage der Daten bereit stellen. Die angebotenen Daten enthalten die Begriffe, deren Kontexte und piorisierte Beziehungen. Die Priorisierung wird dabei vom Benutzer der API spezifiziert.
+
 \subsection{Nichtfunktionale Anforderungen}
+
+Neben den funktionalen Anforderungen werden einige nichtfunktionale Anforderungen an das System gestellt. Diese werden im folgenden genannt.
+
+\paragraph{Datenmenge} Das System muss in der Lage sein, bis zu einer Milliarde Objekte zu speichern und zu verarbeiten. Diese Objekte können Rohdaten der Datenquellen, Zwischenergebnisse der Link Discovery oder Knoten und Kanten des Weltausschnittes sein.
+
+\paragraph{Parallelisierbarkeit} Um die Datenmenge verarbeiten zu können, sollten rechenintensive Berechnungsschritte auf mehrere Rechner verteilt werden können, um die Berechnung zu beschleunigen. Zu den anspruchsvolleren Berechnungsschritten zählt beispielsweise die Berechnung von Kookkurrenz aus den Daten des Tagging--Systems.
+
+\paragraph{Antwortzeiten} Das System sollte Anfragen, die die Graphenrepräsentation des Weltausschnittes betreffen, in unter einer Sekunde beantworten. Hierzu zählt vor allem die Anfrage der Nachbarn eines Begriffes, geordnet nach einer spezifizierten Priorisierung.
+
+Nachdem die Anforderungen an das System formuliert wurden, werden in den folgenden Abschnitten die sich daraus ergebende Architektur, das Datenmodell und die Technologieauswahl erläutert.
 
 \section{Architektur des Systems}
 
@@ -47,7 +75,7 @@ Eine Beispielanwendung, die die API des Link--Discovery--Systems nutzt, ist der 
 
 \section{Datenmodell des Systems}
 
-\section{Technologie}
+\section{Technologieauswahl}
 
 \subsection{MongoDB}
 \label{mongo}
@@ -145,7 +173,7 @@ Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben
 \subsection{MapReduce}
 \label{mapreduce}
 
-MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Die Grundlagen dieses Modelles und die Anwendung zur Berechnung von Kookkurrenz (siehe \cref{co-occurence}) werden im Folgenden erläuert.
+MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Die Grundlagen dieses Modells und die Anwendung zur Berechnung von Kookkurrenz (siehe \cref{co-occurence}) werden im Folgenden erläutert.
 
 \subsubsection{Grundlagen}
 \label{mapreduce_basic}
