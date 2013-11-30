@@ -87,7 +87,7 @@ Zur Repräsentation der Dokumente verwendet MongoDB ein Format, dass sich sehr a
 
 \cref{lst:json} zeigt ein Beispiel für ein Dokument in MongoDB. Das Feld \emph{\_id} ist hierbei ein  Bezeichner vom Typ \emph{ObjectID}. Dieser stellt einen global eindeutigen Bezeichner dar, der benutzt werden kann, um Dokumente zu referenzieren. Innerhalb einer Collection muss \emph{\_id} grundsätzlich eindeutig sein. Das Feld \emph{address} zeigt, dass Dokumente weitere Dokumente enthalten können. Am Feld \emph{friends} wird deutlich, dass Werte für Schlüssel auch Arrays von Werten sein können. Diese sind nicht auf primitive Typen wie Zeichenketten oder Zahlen beschränkt, sondern können auch weitere Dokumente oder Arrays sein.
 
-\begin{lstlisting}[language=json, label={lst:json}, caption={Ein Beispiel für ein Dokument in MongoDB}, float]
+\begin{lstlisting}[language=json, label={lst:json}, caption={JSON--Beispiel für ein Dokument in MongoDB}, float]
 {
     "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
     "name" : "Bob",
@@ -167,6 +167,7 @@ Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben
 \label{arch_components_impl}
 
 Die Komponenten zum Import, zur Bereinigung, Reduktion, Transformation und Integration wurden in der Programmiersprache JavaScript als Skripte für die Mongo Shell (siehe \cref{mongo}) umgesetzt. Diese Skripte implementieren die funktionalen Anforderungen an das System.
+
 JavaScript wurde ausgewählt, da die Sprache eine natürliche Interaktion mit dem JSON--Format ermöglicht. Die Mongo Shell stellt alle Operationen für MongoDB für diese Programmiersprache zur Verfügung und eignet sich damit gut zur Kommunikation mit dem Datenbanksystem.
 
 Die API wurde ebenfalls in JavaScript programmiert, unter Zuhilfenahme der Laufzeitumgebung \emph{node.js} \cite{node}. Diese ermöglicht die serverseitige Benutzung von JavaScript und ist demnach gut geeignet, um mit den Daten aus MongoDB zu arbeiten und diese als JSON--Dokumente an Clients auszuliefern. Der Tag Explorer sowie die Oberfläche zur interaktiven Selektion sind in JavaScript als Browseranwendungen implementiert.
@@ -178,12 +179,12 @@ Zusammenfassend lässt sich festhalten, dass die Architekturkomponenten größte
 \subsection{Datenverarbeitung}
 \label{mapreduce}
 
-MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Die Grundlagen dieses Modells und die Anwendung zur Berechnung von Kookkurrenz (siehe \cref{co-occurence}) werden im Folgenden erläutert.
+Um die nichtfunktionalen Anforderungen an das Link--Discovery--System umzusetzen, wurde zur Verarbeitung der Daten, speziell zur Kookkurrenzberechnung, das Programmiermodell MapReduce gewählt, da dieses die parallele Verarbeitung großer Datenmengen ermöglicht. Die Grundlagen dieses Modells sowie die Umsetzung der Kookkurrenzberechnung werden in den folgenden Abschnitten beschrieben.
 
-\subsubsection{Grundlagen}
+\subsubsection{Grundlagen von MapReduce}
 \label{mapreduce_basic}
 
- Der Grundgedanke dieses Modells besteht in der Zerlegung der Berechnung in zwei Funktionen: \emph{Map} und \emph{Reduce}. Die Ein- und Ausgabedaten sind Schlüssel-/Wertpaare. Beide Funktionen werden vom Benutzer spezifiziert.
+MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Der Grundgedanke dieses Modells besteht in der Zerlegung der Berechnung in zwei Funktionen: \emph{Map} und \emph{Reduce}. Die Ein- und Ausgabedaten sind Schlüssel-/Wertpaare. Beide Funktionen werden vom Benutzer spezifiziert.
 
 Die Map--Funktion dient zur Erzeugung von Zwischenergebnissen, ebenfalls in der Form von Schlüssel-/Wertpaaren. Die Funktion wird einzeln auf jedes Paar der Eingabedaten angewandt und kann eine beliebige Anzahl von Zwischenergebnissen \emph{emittieren}. Die MapReduce--Bibliothek gruppiert daraufhin alle Paare mit dem gleichen Schlüssel und übergibt diese an die Reduce--Funktion.
 
@@ -198,13 +199,13 @@ Die Reduce--Funktion wird also jeweils auf einen Schlüssel und eine Liste von W
 
 Die MapReduce--Bibliothek übernimmt die Kommunikation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass sich der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
 
-In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \cref{db_choice}). Nach dieser grundsätzlichen Betrachtung des Programmiermodelles wird im nächsten Abschnitt die Anwendung zur Berechnung von Konkurrenzen diskutiert.
 
+In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \cref{db_choice}).
 
 \subsubsection{Kookkurrenzberechnung mit MapReduce}
 \label{mapreduce_cooccurence}
 
-MapReduce kann für die Berechnung der Knoten und Kanten des Kookkurrenzgraphen genutzt werden. Dazu müssen für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
+MapReduce kann für die Berechnung der Knoten und Kanten mittels Kookkurrenz genutzt werden. Dazu müssen für beide Operationen das Ein- und Ausgabeformat sowie die Funktionen Map und Reduce definiert werden.
 
 Um die Berechnung zu vereinfachen, werden zuerst die Knoten erzeugt und mit allen Vorkommen der Begriffe annotiert. Somit kann daraufhin direkt aus der Knotenmenge die Kantenmenge erzeugt werden. Außerdem werden bei der Nutzung der Daten weniger Anfragen benötigt, um Informationen über einen Begriff selbst zu bekommen.
 
@@ -216,7 +217,7 @@ Die Reduce--Funktion fasst die einelementigen Listen zusammen, addiert die Vorko
 
 Die Map- und Reduce--Funktionen für die Knotenberechnung sind in \cref{lst:mapred_nodes} als Pseudo--Code dargestellt.
 
-\begin{lstlisting}[language=pseudo, label={lst:mapred_nodes}, caption={Knotenerzeugung mit MapReduce}]
+\begin{lstlisting}[language=pseudo, label={lst:mapred_nodes}, caption={Knotenerzeugung mit MapReduce}, float]
 function map(document, term) {
     emit(term, {documents: [document], count: 1});
 }
@@ -237,7 +238,7 @@ Die Berechnung der Kantenmenge kann mit den vorher berechneten Knoten als Eingab
 
 \cref{lst:mapred_edges1} zeigt die Umformung der Knoten mittels MapReduce. Als Eingabe für die Map--Funktion dienen die Knoten. Diese werden so umgeformt, dass für jedes Dokument, das am Knoten annotiert ist, ein neues Schlüssel-/Wertpaar emittiert wird. Die Reduce--Funktion fasst die emittierten Ergebnisse zusammen, sodass als Ergebnis alle Begriffe, die an ein Dokument vergeben wurden, gesammelt als Liste vorliegen.
 
-\begin{lstlisting}[language=pseudo, label={lst:mapred_edges1}, caption={Umformung der Knoten mit MapReduce}]
+\begin{lstlisting}[language=pseudo, label={lst:mapred_edges1}, caption={Umformung der Knoten mit MapReduce}, float]
 function map(node) {
     foreach document in node.documents do
         emit(document, {terms: [node]});
@@ -255,7 +256,7 @@ function reduce(term, values) {
 
 In \cref{lst:mapred_edges2} wird die Erzeugung der Kookkurrenzkanten dargestellt. Im Map--Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurrenzen zwischen beiden Begriffen. Im Reduce--Schritt werden alle Kanten zwischen zwei Termen zusammengefasst, die Summe der Kookkurrenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \cref{measures} beschrieben.
 
-\begin{lstlisting}[language=pseudo, label={lst:mapred_edges2}, caption={Kantenerzeugung mit MapReduce}]
+\begin{lstlisting}[language=pseudo, label={lst:mapred_edges2}, caption={Kantenerzeugung mit MapReduce}, float]
 function map(document) {
     foreach term1 in document.terms do
         foreach term2 in document.terms do
