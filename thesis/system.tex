@@ -22,7 +22,7 @@ Nachfolgend werden die funktionalen Anforderungen an das System aufgeführt. Die
 
 \paragraph{Priorisierung} Das System muss den in \cref{evo_for_prio} beschriebenen Priorisierungsprozess mittels evolutionärer Algorithmen implementieren. Dazu gehören Komponenten des Algorithmus aus \cref{evo_implementation}, sowie eine Benutzeroberfläche zur interaktiven Selektion.
 
-\paragraph{Programmierschnittstelle} Das System muss eine Programmierschnittstelle (API) zur programmatischen Abfrage der Daten bereit stellen. Die angebotenen Daten enthalten die Begriffe, deren Kontexte und piorisierte Beziehungen. Die Priorisierung wird dabei vom Benutzer der API spezifiziert.
+\paragraph{Programmierschnittstelle} Das System muss eine Programmierschnittstelle (API) zur programmatischen Abfrage der Daten bereit stellen. Die angebotenen Daten enthalten die Begriffe, deren Kontexte und piorisierte Beziehungen. Die Priorisierung wird vom Benutzer der API spezifiziert.
 
 \subsection{Nichtfunktionale Anforderungen}
 
@@ -47,13 +47,13 @@ Aus den im vorherigen Abschnitt formulierten Anforderungen wurde die im Folgende
 \label{fig:architecture}
 \end{figure}
 
-Zentraler Bestandteil der Architektur ist das Datenbanksystem, dass alle benötigten Daten speichert. Die Wahl des Datenbanksystems hat große Bedeutung für die Realisierung der funktionalen und nichtfunktionalen Anforderungen und wird in \cref{db_choice} diskutiert. Im Datenbanksystem werden die Rohdaten, Zwischenergebnisse und die Graphenrepräsentation des Weltausschnittes abgelegt. Das Datenmodell des Graphen folgt dabei der Definition aus \cref{world_graph}.
+Zentraler Bestandteil der Architektur ist das Datenbanksystem, dass alle benötigten Daten speichert. Die Wahl des Datenbanksystems hat große Bedeutung für die Realisierung der funktionalen und nichtfunktionalen Anforderungen und wird in \cref{db_choice} diskutiert. Im Datenbanksystem werden die Rohdaten, Zwischenergebnisse und die Graphenrepräsentation des Weltausschnittes abgelegt. Das Datenmodell des Graphen folgt der Definition aus \cref{world_graph}.
 
 Für jeden Schritt für die Integration von Datenquellen aus \cref{integration_generic} existiert in der Architektur eine Komponente, die den jeweiligen Schritt für die entsprechende Datenquelle ausführt. Diese Komponenten kommunizieren direkt mit dem Datenbanksystem, um die Rohdaten oder Zwischenergebnisse zu lesen, führen die Berechnungen durch und speichern die Ergebnisse wiederum in die Datenbank.
 
 Für die Abfrage der im Graph gespeicherten Informationen existiert eine API, welche Informationen zu Knoten und deren Nachbarn per HTTP als JSON--Dokumente \cite{json2006} zur Verfügung stellt. Diese API kann für die Einbindung der erzeugten Informationen in andere Applikationen genutzt werden. Über Anfrageparameter kann die Gewichtung der einzelnen Kantentypen beeinflusst werden.
 
-Zum Zeitpunkt der Bearbeitung dieser Arbeit existierten zwei Anwendungen, die die API des Link--Discovery--Systems nutzten. Dies sind der \emph{Tag Explorer} und die Komponente zur Prioisierung der Beziehungen.
+Zum Zeitpunkt der Bearbeitung dieser Arbeit existierten zwei Anwendungen, die die API des Link--Discovery--Systems nutzten. Dies sind der \emph{Tag Explorer} und die Komponente zur Priorisierung der Beziehungen.
 
 Beim Tag Explorer handelt es sich um eine Browseranwendung, die die im Graph gespeicherten Beziehungen visualisiert und interaktiv erkundbar macht. Der Benutzer dieser Anwendung kann mit selbst gewählten Gewichtungen der Beziehungen den Graph durchsuchen. Außerdem werden, wenn vorhanden, die Designs auf der Spreadshirt--Plattform angezeigt, die mit dem gewählten Begriff getaggt sind. Somit wurde die funktionale Anforderung, den Kontext zu einem Begriff zu visualisieren, nur zum Teil umgesetzt, da der Tag Explorer lediglich den Tagging--Kontext eines Begriffes darstellt. In \cref{fig:tag_explorer} ist ein Screenshot der Anwendung abgebildet.
 
@@ -64,14 +64,14 @@ Beim Tag Explorer handelt es sich um eine Browseranwendung, die die im Graph ges
 \label{fig:tag_explorer}
 \end{figure}
 
-Die zweite Anwendung, die die API des Systems nutzt, ist die in \cref{evo_implementation} beschriebene Umsetzung der Prioisierung. Da diese die Daten des Weltausschnittes nicht verändern muss, ist eine entkoppelte Anbindung über die API sinnvoll.
+Die zweite Anwendung, die die API des Systems nutzt, ist die in \cref{evo_implementation} beschriebene Umsetzung der Priorisierung. Da diese die Daten des Weltausschnittes nicht verändern muss, ist eine entkoppelte Anbindung über die API sinnvoll.
 
 Nachdem die Architektur vorgestellt wurde, spezifiziert der nächste Abschnitt mit den konkreten Technologien, die zur Implementierung dieser Architektur ausgewählt wurden.
 
 \section{Technologieauswahl}
 \label{tech}
 
-Der folgende Abschnitt beschäftigt sich mit einer Auswahl der zur Umsetzung der Link Discovery eingesetzten Technologien. Kernelemente sind dabei das Datenbanksystem, die konkrete Implementierung der Architekturkomponenten sowie die Datenverarbeitung mittels des Programmiermodells MapReduce.
+Der folgende Abschnitt beschäftigt sich mit einer Auswahl der zur Umsetzung der Link Discovery eingesetzten Technologien. Die Kernelemente sind das Datenbanksystem, die konkrete Implementierung der Architekturkomponenten sowie die Datenverarbeitung mittels des Programmiermodelles MapReduce.
 
 \subsection{Datenbanksystem}
 \label{db_choice}
@@ -115,7 +115,7 @@ MongoDB stellt das zentrale technische Element für die Link Discovery im Rahmen
 
 Um das in \cref{world_graph} beschriebene Datenmodell in MongoDB umzusetzen, muss es in eine Dokumentenform überführt werden. Dazu bietet sich an, Knoten in Kanten in unterschiedlichen Collections zu speichern, um sie voneinander zu trennen.
 
-Somit stellt sich anschließend die Frage, wie die Knoten und Kanten als Dokumente repräsentiert werden. Durch die durch MongoDB gegebene Schemaflexibilität lassen sich die Kontexte der durch die Knoten repräsentierten Begriffe direkt als Unterdokumente im Knotendokument ablegen. Der Schlüssel für diese Unterdokumente ist der Name des Kontextes. Dadurch lassen sich die Knoten leicht filtern, da die Abfrage auf das Vorhandensein des jeweiligen Schlüssels angepasst und durch Indizes auf diesen Schlüsseln unterstützt werden kann. \cref{lst:node_json} zeigt ein Beispiel für einen Knoten in JSON--Notation. Arrays mit vielen Elementen sind dabei aus Platzgründen verkürzt dargestellt.
+Somit stellt sich anschließend die Frage, wie die Knoten und Kanten als Dokumente repräsentiert werden. Durch die durch MongoDB gegebene Schemaflexibilität lassen sich die Kontexte der durch die Knoten repräsentierten Begriffe direkt als Unterdokumente im Knotendokument ablegen. Der Schlüssel für diese Unterdokumente ist der Name des Kontextes. Dadurch lassen sich die Knoten leicht filtern, da die Abfrage auf das Vorhandensein des jeweiligen Schlüssels angepasst und durch Indizes auf diesen Schlüsseln unterstützt werden kann. \cref{lst:node_json} zeigt ein Beispiel für einen Knoten in JSON--Notation. Arrays mit vielen Elementen sind aus Platzgründen verkürzt dargestellt.
 
 Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben sich zusätzliche Eigenschaften. \cref{lst:edge_json} zeigt beispielhaft ein Kantendokument für eine Tagging--Kookkurrenz in JSON--Notation.
 
@@ -188,7 +188,7 @@ MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitun
 
 Die Map--Funktion dient zur Erzeugung von Zwischenergebnissen, ebenfalls in der Form von Schlüssel-/Wertpaaren. Die Funktion wird einzeln auf jedes Paar der Eingabedaten angewandt und kann eine beliebige Anzahl von Zwischenergebnissen \emph{emittieren}. Die MapReduce--Bibliothek gruppiert daraufhin alle Paare mit dem gleichen Schlüssel und übergibt diese an die Reduce--Funktion.
 
-Die Reduce--Funktion wird also jeweils auf einen Schlüssel und eine Liste von Werten angewandt. Ziel dieser Funktion ist, für jeden Schlüssel kein oder ein Ergebnis zurückzugeben. Die zu reduzierenden Werte werden für gewöhnlich als Iterator übergeben, um auch Datenmengen verarbeiten zu können, die nicht in den Arbeitsspeicher des Rechenknotens passen. Die Reduce--Funktion wird nur angewandt, wenn nach dem Map--Schritt mehr als ein Wert für einen Schlüssel emittiert wurde. Somit sollten Map- und Reduce--Funktion das gleiche Ausgabeformat besitzen. Das grundsätzliche Vorgehen von MapReduce ist in \cref{fig:mapreduce} abgebildet.
+Die Reduce--Funktion wird somit jeweils auf einen Schlüssel und eine Liste von Werten angewandt. Ziel dieser Funktion ist, für jeden Schlüssel kein oder ein Ergebnis zurückzugeben. Die zu reduzierenden Werte werden für gewöhnlich als Iterator übergeben, um auch Datenmengen verarbeiten zu können, die nicht in den Arbeitsspeicher des Rechenknotens passen. Die Reduce--Funktion wird nur angewandt, wenn nach dem Map--Schritt mehr als ein Wert für einen Schlüssel emittiert wurde. Somit sollten Map- und Reduce--Funktion das gleiche Ausgabeformat besitzen. Das grundsätzliche Vorgehen von MapReduce ist in \cref{fig:mapreduce} abgebildet.
 
 \begin{figure}
 \centering
@@ -276,8 +276,8 @@ function reduce(edge, values) {
 }
 \end{lstlisting}
 
-MapReduce eignet sich somit gut zur Beschleunigung der Kookurrenzberechnung, da diese in drei Schritte ohne sequentielle Anteile auf die Funktionen Map und Reduce abgebildet werden kann, wie in diesem Abschnitt gezeigt wurde.
+MapReduce eignet sich somit gut zur Beschleunigung der Kookkurrenzberechnung, da diese in drei Schritte ohne sequentielle Anteile auf die Funktionen Map und Reduce abgebildet werden kann, wie in diesem Abschnitt gezeigt wurde.
 
 \section{Zusammenfassung}
 
-Dieses Kapitel beschäftigte sich mit den Implementierungsaspekten des Systems, welches für die in \cref{link_discovery} beschriebene Link--Discovery--Durchfürhrung im Rahmen dieser Arbeit zum Einsatz kam. Dazu wurden die funktionalen und nichtfunktionalen Anforderungen an das System formuliert. Aus diesen Anforderungen und dem Link--Discovery--Prozess \cref{ld_process} wurde eine Architektur für das System abgeleitet und erläutert. Abschließend wurden einige Technologien, die zur Implementierung des Systems zum Einsatz kamen, diskutiert. Dazu gehören MongoDB als Datenbanksystem, JavaScript als Sprache für die einzelnen Komponenten der Systemarchitektur und MapReduce als übergeordnetes Programmiermodell sowie dessen konkreter Einsatz zur Kookkurrenzberechnung.
+Dieses Kapitel beschäftigte sich mit den Implementierungsaspekten des Systems, welches für die in \cref{link_discovery} beschriebene Link--Discovery--Durchführung im Rahmen dieser Arbeit zum Einsatz kam. Dazu wurden die funktionalen und nichtfunktionalen Anforderungen an das System formuliert. Aus diesen Anforderungen und dem Link--Discovery--Prozess \cref{ld_process} wurde eine Architektur für das System abgeleitet und erläutert. Abschließend wurden einige Technologien, die zur Implementierung des Systems zum Einsatz kamen, diskutiert. Dazu gehören MongoDB als Datenbanksystem, JavaScript als Sprache für die einzelnen Komponenten der Systemarchitektur und MapReduce als übergeordnetes Programmiermodell sowie dessen konkreter Einsatz zur Kookkurrenzberechnung.

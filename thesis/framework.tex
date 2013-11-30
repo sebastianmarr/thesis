@@ -37,7 +37,7 @@ Dieses Modell bildet die Grundlage für  im folgenden Abschnitt beschriebenen Li
 \label{fig:link_discovery_process}
 \end{figure}
 
-Der Link--Discovery--Prozess beschreibt die Abfolge von Schritten, die zur Erzeugung und Anreicherung des in \cref{world_model} beschriebenen Weltausschnittes angewendet werden. Dieser Prozess dient also zur Erzeugung von Begriffen und deren Zusammenhängen. \cref{fig:link_discovery_process} zeigt den Prozess als Petri--Netz.
+Der Link--Discovery--Prozess beschreibt die Abfolge von Schritten, die zur Erzeugung und Anreicherung des in \cref{world_model} beschriebenen Weltausschnittes angewendet werden. Er dient somit zur Erzeugung von Begriffen und deren Zusammenhängen. \cref{fig:link_discovery_process} zeigt den Prozess als Petri--Netz.
 
 Die grundlegenden Phasen des Prozesses sind die \emph{Erzeugung} des initialen Weltausschnittes, dessen \emph{Anreicherung} und die \emph{Priorisierung} der Beziehungen. Sowohl bei der initialen Erzeugung, als auch bei der Anreicherung wird ein Prozess zur Integration von Datenquellen benötigt.
 
@@ -155,12 +155,12 @@ Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang
 
 Hierzu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen Begriffe benutzen. Diese Annahme muss im Laufe der Evaluierung der Ergebnisse validiert werden.
 
-\subsection{Kookkurrenzmaße}
+\subsection{Maße für Kookkurrenz}
 \label{measures}
 
-Werden die Objekte, zwischen denen die Ähnlichkeit berechnet werden soll, als Mengen von Eigenschaften definiert, bieten sich die üblichen Kennzahlen für die Ähnlichkeiten von Mengen an. Ein Begriff kann also als Menge der Dokumente, für die er als Beschreibung verwendet wurde, definiert werden.
+Werden die Objekte, zwischen denen die Ähnlichkeit berechnet werden soll, als Mengen von Eigenschaften definiert, bieten sich die üblichen Kennzahlen für die Ähnlichkeiten von Mengen an. Ein Begriff kann als Menge der Dokumente, für die er als Beschreibung verwendet wurde, definiert werden.
 
-Um die Ähnlichkeit zwischen zwei Begriffen zu ermitteln, lassen sich die Vereinigungsmenge, Schnittmenge und Kreuzprodukte der jeweiligen Mengen bilden, die die Begriffe repräsentieren. Ist also \(A\) die Menge der Dokumente, die mit einem Begriff \(a\) versehen wurden, \(B\) die Menge der Dokumente mit einem Begriff \(b\), so ergeben sich die Mengen:
+Um die Ähnlichkeit zwischen zwei Begriffen zu ermitteln, lassen sich die Vereinigungsmenge, Schnittmenge und Kreuzprodukte der jeweiligen Mengen bilden, die die Begriffe repräsentieren. Ist \(A\) die Menge der Dokumente, die mit einem Begriff \(a\) versehen wurden, \(B\) die Menge der Dokumente mit einem Begriff \(b\), so ergeben sich die Mengen:
 
 \begin{itemize}
     \item \(A \cap B\), alle Dokumente die mit \(a\) und \(b\) versehen wurden
@@ -219,9 +219,9 @@ foreach (termA in terms) {
 }
 \end{lstlisting}
 
-Der Aufwand, um die Kookkurrenzmaße für alle Paare von Begriffen zu berechnen, hängt also von der Anzahl der Begriffe, Dokumente und Verwendungen ab. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokumente \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung liegt daher zwischen diesen Schranken.
+Der Aufwand, um die Kookkurrenzmaße für alle Paare von Begriffen zu berechnen, hängt von der Anzahl der Begriffe, Dokumente und Verwendungen ab. Beträgt die Anzahl der Begriffe \(n\) und die Anzahl der Dokumente \(d\), so ergibt sich für den Fall, dass jeder Begriff an jedes Dokument vergeben wurde eine Laufzeit von \(O(d*n^2)\). Wurden keine Begriffe mit Dokumenten verknüpft, beträgt die Laufzeit \(\Theta(d)\). Die reale Laufzeit der Ähnlichkeitsberechnung liegt daher zwischen diesen Schranken.
 
-Es ist also absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden. Eine mögliche Umsetzung der parallelen Berechnung der Kookkurrenz mittels des Programmiermodelles  MapReduce wird in \cref{mapreduce_cooccurence} erläutert.
+Es ist absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden. Eine mögliche Umsetzung der parallelen Berechnung der Kookkurrenz mittels des Programmiermodelles  MapReduce wird in \cref{mapreduce_cooccurence} erläutert.
 
 \section{Graphen als Beschreibungsmittel des Weltausschnittes}
 
@@ -303,14 +303,14 @@ Der initiale Weltausschnitt wird im Rahmen dieser Arbeit aus den Daten des Taggi
 
 Da die Hauptentität des Weltausschnittes Begriffe einer Sprache darstellt, liegt nahe, auf lexikalische Quellen zurückzugreifen. Diese existieren in unterschiedlichen Ausprägungen, haben jedoch alle gemeinsam, dass sie Wörter beschreiben und in Beziehung zu anderen Wörtern setzen. Damit eignen sie sich gut zur Integration in den Weltausschnitt. Einige der üblichen Formen von lexikalischen Quellen werden im folgenden genannt und erläutert.
 
-Ein \emph{Wörterbuch} ist ein Nachschlagewerk, dass erklärende Informationen über Wörter enthält \cite{hk2003}. Dabei kann es sich um Sach- oder Sprachwissen handeln, also einerseits die inhaltliche Bedeutung eines Wortes oder andererseits die linguistischen und grammatikalischen Eigenschaften des Wortes beschreiben. Beispiele für Wörterbücher sind der \emph{Duden} \cite{duden} oder das \emph{Oxford English Dictionary} \cite{oed2010}.
+Ein \emph{Wörterbuch} ist ein Nachschlagewerk, dass erklärende Informationen über Wörter enthält \cite{hk2003}. Dabei kann es sich um Sach- oder Sprachwissen handeln, als einerseits die inhaltliche Bedeutung eines Wortes oder andererseits die linguistischen und grammatikalischen Eigenschaften des Wortes beschreiben. Beispiele für Wörterbücher sind der \emph{Duden} \cite{duden} oder das \emph{Oxford English Dictionary} \cite{oed2010}.
 
 Als \emph{Thesaurus} wird ein kontrolliertes Vokabular von Wörtern bezeichnet, die nach ihrer inhaltlichen Bedeutung geordnet sind \cite[S. 2]{ac2004}. Er stellt demnach eine Sammlung von \emph{Synonymen}, also Wörtern mit gleicher Bedeutung, dar und enthält keine Definitionen der Wörter. Oft enthalten Thesauri ebenfalls Ober- und Unterbegriffe und beschreiben somit \emph{Taxonomien}. Beispiele für Thesauri sind OpenThesaurus \cite{ot2013} für die deutsche und Thesaurus.com \cite{tc2013} für die englische Sprache. Thesauri sind eine spezielle Form von Wörterbüchern.
 
 \emph{Wortschätze} sind eine Mischform aus Sprach- und Sachwörterbüchern. Sie enthalten zu möglichst vielen im Gebrauch befindlichen Wörtern einer Sprache Informationen über Verwendung, Bedeutung, Über- und Unterbegriffe, grammatikalische Eigenschaften und mehr.
 Für die englische Sprache existiert die \emph{WordNet}--Datenbank \cite{wn2013, fc1998}, die Synonyme, Wortformen, Bedeutungen, Über- und Unterbegriffe, Beispiele und mehr für englische Wörter katalogisiert. Für die deutsche Sprache betreibt die Universität Leipzig mit dem \emph{Deutschen Wortschatz} ein ähnliches Projekt \cite{ws2013}.
 
-Generell sind lexikalische Quellen also geeignet, um den Weltausschnitt mit Allgemeinwissen über die enthaltenen Begriffe anzureichern. Sie bieten allgemeine Informationen über Wörter und sind somit in vielen Anwendungsszenarien nutzbar.
+Generell sind lexikalische Quellen geeignet, um den Weltausschnitt mit Allgemeinwissen über die enthaltenen Begriffe anzureichern. Sie bieten allgemeine Informationen über Wörter und sind somit in vielen Anwendungsszenarien nutzbar.
 
 \subsection{Clicktracking--System}
 \label{clicktracking_theo}
@@ -319,7 +319,7 @@ Die Aufgabe eines \emph{Clicktracking--Systems} besteht im Wesentlichen darin, d
 
 Besonders in Verbindung mit eingegebenen Suchbegriffen kann Clicktracking ein hohes Potential zur Anreicherung des Weltausschnittes liefern. Mit jedem Klick auf einen Inhalt der Website wird dem Suchbegriff weiterer Kontext verliehen. Werden gleiche Inhalte zu verschiedenen Suchbegriffen angeklickt, lässt sich eine Kookkurrenz zwischen den Suchbegriffen berechnen (siehe \ref{co-occurence}).
 
-Clicktracking--Systeme bieten also großes Potential, den Kontext von Begriffen innerhalb einer bestimmten Anwendungsdomäne zu integrieren und daraus Zusammenhänge zu extrahieren.
+Clicktracking--Systeme bieten großes Potential, den Kontext von Begriffen innerhalb einer bestimmten Anwendungsdomäne zu integrieren und daraus Zusammenhänge zu extrahieren.
 
 \subsection{Verwendete Datenquellen}
 \label{used_sources}
@@ -328,7 +328,7 @@ Im Rahmen dieser Arbeit wurden für die Anreicherung mittels Integration weitere
 
 Das Clicktracking--System von Spreadshirt zeichnet auf, auf welche Suchergebnisse die  Benutzer auf Suchergebnisseiten klicken und eignet sich damit zur Kookkurrenzberechnung zwischen den verwendeten Suchbegriffen. Die Struktur und der genaue Ablauf der Link Discovery aus diesen Daten wird in \cref{clicktracking} detailliert beschrieben.
 
-Der Wortschatz der Universität Leipzig \cite{ws2013} wurde ausgewählt, da er frei verfügbar ist und zu deutschen Wörtern viele inhaltliche, linguistische und grammatikalische Informationen bereit stellt. Die Informationen werden dabei zu einem großen Teil aus automatisch analysierten deutschen Texten generiert \cite{gh2011}.
+Der Wortschatz der Universität Leipzig \cite{ws2013} wurde ausgewählt, da er frei verfügbar ist und zu deutschen Wörtern viele inhaltliche, linguistische und grammatikalische Informationen bereit stellt. Die Informationen werden zu einem großen Teil aus automatisch analysierten deutschen Texten generiert \cite{gh2011}.
 
 Zu jedem Begriff stellt der Wortschatz die folgenden Informationen bereit:
 
