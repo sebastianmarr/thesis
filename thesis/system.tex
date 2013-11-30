@@ -199,7 +199,6 @@ Die Reduce--Funktion wird also jeweils auf einen Schlüssel und eine Liste von W
 
 Die MapReduce--Bibliothek übernimmt die Kommunikation zwischen den Knoten des Rechnerclusters. Dies hat den Vorteil, dass sich der Programmierer nur über die Umwandlung des zu lösenden Problems auf das Programmiermodell, nicht aber um dessen Implementierung über mehrere Rechner hinweg kümmern muss. Somit kann die verwendete Hardware vergleichsweise einfach an die zu verarbeitende Datenmenge oder die Bedürfnisse an die Rechengeschwindigkeit angepasst werden.
 
-
 In dieser Arbeit wurde die MapReduce Implementierung von MongoDB eingesetzt (siehe \cref{db_choice}).
 
 \subsubsection{Kookkurrenzberechnung mit MapReduce}
@@ -277,4 +276,8 @@ function reduce(edge, values) {
 }
 \end{lstlisting}
 
+MapReduce eignet sich somit gut zur Beschleunigung der Kookurrenzberechnung, da diese in drei Schritte ohne sequentielle Anteile auf die Funktionen Map und Reduce abgebildet werden kann, wie in diesem Abschnitt gezeigt wurde.
+
 \section{Zusammenfassung}
+
+Dieses Kapitel beschäftigte sich mit den Implementierungsaspekten des Systems, welches für die in \cref{link_discovery} beschriebene Link--Discovery--Durchfürhrung im Rahmen dieser Arbeit zum Einsatz kam. Dazu wurden die funktionalen und nichtfunktionalen Anforderungen an das System formuliert. Aus diesen Anforderungen und dem Link--Discovery--Prozess \cref{ld_process} wurde eine Architektur für das System abgeleitet und erläutert. Abschließend wurden einige Technologien, die zur Implementierung des Systems zum Einsatz kamen, diskutiert. Dazu gehören MongoDB als Datenbanksystem, JavaScript als Sprache für die einzelnen Komponenten der Systemarchitektur und MapReduce als übergeordnetes Programmiermodell sowie dessen konkreter Einsatz zur Kookkurrenzberechnung.
