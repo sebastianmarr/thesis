@@ -1,3 +1,47 @@
+\begin{abstract}
+In vielen Online--Shops und Marktplätzen können die angebotenen Artikel von Benutzern mit Tags versehen werden. Diese Tags stellen einen Zusammenhang zwischen dem angebotenen Artikel und einem inhaltlichen Thema her. Die Auswertung und Nutzung dieser Zusammenhänge kann das Einkaufserlebnis der Kunden maßgeblich verbessern und somit einen wirtschaftlichen Nutzen für den Betreiber des Online--Shops bedeuten. Diese Masterarbeit beschäftigt sich mit der Auswertung von Produkttags. Mit Hilfe eines Kookkurrenzgraphen und Integration von externen Daten wie Wörterbüchern und Clicktracking--Daten werden inhaltliche Beziehungen zwischen Begriffen hergestellt. Hauptaugenmerk liegt dabei auf der Erhöhung der Vielfalt der erzeugten Beziehungen, um sie für verschiedenste Anwendungen nutzbarer zu machen. Dabei werden die grundsätzlichen Vorgehensweisen zur Bereinigung, Integration, Reduktion und Transformation in eine Graph--Datenstruktur beschrieben und angewendet. Im Anschluss wird eine evolutionäre Optimierung der verwendeten Parameter durchgeführt und die Ergebnisse evaluiert.
+\end{abstract}
+
+\chapter{Einleitung}
+
+Mit der steigenden Menge von benutzergenerierten Inhalten steigt auch die Menge von Metadaten, die mit diesen Inhalten verknüpft sind. Zur späteren Durchsuchbarkeit und Kategorisierung geben viele Online--Plattformen und Shops ihren Benutzern die Möglichkeit, Inhalte mit Metadaten zu versehen.
+
+Eine oft genutzte Möglichkeit zur Beschreibung von Inhalten sind Tags. Dabei handelt es sich um Wörter oder Wortgruppen, die vom Benutzer frei gewählt werden können, um den Inhalt zu beschreiben. Die Eingabe von Tags unterliegt möglichst wenigen Regeln, um dem Benutzer eine für ihn natürliche Beschreibung des Inhaltes zu ermöglichen. Im Gegensatz zu einer Kategorisierung ist die Vergabe von mehreren Tags an ein Dokument explizit vorgesehen \cite{sc2005}.
+
+Ein charakteristisches Merkmal von Tags ist, dass sie nur einen bestimmten Aspekt des getaggten Objektes beschreiben. Tags sind nicht hierarchisch und es werden an keiner Stelle vom Nutzer explizite Zusammenhänge zwischen Tags erstellt. Jedoch liegt die Annahme, dass zwischen Tags Beziehungen herstellbar sind und sich mehrere Tags zu übergeordneten Themen zusammenfassen lassen, nahe. Der Benutzer berücksichtigt diese Beziehungen bei der Eingabe des Tags, formuliert sie jedoch nicht ausdrücklich. Die nachträgliche Rekonstruktion der Denkprozesse bei der Eingabe von Tags ist Thema dieser Arbeit.
+
+Bei der Arbeit mit Tag--Daten ist zu beachten, dass Benutzer bei der Eingabe von Tags unterschiedliche Ziele verfolgen. Idealerweise werden Tags so vergeben, dass sie das getaggte Objekt inhaltlich beschreiben. Jedoch werden vom Benutzer bei der Eingabe des Tags weitere Assoziationen hergestellt. Beispielsweise kann der Benutzer mit einem Objekt bestimmte Emotionen oder Wertungen verbinden, die sich in den vergebenen Tags widerspiegeln.
+
+Auf Marktplätzen, bei denen Verkäufern die Möglichkeit des Taggings ihrer Produkte gegeben wird, besteht eine weitere Motivation in der Erhöhung der Auffindbarkeit des Produktes. Die inhaltliche Qualität des Tags wird möglicherweise außer Acht gelassen, wenn bei Vergabe einer falschen Beschreibung die Sichtbarkeit des Produktes erhöht wird. Auch der Marktplatzbetreiber selbst kann so vorgehen, um zu versuchen, die Gesamtverkäufe zu steigern.
+
+Die verschiedenen Motivationen bei der Benutzung von Tags erschweren die nachträgliche Suche nach Assoziationen. Die vorliegende Masterarbeit beschäftigt sich mit Strategien zur Datenaufbereitung und Nutzung externer und interner Datenquellen und deren Integration mit Tag--Daten. Aus diesen Datenquellen wird eine Datenstruktur mit einem Kookkurrenzgraphen als Basis aufgebaut. Außerdem wird eine Optimierung der verwendeten Parameter und die Evaluation der Ergebnisse durchgeführt.
+
+\section{Motivation und Anwendungen}
+
+Die nachträgliche Herstellung von Assoziationen in vorhandenen Tag--Daten bietet einige Nutzungsmöglichkeiten für den Betreiber der Online--Plattform.
+
+Die Beziehungen zwischen Tags können genutzt werden, um Suchergebnisse zu verbessern. Wenn zu einem Suchbegriff weitere relevante Begriffe bekannt sind, können diese im Suchergebnis mit enthalten sein um somit auch Objekte zu finden, die nicht direkt mit dem Suchbegriff getaggt sind. Außerdem können Suchen vom Benutzer mit Hilfe von verwandten Tags verfeinert werden.
+
+Über die Zusammenfassung von Tags zu Themen lässt sich außerdem die Navigation einer Website verbessern. Aus den Themen lassen sich Kategorien oder Hierarchien von Kategorien erzeugen, die besser den Denkmustern von Benutzern entsprechen. So sind auch Navigationskonzepte denkbar, die nicht hierarchisch, sondern assoziativ aufgebaut sind. Des weiteren können Tag--Assoziationen für Empfehlungssysteme genutzt werden, die einem Kunden zu einem bestimmten Artikel passende andere Artikel vorschlagen.
+
+Im Bereich des Marketings können Beziehungen zwischen Tags genutzt werden, um für bestimmte externe Suchbegriffe spezielle Seiten zu erstellen (Landing Pages), die Inhalte zu diesem Suchbegriff bereitstellen oder Werbung für diese Suchbegriffe zu schalten. Außerdem können mit Hilfe des Kaufinteresses an bestimmten Themen über die Zeit Trends erkannt werden und mit entsprechenden Marketingmaßnahmen darauf reagiert werden.
+
+All diese Anwendungen führen zu einer besseren Erfahrung für den Benutzer der Plattform. Die Präsentation von Daten kann besser auf die Denkmuster und Erwartungshaltungen des Benutzers angepasst werden. Dies führt in Konsequenz zu einem wirtschaftlichen Vorteil für den Plattformbetreiber und einem angenehmeren Erlebnis für den Benutzer.
+
+\section{Verwandte Arbeiten}
+
+Die Herstellung von semantischen Beziehungen in Tag--Daten ist Gegenstand vieler Arbeiten. Diese beschäftigen sich meist mit Daten aus so genannten Folksonomies, also Sammlungen von Tags aus Systemen, bei denen alle Nutzer Inhalte verschlagworten können.
+
+\textcite{bks2006} beschreiben einen auf Kookkurrenz basierenden Ansatz, miteinander verwandte Tags zu Clustern zusammenzufassen. Die Ähnlichkeit der Tags wird nicht nur durch die Menge, sondern auch durch die Verteilung der Häufigkeiten der gemeinsamen Vorkommen definiert. Dadurch ergeben sich bereits bei Berechnung des Ähnlichkeitsmaßes Cluster, die dann mit einem partitionierenden Algorithmus weiter geteilt werden.
+
+In der Arbeit von \textcite{ps2006} wird ein Ansatz beschrieben, eine Ontologie aus den Daten der Foto--Plattform \emph{Flickr} herzustellen. Dazu wird versucht, ebenfalls auf Basis von Kookkurrenz, nicht nur Cluster von Tags, sondern hierarchische Beziehungen zwischen eben jenen zu ermitteln. Diese Beziehungen werden durch die Analyse der getaggten Inhalte hergestellt, indem ermittelt wird, welche der Inhalte Teilmengen voneinander sind.
+
+\textcite{kss2010} arbeiten ebenfalls mit dem Ansatz, auf Basis eines Kookkurrenzgraphen Cluster von Tags zu bilden. Die Kookkurrenz wird mit den bekannten Maßen Dice, Jaccard und Cosinus berechnet. Als Clusteringalgorithmen kommen Single--Link, Complete--Link und Group--Average zum Einsatz. Die Arbeit legt besonderen Wert auf die Rolle der Cluster zur Verbesserung von Suchoberflächen. Daher werden auch Tests mit Benutzern durchgeführt und die Ergebnisse evaluiert.
+
+\textcite{mcf2009} beschäftigen sich mit der Motivation und Erkennung von Spam in Tagging--Systemen. Es werden verschiedene Merkmale von Spam identifiziert und darauf basierend eine Klassifikation erstellt. Diese Merkmale konzentrieren sich vor allem auf Systeme, in denen es allen Benutzern erlaubt ist, Tags zu vergeben.
+
+\section{Aufbau der Arbeit}
+
 \chapter{Problembeschreibung}
 
 Das folgende Kapitel beschäftigt sich mit der Beschreibung der Problemstellung. Dazu wird zuerst das Ziel der Arbeit formuliert. Es folgen grundsätzliche Definitionen und die Beschreibung des zu bearbeitenden Datenbestandes. Abschließend wird die gewählte Lösungsstrategie konzeptionell beschrieben.
