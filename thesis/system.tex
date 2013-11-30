@@ -166,6 +166,15 @@ Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben
 \subsection{Implementierung der Komponenten der Architektur}
 \label{arch_components_impl}
 
+Die Komponenten zum Import, zur Bereinigung, Reduktion, Transformation und Integration wurden in der Programmiersprache JavaScript als Skripte für die Mongo Shell (siehe \cref{mongo}) umgesetzt. Diese Skripte implementieren die funktionalen Anforderungen an das System.
+JavaScript wurde ausgewählt, da die Sprache eine natürliche Interaktion mit dem JSON--Format ermöglicht. Die Mongo Shell stellt alle Operationen für MongoDB für diese Programmiersprache zur Verfügung und eignet sich damit gut zur Kommunikation mit dem Datenbanksystem.
+
+Die API wurde ebenfalls in JavaScript programmiert, unter Zuhilfenahme der Laufzeitumgebung \emph{node.js} \cite{node}. Diese ermöglicht die serverseitige Benutzung von JavaScript und ist demnach gut geeignet, um mit den Daten aus MongoDB zu arbeiten und diese als JSON--Dokumente an Clients auszuliefern. Der Tag Explorer sowie die Oberfläche zur interaktiven Selektion sind in JavaScript als Browseranwendungen implementiert.
+
+Einzig die Importskripte für die MySQL--Datenbank von Spreadshirt und den Wortschatz der Universität Leipzig wurden in der Programmiersprache Ruby umgesetzt, da diese zum Zeitpunkt des Imports bessere Unterstützung für diese Datenquellen bot.
+
+Zusammenfassend lässt sich festhalten, dass die Architekturkomponenten größtenteils als Skripte implementiert wurde, die direkt mit MongoDB kommunizieren. Dadurch kann das System bei Benutzung von weiteren Datenquellen einfach erweitert werden.
+
 \subsection{Datenverarbeitung}
 \label{mapreduce}
 
