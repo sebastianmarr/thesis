@@ -224,6 +224,7 @@ Der Aufwand, um die Kookkurrenzmaße für alle Paare von Begriffen zu berechnen,
 Es ist absehbar, dass der Rechenaufwand mit wachsender Datenmenge stark ansteigt. Somit scheint es ratsam, nach Optimierungen zu suchen, um die Rechenzeit zu verringern. Da sich die Anzahl der Berechnungen nicht vermindern lässt, kann eine Verkürzung der Rechenzeit nur durch Parallelisierung erreicht werden. Eine mögliche Umsetzung der parallelen Berechnung der Kookkurrenz mittels des Programmiermodelles  MapReduce wird in \cref{mapreduce_cooccurence} erläutert.
 
 \section{Graphen als Beschreibungsmittel des Weltausschnittes}
+\label{graphs}
 
 Nachdem in \cref{world_model} der zur Link Discovery verwendete Weltausschnitt modelliert wurde, wird zur Umsetzung eine Datenstruktur benötigt, die diesen Ausschnitt konkret abbildet. Da im Wesentlichen Objekte, zwischen denen Verbindungen bestehen, abgebildet werden, bietet sich die Verwendung eines Graphen an. Die Grundlagen von Graphen, sowie die konkrete Abbildung des Weltausschnittes auf eine Graph--Datenstruktur werden in den folgenden Abschnitten erläutert.
 
@@ -295,6 +296,7 @@ Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher da
 Nach der Definition der verwendeten Graphenstruktur werden im folgenden Abschnitt die möglichen Datenquellen diskutiert.
 
 \section{Datenquellen zur Anreicherung}
+\label{data_sources}
 
 Der initiale Weltausschnitt wird im Rahmen dieser Arbeit aus den Daten des Tagging--Systems von Spreadshirt erzeugt. Wie in \cref{enrichment_external} bereits einführend erläutert, kann danach zur Anreicherung die Integration weiterer Datenquellen erfolgen. Diese Datenquellen können eine andere Sicht auf die Begriffe des Weltausschnittes liefern und somit zur Erzeugung neuer Beziehungen nützlich sein. In diesem Abschnitt werden mögliche Datenquellen genannt und erläutert, sowie die letztendlich verwendeten Datenquellen näher beschrieben.
 
