@@ -20,5 +20,5 @@ open: all
 clean:
 	rm -rf $(BUILDDIR)/*
 
-# .SILENT: all clean open
+.SILENT: all clean open
 .PHONY: all clean open
