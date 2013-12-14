@@ -16,13 +16,13 @@ Nachfolgend werden die funktionalen Anforderungen an das System aufgeführt. Die
 
 \paragraph{Datenspeicherung} Das System muss die importierten Rohdaten, Zwischenergebnisse der Link Discovery und die Graphenrepräsentation des Weltausschnittes permanent speichern können.
 
-\paragraph{Datenverarbeitung} Das System muss die importierten Daten entsprechend des Link--Discovery--Prozesses aus \cref{ld_process} verarbeiten können. Dazu zählen die Schritte Bereinigung, Reduktion, Transformation und Integration. Die Implementierung dieser Schritte sollte änderbar und erweiterbar sein. Im Rahmen des Transformationsschrittes muss das System in der Lage sein, Kookkurrenzmaße zu berechnen.
+\paragraph{Datenverarbeitung} Das System muss die importierten Daten entsprechend des in \cref{ld_process} beschriebenen Link--Discovery--Prozesses verarbeiten können. Dazu zählen die Schritte Bereinigung, Reduktion, Transformation und Integration. Die Implementierung dieser Schritte sollte änderbar und erweiterbar sein. Im Rahmen des Transformationsschrittes muss das System in der Lage sein, Kookkurrenzmaße zu berechnen.
 
 \paragraph{Visualisierung} Das System soll eine Oberfläche für die Visualisierung der in der Graphenrepräsentation des Weltausschnittes gespeicherten Daten bieten. Dazu zählen die Darstellung der Begriffe, deren Kontext und Beziehungen und eine Möglichkeit der manuellen Priorisierung zum interaktiven Erkunden des Datenbestandes.
 
 \paragraph{Priorisierung} Das System muss den in \cref{evo_for_prio} beschriebenen Priorisierungsprozess mittels evolutionärer Algorithmen implementieren. Dazu gehören Komponenten des Algorithmus aus \cref{evo_implementation}, sowie eine Benutzeroberfläche zur interaktiven Selektion.
 
-\paragraph{Programmierschnittstelle} Das System muss eine Programmierschnittstelle (API) zur programmatischen Abfrage der Daten bereit stellen. Die angebotenen Daten enthalten die Begriffe, deren Kontexte und piorisierte Beziehungen. Die Priorisierung wird vom Benutzer der API spezifiziert.
+\paragraph{Programmierschnittstelle} Das System muss eine Programmierschnittstelle (im Folgenden \emph{API}), zur programmatischen Abfrage der Daten bereit stellen. Die angebotenen Daten enthalten die Begriffe, deren Kontexte und piorisierte Beziehungen. Die Priorisierung wird vom Benutzer der API spezifiziert.
 
 \subsection{Nichtfunktionale Anforderungen}
 
@@ -187,7 +187,7 @@ Um die nichtfunktionalen Anforderungen an das Link--Discovery--System umzusetzen
 
 MapReduce \cite{dg2004} ist ein Programmiermodell für nebenläufige Verarbeitung und Erzeugung großer Datenmengen. Der Grundgedanke dieses Modells besteht in der Zerlegung der Berechnung in zwei Funktionen: \emph{Map} und \emph{Reduce}. Die Ein- und Ausgabedaten sind Schlüssel-/Wertpaare. Beide Funktionen werden vom Benutzer spezifiziert.
 
-Die Map--Funktion dient zur Erzeugung von Zwischenergebnissen, ebenfalls in der Form von Schlüssel-/Wertpaaren. Die Funktion wird einzeln auf jedes Paar der Eingabedaten angewandt und kann eine beliebige Anzahl von Zwischenergebnissen \emph{emittieren}. Die MapReduce--Bibliothek gruppiert daraufhin alle Paare mit dem gleichen Schlüssel und übergibt diese an die Reduce--Funktion.
+Die Map--Funktion dient zur Erzeugung von Zwischenergebnissen, welche ebenfalls in der Form von Schlüssel-/Wertpaaren vorliegen. Die Funktion wird einzeln auf jedes Paar der Eingabedaten angewandt und kann eine beliebige Anzahl von Zwischenergebnissen \emph{emittieren}. Die MapReduce--Bibliothek gruppiert daraufhin alle Paare mit dem gleichen Schlüssel und übergibt diese an die Reduce--Funktion.
 
 Die Reduce--Funktion wird somit jeweils auf einen Schlüssel und eine Liste von Werten angewandt. Ziel dieser Funktion ist, für jeden Schlüssel kein oder ein Ergebnis zurückzugeben. Die zu reduzierenden Werte werden für gewöhnlich als Iterator übergeben, um auch Datenmengen verarbeiten zu können, die nicht in den Arbeitsspeicher des Rechenknotens passen. Die Reduce--Funktion wird nur angewandt, wenn nach dem Map--Schritt mehr als ein Wert für einen Schlüssel emittiert wurde. Somit sollten Map- und Reduce--Funktion das gleiche Ausgabeformat besitzen. Das grundsätzliche Vorgehen von MapReduce ist in \cref{fig:mapreduce} abgebildet.
 
@@ -254,7 +254,7 @@ function reduce(term, values) {
 }
 \end{lstlisting}
 
-In \cref{lst:mapred_edges2} wird die Erzeugung der Kookkurrenzkanten dargestellt. Im Map--Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurrenzen zwischen beiden Begriffen. Im Reduce--Schritt werden alle Kanten zwischen zwei Termen zusammengefasst, die Summe der Kookkurrenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \cref{measures} beschrieben.
+In \cref{lst:mapred_edges2} wird die Erzeugung der Kookkurrenzkanten dargestellt. Im Map--Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurrenzen zwischen beiden Begriffen. Während des Reduce--Schrittes werden alle Kanten zwischen zwei Begriffen zusammengefasst, die Summe der Kookkurrenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \cref{measures} beschrieben.
 
 \begin{lstlisting}[language=pseudo, label={lst:mapred_edges2}, caption={Kantenerzeugung mit MapReduce}, float]
 function map(document) {
