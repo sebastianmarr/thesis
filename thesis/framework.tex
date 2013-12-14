@@ -10,7 +10,7 @@ Das folgende Kapitel beschreibt das Framework, dass für die Link Discovery im R
 
 Der folgende Abschnitt beschäftigt sich mit der Modellierung des im Rahmen dieser Arbeit verwendeten Weltausschnittes. Das Entity--Relationship--Diagramm des resultierenden Modells ist in \cref{fig:world_model} dargestellt.
 
-\begin{figure}[t]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{abstract_world_model}
 \caption{FMC--Entity--Relationship--Diagramm des Modells des Weltausschnittes}
@@ -30,16 +30,16 @@ Dieses Modell bildet die Grundlage für  im folgenden Abschnitt beschriebenen Li
 \section{Link--Discovery--Prozess}
 \label{ld_process}
 
-\begin{figure}[ht]
+Der Link--Discovery--Prozess beschreibt die Abfolge von Schritten, die zur Erzeugung und Anreicherung des in \cref{world_model} beschriebenen Weltausschnittes durchgeführt werden. Er dient somit zur Erzeugung von Begriffen und deren Zusammenhängen. \cref{fig:link_discovery_process} zeigt den Prozess als Petri--Netz.
+
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{link_discovery_process}
 \caption{FMC--Petri--Netz des Link--Discovery--Prozesses}
 \label{fig:link_discovery_process}
 \end{figure}
 
-Der Link--Discovery--Prozess beschreibt die Abfolge von Schritten, die zur Erzeugung und Anreicherung des in \cref{world_model} beschriebenen Weltausschnittes angewendet werden. Er dient somit zur Erzeugung von Begriffen und deren Zusammenhängen. \cref{fig:link_discovery_process} zeigt den Prozess als Petri--Netz.
-
-Die grundlegenden Phasen des Prozesses sind die \emph{Erzeugung} des initialen Weltausschnittes, dessen \emph{Anreicherung} und die \emph{Priorisierung} der Beziehungen. Sowohl bei der initialen Erzeugung, als auch bei der Anreicherung wird ein Prozess zur Integration von Datenquellen benötigt.
+Die grundlegenden Phasen des Prozesses sind die initiale \emph{Erzeugung} des Weltausschnittes, dessen \emph{Anreicherung} und die \emph{Priorisierung} der Beziehungen. Sowohl bei der initialen Erzeugung, als auch bei der Anreicherung wird ein Prozess zur Integration von Datenquellen benötigt.
 
 Die Schritte der Anreicherung und Priorisierung können beliebig oft wiederholt werden, um das Ergebnis zu verbessern und auf die gewünschte Anwendung anzupassen. Die Anreicherung kann grundsätzlich durch das Mining der bereits im Weltausschnitt vorhandenen Daten oder durch die Integration neuer Datenquellen erfolgen.
 
@@ -58,7 +58,7 @@ Im Importschritt werden die Rohdaten aus der Datenquelle extrahiert. Dabei wird 
 
 \paragraph{Bereinigung}
 
-Im nachfolgenden Bereinigungsschritt werden die importierten Daten so gut wie möglich von eventuell vorhandenen Defekten bezüglich der Datenqualität (siehe auch \cref{quality}) befreit. Dazu zählen beispielsweise das Entfernen nicht nutzbarer Zeichen oder von unvollständigen Datensätzen.
+Im nachfolgenden Bereinigungsschritt werden die importierten Daten so gut wie möglich von eventuell vorhandenen Defekten bezüglich der Datenqualität (siehe auch \cref{quality}) befreit. Dazu zählen beispielsweise die Entfernung von nicht nutzbaren Zeichen oder von unvollständigen Datensätzen.
 
 \paragraph{Reduktion}
 
@@ -123,6 +123,8 @@ Nach der Auswahl der Stichprobe wird vom Link--Discovery--System eine Priorisier
 
 Ist die Bewertung der Priorisierung positiv, ist der Priorisierungsprozess beendet. Bei nicht zufriedenstellendem Ergebnis wird die Erzeugung einer neuen Priorisierung und die anschließende Bewertung wiederholt. Stellt sich auch nach einer im Voraus gewählten Anzahl von Iterationen dieser Art kein zufriedenstellendes Ergebnis ein, so sollte die Priorisierung abgebrochen werden und die Gründe für das Fehlschlagen analysiert werden. Diese können beispielsweise in einer schlechten Qualität der Beziehungen des Weltausschnittes, in einer unpassenden Stichprobenauswahl oder fehlendem Wissen des Benutzers gefunden werden.
 
+\cleardoublepage
+
 \section{Kookkurrenz als Mittel zur Beziehungserzeugung}
 \label{co-occurence}
 
@@ -134,16 +136,16 @@ Um gewichtete inhaltliche Beziehungen zwischen Begriffen herstellen zu können, 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\textwidth]{similarity}
+\includegraphics[width=0.5\textwidth]{similarity}
 \caption{Repräsentation von Dokumenten als Mengen von Eigenschaften}
 \label{fig:similarity}
 \end{figure}
 
 Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1977} definiert werden. Dieser Definition liegt zu Grunde, dass sich die Dokumente als Mengen von Eigenschaften beschreiben lassen. Im Gegensatz zu anderen Ähnlichkeitsmodellen hängt die Ähnlichkeit nicht nur von den gemeinsamen Eigenschaften der Dokumente ab, sondern auch von den Eigenschaften, die die Dokumente allein besitzen. Diese Definition von Ähnlichkeit wird in \cref{fig:similarity} veranschaulicht.
 
-Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, definieren durch
-\[s(A,B) = F(A \cap B, A-B, B-A)\]
 \label{similarity}
+Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, definieren durch:
+\[s(A,B) = F(A \cap B, A-B, B-A)\]
 
 Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein--Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
 
@@ -172,7 +174,7 @@ Die Mächtigkeiten dieser Mengen können dann zur Berechnung verschiedener Ähnl
 
 \subsubsection{Sørensen--Dice}
 
-Der Sørensen--Dice--Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur Dice--Koeffizient, entstand ursprünglich in der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
+Der Sørensen--Dice--Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur als Dice--Koeffizient bezeichent, entstand ursprünglich in der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
 
 \[
 \delta_{Dice}(a, b) = \frac{2|A \cap B|}{|A|+|B|}
@@ -202,7 +204,7 @@ Nachdem die Ähnlichkeit mittels Kookkurrenz und die entsprechenden Maße vorges
 
 Um die in \cref{measures} genannten Maße für Kookkurrenz zu berechnen, muss das Kreuzprodukt aller Begriffe gebildet werden. Dabei muss für jedes Paar von Begriffen die Häufigkeit gezählt werden, wie oft die Begriffe gemeinsam zur Beschreibung von Dokumenten verwendet wurden. Diese Häufigkeit beschreibt die Mächtigkeit der Mengen \(A \cap B\). Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet wird, um die Mächtigkeit der Mengen \(A, B, \dots\) zu bestimmen. Danach können über die genannten Formeln die Kookkurrenzmaße berechnet werden. In \cref{lst:coocc-pseudo} ist die Berechnung als Pseudo--Code dargestellt.
 
-\begin{lstlisting}[language=pseudo, label={lst:coocc-pseudo}, caption={Kookkurrenzberechnung}]
+\begin{lstlisting}[language=pseudo, label={lst:coocc-pseudo}, caption={Kookkurrenzberechnung}, float=ht]
 var occurences = {};
 
 foreach (term in terms) {
@@ -242,7 +244,7 @@ Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Me
 
 Ein \emph{gerichteter Graph} ist ein Graph, der neben den Mengen \(V\) und \(E\) die zwei Abbildungen \(quelle: E \rightarrow V\) und \(ziel: E \rightarrow V\) enthält \cite[S. 25]{rd2012}. Diese weisen jeder Kante \(e\) einen Quell- und Zielknoten zu. Die Kante ist somit von \(quelle(e)\) nach \(ziel(e)\) gerichtet. \cref{fig:directed_graph} zeigt einen gerichteten Graphen.
 
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.2\textwidth]{directed_graph}
 \caption{Gerichteter Graph}
@@ -284,16 +286,18 @@ Zwischen zwei Knoten können beliebig viele, je Typ jedoch höchstens eine, Kant
 
 Das resultierende komplette Modell des Graphen ist in \cref{fig:graph_model} dargestellt. Dieses beinhaltet sämtliche zum Zeitpunkt der Bearbeitung bekannten und integrierten Datenquellen und die damit verbundenen Kontexte und Kantentypen. Die Datenquelle des Tagging-Systems und der damit verbundene Kontext wird in \cref{tag_sprd} näher beschrieben. Das Clicktracking--System wird in \cref{clicktracking} und der Wortschatz der Universität Leipzig in \cref{wortschatz} näher beleuchtet. Details über die Erzeugung der entsprechenden Kantentypen werden in \cref{link_discovery} erläutert.
 
-\begin{figure}[t]
+Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher darzustellen, ist in \cref{fig:example_graph} ein beispielhafter Ausschnitt des nach Durchführung der Link Discovery entstehenden Graphen abgebildet. Auf Darstellung der Kontexte und Kantenattribute wurde aus Platzgründen verzichtet.
+
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{example_graph}
 \caption{Beispiel--Graphausschnitt für das Ergebnis der Link Discovery}
 \label{fig:example_graph}
 \end{figure}
 
-Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher darzustellen, ist in \cref{fig:example_graph} ein beispielhafter Ausschnitt des nach Durchführung der Link Discovery entstehenden Graphen abgebildet. Auf Darstellung der Kontexte und Kantenattribute wurde aus Platzgründen verzichtet.
-
 Nach der Definition der verwendeten Graphenstruktur werden im folgenden Abschnitt die möglichen Datenquellen diskutiert.
+
+\clearpage
 
 \section{Datenquellen zur Anreicherung}
 \label{data_sources}
@@ -309,8 +313,7 @@ Ein \emph{Wörterbuch} ist ein Nachschlagewerk, dass erklärende Informationen �
 
 Als \emph{Thesaurus} wird ein kontrolliertes Vokabular von Wörtern bezeichnet, die nach ihrer inhaltlichen Bedeutung geordnet sind \cite[S. 2]{ac2004}. Er stellt demnach eine Sammlung von \emph{Synonymen}, also Wörtern mit gleicher Bedeutung, dar und enthält keine Definitionen der Wörter. Oft enthalten Thesauri ebenfalls Ober- und Unterbegriffe und beschreiben somit \emph{Taxonomien}. Beispiele für Thesauri sind OpenThesaurus \cite{ot2013} für die deutsche und Thesaurus.com \cite{tc2013} für die englische Sprache. Thesauri sind eine spezielle Form von Wörterbüchern.
 
-\emph{Wortschätze} sind eine Mischform aus Sprach- und Sachwörterbüchern. Sie enthalten zu möglichst vielen im Gebrauch befindlichen Wörtern einer Sprache Informationen über Verwendung, Bedeutung, Über- und Unterbegriffe, grammatikalische Eigenschaften und mehr.
-Für die englische Sprache existiert die \emph{WordNet}--Datenbank \cite{wn2013, fc1998}, die Synonyme, Wortformen, Bedeutungen, Über- und Unterbegriffe, Beispiele und mehr für englische Wörter katalogisiert. Für die deutsche Sprache betreibt die Universität Leipzig mit dem \emph{Deutschen Wortschatz} ein ähnliches Projekt \cite{ws2013}.
+\emph{Wortschätze} sind eine Mischform aus Sprach- und Sachwörterbüchern. Sie enthalten zu möglichst vielen im Gebrauch befindlichen Wörtern einer Sprache Informationen über Verwendung, Bedeutung, Über- und Unterbegriffe, grammatikalische Eigenschaften und mehr. Für die englische Sprache existiert die \emph{WordNet}--Datenbank \cite{wn2013, fc1998}, die Synonyme, Wortformen, Bedeutungen, Über- und Unterbegriffe, Beispiele und mehr für englische Wörter katalogisiert. Die Universität Leipzig mit dem \emph{Deutschen Wortschatz} ein ähnliches Projekt \cite{ws2013} für die deutsche Sprache.
 
 Generell sind lexikalische Quellen geeignet, um den Weltausschnitt mit Allgemeinwissen über die enthaltenen Begriffe anzureichern. Sie bieten allgemeine Informationen über Wörter und sind somit in vielen Anwendungsszenarien nutzbar.
 
@@ -347,6 +350,8 @@ Zu jedem Begriff stellt der Wortschatz die folgenden Informationen bereit:
 
 Die Informationen über Grundform, Wortformen, Thesaurus--Beziehungen, Synonyme und Kategorien wurden im Rahmen dieser Arbeit ausgewertet und entsprechen den in \cref{fig:graph_model} gezeigten Kantentypen. Die Durchführung der Link Discovery anhand dieser Daten wird ausführlich in \cref{wortschatz} beschrieben.
 
+\clearpage
+
 \section{Evolutionäre Algorithmen als Mittel zur Priorisierung}
 \label{evo_for_prio}
 
@@ -357,16 +362,16 @@ Um die in \cref{prioritization} beschriebene Priorisierung der Beziehungen durch
 
 Als evolutionäre Algorithmen wird eine Klasse von Optimierungsverfahren bezeichnet, deren Funktionsweise an die Evolution natürlicher Lebewesen angelehnt ist. Sie versuchen, Probleme durch die Simulation von Evolution mittels der Auswahl der erfolgreichsten Individuen zu lösen. Dabei kommen ebenfalls aus der Biologie entlehnte Mechanismen wie Mutation und Rekombination zum Einsatz, um iterativ eine Population von Lösungskandidaten zu verbessern \cite{tw2008}.
 
-Es handelt sich um heuristische Algorithmen, die das Finden einer optimalen Lösung nicht garantieren können \cite[S. 12]{gk2004}.
-
-Grundsätzlich folgt das Vorgehen einem Kreislauf mit den Komponenten \emph{Evaluierung}, \emph{Selektion} und \emph{Reproduktion}. Nach Generierung einer anfänglichen Population (\emph{Initialisierung}) wird dieser Kreislauf so lange durchlaufen, bis ein vorher definiertes Abbruchkriterium eintritt. Ein Durchlauf wird als \emph{Generation} bezeichnet. Das Abbruchkriterium kann beispielsweise ein bestimmter Schwellwert für die Güte der Lösung oder eine feste Anzahl von Generationen sein. Der beschriebene Ablauf ist in \cref{fig:evo_basic} dargestellt.
-
-\begin{figure}[t]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{evo_basic}
 \caption{Ablauf evolutionärer Algorithmen}
 \label{fig:evo_basic}
 \end{figure}
+
+Es handelt sich um heuristische Algorithmen, die das Finden einer optimalen Lösung nicht garantieren können \cite[S. 12]{gk2004}.
+
+Grundsätzlich folgt das Vorgehen einem Kreislauf mit den Komponenten \emph{Evaluierung}, \emph{Selektion} und \emph{Reproduktion}. Nach Generierung einer anfänglichen Population (\emph{Initialisierung}) wird dieser Kreislauf so lange durchlaufen, bis ein vorher definiertes Abbruchkriterium eintritt. Ein Durchlauf wird als \emph{Generation} bezeichnet. Das Abbruchkriterium kann beispielsweise ein bestimmter Schwellwert für die Güte der Lösung oder eine feste Anzahl von Generationen sein. Der beschriebene Ablauf ist in \cref{fig:evo_basic} dargestellt.
 
 Die einzelnen Komponenten eines evolutionären Algorithmus werden im Folgenden beschrieben. Die Definitionen folgen im Wesentlichen denen von \textcite{tw2008}.
 
@@ -395,7 +400,7 @@ Nachdem evolutionäre Algorithmen grundlegend beschrieben wurden, wird im nächs
 
 Mit Hilfe von evolutionären Algorithmen kann der Prozess der Priorisierung aus \cref{prioritization} genauer beschrieben werden. \cref{fig:prioritization_evo} zeigt den Prozess mit den Komponenten evolutionärer Algorithmen.
 
-\begin{figure}[h]
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.8\textwidth]{prioritization_evo}
 \caption{FMC--Petri--Netz der Priorisierung mittels evolutionärer Algorithmen}
@@ -411,6 +416,8 @@ Da der Algorithmus den Eingriff eines Benutzers erfordert, handelt es sich um ei
 Die Schritte der Rekombination und Mutation dienen zur Erzeugung neuer Lösungskandidaten auf Basis der vom Benutzer selektierten Priorisierungen. Sie sollten so gewählt werden, dass genügend unterschiedliche Priorisierungen erzeugt werden, aber dennoch eine Verbesserung über die Generationen erkennbar ist.
 
 Zusammenfassend stellen evolutionäre Algorithmen eine geeignete Methode dar, um die Priorisierung durchzuführen, da die Schritte der Priorisierungserzeugung darauf abgebildet werden können. Die Stichprobenauswahl, die konkret implementierten Komponenten, die Durchführung der Selektion und die Ergebnisse werden in \cref{evo_implementation} detailliert erläutert.
+
+\clearpage
 
 \section{Zusammenfassung}
 
