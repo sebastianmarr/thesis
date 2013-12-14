@@ -138,7 +138,7 @@ Je Tag wird während der Transformation ein Knotenobjekt erzeugt. Dieses besitzt
 
 Die Erzeugung der Kanten erfolgt wie in \cref{mapreduce_cooccurence} beschrieben. Für jedes gemeinsame Auftreten von zwei Tags werden zwei Kantenobjekte erzeugt. Diese beschreiben gerichtete Kanten zwischen den Begriffen, die ein gemeinsames Auftreten der Tags repräsentieren. Neben den eindeutigen Bezeichnern der Quell- und Zielknoten enthält das Kantenobjekt den Kantentyp \emph{Tagging--Kookkurrenz} sowie die absolute Anzahl gemeinsamer Vorkommen der Tags und die in \cref{measures} beschriebenen Kookkurrenzmaße. Außerdem erhält die Kante selbst einen global eindeutigen Bezeichner zur Referenzierung. Ein Beispiel für eine aus den Tagging--Daten erzeugte Kante ist in \cref{lst:tag_transform_edge} dargestellt.
 
-\begin{lstlisting}[language=json, label={lst:tag_transform_edge}, caption={JSON--Beispiel für eine aus den Tagging--Daten erzeugte Kante}, float]
+\begin{lstlisting}[language=json, label={lst:tag_transform_edge}, caption={JSON--Beispiel für eine aus den Tagging--Daten erzeugte Kante}, float=h]
 {
     "_id" : ObjectId("51efd6f61177ff360605bd99"),
     "source" : ObjectId("51efc1af47cae77dfc00c3f8"),
@@ -310,7 +310,7 @@ Da die erzeugten Kanten einen noch nicht im Graph vorhandenen Typ besitzen, müs
 
 Durch die auf die Clicktracking--Daten angewendeten Link--Discovery--Schritte wurden dem Weltausschnitt \num{78237} neue Begriffe und \num{310860} neue Zusammenhänge vom Type \emph{Clicktracking--Kookkurrenz} hinzugefügt.
 
-Wie schon für die Tagging--Daten in \cref{tagging_results}, wird im folgenden die Verteilung der Clicktracking--Kanten je Knoten als Metrik für die Ergebnisse der Clicktracking--Integration verwendet. Diese ist in \cref{fig:hist_only_clicktracking} als Histogramm mit exponentiell wachsenden Klassen dargestellt.
+Wie schon für die Tagging--Daten in \cref{tagging_results}, wird im folgenden die Verteilung der Clicktracking--Kanten je Knoten als Metrik für die Ergebnisse der Clicktracking--Integration verwendet. Diese ist in \cref{fig:hist_only_clicktracking}, analog zu \cref{fig:hist_only_tags}, als Histogramm mit exponentiell wachsenden Klassen dargestellt.
 
 \begin{figure}[t]
 \centering
@@ -350,7 +350,7 @@ Die Zerlegung von Tags, die aus mehr als einem Wort bestehen, ist ein Anreicheru
 
 \subsection{Vorgehensweise}
 
-Zum Zeitpunkt des Importes befanden sich \num{147364} Begriffe im Weltausschnitt, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozent aller bereinigten deutschen Tags. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Tags auch Wörter enthalten sind, die nicht als Einzelwörter existieren.
+Zum Zeitpunkt des Importes befanden sich \num{147364} Begriffe im Weltausschnitt, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozent aller bereinigten Tags, die als deutsch gekennzeichnet sind. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Tags auch Wörter enthalten sind, die nicht als Einzelwörter existieren.
 
 \begin{figure}[h]
 \centering
@@ -670,7 +670,7 @@ Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die 
 \label{fig:genotype}
 \end{figure}
 
-Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute wird auf das Intervall \(W=[0,1] \in \mathbb{R}\) eingeschränkt. Die Kookkurrenzmaße entsprechen den in \cref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in \cref{fig:genotype} als UML--Klassendiagramm und in \cref{lst:genotyope} beispielhaft in JSON--Notation dargestellt.
+Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute beschränkt sich auf das Intervall \(W=[0,1] \in \mathbb{R}\). Die Kookkurrenzmaße entsprechen den in \cref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in \cref{fig:genotype} als UML--Klassendiagramm dargestellt. \cref{lst:genotyope} zeigt beispielhaft ein Individuum in JSON--Notation.
 
 \begin{lstlisting}[language=json, label={lst:genotyope}, caption={JSON--Beispiel für ein Individuum}, float=b]
 {
@@ -788,11 +788,13 @@ Da nach jeder Selektion je Stichprobe fünf Individuen in der Population verblei
 
 Bei Betrachtung dieser Ergebnisse fällt auf, dass sich die Gewichtungen der Kanten von Stichprobe zu Stichprobe stark unterscheiden. Somit bestätigt sich die Vermutung, dass eine globale Priorisierung der Kantengewichtungen keine sinnvollen Ergebnisse erzielt. Jedoch ergaben sich für die Typen \emph{Wortform} und \emph{Grundform} in allen Stichproben relativ hohe Gewichte.
 
+\clearpage
+
 \subsubsection{Kookkurrenzmaße}
 
 In \cref{tab:measures_each} sind für alle Stichproben die nach der letzten Selektion jeweils am häufigsten in der Population auftretenden Kookkurrenzmaße aufgeführt.
 
-\begin{table}
+\begin{table}[h]
 \centering
 \begin{tabular}{llll}
     \toprule
