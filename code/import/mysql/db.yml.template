@@ -1,0 +1,14 @@
+config_name:
+    mysql:
+        host: mysql.example.com
+        port: 3306
+        username: username
+        password: password
+        database: db
+        ssh:
+            host: tunnel.com
+            username: username
+            key: ~/.ssh/id_rsa
+    mongodb:
+        host: mongo.example.com
+        database: database
