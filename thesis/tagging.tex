@@ -16,7 +16,7 @@ Aus dieser Eigenschaft ergeben sich bestimmte Schwächen und Stärken von Taggin
 
 Zu den von \textcite{ma2004} formulierten Stärken gehören die starke Ausrichtung von Tags an den Gedankengängen der Benutzer und dem einfacheren Durchstöbern von Dokumenten. Da die Tags von den Benutzern eines Systems formuliert werden, spiegeln sie deren Vokabular und deren Gedankengänge wieder. Werden Tags statt zum Finden von konkreten Dokumenten zum Durchstöbern genutzt, bieten sie größere Möglichkeiten, interessante Inhalte zu finden, als in einer starren Kategorisierung.
 
-Tagging--Systeme enthalten demnach implizites Wissen, dass durch Data Mining extrahiert und genutzt werden kann. Im Rahmen dieser Arbeit wurden Tagging--Systeme als Ausgangspunkt für die Link Discovery mittels Kookkurrenz genutzt genutzt (siehe \cref{co-occurence,ld_tags}).
+Tagging--Systeme enthalten demnach implizites Wissen, dass durch Data Mining extrahiert und genutzt werden kann. Im Rahmen dieser Arbeit wurden Tagging--Systeme als Ausgangspunkt für die Link Discovery mittels Kookkurrenz genutzt (siehe \cref{co-occurence,ld_tags}).
 
 \subsection{Datenmodell von Tagging--Systemen}
 \label{tagging_data}
@@ -25,7 +25,7 @@ Ein Tagging--System ist allgemein durch ein Tripel \(S=(D, T, U)\) von Mengen, s
 
 \(D\) repräsentiert eine Menge von Dokumenten. Ein Dokument \(d\) kann ein beliebiger Datensatz sein, beispielsweise ein Design, Artikel oder Produkt. Die Menge \(U\) stellt alle Benutzer des Systems dar. Ein Benutzer \(u\) ist eine Entität mit beliebigen weiteren Attributen, die jedoch im Kontext des Tagging--Systems nicht weiter betrachtet werden. \(T\) repräsentiert die Menge der Tags. Ein Tag \(t\) ist eine Entität, die als benötigtes Attribut eine Zeichenkette besitzt, die zur Beschreibung von Dokumenten genutzt werden kann. \(T\) bildet das \emph{Vokabular} des Tagging--Systems.
 
-Die Relation \(R\) beschreibt den Vorgang des \emph{Taggings}. Ein Benutzer \(u\) des Systems vergibt einen Tag \(t\) an ein Dokument \(d\), um den Inhalt von \(d\) mit der Zeichenkette von \(t\) zu beschreiben. \(R\) enthält demnach Tripel der Form \((d,t,u)\).
+Die Relation \(R\) beschreibt den Vorgang des \emph{Taggings}. Ein Benutzer \(u\) des Systems vergibt einen Tag \(t\) an ein Dokument \(d\), um den Inhalt von \(d\) mit der Zeichenkette von \(t\) zu beschreiben. Der Zeitpunkt der Vergabe des Tags wird durch einen Zeitstempel \(ts\) repräsentiert. \(R\) enthält demnach Quadrupel der Form \((d,t,u,ts)\).
 
 \begin{figure}
 \centering
@@ -34,12 +34,12 @@ Die Relation \(R\) beschreibt den Vorgang des \emph{Taggings}. Ein Benutzer \(u\
 \label{fig:tagging_erd}
 \end{figure}
 
-Das beschriebene Tagging--System lässt sich somit in ein Datenmodell mit den Entitäten \emph{Benutzer}, \emph{Dokument}, \emph{Tag} und  der ternären Beziehung \emph{Tagging} überführen. Dieses Modell ist in \cref{fig:tagging_erd} als Entity--Relationship--Diagramm dargestellt. Alle genannten Entitäten können weitere Attribute besitzen, die von der Anwendungsdomäne des konkret betrachteten Tagging--Systems abhängen.
+Das beschriebene Tagging--System lässt sich somit in ein Datenmodell mit den Entitätstypen \emph{Benutzer}, \emph{Dokument}, \emph{Tag} und  der ternären Beziehung \emph{Tagging} überführen. Dieses Modell ist in \cref{fig:tagging_erd} als Entity--Relationship--Diagramm dargestellt. Alle genannten Entitätstypen können weitere Attribute besitzen, die von der Anwendungsdomäne des konkret betrachteten Tagging--Systems abhängen.
 
 \subsection{Arten von Tagging--Systemen}
 \label{tagging_types}
 
-Abhängig vom gewünschten Einsatzzweck des Tagging--Systems kann der Betreiber bestimmte Aspekte des Systems beschränken. Außerdem können die Benutzer einen vorherrschenden Umgang mit dem System entwickeln. Aus diesen Faktoren ergeben sich verschiedene Arten und Nutzungsmuster von Tagging-Systemen. Hauptsächlich kann zwischen offenen Tagging--Systemen, den so genannten \emph{Folksonomies} und den teilweise geschlossenen Tagging--Systemen unterschieden werden.
+Abhängig vom gewünschten Einsatzzweck des Tagging--Systems kann der Betreiber bestimmte Aspekte des Systems beschränken. Außerdem können die Benutzer einen vorherrschenden Umgang mit dem System entwickeln. Aus diesen Faktoren ergeben sich verschiedene Arten und Nutzungsmuster von Tagging-Systemen. Hauptsächlich kann zwischen offenen Tagging--Systemen, den so genannten \emph{Folksonomies} und den geschlossenen Tagging--Systemen unterschieden werden.
 
 \subsubsection{Folksonomies}
 
@@ -47,9 +47,9 @@ Eine Folksonomy beschreibt ein weitestgehend offenes Tagging--System \cite{ma200
 
 Der Begriff \emph{Folksonomy} steht im Gegensatz zur \emph{Taxonomie} und beschreibt den Umstand, dass die Kategorisierung und Ordnung von Inhalten vom \emph{folk}, also den Benutzern selbst vorgenommen werden \cite{vt2007}.
 
-\subsubsection{Teilweise geschlossene Tagging--Systeme}
+\subsubsection{Geschlossene Tagging--Systeme}
 
-In teilweise geschlossenen Tagging--Systemen beschränkt der Betreiber des Systems bestimmte Aspekte. Dies können die Benutzer, die Tags vergeben dürfen, die Dokumente oder auch das Vokabular sein.
+In geschlossenen Tagging--Systemen beschränkt der Betreiber des Systems bestimmte Aspekte. Dies können die Benutzer, die Tags vergeben dürfen, die Dokumente oder auch das Vokabular sein.
 
 Eine häufige Form der Einschränkung, der auch das in dieser Arbeit verwendete System unterliegt (siehe \cref{tag_sprd}), ist die Einschränkung der Benutzer die ein Dokument taggen können. Oftmals ist dies nur den Autoren des Dokumentes selbst oder Benutzern mit besonderen Rechten, beispielsweise Moderatoren oder Angestellten des Betreibers, erlaubt.
 
@@ -91,7 +91,7 @@ Spreadshirt betreibt aus historischen Gründen zwei Plattformen, deren Datenbest
 \subsection{Eigenschaften des Tagging--Systems}
 \label{tag_sprd}
 
-Im Fall von Spreadshirt ist die Vergabe von Tags auf die Menge der Partner \(P \subseteq U\) begrenzt (siehe auch \cref{spreadshirt}). Es handelt sich demnach um ein in \cref{tagging_types} beschriebenes teilweise geschlossenes Tagging--System.
+Im Fall von Spreadshirt ist die Vergabe von Tags auf die Menge der Partner \(P \subseteq U\) begrenzt (siehe auch \cref{spreadshirt}). Es handelt sich demnach um ein in \cref{tagging_types} beschriebenes geschlossenes Tagging--System.
 
 Die Dokumente, die von den Partnern getaggt werden können, sind auf die Designs und Artikel beschränkt, die der Partner selbst angelegt hat. Eine Beschreibung kann somit ausschließlich durch den Autor des Inhaltes erfolgen. Deshalb fehlt im Vergleich zu anderen Tagging--Systemen auch die Information, welcher Benutzer den Tag vergeben hat, da diese implizit durch den Autor des Dokumentes gegeben ist.
 
@@ -114,7 +114,7 @@ Die Quelle beider Fehler ist die bewusste Falscheingabe von Informationen, um ei
                                                                                                                                                                                                                                                                                                                                                                                                               
 \subsubsection{Vollständigkeit}
 
-Wie bereits in \cref{tag_sprd} beschrieben, fehlen in den Daten des Spreadshirt--Systems der Zeitpunkt und der Benutzer eines Taggings. Dies führt in der Konsequenz dazu, dass Spam schwerer erkannt werden kann. Zwar ist bekannt, wann ein Tag das erste Mal verwendet wurde, alle weiteren Verwendungen des Tags haben jedoch keinen Zeitstempel. Der Benutzer, der den Tag angelegt und verwendet hat, kann nur daraus abgeleitet werden, wer den getaggten Artikel angelegt hat.
+Wie bereits in \cref{tag_sprd} beschrieben, fehlt in den Daten des Spreadshirt--Systems die Angabe, welcher Benutzer einen Tag vergeben hat. Außerdem besitzen die Taggings keinen Zeitstempel. Dies führt in der Konsequenz dazu, dass Spam schwerer erkannt werden kann. Zwar ist bekannt, wann ein Tag das erste Mal verwendet wurde, alle weiteren Verwendungen des Tags haben jedoch keinen Zeitstempel. Der Benutzer, der den Tag angelegt und verwendet hat, kann nur daraus abgeleitet werden, wer den getaggten Artikel angelegt hat.
 
 Die Unvollständigkeit der Daten rührt in erster Linie daher, dass zum Zeitpunkt der Implementierung des Tagging--Systems noch nicht bedacht wurde, dass die fehlenden Attribute später nützlich sein können.
 
@@ -142,7 +142,7 @@ Diese Datenmengen stellen besondere Anforderungen an die Verarbeitung. Wie diese
 
 \section{Zusammenfassung}
 
-Dieses Kapitel befasste sich mit Tagging--Systemen. Dazu wurden die Grundlagen und Begriffe genannt, die Vor-- und Nachteile von Tagging--System erläutert, das Datenmodell formalisiert und die grundsätzlichen Arten Folksonomy und teilweise geschlossenes Tagging--System unterschieden.
+Dieses Kapitel befasste sich mit Tagging--Systemen. Dazu wurden die Grundlagen und Begriffe genannt, die Vor-- und Nachteile von Tagging--System erläutert, das Datenmodell formalisiert und die grundsätzlichen Arten Folksonomy und geschlossenes Tagging--System unterschieden.
 
 Außerdem wurde das im weiteren Verlauf dieser Arbeit verwendete Tagging--System von Spreadshirt \cite{sprd2013} näher betrachtet. Dazu wurden die speziellen Eigenschaften dieses Systems, die Datenqualität und die Menge der vorhandenen Daten beschrieben.
 
