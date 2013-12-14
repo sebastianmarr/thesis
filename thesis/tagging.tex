@@ -29,7 +29,7 @@ Die Relation \(R\) beschreibt den Vorgang des \emph{Taggings}. Ein Benutzer \(u\
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{tag_system}
+\includegraphics[width=0.8\textwidth]{tag_system}
 \caption{FMC--Entity--Relationship--Diagramm eines Tagging--Systems}
 \label{fig:tagging_erd}
 \end{figure}
@@ -59,7 +59,7 @@ Die Einschränkung des Vokabulars kann vorgenommen werden, um Rechtschreibfehler
 
 \section{Tagging--System von Spreadshirt}
 
-Nachdem im vorherigen Abschnitt die Grundlagen von Tagging--Systemen diskutiert wurden, beschäftigt sich dieser Abschnitt mit dem konkreten Tagging--Systems der Website \emph{Spreadshirt}, welches in dieser Arbeit für den initialen Schritt der Link Discovery genutzt wurde (siehe \cref{ld_tags}).
+Nachdem im vorherigen Abschnitt die Grundlagen von Tagging--Systemen diskutiert wurden, beschäftigt sich dieser Abschnitt mit dem konkreten Tagging--System der Website \emph{Spreadshirt}, welches in dieser Arbeit für den initialen Schritt der Link Discovery genutzt wurde (siehe \cref{ld_tags}).
 
 \subsection{Spreadshirt}
 \label{spreadshirt}
@@ -68,18 +68,18 @@ Die vorliegende Masterarbeit wurde im Kontext der sprd.net AG (Spreadshirt) \cit
 
 Das Erstellen von Designs und die Konfiguration eines Produktes, also das Positionieren von Designs auf Produkttypen, wird vollständig vom Benutzer durchgeführt. Es agieren grundsätzlich zwei Arten von Benutzern mit der Spreadshirt--Plattform: \emph{Kunden} und \emph{Partner}.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\textwidth]{how_spreadshirt_works}
+\caption{FMC--Blockdiagramm der Spreadshirt--Bereiche und Benutzer}
+\label{fig:howspreadshirtworks}
+\end{figure}
+
 Als Kunden werden Benutzer bezeichnet, die Produkte bestellen. Diese Produkte können entweder von ihnen selbst oder von einem Partner erstellt worden sein. 
 
 Partner sind Benutzer, die Designs oder Produkte erstellen und diese zum Verkauf anbieten. Zu diesem Zweck kann der Partner einen eigenen Shop auf der Spreadshirt--Plattform eröffnen. Kunden können in diesem Shop Produkte bestellen und der Partner erhält einen Anteil des Verkaufspreises, während Spreadshirt die Produktion und den Versand an den Kunden übernimmt.
 
 Neben den von Kunden für sich selbst erstellten Produkten und den Partner--Shops existiert mit dem Spreadshirt--Marktplatz ein weiterer Vertriebskanal. Auf dem Marktplatz können Partner nach ihrer Zustimmung ihre Designs vertreiben. Kunden können nach Motiven suchen, die ihrem Geschmack entsprechen und diese bestellen, mit anderen Motiven kombinieren oder mit Texten versehen. Ein Produkt, das entweder in einem Partner--Shop oder auf dem Marktplatz positioniert und mit einem Preis versehen wurde, wird Artikel genannt.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.65\textwidth]{how_spreadshirt_works}
-\caption{FMC--Blockdiagramm der Spreadshirt--Bereiche und Benutzer}
-\label{fig:howspreadshirtworks}
-\end{figure}
 
 Die grundsätzliche Funktionsweise der Spreadshirt--Plattform ist in \cref{fig:howspreadshirtworks} als FMC--Blockdiagramm dargestellt.
 
@@ -126,6 +126,8 @@ Technisch kann jeder Tag genau ein Mal in der Datenbank vorkommen. Jedoch führe
 
 Außerdem führten in der Vergangenheit Systemfehler und Implementierungsfehler dazu, dass falsche, nicht druckbare Zeichen in den Tags enthalten waren. Nach Beseitigung der Fehler blieben die fehlerhaften Tags bestehen, so dass bei einer erneuten Eingabe des gleichen Wortes ein neuer Tag in der Datenbank angelegt wurde.
 
+\cleardoublepage
+
 \subsection{Mengengerüst des Tagging--Systems}
 \label{tag_amount}
 
@@ -142,7 +144,7 @@ Diese Datenmengen stellen besondere Anforderungen an die Verarbeitung. Wie diese
 
 \section{Zusammenfassung}
 
-Dieses Kapitel befasste sich mit Tagging--Systemen. Dazu wurden die Grundlagen und Begriffe genannt, die Vor-- und Nachteile von Tagging--System erläutert, das Datenmodell formalisiert und die grundsätzlichen Arten Folksonomy und geschlossenes Tagging--System unterschieden.
+Dieses Kapitel befasste sich mit Tagging--Systemen. Dazu wurden die Grundlagen und Begriffe genannt, die Vor-- und Nachteile von Tagging--System erläutert, das Datenmodell formalisiert und die grundsätzlichen Arten der Folksonomies und geschlossenen Tagging--Systeme unterschieden.
 
 Außerdem wurde das im weiteren Verlauf dieser Arbeit verwendete Tagging--System von Spreadshirt \cite{sprd2013} näher betrachtet. Dazu wurden die speziellen Eigenschaften dieses Systems, die Datenqualität und die Menge der vorhandenen Daten beschrieben.
 
