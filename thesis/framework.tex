@@ -32,7 +32,7 @@ Dieses Modell bildet die Grundlage für  im folgenden Abschnitt beschriebenen Li
 
 Der Link--Discovery--Prozess beschreibt die Abfolge von Schritten, die zur Erzeugung und Anreicherung des in \cref{world_model} beschriebenen Weltausschnittes durchgeführt werden. Er dient somit zur Erzeugung von Begriffen und deren Zusammenhängen. \cref{fig:link_discovery_process} zeigt den Prozess als Petri--Netz.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{link_discovery_process}
 \caption{FMC--Petri--Netz des Link--Discovery--Prozesses}
@@ -123,8 +123,6 @@ Nach der Auswahl der Stichprobe wird vom Link--Discovery--System eine Priorisier
 
 Ist die Bewertung der Priorisierung positiv, ist der Priorisierungsprozess beendet. Bei nicht zufriedenstellendem Ergebnis wird die Erzeugung einer neuen Priorisierung und die anschließende Bewertung wiederholt. Stellt sich auch nach einer im Voraus gewählten Anzahl von Iterationen dieser Art kein zufriedenstellendes Ergebnis ein, so sollte die Priorisierung abgebrochen werden und die Gründe für das Fehlschlagen analysiert werden. Diese können beispielsweise in einer schlechten Qualität der Beziehungen des Weltausschnittes, in einer unpassenden Stichprobenauswahl oder fehlendem Wissen des Benutzers gefunden werden.
 
-\cleardoublepage
-
 \section{Kookkurrenz als Mittel zur Beziehungserzeugung}
 \label{co-occurence}
 
@@ -134,7 +132,7 @@ Im Transformationsschritt der Link Discovery (\cref{transformation}) wird eine M
 
 Um gewichtete inhaltliche Beziehungen zwischen Begriffen herstellen zu können, wird eine Definition von \emph{Ähnlichkeit} benötigt. Diese lässt sich auf vielfältige Arten bestimmen.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{similarity}
 \caption{Repräsentation von Dokumenten als Mengen von Eigenschaften}
@@ -204,7 +202,7 @@ Nachdem die Ähnlichkeit mittels Kookkurrenz und die entsprechenden Maße vorges
 
 Um die in \cref{measures} genannten Maße für Kookkurrenz zu berechnen, muss das Kreuzprodukt aller Begriffe gebildet werden. Dabei muss für jedes Paar von Begriffen die Häufigkeit gezählt werden, wie oft die Begriffe gemeinsam zur Beschreibung von Dokumenten verwendet wurden. Diese Häufigkeit beschreibt die Mächtigkeit der Mengen \(A \cap B\). Außerdem muss gezählt werden, wie oft jeder Begriff insgesamt verwendet wird, um die Mächtigkeit der Mengen \(A, B, \dots\) zu bestimmen. Danach können über die genannten Formeln die Kookkurrenzmaße berechnet werden. In \cref{lst:coocc-pseudo} ist die Berechnung als Pseudo--Code dargestellt.
 
-\begin{lstlisting}[language=pseudo, label={lst:coocc-pseudo}, caption={Kookkurrenzberechnung}, float=ht]
+\begin{lstlisting}[language=pseudo, label={lst:coocc-pseudo}, caption={Kookkurrenzberechnung}, float]
 var occurences = {};
 
 foreach (term in terms) {
@@ -235,7 +233,7 @@ Nachdem in \cref{world_model} der zur Link Discovery verwendete Weltausschnitt m
 
 Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Mengen, für die gilt: \(E \subseteq\ [V]^2\). Dies bedeutet, dass alle Elemente aus \(E\) 2-elementige Teilmengen von \(V\) sind \cite[S. 2]{rd2012}. Die Menge \(V\) repräsentiert die \emph{Knoten} und die Menge \(E\) die \emph{Kanten} des Graphen. Eine Kante stellt eine Verbindung von zwei Knoten dar. Zwei Knoten werden als \emph{Nachbarn} bezeichnet, wenn zwischen ihnen eine Kante existiert. \cref{fig:basic_graph} zeigt ein Beispiel für einen ungerichteten Graphen.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.2\textwidth]{basic_graph}
 \caption{Ungerichteter Graph}
@@ -244,7 +242,7 @@ Ein \emph{ungerichteter Graph} ist definiert durch ein Paar \(G = (V,E)\) von Me
 
 Ein \emph{gerichteter Graph} ist ein Graph, der neben den Mengen \(V\) und \(E\) die zwei Abbildungen \(quelle: E \rightarrow V\) und \(ziel: E \rightarrow V\) enthält \cite[S. 25]{rd2012}. Diese weisen jeder Kante \(e\) einen Quell- und Zielknoten zu. Die Kante ist somit von \(quelle(e)\) nach \(ziel(e)\) gerichtet. \cref{fig:directed_graph} zeigt einen gerichteten Graphen.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.2\textwidth]{directed_graph}
 \caption{Gerichteter Graph}
@@ -253,7 +251,7 @@ Ein \emph{gerichteter Graph} ist ein Graph, der neben den Mengen \(V\) und \(E\)
 
 Als \emph{Multigraph} wird schließlich ein Graph bezeichnet, bei dem zwischen zwei Knoten mehrere Kanten bestehen \cite[S. 25]{rd2012}. Sind diese gerichtet, spricht man vom einen \emph{gerichteten Multigraph}. \cref{fig:directed_multigraph} illustriert einen solchen gerichteten Multigraph.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.2\textwidth]{directed_multigraph}
 \caption{Gerichteter Multigraph}
@@ -288,7 +286,7 @@ Das resultierende komplette Modell des Graphen ist in \cref{fig:graph_model} dar
 
 Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher darzustellen, ist in \cref{fig:example_graph} ein beispielhafter Ausschnitt des nach Durchführung der Link Discovery entstehenden Graphen abgebildet. Auf Darstellung der Kontexte und Kantenattribute wurde aus Platzgründen verzichtet.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{example_graph}
 \caption{Beispiel--Graphausschnitt für das Ergebnis der Link Discovery}
@@ -296,8 +294,6 @@ Um die Graphenrepräsentation des modellierten Weltausschnittes anschaulicher da
 \end{figure}
 
 Nach der Definition der verwendeten Graphenstruktur werden im folgenden Abschnitt die möglichen Datenquellen diskutiert.
-
-\clearpage
 
 \section{Datenquellen zur Anreicherung}
 \label{data_sources}
@@ -350,8 +346,6 @@ Zu jedem Begriff stellt der Wortschatz die folgenden Informationen bereit:
 
 Die Informationen über Grundform, Wortformen, Thesaurus--Beziehungen, Synonyme und Kategorien wurden im Rahmen dieser Arbeit ausgewertet und entsprechen den in \cref{fig:graph_model} gezeigten Kantentypen. Die Durchführung der Link Discovery anhand dieser Daten wird ausführlich in \cref{wortschatz} beschrieben.
 
-\clearpage
-
 \section{Evolutionäre Algorithmen als Mittel zur Priorisierung}
 \label{evo_for_prio}
 
@@ -362,7 +356,7 @@ Um die in \cref{prioritization} beschriebene Priorisierung der Beziehungen durch
 
 Als evolutionäre Algorithmen wird eine Klasse von Optimierungsverfahren bezeichnet, deren Funktionsweise an die Evolution natürlicher Lebewesen angelehnt ist. Sie versuchen, Probleme durch die Simulation von Evolution mittels der Auswahl der erfolgreichsten Individuen zu lösen. Dabei kommen ebenfalls aus der Biologie entlehnte Mechanismen wie Mutation und Rekombination zum Einsatz, um iterativ eine Population von Lösungskandidaten zu verbessern \cite{tw2008}.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.8\textwidth]{evo_basic}
 \caption{Ablauf evolutionärer Algorithmen}
@@ -400,7 +394,7 @@ Nachdem evolutionäre Algorithmen grundlegend beschrieben wurden, wird im nächs
 
 Mit Hilfe von evolutionären Algorithmen kann der Prozess der Priorisierung aus \cref{prioritization} genauer beschrieben werden. \cref{fig:prioritization_evo} zeigt den Prozess mit den Komponenten evolutionärer Algorithmen.
 
-\begin{figure}[t]
+\begin{figure}
 \centering
 \includegraphics[width=0.8\textwidth]{prioritization_evo}
 \caption{FMC--Petri--Netz der Priorisierung mittels evolutionärer Algorithmen}
@@ -416,8 +410,6 @@ Da der Algorithmus den Eingriff eines Benutzers erfordert, handelt es sich um ei
 Die Schritte der Rekombination und Mutation dienen zur Erzeugung neuer Lösungskandidaten auf Basis der vom Benutzer selektierten Priorisierungen. Sie sollten so gewählt werden, dass genügend unterschiedliche Priorisierungen erzeugt werden, aber dennoch eine Verbesserung über die Generationen erkennbar ist.
 
 Zusammenfassend stellen evolutionäre Algorithmen eine geeignete Methode dar, um die Priorisierung durchzuführen, da die Schritte der Priorisierungserzeugung darauf abgebildet werden können. Die Stichprobenauswahl, die konkret implementierten Komponenten, die Durchführung der Selektion und die Ergebnisse werden in \cref{evo_implementation} detailliert erläutert.
-
-\clearpage
 
 \section{Zusammenfassung}
 

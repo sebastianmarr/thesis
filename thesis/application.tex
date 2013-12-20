@@ -12,7 +12,7 @@ Die initiale Erstellung des Weltausschnittes stellt den ersten Schritt des in \c
 
 Die Daten liegen im Quellsystem, einer MySQL--Datenbank, in relationaler Form vor. Somit existieren, dem Datenmodell von Tagging--Systemen in \cref{tagging_data} folgend, Tabellen für Benutzer, Tags, Dokumente und Taggings. Da der Inhalt der Dokumente sowie die Benutzer für die Kookkurrenzberechnung nicht relevant sind, genügt der Import der Tabellen \emph{Tags} und \emph{Taggings}. Das Datenmodell der für den Import benötigten Daten ist in \cref{fig:tag_source_erd} dargestellt.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.6\textwidth]{tag_source_erd}
 \caption{FMC--Entity--Relationship--Diagramm der Tagging--Quelldaten}
@@ -21,7 +21,7 @@ Die Daten liegen im Quellsystem, einer MySQL--Datenbank, in relationaler Form vo
 
 Die Tags besitzen, neben einem eindeutigen Bezeichner, die Attribute \emph{tag} für die Zeichenkette und \emph{lang} für die Sprache des Tags. \cref{lst:tag_import_tag} zeigt beispielhaft eine solche Tag--Entität.
 
-\begin{lstlisting}[language=json, label={lst:tag_import_tag}, caption={JSON--Beispiel für einen importierten Tag}, float=h]
+\begin{lstlisting}[language=json, label={lst:tag_import_tag}, caption={JSON--Beispiel für einen importierten Tag}, float]
 {
     "tag_id": 12345,
     "tag": "segeln",
@@ -31,7 +31,7 @@ Die Tags besitzen, neben einem eindeutigen Bezeichner, die Attribute \emph{tag} 
 
 Ein Tagging ist über den eindeutigen Bezeichner des Tags und den eindeutigen Bezeichner des getaggten Dokumentes definiert. Der Schlüssel des Dokumentes setzt sich aus den Attributen \emph{object\_type\_id} und \emph{object\_id} zusammen, da die Dokumente auf der Plattform von Spreadshirt verschiedene Typen wie  ``Artikel'' oder ``Design'' besitzen können. In \cref{lst:tag_import_link} ist ein Tagging beispielhaft dargestellt.
 
-\begin{lstlisting}[language=json, label={lst:tag_import_link}, caption={JSON--Beispiel für ein importiertes Tagging}, float=ht]
+\begin{lstlisting}[language=json, label={lst:tag_import_link}, caption={JSON--Beispiel für ein importiertes Tagging}, float]
 {
     "object_id": 45678
     "object_type_id": 3,
@@ -47,7 +47,7 @@ An den Tagging--Daten liegen die in \cref{quality} genannten Defekte in Hinblick
 
 In den unbereinigten importierten Daten existieren keine Duplikate in der Art, dass eine Paarung aus Zeichenkette und Sprache immer nur genau einmal in den Daten vorhanden ist. Jedoch enthalten viele der Tags nicht weiter verwertbare Zeichen wie nicht druckbare ASCII Zeichen, Anführungszeichen, Satzzeichen, Sonderzeichen sowie überflüssige Leerzeichen am Anfang und Ende der Zeichenkette. Außerdem existiert in den importierten Daten eine Unterscheidung zwischen Groß- und Kleinschreibung. Diese Unterscheidung bringt im Kontext der Link Discovery keine Vorteile und kann somit entfernt werden.
 
-\begin{table}[h]
+\begin{table}
 \centering
 % \arraystretch}{1.3}
 \begin{tabular}{lcl}
@@ -75,7 +75,7 @@ Der Reduktionsschritt dient zur Einschränkung der Gesamtdaten auf eine nützlic
 
 Im Fall der Tagging--Daten liegt das Hauptaugenmerk im Reduktionsschritt auf der Entfernung von Duplikaten, die bei der Bereinigung entstanden sind. Gleichzeitig muss sicher gestellt werden, dass keine Informationen über die Verwendung der Tags verloren gehen. Somit besteht die Duplikatentfernung der Tags im Zusammenführen von Datensätzen mit gleichen Zeichenketten und Sprachen. Gleichzeitig werden auch die Taggings zusammengeführt.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=0.9\textwidth]{tag_reduction}
 \caption{Beispiel für das Zusammenführen der bereinigten Tags}
@@ -86,7 +86,7 @@ Werden die Verknüpfungen zweier Tags mit Dokumenten zusammengeführt, können w
 
 Dabei findet ebenfalls eine Denormalisierung der Daten statt, da alle Dokumente, für die ein Tag vergeben werden, direkt mit in das Tag--Objekt gespeichert werden. Dies ist beispielhaft in \cref{lst:tag_denormalization} abgebildet. Das Attribut \emph{links} enthält alle Verknüpfungen des Tags mit Dokumenten.
 
-\begin{lstlisting}[language=json, label={lst:tag_denormalization}, caption={JSON--Beispiel für die denormalisierten Tagging-Daten}, float=t]
+\begin{lstlisting}[language=json, label={lst:tag_denormalization}, caption={JSON--Beispiel für die denormalisierten Tagging-Daten}, float]
 {
     "string": "segeln"
     "language": "de",
@@ -116,7 +116,7 @@ Der Transformationsschritt stellt die Überführung der Daten in die in \cref{wo
 
 Je Tag wird während der Transformation ein Knotenobjekt erzeugt. Dieses besitzt als benötigte Attribute die \emph{Zeichenkette} und die \emph{Sprache} des Tags, aus dem es erzeugt wurde und repräsentiert somit einen Begriff des Weltausschnittes. Außerdem wird ein Kontext dieses Begriffes im Rahmen des Tagging--Systems erzeugt. Dieser enthält die Anzahl der Verwendungen des Begriffes als Tag und die eindeutigen Bezeichner der Dokumente, also der Artikel und Designs, die mit dem Begriff getaggt wurden. Weiterhin wird für jedes Knotenobjekt ein global eindeutiger Bezeichner generiert, um die spätere Referenzierung der Knoten zu ermöglichen. \cref{lst:tag_transform_node} zeigt ein Beispiel für ein so erzeugtes Knotenobjekt.
 
-\begin{lstlisting}[language=json, label={lst:tag_transform_node}, caption={JSON--Beispiel für einen aus den Tagging--Daten erzeugten Knoten}, float=h]
+\begin{lstlisting}[language=json, label={lst:tag_transform_node}, caption={JSON--Beispiel für einen aus den Tagging--Daten erzeugten Knoten}, float]
 {
     "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
     "language" : "de",
@@ -138,7 +138,7 @@ Je Tag wird während der Transformation ein Knotenobjekt erzeugt. Dieses besitzt
 
 Die Erzeugung der Kanten erfolgt wie in \cref{mapreduce_cooccurence} beschrieben. Für jedes gemeinsame Auftreten von zwei Tags werden zwei Kantenobjekte erzeugt. Diese beschreiben gerichtete Kanten zwischen den Begriffen, die ein gemeinsames Auftreten der Tags repräsentieren. Neben den eindeutigen Bezeichnern der Quell- und Zielknoten enthält das Kantenobjekt den Kantentyp \emph{Tagging--Kookkurrenz} sowie die absolute Anzahl gemeinsamer Vorkommen der Tags und die in \cref{measures} beschriebenen Kookkurrenzmaße. Außerdem erhält die Kante selbst einen global eindeutigen Bezeichner zur Referenzierung. Ein Beispiel für eine aus den Tagging--Daten erzeugte Kante ist in \cref{lst:tag_transform_edge} dargestellt.
 
-\begin{lstlisting}[language=json, label={lst:tag_transform_edge}, caption={JSON--Beispiel für eine aus den Tagging--Daten erzeugte Kante}, float=h]
+\begin{lstlisting}[language=json, label={lst:tag_transform_edge}, caption={JSON--Beispiel für eine aus den Tagging--Daten erzeugte Kante}, float]
 {
     "_id" : ObjectId("51efd6f61177ff360605bd99"),
     "source" : ObjectId("51efc1af47cae77dfc00c3f8"),
@@ -162,7 +162,7 @@ Durch die Schritte, die zur Link Discovery aus den Tagging--Daten verwendet wurd
 
 Eine mögliche Metrik für die quantitativen Eigenschaften der Ergebnisse ist die Verteilung der ausgehenden Kanten, die jeder Knoten besitzt. Diese ist als Histogramm in \cref{fig:hist_only_tags} dargestellt. Hierbei ist anzumerken, dass die Klassen des Histogrammes exponentiell breiter werden, um Knoten, die sehr viele Kanten besitzen, im Histogramm darstellen zu können.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{hist_only_tags}
 \caption{Histogramm der Verteilung der Tagging--Kookkurrenz--Kanten}
@@ -171,7 +171,7 @@ Eine mögliche Metrik für die quantitativen Eigenschaften der Ergebnisse ist di
 
 \cref{tab:only_tags} zeigt die statistischen Kennzahlen Minimum, erstes Quartil, Median, drittes Quartil, Maximum und Durchschnitt der Verteilung der Kanten nach Berechnung der Tagging--Kookkurrenz.
 
-\begin{table}[ht]
+\begin{table}
 \centering
 \begin{tabular}{lr}
     \toprule
@@ -200,7 +200,7 @@ Nachdem in diesem Abschnitt die Integration der Tagging--Daten beschrieben wurde
 
 Spreadshirt betreibt ein Clicktracking--System (siehe \cref{clicktracking_theo}), welches die Klicks der Benutzer auf Artikel und Designs auf Suchergebnisseiten aufzeichnet. Dabei ist unerheblich, ob der Benutzer bei Spreadshirt registriert und angemeldet ist. Dieses System sammelt Daten von beiden Spreadshirt--Plattformen (siehe \cref{platforms}). In \cref{fig:search_result} ist beispielhaft eine Suchergebnisseite der Spreadshirt--Plattform abgebildet, welche die gefundenen Designs für eine Suchanfrage auflistet.
 
-\begin{figure}[t]
+\begin{figure}
 \centering
 \includegraphics[scale=0.25]{search_result}
 \caption{Beispiel für eine Spreadshirt--Suchergebnisseite}
@@ -282,7 +282,7 @@ Ziel der Transformation ist somit die Erzeugung von Knoten und Kanten. Die Knote
 
 Die Kanten besitzen die gleiche Form wie die Kookkurrenzkanten, die bei der Integration der Tagging--Daten erzeugt wurden. Lediglich der Typ der Kanten ist unterschiedlich und lautet \emph{Clicktracking--Kookkurrenz}. Ein Beispiel für eine solche Kante ist in \cref{lst:click_edge} dargestellt.
 
-\begin{lstlisting}[language=json, label={lst:click_edge}, caption={JSON--Beispiel für ein aus den Clicktracking--Daten erzeugtes Kantenobjekt}]
+\begin{lstlisting}[language=json, label={lst:click_edge}, caption={JSON--Beispiel für ein aus den Clicktracking--Daten erzeugtes Kantenobjekt}, float]
 {
     "_id": ObjectId("51e91aff3b6a20bfd68c468a")
     "source" : ObjectId("51e91af93b6a20bfd68b0bed"),
@@ -312,7 +312,7 @@ Durch die auf die Clicktracking--Daten angewendeten Link--Discovery--Schritte wu
 
 Wie schon für die Tagging--Daten in \cref{tagging_results}, wird im folgenden die Verteilung der Clicktracking--Kanten je Knoten als Metrik für die Ergebnisse der Clicktracking--Integration verwendet. Diese ist in \cref{fig:hist_only_clicktracking}, analog zu \cref{fig:hist_only_tags}, als Histogramm mit exponentiell wachsenden Klassen dargestellt.
 
-\begin{figure}[t]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{hist_only_clicktracking}
 \caption{Histogramm der Verteilung der Clicktracking--Kookkurrenz--Kanten}
@@ -323,7 +323,7 @@ Wie schon für die Tagging--Daten in \cref{tagging_results}, wird im folgenden d
 
 Bei der Interpretation dieser Daten fällt auf, dass im Vergleich zu den Tagging--Daten zum einen deutlich weniger Kanten, zum anderen auch durchschnittlich weniger Kanten pro Knoten erzeugt wurden. So muss bei circa einem Viertel der Knoten, die Kanten vom Typ Clicktracking--Kookkurrenz besitzen, mit zwei oder weniger Beziehungen gerechnet werden. Durch die geringe Kantenanzahl wird die Gesamtverteilung der Kanten jedoch nicht wesentlich beeinflusst (siehe \cref{lda_results}).
 
-\begin{table}[h]
+\begin{table}
 \centering
 \begin{tabular}{lr}
     \toprule
@@ -352,7 +352,7 @@ Die Zerlegung von Tags, die aus mehr als einem Wort bestehen, ist ein Anreicheru
 
 Zum Zeitpunkt des Importes befanden sich \num{147364} Begriffe im Weltausschnitt, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozent aller bereinigten Tags, die als deutsch gekennzeichnet sind. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Tags auch Wörter enthalten sind, die nicht als Einzelwörter existieren.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{decomposition}
 \caption{Beispielhafter Graphausschnitt nach der Zerlegung}
@@ -367,14 +367,14 @@ Durch die Anwendung des Zerlegungsschrittes auf die vorhandenen Begriffe wurden 
 
 Die Verteilung der erzeugten Kanten über alle Knoten, die von der Zerlegung betroffen sind, ist in \cref{fig:hist_only_decomposition} als Histogramm dargestellt. Statistische Kennzahlen dieser Verteilung sind in \cref{tab:only_decomposition} aufgeführt.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{hist_only_decomposition}
 \caption{Histogramm der Verteilung der Zerlegungs-- und Zusammensetzungskanten}
 \label{fig:hist_only_decomposition}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}
 \centering
 \begin{tabular}{lr}
     \toprule
@@ -517,14 +517,14 @@ Insgesamt wurden dadurch \num{145023} neue Knoten und \num{50227965} neue Kanten
 
 In \cref{fig:hist_only_wortschatz} ist die Verteilung durch die Integration des Wortschatzes erzeugten Kanten als Histogramm mit exponentiell wachsenden Klassen abgebildet. \cref{tab:only_wortschatz} zeigt statistische Kennzahlen dieser Verteilung.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics[width=\textwidth]{hist_only_wortschatz}
 \caption{Histogramm der Verteilung der Wortschatz--Kanten}
 \label{fig:hist_only_wortschatz}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}
 \centering
 \begin{tabular}{lr}
     \toprule
@@ -555,7 +555,7 @@ In den bisherigen Auswertungen der Integrations-- und Anreicherungsschritte wurd
 
 \cref{tab:discovery_amounts} zeigt zusammengefasst die quantitative Veränderung des Graphen nach jedem durchgeführten Schritt. Dabei zeigt sich, dass die Integration der Daten des Wortschatzes mit Abstand die meisten neuen Kanten in den Graphen eingefügt hat. 
 
-\begin{table}[h]
+\begin{table}
 \centering
 \begin{tabular}{lrcr}
     \toprule
@@ -579,35 +579,35 @@ Bei der Verwendung der Clicktracking--Daten wurden im Verhältnis wenig neue Kno
 
 Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der quantitativen Ergebnisse auch die Anzahl der Kanten, die von einem Knoten ausgehen, von Interesse. Diese Verteilung der Kanten je Knoten nach jedem Schritt ist in den \cref{fig:hist_after_tags,fig:hist_after_clicktracking,fig:hist_after_decomposition,fig:hist_after_wortschatz} als Histogramm dargestellt.
 
-\begin{figure}[p]
+\begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{hist_after_tags}
 \caption{Histogramm der Kantenverteilung nach Integration der Tagging--Daten}
 \label{fig:hist_after_tags}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{hist_after_clicktracking}
 \caption{Histogramm der Kantenverteilung nach Integration der Clicktracking--Daten}
 \label{fig:hist_after_clicktracking}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{hist_after_decomposition}
 \caption{Histogramm der Kantenverteilung nach der Zerlegung von Wortgruppen}
 \label{fig:hist_after_decomposition}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{hist_after_wortschatz}
 \caption{Histogramm der Kantenverteilung nach Integration der Wortschatz--Daten}
 \label{fig:hist_after_wortschatz}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}
 \centering
 \begin{tabular}{lrrrrrr}
     \toprule
@@ -672,7 +672,7 @@ Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die 
 
 Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute beschränkt sich auf das Intervall \(W=[0,1] \in \mathbb{R}\). Die Kookkurrenzmaße entsprechen den in \cref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in \cref{fig:genotype} als UML--Klassendiagramm dargestellt. \cref{lst:genotyope} zeigt beispielhaft ein Individuum in JSON--Notation.
 
-\begin{lstlisting}[language=json, label={lst:genotyope}, caption={JSON--Beispiel für ein Individuum}, float=b]
+\begin{lstlisting}[language=json, label={lst:genotyope}, caption={JSON--Beispiel für ein Individuum}, float]
 {
     "tagCoOccMeasure" : 0,
     "tagCoOccWeight" : 0.6878115427680314,
@@ -747,7 +747,7 @@ Die Priorisierung wurde über insgesamt \num{13} Generationen durchgeführt. Som
 
 Da nach jeder Selektion je Stichprobe fünf Individuen in der Population verbleiben, werden zunächst deren Kantengewichtungen untersucht. \cref{tab:winners_total} zeigt für jede Variable aus dem Genotyp den Median der in der dreizehnten Generation selektierten Individuen. Das Kantengewicht für den Typ \emph{Zerlegung} ist nicht in der Tabelle enthalten, da es sich bei den Stichproben nur um Einzelwörter handelt.
 
-\begin{table}[ht]
+\begin{table}
 \centering
 \begin{tabular}{lcccccccc}
     \toprule
@@ -788,13 +788,11 @@ Da nach jeder Selektion je Stichprobe fünf Individuen in der Population verblei
 
 Bei Betrachtung dieser Ergebnisse fällt auf, dass sich die Gewichtungen der Kanten von Stichprobe zu Stichprobe stark unterscheiden. Somit bestätigt sich die Vermutung, dass eine globale Priorisierung der Kantengewichtungen keine sinnvollen Ergebnisse erzielt. Jedoch ergaben sich für die Typen \emph{Wortform} und \emph{Grundform} in allen Stichproben relativ hohe Gewichte.
 
-\clearpage
-
 \subsubsection{Kookkurrenzmaße}
 
 In \cref{tab:measures_each} sind für alle Stichproben die nach der letzten Selektion jeweils am häufigsten in der Population auftretenden Kookkurrenzmaße aufgeführt.
 
-\begin{table}[h]
+\begin{table}
 \centering
 \begin{tabular}{llll}
     \toprule
@@ -827,7 +825,7 @@ Die auffälligste Beobachtung ist, dass für die Clicktracking--Kookkurrenz das 
 
 Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konkret erzeugten Priorisierungen ausgewertet. In \crefrange{tab:prio_res_kind}{tab:prio_res_volkswagen} sind die nach den Ergebnissen der Priorisierung fünf höchstgewichteten Nachbarn einiger Stichproben beispielhaft dargestellt. Dazu wurden die Mediane der Gewichte der nach der letzten Selektion enthaltenen Individuen gebildet. Als Kookkurrenzmaße wurden die jeweils am häufigsten auftretenden Maße für die Stichprobe gewählt. Die Nachbarn der übrigen Stichproben sind in \cref{other_results} dargestellt. Diese Tabellen zeigen gleichzeitig die Ergebnisse der Link Discovery mittels Integration und Anreicherung sowie die Ergebnisse der Priorisierung. Die inhaltliche Beurteilung der Qualität dieser Nachbarn hängt vom Anwendungszweck der Daten ab und kann somit im Rahmen dieser Arbeit nicht endgültig beurteilt werden. Jedoch lässt sich bei Betrachtung der Daten feststellen, dass für viele der Stichproben durchaus Nachbarn aufgelistet werden, die eine inhaltliche Nähe zum Ausgangsbegriff besitzen.
 
-\begin{table}[p]
+\begin{table}
 \centering
 \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill} } lr}
     \toprule
@@ -844,7 +842,7 @@ Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konk
 \label{tab:prio_res_kind}
 \end{table}
 
-\begin{table}[p]
+\begin{table}
 \centering
 \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill} } lr}
     \toprule
@@ -861,7 +859,7 @@ Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konk
 \label{tab:prio_res_leipzig}
 \end{table}
 
-\begin{table}[p]
+\begin{table}
 \centering
 \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill} } lr}
     \toprule
@@ -878,7 +876,7 @@ Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konk
 \label{tab:prio_res_mountainbike}
 \end{table}
 
-\begin{table}[p]
+\begin{table}
 \centering
 \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill} } lr}
     \toprule
@@ -894,8 +892,6 @@ Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konk
 \caption{Nachbarn des Begriffes ``Volkswagen'' nach der Priorisierung}
 \label{tab:prio_res_volkswagen}
 \end{table}
-
-\clearpage
 
 \section{Zusammenfassung}
 
