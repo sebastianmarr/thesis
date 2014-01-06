@@ -1,7 +1,7 @@
 \chapter{Link--Discovery--Durchführung}
 \label{link_discovery}
 
-Dieses Kapitel beschäftigt sich mit den konkret durchgeführten Schritten zur Link Discovery an Beispieldaten. Das Vorgehen und die verwendete Modellierung des Weltausschnittes wurde umfassend in \cref{ld_framework} beschrieben. Im Folgenden wird die initiale Erstellung des Weltausschnittes aus den Daten des Tagging--Systems von Spreadshirt, die Anreicherung durch Clicktracking--Daten, Zerlegung von Wortgruppen in Einzelwörter und Integration des Wortschatzes der Universität Leipzig beschrieben. Anschließend wird die konkrete Priorisierung der Beziehungen mittels evolutionärer Algorithmen erläutert und die Ergebnisse der Link Discovery zusammenfassend ausgewertet.
+Dieses Kapitel beschäftigt sich mit den konkret durchgeführten Schritten zur Link Discovery an Beispieldaten. Das Vorgehen und die verwendete Modellierung des Weltausschnittes wurden umfassend in \cref{ld_framework} beschrieben. Im Folgenden wird die initiale Erstellung des Weltausschnittes aus den Daten des Tagging--Systems von Spreadshirt, die Anreicherung durch Clicktracking--Daten, Zerlegung von Wortgruppen in Einzelwörter und Integration des Wortschatzes der Universität Leipzig erläutert. Anschließend wird die konkrete Priorisierung der Beziehungen mittels evolutionärer Algorithmen erläutert und die Ergebnisse der Link Discovery zusammenfassend ausgewertet.
 
 \section{Initiale Erstellung des Weltausschnittes aus Tagging--Daten}
 \label{ld_tags}
@@ -45,7 +45,7 @@ Gemäß des Mengengerüstes aus \cref{tag_amount} stehen nach dem Import \num{20
 
 An den Tagging--Daten liegen die in \cref{quality} genannten Defekte in Hinblick auf die Datenqualität vor. Diese sollten in einem Bereinigungsschritt reduziert werden. Hierbei liegt das Hauptaugenmerk auf der Erkennung von Duplikaten und später nicht verwertbaren Zeichenketten. Alle durchgeführten Maßnahmen zur Bereinigung beziehen sich hierbei auf das Attribut \emph{tag} eines Tag--Objektes, der Zeichenkette selbst.
 
-In den unbereinigten importierten Daten existieren keine Duplikate in der Art, dass eine Paarung aus Zeichenkette und Sprache immer nur genau einmal in den Daten vorhanden ist. Jedoch enthalten viele der Tags nicht weiter verwertbare Zeichen wie nicht druckbare ASCII Zeichen, Anführungszeichen, Satzzeichen, Sonderzeichen sowie überflüssige Leerzeichen am Anfang und Ende der Zeichenkette. Außerdem existiert in den importierten Daten eine Unterscheidung zwischen Groß- und Kleinschreibung. Diese Unterscheidung bringt im Kontext der Link Discovery keine Vorteile und kann somit entfernt werden.
+In den unbereinigten importierten Daten existieren keine Duplikate in der Art, dass eine Paarung aus Zeichenkette und Sprache immer nur genau einmal in den Daten vorhanden ist. Jedoch enthalten viele der Tags nicht weiter verwertbare Zeichen wie nicht druckbare ASCII--Zeichen, Anführungszeichen, Satzzeichen, Sonderzeichen sowie überflüssige Leerzeichen am Anfang und Ende der Zeichenkette. Außerdem existiert in den importierten Daten eine Unterscheidung zwischen Groß- und Kleinschreibung. Diese Unterscheidung bringt im Kontext der Link Discovery keine Vorteile und kann somit entfernt werden.
 
 \begin{table}
 \centering
@@ -112,7 +112,7 @@ Nach der beschriebenen Reduktion befinden sich noch \num{314351} Tags und \num{2
 
 \subsection{Transformation}
 
-Der Transformationsschritt stellt die Überführung der Daten in die in \cref{world_graph} beschriebene Repräsentation des Weltausschnittes dar. Für die Tagging--Daten bedeutet dies eine Umformung in eine Graphenform, wobei die Kanten des Graphen über Kookkurrenz ermittelt werden. Die genaue Umsetzung dieser Transformation mittels des MapReduce--Programmiermodelles wird in \cref{mapreduce_cooccurence} detailliert beschrieben.
+Der Transformationsschritt stellt die Überführung der Daten in die in \cref{world_graph} beschriebene Repräsentation des Weltausschnittes dar. Für die Tagging--Daten bedeutet dies eine Umformung in eine Graphenform, wobei die Kanten des Graphen über Kookkurrenz ermittelt werden. Die genaue Umsetzung dieser Transformation mittels des MapReduce--Programmiermodells wird in \cref{mapreduce_cooccurence} detailliert beschrieben.
 
 Je Tag wird während der Transformation ein Knotenobjekt erzeugt. Dieses besitzt als benötigte Attribute die \emph{Zeichenkette} und die \emph{Sprache} des Tags, aus dem es erzeugt wurde und repräsentiert somit einen Begriff des Weltausschnittes. Außerdem wird ein Kontext dieses Begriffes im Rahmen des Tagging--Systems erzeugt. Dieser enthält die Anzahl der Verwendungen des Begriffes als Tag und die eindeutigen Bezeichner der Dokumente, also der Artikel und Designs, die mit dem Begriff getaggt wurden. Weiterhin wird für jedes Knotenobjekt ein global eindeutiger Bezeichner generiert, um die spätere Referenzierung der Knoten zu ermöglichen. \cref{lst:tag_transform_node} zeigt ein Beispiel für ein so erzeugtes Knotenobjekt.
 
@@ -153,7 +153,7 @@ Die Erzeugung der Kanten erfolgt wie in \cref{mapreduce_cooccurence} beschrieben
 
 \subsection{Integration}
 
-Da es sich bei der Integration der Tagging--Daten um die initiale Erstellung des Weltausschnittes handelt, ist der letzte Schritt trivial. Die transformierten Daten müssen lediglich in die Zieldatenbank kopiert werden, da noch keine weiteren Daten vorhanden sind, mit denen sie integriert werden müssen.
+Da es sich bei der Integration der Tagging--Daten um die initiale Erstellung des Weltausschnittes handelt, ist der letzte Schritt trivial. Die transformierten Daten sind lediglich in die Zieldatenbank zu kopieren, da noch keine weiteren Daten vorhanden sind, mit denen sie integriert werden müssen.
 
 \subsection{Ergebnisse}
 \label{tagging_results}
@@ -207,7 +207,7 @@ Spreadshirt betreibt ein Clicktracking--System (siehe \cref{clicktracking_theo})
 \label{fig:search_result}
 \end{figure}
 
-Die von diesem System erzeugten Daten können für die Link Discovery von großer Bedeutung sein, da sie eine andere Perspektive auf die Begriffe im Graphen liefern. Die Tags liefern die Sicht der Partner, der Personen, die Inhalte hochladen und verkaufen möchten. Die Klicks beschreiben die Sicht der Käufer, der Personen, die nach Inhalten suchen. Durch die Auswertung der Clicktracking--Daten ergibt sich die Möglichkeit, eine Form der Validierung der durch Partner vergebenen Metadaten zu erhalten. Die Annahme hierbei ist, dass Käufer nur auf Suchergebnisse klicken, die eine inhaltliche Relevanz zum eingegebenen Suchbegriff besitzen und somit ihren Erwartungen bezüglich des Suchbegriffes gerecht werden.
+Die von diesem System erzeugten Daten können für die Link Discovery von großer Bedeutung sein, da sie eine andere Perspektive auf die Begriffe im Graphen liefern. Die Tags liefern die Sicht der Partner, das heißt der Personen, die Inhalte hochladen und verkaufen möchten. Die Klicks beschreiben die Sicht der Käufer, also der Personen, die nach Inhalten suchen. Durch die Auswertung der Clicktracking--Daten ergibt sich die Möglichkeit, eine Form der Validierung der durch Partner vergebenen Metadaten zu erhalten. Die Annahme hierbei ist, dass Käufer nur auf Suchergebnisse klicken, die eine inhaltliche Relevanz zum eingegebenen Suchbegriff besitzen und somit ihren Erwartungen bezüglich des Suchbegriffes gerecht werden.
 
 Wie bereits für die Tagging--Daten, werden im Folgenden auch für das Clicktracking die Schritte Import, Bereinigung, Reduktion, Transformation und Integration (siehe \cref{integration_generic}) näher erläutert. Der Ansatz zur Erzeugung der Verbindungen ist, wie schon bei den Tagging--Daten, kookkurrenzbasiert.
 
@@ -302,13 +302,13 @@ Die Durchführung des Transformationsschrittes erfolgte mittels MapReduce (siehe
 
 Die Integration der erzeugten Daten stellt eine Vereinigung des vorhandenen Weltausschnittes mit dem im Transformationsschritt erzeugten Graphen dar.
 
-Die Knotenmenge wird derart vereinigt, das sie die Eigenschaft behält, dass Paare aus Sprache und Zeichenkette eindeutig sind. Somit werden bei bereits vorhandenen Knoten die zusätzlichen Informationen bezüglich des Clicktrackings als Attribute hinzugefügt. Existiert eine Kombination aus Sprache und Zeichenkette noch nicht im Zielgraph, so wird der entsprechende Knoten eingefügt.
+Die Knotenmenge wird derart vereinigt, dass sie die Eigenschaft behält, dass Paare aus Sprache und Zeichenkette eindeutig sind. Somit werden bei bereits vorhandenen Knoten die zusätzlichen Informationen bezüglich des Clicktrackings als Attribute hinzugefügt. Existiert eine Kombination aus Sprache und Zeichenkette noch nicht im Zielgraphen, so wird der entsprechende Knoten eingefügt.
 
-Da die erzeugten Kanten einen noch nicht im Graph vorhandenen Typ besitzen, müssen keine Kanten zusammengeführt werden. Jedoch werden die Bezeichner der Ziel- und Quellknoten entsprechend angepasst, wenn bei der Integration der Knoten eine Zusammenführung stattgefunden hat.
+Da die erzeugten Kanten einen noch nicht im Graphen vorhandenen Typ besitzen, müssen keine Kanten zusammengeführt werden. Jedoch werden die Bezeichner der Ziel- und Quellknoten entsprechend angepasst, wenn bei der Integration der Knoten eine Zusammenführung stattgefunden hat.
 
 \subsection{Ergebnisse}
 
-Durch die auf die Clicktracking--Daten angewendeten Link--Discovery--Schritte wurden dem Weltausschnitt \num{78237} neue Begriffe und \num{310860} neue Zusammenhänge vom Type \emph{Clicktracking--Kookkurrenz} hinzugefügt.
+Durch die auf die Clicktracking--Daten angewendeten Link--Discovery--Schritte wurden dem Weltausschnitt \num{78237} neue Begriffe und \num{310860} neue Zusammenhänge vom Typ \emph{Clicktracking--Kookkurrenz} hinzugefügt.
 
 Wie schon für die Tagging--Daten in \cref{tagging_results}, wird im folgenden die Verteilung der Clicktracking--Kanten je Knoten als Metrik für die Ergebnisse der Clicktracking--Integration verwendet. Diese ist in \cref{fig:hist_only_clicktracking}, analog zu \cref{fig:hist_only_tags}, als Histogramm mit exponentiell wachsenden Klassen dargestellt.
 
@@ -403,7 +403,7 @@ Wie in \cref{lexical_sources} bereits einführend beschrieben, betreibt die Univ
 
 Neben einem Webportal \cite{ws2013} stellt dieses Projekt eine API bereit, über die die Daten des Wortschatzes programmatisch abgefragt werden können. Diese API wurde mittels einer Bibliothek für die Programmiersprache Ruby \cite{wlapi2013} im Rahmen dieser Arbeit für einen weiteren Integrationsschritt zur Link Discovery genutzt. Dazu wurden die Informationen \emph{Grundform}, \emph{Wortformen}, \emph{Kategorien}, \emph{Synonyme} und \emph{Thesaurus--Beziehungen} ausgewertet (siehe \cref{used_sources}).
 
-Wie bereits für die anderen Datenquellen, werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben (siehe \cref{integration_generic}).
+Wie bereits für die anderen Datenquellen werden im Folgenden auch für den Wortschatz die Schritte des Imports, der Bereinigung, der Reduktion, der Transformation und der Integration beschrieben (siehe \cref{integration_generic}).
 
 \subsection{Import}
 
@@ -494,7 +494,7 @@ Die Transformation der Wortschatz--Daten besteht, wie bereits bei den anderen Da
 
 Die Knoten repräsentieren alle Wörter, die durch die Benutzung der Wortschatz--API bekannt sind. Dazu zählen einerseits sowohl die angefragten Wörter, als auch die von der API zurückgegebenen Wortbeziehungen. Der Kontext dieser durch die Knoten repräsentierten Begriffe enthält die Rohdaten des Wortschatzes, um sie bei gegebenenfalls stattfindenden späteren Analysen nutzen zu können.
 
-Die Kanten die Attribute \emph{Synonyme}, \emph{Thesaurus}, \emph{Grundform} und \emph{Wortformen} können direkt aus den entsprechenden Attributen erzeugt werden und besitzen die entsprechenden Kantentypen. Sie enthalten keine weiteren Attribute, da über diese Beziehungen keine weiteren Informationen verfügbar sind.
+Die Kanten für \emph{Synonyme}, \emph{Thesaurus}, \emph{Grundform} und \emph{Wortformen} können direkt aus den entsprechenden Attributen erzeugt werden und besitzen die entsprechenden Kantentypen. Sie enthalten keine weiteren Attribute, da über diese Beziehungen keine weiteren Informationen verfügbar sind.
 
 \begin{figure}
 \centering
@@ -515,7 +515,7 @@ Zur Integration wird der im Transformationsschritt erzeugte Graph mit dem vorhan
 
 Insgesamt wurden dadurch \num{145023} neue Knoten und \num{50227965} neue Kanten erzeugt.  Dabei entfallen \num{48399466} Kanten auf Kookkurrenz von Kategorien, \num{550270} Kanten auf Wortformen, \num{149381} Kanten auf Grundformen, \num{279118} Kanten auf Synonyme und \num{849730} Kanten auf Thesaurus--Beziehungen.
 
-In \cref{fig:hist_only_wortschatz} ist die Verteilung durch die Integration des Wortschatzes erzeugten Kanten als Histogramm mit exponentiell wachsenden Klassen abgebildet. \cref{tab:only_wortschatz} zeigt statistische Kennzahlen dieser Verteilung.
+In \cref{fig:hist_only_wortschatz} ist die Verteilung der durch die Integration des Wortschatzes erzeugten Kanten als Histogramm mit exponentiell wachsenden Klassen abgebildet. \cref{tab:only_wortschatz} zeigt statistische Kennzahlen dieser Verteilung.
 
 \begin{figure}
 \centering
@@ -542,14 +542,14 @@ In \cref{fig:hist_only_wortschatz} ist die Verteilung durch die Integration des 
 \label{tab:only_wortschatz}
 \end{table}
 
-Bei Inspektion der Daten fällt auf, dass der Großteil der betroffenen Knoten nur eine Wortschatz--Kante besitzt. Jedoch deutet der Hohe Durchschnitt, verbunden mit dem \(Q_{0.75}=10\) darauf hin, dass im Gegensatz zu den anderen Integrationsschritten deutlich mehr Knoten existieren, die viele Kanten besitzen.
+Bei Inspektion der Daten fällt auf, dass der Großteil der betroffenen Knoten nur eine Wortschatz--Kante besitzt. Jedoch deutet der hohe Durchschnitt, verbunden mit dem \(Q_{0.75}=10\) darauf hin, dass im Gegensatz zu den anderen Integrationsschritten deutlich mehr Knoten existieren, die viele Kanten besitzen.
 
 Nachdem alle Anreicherungsschritte durchgeführt und beschrieben wurde, beschäftigt sich der nächste Abschnitt mit den zusammengefassten Ergebnissen der Integrations-- und Anreicherungsschritte.
 
 \section{Ergebnisse der Integrations-- und Anreicherungsschritte}
 \label{lda_results}
 
-In den bisherigen Auswertungen der Integrations-- und Anreicherungsschritte wurden lediglich die Eigenschaften der vom jeweiligen Schritt betroffenen Begriffe analysiert. Dieser Abschnitt beschäftigt sich mit der Veränderung des durch den Graphen repräsentierten Weltausschnittes bei jedem durchgeführten Link--Discovery--Schritt.
+In den bisherigen Auswertungen der Integrations-- und Anreicherungsschritte wurden die Eigenschaften der vom jeweiligen Schritt betroffenen Begriffe analysiert. Dieser Abschnitt beschäftigt sich mit der Veränderung des durch den Graphen repräsentierten Weltausschnittes bei jedem durchgeführten Link--Discovery--Schritt.
 
 \subsection{Anzahl der Knoten und Kanten}
 
@@ -573,7 +573,7 @@ In den bisherigen Auswertungen der Integrations-- und Anreicherungsschritte wurd
 \label{tab:discovery_amounts}
 \end{table}
 
-Bei der Verwendung der Clicktracking--Daten wurden im Verhältnis wenig neue Knoten und Kanten erzeugt. Dies ist im Wesentlichen auf den zum Zeitpunkt des Importes noch geringen Datenbestand zurückzuführen. Daher sollte dieser Schritt zukünftig wiederholt werden, da mit der längeren Laufzeit des Clicktracking--Systems auch ein größeres Potential für neue Verknüpfungen vorhanden ist.
+Bei der Verwendung der Clicktracking--Daten wurden im Verhältnis wenig neue Knoten und Kanten erzeugt. Dies ist im Wesentlichen auf den zum Zeitpunkt des Importes noch geringen Datenbestand zurückzuführen. Daher sollte dieser Schritt zukünftig wiederholt werden, da mit der längeren Laufzeit des Clicktracking--Systems auch ein größeres Potenzial für neue Verknüpfungen vorhanden ist.
 
 \subsection{Verteilung der Kanten}
 
@@ -623,15 +623,15 @@ Neben der absoluten Anzahl der Knoten und Kanten sind bei einer Betrachtung der 
 \label{tab:discovery_edges_per_node}
 \end{table}
 
-\cref{tab:discovery_edges_per_node} zeigt die einige statistische Kennzahlen der Kantenverteilung nach jedem Schritt. Dabei sind das Minimum, das untere, mittlere (Median) und obere Quartil, das Maximum und der Durchschnitt dargestellt.
+\cref{tab:discovery_edges_per_node} zeigt einige statistische Kennzahlen der Kantenverteilung nach jedem Schritt. Dabei sind das Minimum, das untere, mittlere (Median) und obere Quartil, das Maximum und der Durchschnitt dargestellt.
 
 Auffällig ist hierbei, dass die Integration von Clicktracking- und Wortschatz--Daten zu einer Herabsetzung des Medians führten. Dies bedeutet, dass nach Durchführung dieser Schritte verhältnismäßig weniger viel verbundene Knoten im Datenbestand existierten als davor. Jedoch deutet die Entwicklung des Durchschnittes nach der Integration der Wortschatz--Daten darauf hin, dass die Knotenanzahl viel verbundener Knoten nach diesem Schritt deutlich größer geworden ist.
 
-Das Absinken des Durchschnittes nach Integration der Clicktracking--Daten kann in der geringen Menge der Daten begründet werden. Durch die geringe Anzahl von Kookkurrenzen konnten viel verbundene Knoten keinen relevanten Zugewinn an Verbindungen verzeichnen, während für wenig verbundene Knoten verhältnismäßig mehr neue Verbindungen hinzukamen.
+Das Absinken des Durchschnittes nach Integration der Clicktracking--Daten kann mit der geringen Menge der Daten begründet werden. Durch die geringe Anzahl von Kookkurrenzen konnten viel verbundene Knoten keinen relevanten Zugewinn an Verbindungen verzeichnen, während für wenig verbundene Knoten verhältnismäßig mehr neue Verbindungen hinzukamen.
 
-Die Entwicklung der Verteilung zeigt, dass der Anteil wenig verbundener Knoten an der Knotenmenge ständig gewachsen ist. Daraus kann geschlussfolgert werden, mit jedem Schritt mehr Knoten existierten, die überhaupt Verbindungen besitzen. Speziell die Integration der Wortschatz--Daten hat gleichzeitig den Anteil der wenig verbundenen als auch der viel verbundenen Knoten erhöht.
+Die Entwicklung der Verteilung zeigt, dass der Anteil wenig verbundener Knoten an der Knotenmenge ständig gewachsen ist. Daraus kann geschlussfolgert werden, dass mit jedem Schritt mehr Knoten existierten, die überhaupt Verbindungen besitzen. Speziell die Integration der Wortschatz--Daten hat gleichzeitig den Anteil der wenig verbundenen als auch der viel verbundenen Knoten erhöht.
 
-Generell lässt sich festhalten, dass die Anzahl viel verbundener Knoten gemessen an der Gesamtanzahl relativ klein ist. Die Auswirkungen dessen hängen jedoch stark von der Anwendung der Daten ab und sind im Rahmen dieser Arbeit nicht beurteilbar.
+Generell lässt sich festhalten, dass die Anzahl viel verbundener Knoten, gemessen an der Gesamtanzahl, relativ klein ist. Die Auswirkungen dessen hängen jedoch stark von der Anwendung der Daten ab und sind im Rahmen dieser Arbeit nicht beurteilbar.
 
 Nach der quantitativen Auswertung der Link--Discovery--Schritte wird im nächsten Abschnitt die konkret durchgeführte Priorisierung der Beziehungen beschrieben.
 
@@ -653,7 +653,7 @@ Zur Erläuterung der Vorgehensweise wird zum einen die Stichprobenauswahl, zum a
 
 \subsubsection{Stichprobenauswahl}
 
-Zunächst sollte die Methode zur Auswahl der Stichproben erläutert werden. Insgesamt wurden fünfzehn Knoten ausgewählt, deren Beziehungen optimiert werden sollen. Die Auswahl der Knoten richtete sich nach der Popularität von Suchbegriffen auf der Website von Spreadshirt. Dazu wurden alle Begriffe mit mehr als eintausend Suchen herangezogen und diese nach Häufigkeit der Suchen geordnet. Daraus wurden zufällig je fünf Begriffe bis zum unteren Quartil, fünf Begriffe zwischen unterem und oberen Quartil und fünf Begriffe über dem oberen Quartil ausgewählt. Die ausgewählten Begriffe, deren Kantengewichtungen lokal optimiert werden sollen, lauten: \emph{Kopfkissenbezug}, \emph{Student}, \emph{Volkswagen}, \emph{Marathon}, \emph{Wow}, \emph{Krankenschwester}, \emph{Mountainbike}, \emph{Hammer}, \emph{Polska}, \emph{Regenbogen}, \emph{Minecraft}, \emph{Kind}, \emph{Dubstep}, \emph{Leipzig} und \emph{Valentinstag}.
+Zunächst soll die Methode zur Auswahl der Stichproben erläutert werden. Insgesamt wurden fünfzehn Knoten ausgewählt, deren Beziehungen optimiert werden sollen. Die Auswahl der Knoten richtete sich nach der Popularität von Suchbegriffen auf der Website von Spreadshirt. Dazu wurden alle Begriffe mit mehr als eintausend Suchen herangezogen und diese nach Häufigkeit der Suchen geordnet. Daraus wurden zufällig je fünf Begriffe bis zum unteren Quartil, fünf Begriffe zwischen unterem und oberen Quartil und fünf Begriffe über dem oberen Quartil ausgewählt. Die ausgewählten Begriffe, deren Kantengewichtungen lokal optimiert werden sollen, lauten: \emph{Kopfkissenbezug}, \emph{Student}, \emph{Volkswagen}, \emph{Marathon}, \emph{Wow}, \emph{Krankenschwester}, \emph{Mountainbike}, \emph{Hammer}, \emph{Polska}, \emph{Regenbogen}, \emph{Minecraft}, \emph{Kind}, \emph{Dubstep}, \emph{Leipzig} und \emph{Valentinstag}.
 
 Ziel dieser Auswahl war, eine möglichst vielfältige Verteilung der einzelnen Kantentypen zu erreichen, aus welcher sich nach Durchführung der Priorisierung möglicherweise Erkenntnisse ableiten lassen, ob die Priorisierung nur lokal oder auch global durchgeführt werden kann.
 
@@ -661,7 +661,7 @@ Nach Auswahl der Stichproben muss der Genotyp der am evolutionären Algorithmus 
 
 \subsubsection{Genotyp}
 
-Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die die Gewichtung der Kantentypen untereinander beeinflussen. Daher wird jedes Individuum als Objekt repräsentiert, dass zwölf Attribute besitzt. Davon sind neun Attribute reellwertig und drei Attribute vom Aufzählungstyp \emph{Kookkurrenzmaß}.
+Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die die Gewichtung der Kantentypen untereinander beeinflussen. Daher wird jedes Individuum als Objekt repräsentiert, das zwölf Attribute besitzt. Davon sind neun Attribute reellwertig und drei Attribute vom Aufzählungstyp \emph{Kookkurrenzmaß}.
 
 \begin{figure}
 \centering
@@ -670,7 +670,7 @@ Jeder Lösungskandidat wird durch die Werte der zwölf Parameter definiert, die 
 \label{fig:genotype}
 \end{figure}
 
-Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute beschränkt sich auf das Intervall \(W=[0,1] \in \mathbb{R}\). Die Kookkurrenzmaße entsprechen den in \cref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in \cref{fig:genotype} als UML--Klassendiagramm dargestellt. \cref{lst:genotyope} zeigt beispielhaft ein Individuum in JSON--Notation.
+Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. Sie können nur relativ zu den anderen Kantengewichten betrachtet werden und sind somit nur im Rahmen der Optimierung von Interesse. Der Wertebereich dieser Attribute beschränkt sich auf das Intervall \(W=[0,1] \in \mathbb{R}\). Die Kookkurrenzmaße entsprechen den in \cref{measures} genannten, also \emph{Dice}, \emph{Jaccard} und \emph{Kosinus}. Der Genotyp ist in \cref{fig:genotype} als UML--Klassendiagramm dargestellt. \cref{lst:genotyope} zeigt beispielhaft ein Individuum in JSON--Notation.
 
 \begin{lstlisting}[language=json, label={lst:genotyope}, caption={JSON--Beispiel für ein Individuum}, float]
 {
@@ -693,13 +693,13 @@ Die reellwertigen Attribute stellen ein Gewicht des jeweiligen Kantentyps dar. S
 
 Im Initialisierungsschritt wird die anfängliche Population für jede der Stichproben gebildet. Dazu muss zuerst eine geeignet erscheinende Populationsgröße festgelegt werden.
 
-In jeder Generation müssen im Selektionsschritt alle Individuen bewertet werden. Wie in \cref{prio_evo} bereits erläutert wurde, kann dies nur mit menschlicher Interaktion erfolgen. Somit sollte die Populationsgröße möglichst gering sein, um mit der gleichen Anzahl Bewertungen eine größere Anzahl von Generationen zu durchlaufen. Dies geschieht auf Kosten der Diversität in der Population. Jedoch wurde im Rahmen dieser Arbeit dieser Ansatz gewählt, um möglichst viele Möglichkeiten zu haben, die Parameter zu optimieren.
+In jeder Generation müssen im Selektionsschritt alle Individuen bewertet werden. Wie in \cref{prio_evo} bereits erläutert wurde, kann dies nur mit menschlicher Interaktion erfolgen. Somit sollte die Populationsgröße möglichst gering sein, um mit der gleichen Anzahl Bewertungen eine größere Anzahl von Generationen zu durchlaufen. Dies geschieht auf Kosten der Diversität in der Population. Jedoch wurde im Rahmen dieser Arbeit dieser Ansatz gewählt, um möglichst viele Optionen zu haben, die Parameter zu optimieren.
 
 Es wurde eine Populationsgröße von zehn Individuen je Stichprobe gewählt. Somit müssen in jeder Generation einhundertfünfzig Individuen bewertet werden. Bei der Initialisierung wurden die Variablen jedes erzeugten Individuums zufällig gewählt.
 
 \subsubsection{Selektion}
 
-Die Bestimmung einer Fitnessfunktion für die Optimierung der Link Discovery gestaltet sich durch die Notwendigkeit menschlicher Beurteilung als schwierig. Eine solche Fitnessbestimmung müsste derart erfolgen, dass ein Benutzer jedem Individuum einen reellwertigen Fitnesswert zuweist. Dies gestaltet ist jedoch auf Grund der hohen Anzahl von Individuen nicht praktikabel.
+Die Bestimmung einer Fitnessfunktion für die Optimierung der Link Discovery gestaltet sich durch die Notwendigkeit menschlicher Beurteilung als schwierig. Eine solche Fitnessbestimmung müsste derart erfolgen, dass ein Benutzer jedem Individuum einen reellwertigen Fitnesswert zuweist. Dies gestaltet sich jedoch auf Grund der hohen Anzahl von Individuen nicht praktikabel.
 
 Aus diesem Grund werden die Individuen, die in die nächste Generation übernommen werden, direkt durch den bewertenden Benutzer umgesetzt. Die umgesetzte Selektion erfolgt durch die Durchführung von Wettkämpfen. Hierzu werden in jeder Generation je fünf Paare von Individuen gebildet. Diese Paarungen stellen die Wettkämpfe dar, bei denen der Benutzer den Gewinner bestimmt. Alle Gewinner werden selektiert und im Reproduktionsschritt weiter verwendet.
 
@@ -735,7 +735,7 @@ Als Verfahren zur Rekombination wurde der \emph{Ein--Punkt--Crossover} \cite{kw2
 
 \paragraph{Mutation}
 
-Zur Mutation der reellwertigen Kantengewichtungen wurde das Verfahren der \emph{Gauß-Mutation} \cite{kw2007} gewählt. Dabei wird zu jeder reellwertigen Variablen des Genotyps ein normalverteilter Zufallswert addiert. Verlässt der entstehende Wert das zulässige Intervall, so wird er auf die entsprechende Intervallschranke angepasst. Die Gauß-Mutation macht daher große Änderungen der Variable möglich, aber weniger Wahrscheinlich als kleine Änderungen. Sie eignet sich somit gut, um Diversität in der Population zu erzeugen. Konkret wurde in der Umsetzung der Priorisierung eine auf das Intervall \((0,1)\) angepasste Normalverteilung mit Erwartungswert \(\mu=0\) und Varianz \(\sigma=0.5\) gewählt. Die Variablen für die Kookkurrenzmaße werden nicht mutiert.
+Zur Mutation der reellwertigen Kantengewichtungen wurde das Verfahren der \emph{Gauß-Mutation} \cite{kw2007} gewählt. Dabei wird zu jeder reellwertigen Variablen des Genotyps ein normalverteilter Zufallswert addiert. Verlässt der entstehende Wert das zulässige Intervall, so wird er auf die entsprechende Intervallschranke angepasst. Die Gauß-Mutation macht daher große Änderungen der Variable möglich, aber weniger wahrscheinlich als kleine Änderungen. Sie eignet sich somit gut, um Diversität in der Population zu erzeugen. Konkret wurde in der Umsetzung der Priorisierung eine auf das Intervall \((0,1)\) angepasste Normalverteilung mit Erwartungswert \(\mu=0\) und Varianz \(\sigma=0.5\) gewählt. Die Variablen für die Kookkurrenzmaße werden nicht mutiert.
 
 Nachdem in diesem Abschnitt die konkrete Umsetzung der Priorisierung mittels interaktiver evolutionärer Algorithmen beschrieben wurde, folgt im nächsten Abschnitt die Darstellung und Diskussion der Ergebnisse.
 
@@ -849,7 +849,7 @@ Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konk
     Begriff & Gewicht \\
     \midrule
     i heart leipzig & \num{1.18} \\
-    tshirts leizig & \num{1.17} \\
+    tshirts leipzig & \num{1.17} \\
     t-shirts leipzig & \num{1.17} \\
     leipzig stadt & \num{1.09} \\
     deutschland leipzig & \num{1.09} \\
@@ -895,6 +895,6 @@ Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konk
 
 \section{Zusammenfassung}
 
-In diesem Kapitel wurde die am praktischen Beispiel die Anwendung des in \cref{ld_framework} beschriebenen Link--Discovery--Frameworks dargestellt. Dazu wurden die initiale Erstellung des Weltausschnittes aus den Tagging--Daten von Spreadshirt, die Anreicherung mit den Daten des Clicktracking--Systems, durch Zerlegung von Wortgruppen und Integration des Wortschatzes der Universität Leipzig ausführlich erläutert. Für jeden dieser Schritte wurden die quantitativen Ergebnisse dargestellt und diskutiert. Außerdem wurde die quantitative Entwicklung des gesamten Weltausschnittes dargelegt. Anschließend wurden die erzeugten Beziehungen mittels eines interaktiven evolutionären Algorithmus priorisiert und die Ergebnisse ausgewertet.
+In diesem Kapitel wurde am praktischen Beispiel die Anwendung des in \cref{ld_framework} beschriebenen Link--Discovery--Frameworks dargestellt. Dazu wurden die initiale Erstellung des Weltausschnittes aus den Tagging--Daten von Spreadshirt, die Anreicherung mit den Daten des Clicktracking--Systems, durch Zerlegung von Wortgruppen und Integration des Wortschatzes der Universität Leipzig ausführlich erläutert. Für jeden dieser Schritte wurden die quantitativen Ergebnisse dargestellt und diskutiert. Außerdem wurde die quantitative Entwicklung des gesamten Weltausschnittes dargelegt. Anschließend wurden die erzeugten Beziehungen mittels eines interaktiven evolutionären Algorithmus priorisiert und die Ergebnisse ausgewertet.
 
 Nachdem die praktische Durchführung der Link Discovery beschrieben wurde, werden im folgenden Kapitel ausgewählte Aspekte der technischen Umsetzung erläutert.
