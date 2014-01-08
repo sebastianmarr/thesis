@@ -1,7 +1,7 @@
 \chapter{Link--Discovery--Durchführung}
 \label{link_discovery}
 
-Dieses Kapitel beschäftigt sich mit den konkret durchgeführten Schritten zur Link Discovery an Beispieldaten. Das Vorgehen und die verwendete Modellierung des Weltausschnittes wurden umfassend in \cref{ld_framework} beschrieben. Im Folgenden wird die initiale Erstellung des Weltausschnittes aus den Daten des Tagging--Systems von Spreadshirt, die Anreicherung durch Clicktracking--Daten, Zerlegung von Wortgruppen in Einzelwörter und Integration des Wortschatzes der Universität Leipzig erläutert. Anschließend wird die konkrete Priorisierung der Beziehungen mittels evolutionärer Algorithmen erläutert und die Ergebnisse der Link Discovery zusammenfassend ausgewertet.
+Dieses Kapitel beschäftigt sich mit den konkret durchgeführten Schritten zur Link Discovery an Beispieldaten. Das Vorgehen und die verwendete Modellierung des Weltausschnittes wurden umfassend in \cref{ld_framework} beschrieben. Im Folgenden wird die initiale Erstellung des Weltausschnittes aus den Daten des Tagging--Systems von Spreadshirt, die Anreicherung durch Clicktracking--Daten, Zerlegung von Wortgruppen in Einzelwörter und Integration des Wortschatzes der Universität Leipzig erläutert. Anschließend wird die konkrete Priorisierung der Beziehungen mittels evolutionärer Algorithmen dargestellt und die Ergebnisse der Link Discovery zusammenfassend ausgewertet.
 
 \section{Initiale Erstellung des Weltausschnittes aus Tagging--Daten}
 \label{ld_tags}
@@ -45,7 +45,7 @@ Gemäß des Mengengerüstes aus \cref{tag_amount} stehen nach dem Import \num{20
 
 An den Tagging--Daten liegen die in \cref{quality} genannten Defekte in Hinblick auf die Datenqualität vor. Diese sollten in einem Bereinigungsschritt reduziert werden. Hierbei liegt das Hauptaugenmerk auf der Erkennung von Duplikaten und später nicht verwertbaren Zeichenketten. Alle durchgeführten Maßnahmen zur Bereinigung beziehen sich hierbei auf das Attribut \emph{tag} eines Tag--Objektes, der Zeichenkette selbst.
 
-In den unbereinigten importierten Daten existieren keine Duplikate in der Art, dass eine Paarung aus Zeichenkette und Sprache immer nur genau einmal in den Daten vorhanden ist. Jedoch enthalten viele der Tags nicht weiter verwertbare Zeichen wie nicht druckbare ASCII--Zeichen, Anführungszeichen, Satzzeichen, Sonderzeichen sowie überflüssige Leerzeichen am Anfang und Ende der Zeichenkette. Außerdem existiert in den importierten Daten eine Unterscheidung zwischen Groß- und Kleinschreibung. Diese Unterscheidung bringt im Kontext der Link Discovery keine Vorteile und kann somit entfernt werden.
+In den unbereinigten importierten Daten existieren keine Duplikate in der Art, dass eine Paarung aus Zeichenkette und Sprache immer nur genau einmal in den Daten vorhanden ist. Jedoch enthalten viele der Tags nicht weiter verwertbare Zeichen wie nicht druckbare ASCII--Zeichen, Anführungszeichen, Satzzeichen, Sonderzeichen sowie überflüssige Leerzeichen am Anfang und Ende der Zeichenkette. Außerdem existiert in den importierten Daten eine Unterscheidung zwischen Groß- und Kleinschreibung. Diese Unterscheidung bringt im Kontext der Link Discovery keine Vorteile und kann folglich entfernt werden.
 
 \begin{table}
 \centering
@@ -158,7 +158,7 @@ Da es sich bei der Integration der Tagging--Daten um die initiale Erstellung des
 \subsection{Ergebnisse}
 \label{tagging_results}
 
-Durch die Schritte, die zur Link Discovery aus den Tagging--Daten verwendet wurden, wurden insgesamt \num{314351} Knoten und \num{21834868} Kanten erzeugt.
+Durch auf die Tagging--Daten angewendeten Link--Discovery--Schritte wurden insgesamt \num{314351} Knoten und \num{21834868} Kanten erzeugt.
 
 Eine mögliche Metrik für die quantitativen Eigenschaften der Ergebnisse ist die Verteilung der ausgehenden Kanten, die jeder Knoten besitzt. Diese ist als Histogramm in \cref{fig:hist_only_tags} dargestellt. Hierbei ist anzumerken, dass die Klassen des Histogrammes exponentiell breiter werden, um Knoten, die sehr viele Kanten besitzen, im Histogramm darstellen zu können.
 
@@ -198,7 +198,7 @@ Nachdem in diesem Abschnitt die Integration der Tagging--Daten beschrieben wurde
 \section{Anreicherung des Weltausschnittes mit Clicktracking--Daten}
 \label{clicktracking}
 
-Spreadshirt betreibt ein Clicktracking--System (siehe \cref{clicktracking_theo}), welches die Klicks der Benutzer auf Artikel und Designs auf Suchergebnisseiten aufzeichnet. Dabei ist unerheblich, ob der Benutzer bei Spreadshirt registriert und angemeldet ist. Dieses System sammelt Daten von beiden Spreadshirt--Plattformen (siehe \cref{platforms}). In \cref{fig:search_result} ist beispielhaft eine Suchergebnisseite der Spreadshirt--Plattform abgebildet, welche die gefundenen Designs für eine Suchanfrage auflistet.
+Spreadshirt betreibt ein Clicktracking--System (siehe \cref{clicktracking_theo}), welches die Klicks der Benutzer auf Artikel und Designs auf Suchergebnisseiten aufzeichnet. Dabei ist unerheblich, ob der Benutzer bei Spreadshirt registriert oder im Moment des Klicks angemeldet ist. Dieses System sammelt Daten von beiden Spreadshirt--Plattformen (siehe \cref{platforms}). In \cref{fig:search_result} ist beispielhaft eine Suchergebnisseite der Spreadshirt--Plattform abgebildet, welche die gefundenen Designs für eine Suchanfrage auflistet.
 
 \begin{figure}
 \centering
@@ -214,7 +214,7 @@ Wie bereits für die Tagging--Daten, werden im Folgenden auch für das Clicktrac
 \subsection{Import}
 \label{click_import}
 
-Das Clicktracking--System erzeugt Dateien im JSON--Format, die zu jedem Klick auf einer Ergebnisseite die wesentlichen Informationen enthalten. Pro Klick ist ein JSON--Dokument in den Dateien abgespeichert. Ein Beispiel für ein solches Dokument ist in \cref{lst:click_raw} dargestellt.
+Das Clicktracking--System erzeugt Dateien im JSON--Format, die zu jedem Klick auf einer Ergebnisseite die wesentlichen Informationen enthalten. Pro Klick ist ein JSON--Dokument abgespeichert. Ein Beispiel für ein solches Dokument ist in \cref{lst:click_raw} dargestellt.
 
 \begin{lstlisting}[language=json, label={lst:click_raw}, caption={JSON--Beispiel für ein Clicktracking--Rohdokument}, float]
 {
@@ -346,11 +346,11 @@ Nachdem die Anreicherung der Clicktracking--Daten durchgeführt wurde, beschäft
 \section{Anreicherung des Weltausschnittes durch Zerlegung von Wortgruppen}
 \label{decomposition}
 
-Die Zerlegung von Tags, die aus mehr als einem Wort bestehen, ist ein Anreicherungsschritt durch das Mining von schon im Weltausschnitt vorhandenen Daten (siehe \cref{enrichment_mining}). Neben der Erzeugung zusätzlicher Verbindungen ist er für weitere Integrationsschritte von Nutzen, da es Vorteile bringt, wenn möglichst viele Einzelwörter im Weltausschnitt gespeichert sind (siehe \cref{wortschatz}).
+Die Zerlegung von Begriffen, die aus mehr als einem Wort bestehen, ist ein Anreicherungsschritt durch das Mining von schon im Weltausschnitt vorhandenen Daten (siehe \cref{enrichment_mining}). Neben der Erzeugung zusätzlicher Verbindungen ist er für weitere Integrationsschritte von Nutzen, da es Vorteile bringt, wenn möglichst viele Einzelwörter im Weltausschnitt gespeichert sind (siehe \cref{wortschatz}).
 
 \subsection{Vorgehensweise}
 
-Zum Zeitpunkt des Importes befanden sich \num{147364} Begriffe im Weltausschnitt, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozent aller bereinigten Tags, die als deutsch gekennzeichnet sind. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Tags auch Wörter enthalten sind, die nicht als Einzelwörter existieren.
+Zum Zeitpunkt des Importes befanden sich \num{147364} Begriffe im Weltausschnitt, die aus mehreren Wörtern bestehen. Dies entspricht \num{47} Prozent aller bereinigten Tags, die als deutsch gekennzeichnet sind. Dieser Umstand legt die Vermutung nahe, dass in diesen zusammengesetzten Begriffen auch Wörter enthalten sind, die nicht als Einzelwörter im Weltausschnitt existieren.
 
 \begin{figure}
 \centering
@@ -513,7 +513,7 @@ Zur Integration wird der im Transformationsschritt erzeugte Graph mit dem vorhan
 
 \subsection{Ergebnisse}
 
-Insgesamt wurden dadurch \num{145023} neue Knoten und \num{50227965} neue Kanten erzeugt.  Dabei entfallen \num{48399466} Kanten auf Kookkurrenz von Kategorien, \num{550270} Kanten auf Wortformen, \num{149381} Kanten auf Grundformen, \num{279118} Kanten auf Synonyme und \num{849730} Kanten auf Thesaurus--Beziehungen.
+Insgesamt wurden durch die Integration der Wortschatz--Daten \num{145023} neue Knoten und \num{50227965} neue Kanten erzeugt.  Dabei entfallen \num{48399466} Kanten auf Kookkurrenz von Kategorien, \num{550270} Kanten auf Wortformen, \num{149381} Kanten auf Grundformen, \num{279118} Kanten auf Synonyme und \num{849730} Kanten auf Thesaurus--Beziehungen.
 
 In \cref{fig:hist_only_wortschatz} ist die Verteilung der durch die Integration des Wortschatzes erzeugten Kanten als Histogramm mit exponentiell wachsenden Klassen abgebildet. \cref{tab:only_wortschatz} zeigt statistische Kennzahlen dieser Verteilung.
 
@@ -542,7 +542,7 @@ In \cref{fig:hist_only_wortschatz} ist die Verteilung der durch die Integration 
 \label{tab:only_wortschatz}
 \end{table}
 
-Bei Inspektion der Daten fällt auf, dass der Großteil der betroffenen Knoten nur eine Wortschatz--Kante besitzt. Jedoch deutet der hohe Durchschnitt, verbunden mit dem \(Q_{0.75}=10\) darauf hin, dass im Gegensatz zu den anderen Integrationsschritten deutlich mehr Knoten existieren, die viele Kanten besitzen.
+Bei Inspektion der Daten fällt auf, dass der Großteil der betroffenen Knoten nur eine Wortschatz--Kante besitzt. Jedoch deutet der hohe Durchschnitt, verbunden mit dem Umstand, dass \(Q_{0.75}=10\) ist, darauf hin, dass im Gegensatz zu den anderen Integrationsschritten deutlich mehr Knoten existieren, die viele Kanten besitzen.
 
 Nachdem alle Anreicherungsschritte durchgeführt und beschrieben wurde, beschäftigt sich der nächste Abschnitt mit den zusammengefassten Ergebnissen der Integrations-- und Anreicherungsschritte.
 
@@ -638,11 +638,11 @@ Nach der quantitativen Auswertung der Link--Discovery--Schritte wird im nächste
 \section{Priorisierung der Beziehungen}
 \label{lda_prio}
 
-Im Folgenden wird beschrieben, wie die in den Abschnitten \labelcref{ld_tags,clicktracking,decomposition,wortschatz} durch Link Discovery erzeugten Beziehungen zwischen den Begriffen des Weltausschnittes priorisiert wurden. Der Prozess der Priorisierung folgt grundsätzlich dem in \cref{prio_evo} skizzierten Prozess unter Zuhilfenahme evolutionärer Algorithmen. Dazu wird die Vorgehensweise und die Implementierung der Komponenten des evolutionären Algorithmus erläutert und die Ergebnisse ausgewertet.
+Im Folgenden wird beschrieben, wie die in den Abschnitten \labelcref{ld_tags,clicktracking,decomposition,wortschatz} durch Link Discovery erzeugten Zusammenhängen zwischen den Begriffen des Weltausschnittes priorisiert wurden. Der Prozess der Priorisierung folgt grundsätzlich dem in \cref{prio_evo} skizzierten Prozess unter Zuhilfenahme evolutionärer Algorithmen. Dazu wird die Vorgehensweise und die Implementierung der Komponenten des evolutionären Algorithmus erläutert und die Ergebnisse ausgewertet.
 
-Zum Zeitpunkt der Priorisierung befanden sich neun verschiedene Beziehungstypen im Weltausschnitt: \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Kategorie--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Thesaurus--Beziehung} und \emph{Zerlegung}.
+Zum Zeitpunkt der Priorisierung befanden sich neun verschiedene Zusammenhangstypen im Weltausschnitt: \emph{Tag--Kookkurrenz}, \emph{Klick--Kookkurrenz}, \emph{Kategorie--Kookkurrenz}, \emph{Zusammensetzung}, \emph{Wortform}, \emph{Grundform}, \emph{Synonym}, \emph{Thesaurus--Beziehung} und \emph{Zerlegung}.
 
-Der Priorisierungsprozess versucht nun, diese Beziehungstypen gegeneinander zu gewichten, um für einen Anwendungsfall relevante Nachbarn eines Begriffes zu finden (siehe \cref{prioritization}). Dazu muss jedem Typ ein relatives Gewicht zu den anderen Typen zugeordnet werden. Beziehungen, die durch Kookkurrenz berechnet wurden, besitzen bereits aufgrund der angegebenen Kookkurrenzmaße ein Kantengewicht. Jedoch muss hierbei festgelegt werden, welches Maß für das Kantengewicht herangezogen werden und in welchem Verhältnis zu den Gewichten anderer Kantentypen es stehen soll.
+Der Priorisierungsprozess versucht nun, diese Zusammenhangstypen gegeneinander zu gewichten, um für einen Anwendungsfall relevante Nachbarn eines Begriffes zu finden (siehe \cref{prioritization}). Dazu muss jedem Typ ein relatives Gewicht zu den anderen Typen zugeordnet werden. Beziehungen, die durch Kookkurrenz berechnet wurden, besitzen bereits aufgrund der angegebenen Kookkurrenzmaße ein Kantengewicht. Jedoch muss hierbei festgelegt werden, welches Maß für das Kantengewicht herangezogen werden und in welchem Verhältnis zu den Gewichten anderer Kantentypen es stehen soll.
 
 Somit wird zum Zwecke der Priorisierung eine Gewichtung von zwölf verschiedenen Parametern gesucht. Der nächste Abschnitt beschäftigt sich mit dem zur Priorisierung implementierten evolutionären Algorithmus.
 
@@ -895,6 +895,6 @@ Nach den quantitativen Ergebnissen der Priorisierung werden nachfolgend die konk
 
 \section{Zusammenfassung}
 
-In diesem Kapitel wurde am praktischen Beispiel die Anwendung des in \cref{ld_framework} beschriebenen Link--Discovery--Frameworks dargestellt. Dazu wurden die initiale Erstellung des Weltausschnittes aus den Tagging--Daten von Spreadshirt, die Anreicherung mit den Daten des Clicktracking--Systems, durch Zerlegung von Wortgruppen und Integration des Wortschatzes der Universität Leipzig ausführlich erläutert. Für jeden dieser Schritte wurden die quantitativen Ergebnisse dargestellt und diskutiert. Außerdem wurde die quantitative Entwicklung des gesamten Weltausschnittes dargelegt. Anschließend wurden die erzeugten Beziehungen mittels eines interaktiven evolutionären Algorithmus priorisiert und die Ergebnisse ausgewertet.
+In diesem Kapitel wurde am praktischen Beispiel die Anwendung des in \cref{ld_framework} beschriebenen Link--Discovery--Frameworks dargestellt. Dazu wurden die initiale Erstellung des Weltausschnittes aus den Tagging--Daten von Spreadshirt, die Anreicherung mit den Daten des Clicktracking--Systems, durch Zerlegung von Wortgruppen und Integration des Wortschatzes der Universität Leipzig ausführlich erläutert. Für jeden dieser Schritte wurden die quantitativen Ergebnisse dargestellt und diskutiert. Außerdem wurde die quantitative Entwicklung des gesamten Weltausschnittes dargelegt. Anschließend wurden die erzeugten Beziehungen mittels eines interaktiven evolutionären Algorithmus priorisiert und die Ergebnisse präsentiert.
 
 Nachdem die praktische Durchführung der Link Discovery beschrieben wurde, werden im folgenden Kapitel ausgewählte Aspekte der technischen Umsetzung erläutert.

@@ -3,7 +3,7 @@
 
 \emph{Link Discovery} \cite{na2011, vbgk2009}, oder \emph{Link Prediction} \cite{twak2003, nk2007}, bezeichnet Methoden des Data Minings \cite{hkp2012}, die zum Ziel haben, Verbindungen zwischen Objekten herzustellen. Diese Verbindungen werden aus vorhandenen Daten abgeleitet.
 
-Das folgende Kapitel beschreibt das Framework, das für die Link Discovery im Rahmen dieser Arbeit angewendet wurde. Das Framework beschreibt die Kombination aus dem modellierten Weltausschnitt, dem Prozess zur Herstellung der Beziehungen, Kookkurrenz als Maß für Beziehungen, Graphen als Mittel zur Beschreibung des Weltausschnittes, möglichen Datenquellen und evolutionären Algorithmen als Mittel zur Priorisierung der erzeugten Beziehungen.
+Das folgende Kapitel spezifiziert das Framework, das für die Link Discovery im Rahmen dieser Arbeit angewendet wurde. Das Framework beschreibt die Kombination aus dem modellierten Weltausschnitt, dem Prozess zur Herstellung der Beziehungen, Kookkurrenz als Maß für Beziehungen, Graphen als Mittel zur Beschreibung des Weltausschnittes, möglichen Datenquellen und evolutionären Algorithmen als Mittel zur Priorisierung der erzeugten Beziehungen.
 
 \section{Modell des Weltausschnittes}
 \label{world_model}
@@ -67,7 +67,7 @@ Der Reduktionsschritt dient zur Verkleinerung der Datenmenge. Dazu gehören beis
 \paragraph{Transformation}
 \label{transformation}
 
-Der Schritt der Transformation überführt die Daten schließlich in das Modell des Weltausschnittes. Dies bedeutet, dass die Datensätze in Begriffe und Beziehungen umgewandelt werden. Dabei sollten möglichst viele Informationen über den Kontext der Begriffe erhalten bleiben. Die Methode, nachder diese Transformation vorgenommen wird, hängt von der Datenquelle ab. Generell werden die Beziehungen meist aus dem Kontext der Begriffe, wie er in der Datenquelle vorliegt, gebildet. Ein Mittel für die Beziehungserzeugung ist die Kookkurrenz, welche in \cref{co-occurence} erläutert wird. Somit stellt der Transformationsschritt die wichtigste Komponente für die Integration einer Datenquelle dar.
+Der Schritt der Transformation überführt die Daten schließlich in das Modell des Weltausschnittes. Dies bedeutet, dass die Datensätze in Begriffe und Beziehungen umgewandelt werden. Dabei sollten möglichst viele Informationen über den Kontext der Begriffe erhalten bleiben. Die Methode, nach der diese Transformation vorgenommen wird, hängt von der Datenquelle ab. Generell werden die Beziehungen meist aus dem Kontext der Begriffe, wie er in der Datenquelle vorliegt, gebildet. Ein Mittel für die Beziehungserzeugung ist die Kookkurrenz, welche in \cref{co-occurence} erläutert wird. Somit stellt der Transformationsschritt die wichtigste Komponente für die Integration einer Datenquelle dar.
 
 \paragraph{Integration}
 
@@ -106,7 +106,7 @@ Um die zusätzliche Datenquelle zur Link Discovery zu nutzen, werden die Schritt
 \subsection{Priorisierung von Beziehungen}
 \label{prioritization}
 
-Ziel des Priorisierungsschrittes der Link Discovery ist das Finden einer Gewichtung der Zusammenhangstypen, die für einen Anwendungsfall relevante Nachbarn zu einem Begriff liefert. Die Relevanz kann jedoch nur von einem Benutzer bewertet werden. \cref{fig:prioritization} stellt den Priorisierungsprozess dar.
+Ziel des Priorisierungsschrittes der Link Discovery ist das Finden einer Gewichtung der Zusammenhangstypen, die für einen Anwendungsfall relevante Nachbarn zu einem Begriff liefert. Die Relevanz kann jedoch nur von einem Benutzer bewertet werden. \cref{fig:prioritization} stellt den Priorisierungsprozess als FMC--Petri--Netz dar.
 
 \begin{figure}
 \centering
@@ -145,7 +145,7 @@ Die Ähnlichkeit zwischen zwei Dokumenten kann grundsätzlich nach \textcite{at1
 Somit lässt sich Ähnlichkeit \(s(A,B)\) zwischen den Dokumenten, die durch die Mengen \(A\) und \(B\) dargestellt werden, definieren durch:
 \[s(A,B) = F(A \cap B, A-B, B-A)\]
 
-Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein--Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können merkmalsbasierte Ähnlichkeitsmaße ebenfalls eingesetzt werden, beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
+Die Gestaltung der Funktion \(s\) und die Auswahl der für die Ähnlichkeitsberechnung genutzten Eigenschaften der Dokumente hängt stark von der Anwendung ab. Somit beschreibt beispielsweise die Levenshtein--Distanz \cite{vl1966} die Ähnlichkeit zweier Zeichenketten durch die minimale Menge von Einfüge-, Lösch- und Ersetzungsoperationen, die nötig sind, um eine Zeichenkette in die andere umzuwandeln. In Ontologien und Taxonomien kann die Ähnlichkeit von Begriffen mittels der Knoten- oder Kanteneigenschaften berechnet werden. Beispiele hierfür sind die Ähnlichkeit in Ontologien nach \textcite{pr1995} und \textcite{ps2002}. In der Bildverarbeitung können ebenfalls merkmalsbasierte Ähnlichkeitsmaße eingesetzt werden. Beispielsweise beschreiben \textcite{ow2006} ein Ähnlichkeitsmaß auf Basis von Clusteringalgorithmen, die auf Rastergrafiken angewandt werden.
 
 Im Rahmen dieser Arbeit wird ein Ähnlichkeitsmaß gesucht, das anhand der Eigenschaften von Begriffen eine Distanz zwischen diesen berechnet. Da eine inhaltliche Ähnlichkeit gesucht wird, spielen linguistische Ähnlichkeitsmaße wie die Levenshtein--Distanz eine untergeordnete Rolle. Zu Beginn bestehen keinerlei Verbindungen zwischen den Begriffen, so dass keine Ähnlichkeitsmaße für Ontologien eingesetzt werden können. Somit bietet sich die Wahl eines Ähnlichkeitsmaßes an, das den Kontext, in dem die Begriffe im Quellsystem verwendet werden, berücksichtigt.
 
@@ -153,7 +153,7 @@ In \cref{tag_sprd} wurde das für diese Arbeit verfügbare Tagging--System besch
 
 Wenn mehrere Begriffe pro Dokument verwendet werden, wird damit ein Zusammenhang zwischen den Begriffen beschrieben. Dieser Zusammenhang lässt sich mit dem Ähnlichkeitsmaß \emph{Kookkurrenz} messen. Kookkurrenzmaße beschreiben, wie oft Begriffe gemeinsam verwendet werden \cite[S. 21]{zz2011}. Dies wird ins Verhältnis zum einzelnen Auftreten der Begriffe gesetzt und genügt somit der Definition von Ähnlichkeit in \cref{similarity}.
 
-Hierzu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen Begriffe benutzen. Diese Annahme muss im Laufe der Evaluierung der Ergebnisse validiert werden.
+Hierzu muss angemerkt werden, dass die Ähnlichkeit mittels Kookkurrenz nicht zwingend eine Ähnlichkeit der den Begriffen zu Grunde liegenden Konzepte darstellt. Die Verwendung von Kookkurrenz als Ähnlichkeitsmaß beruht allein auf der Annahme, dass Menschen zur Beschreibung von gleichen Inhalten die gleichen Begriffe benutzen. Diese Annahme muss im Laufe der Evaluierung der Qualität der Ergebnisse validiert werden, liegt jedoch nicht im Fokus dieser Arbeit.
 
 \subsection{Maße für Kookkurrenz}
 \label{measures}
@@ -172,7 +172,7 @@ Die Mächtigkeiten dieser Mengen können dann zur Berechnung verschiedener Ähnl
 
 \subsubsection{Sørensen--Dice}
 
-Der Sørensen--Dice--Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur als Dice--Koeffizient bezeichent, entstand ursprünglich in der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
+Der Sørensen--Dice--Koeffizient \cite{st1948} \cite{ld1945}, oft auch nur als Dice--Koeffizient bezeichnet, entstand ursprünglich in der Biologie und wurde verwendet, um die Ähnlichkeit zwischen Proben zu berechnen. Heute findet er allgemeine Anwendung im Data Mining. Er ist definiert durch:
 
 \[
 \delta_{Dice}(a, b) = \frac{2|A \cap B|}{|A|+|B|}
@@ -303,7 +303,7 @@ Der initiale Weltausschnitt wird im Rahmen dieser Arbeit aus den Daten des Taggi
 \subsection{Lexikalische Quellen}
 \label{lexical_sources}
 
-Da die Hauptentität des Weltausschnittes Begriffe einer Sprache darstellt, liegt es nahe, auf lexikalische Quellen zurückzugreifen. Diese existieren in unterschiedlichen Ausprägungen, haben jedoch alle gemeinsam, dass sie Wörter beschreiben und in Beziehung zu anderen Wörtern stehen. Damit eignen sie sich gut zur Integration in den Weltausschnitt. Einige der üblichen Formen von lexikalischen Quellen werden im folgenden genannt und erläutert.
+Da die Hauptentität des Weltausschnittes Begriffe einer Sprache darstellt, liegt es nahe, auf lexikalische Quellen zurückzugreifen. Diese existieren in unterschiedlichen Ausprägungen, haben jedoch alle gemeinsam, dass sie Wörter beschreiben und in Beziehung zu anderen Wörtern setzen. Damit eignen sie sich gut zur Integration in den Weltausschnitt. Einige der üblichen Formen von lexikalischen Quellen werden im folgenden genannt und erläutert.
 
 Ein \emph{Wörterbuch} ist ein Nachschlagewerk, das erklärende Informationen über Wörter enthält \cite{hk2003}. Dabei kann es sich um Sach- oder Sprachwissen handeln, das einerseits die inhaltliche Bedeutung eines Wortes oder andererseits die linguistischen und grammatikalischen Eigenschaften beschreibt. Beispiele für Wörterbücher sind der \emph{Duden} \cite{duden} oder das \emph{Oxford English Dictionary} \cite{oed2010}.
 
@@ -318,9 +318,7 @@ Generell sind lexikalische Quellen geeignet, um den Weltausschnitt mit Allgemein
 
 Die Aufgabe eines \emph{Clicktracking--Systems} besteht im Wesentlichen darin, die Klicks von Benutzern auf Hyperlinks einer Website aufzuzeichnen. Dabei wird für gewöhnlich auch aufgezeichnet, in welchem Kontext der Klick statt fand. Der Kontext enthält beispielsweise die Suchbegriffe, die der Benutzer auf der Website oder einer externen Suchmaschine eingegeben hat, die Position des geklickten Elementes auf der Website und weitere Metadaten.
 
-Besonders in Verbindung mit eingegebenen Suchbegriffen kann Clicktracking ein hohes Potenzial zur Anreicherung des Weltausschnittes liefern. Mit jedem Klick auf einen Inhalt der Website wird dem Suchbegriff weiterer Kontext verliehen. Werden gleiche Inhalte zu verschiedenen Suchbegriffen angeklickt, lässt sich eine Kookkurrenz zwischen den Suchbegriffen berechnen (siehe \ref{co-occurence}).
-
-Clicktracking--Systeme bieten großes Potenzial, den Kontext von Begriffen innerhalb einer bestimmten Anwendungsdomäne zu integrieren und daraus Zusammenhänge zu extrahieren.
+Besonders in Verbindung mit eingegebenen Suchbegriffen kann Clicktracking ein hohes Potenzial zur Anreicherung des Weltausschnittes bieten. Mit jedem Klick auf einen Inhalt der Website wird dem Suchbegriff weiterer Kontext innerhalb einer bestimmten Anwendungsdomäne verliehen. Werden gleiche Inhalte zu verschiedenen Suchbegriffen angeklickt, lassen sich Kookkurrenzen zwischen den Suchbegriffen berechnen (siehe \ref{co-occurence}) und somit Zusammenhänge extrahieren.
 
 \subsection{Verwendete Datenquellen}
 \label{used_sources}
@@ -383,7 +381,7 @@ Im Selektionsschritt werden die fittesten Individuen der Population \(P\) ausgew
 
 \paragraph{Reproduktion}
 
-Die Reproduktion dient dazu, aus den im Selektionsschritt ausgewählten Individuen neue Lösungskandidaten zu erzeugen. Dabei werden üblicherweise die Operationen \emph{Rekombination} und \emph{Mutation} verwendet. Bei der Rekombination wird, analog zur Biologie, aus zwei Elternindividuen ein neues Kindindividuum erzeugt. Sie lässt sich als Funktion der Form \(i_n = recombine(i_a, i_b)\) darstellen, wobei \(i_n\) das neue Individuum und \(i_a\) und \(i_b\) die Elternindividuen darstellen. Eine Mutation erzeugt ein neues Individuum durch die Modifikation eines anderen und ist daher durch die Funktion \(i_n = mutate(i_a)\) spezifiziert.
+Die Reproduktion dient dazu, aus den im Selektionsschritt ausgewählten Individuen neue Lösungskandidaten zu erzeugen. Dabei werden üblicherweise die Operationen \emph{Rekombination} und \emph{Mutation} verwendet. Bei der Rekombination wird, analog zur Biologie, aus zwei Elternindividuen ein neues Kindindividuum erzeugt. Sie lässt sich als Funktion der Form \(i_n = recombine(i_a, i_b)\) darstellen, wobei \(i_n\) das neue Individuum und \(i_a\) und \(i_b\) die Elternindividuen darstellen. Eine Mutation erzeugt ein neues Individuum durch die Modifikation eines anderen und ist daher durch die Funktion \(i_n = mutate(i_a)\) beschrieben.
 
 In der Literatur \cite{kw2007, tw2008, dj2006} finden sich für Selektion, Mutation und Rekombination Standardverfahren, die in Hinblick auf das zu lösende Optimierungsproblem ausgewählt werden können. Die konkret implementierten Verfahren werden in \cref{evo_implementation} beschrieben.
 
@@ -413,4 +411,4 @@ Zusammenfassend stellen evolutionäre Algorithmen eine geeignete Methode dar, um
 
 \section{Zusammenfassung}
 
-In diesem Kapitel wurde das Framework zur Link Discovery erläutert. Dies beinhaltet den modellierten Weltausschnitt und dessen Umsetzung auf eine Graph--Datenstruktur. Der Prozess der Erzeugung, Anreicherung und Priorisierung der Beziehungen dieses Modells wurde definiert und beschrieben. Zur Beziehungserzeugung wurde Kookkurrenz vorgestellt, die gängigen Maße genannt und die Berechnung erläutert. Ferner wurden mögliche Datenquellen für die Anreicherung diskutiert sowie der Einsatz evolutionärer Algorithmen zur Beziehungspriorisierung beschrieben. Nachdem in diesem Kapitel das Link--Discovery--Framework umfassend behandelt wurde, beschreibt das nächste Kapitel die konkrete Durchführung der Link Discovery.
+In diesem Kapitel wurde das Framework zur Link Discovery erläutert. Dies beinhaltet den modellierten Weltausschnitt und dessen Umsetzung auf eine Graphen--Datenstruktur. Der Prozess der Erzeugung, Anreicherung und Priorisierung der Beziehungen dieses Modells wurde definiert und beschrieben. Zur Beziehungserzeugung wurde Kookkurrenz vorgestellt, die gängigen Maße genannt und die Berechnung erläutert. Ferner wurden mögliche Datenquellen für die Anreicherung diskutiert sowie der Einsatz evolutionärer Algorithmen zur Beziehungspriorisierung beschrieben. Nachdem in diesem Kapitel das Link--Discovery--Framework umfassend behandelt wurde, beschreibt das nächste Kapitel die konkrete Durchführung der Link Discovery an Beispieldaten.
