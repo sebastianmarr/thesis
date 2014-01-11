@@ -12,17 +12,17 @@ Dieser Abschnitt spezifiziert die Anforderungen an ein System, das zur Link Disc
 
 Nachfolgend werden die funktionalen Anforderungen an das System aufgeführt. Diese ergeben sich direkt aus dem in \cref{ld_framework} beschriebenen Link--Discovery--Framework.
 
-\paragraph{Datenimport} Das System muss in der Lage sein, Rohdaten aus verschiedenen Datenquellen zu importieren und zu speichern. Dazu zählen die MySQL--Datenbank von Spreadshirt, die JSON--Dokumente des Clicktracking--Systems und die API des Wortschatzes der Universität Leipzig. Das System sollte außerdem erweiterbar sein, um in Zukunft andere Datenquellen einbinden zu können.
+\paragraph{Datenimport} Das System muss in der Lage sein, Rohdaten aus verschiedenen Datenquellen zu importieren und zu speichern. Dazu zählen die MySQL--Datenbank des Unternehmens Spreadshirt, die JSON--Dokumente des Clicktracking--Systems und die API des Wortschatzes der Universität Leipzig. Das System sollte außerdem erweiterbar sein, um in Zukunft andere Datenquellen einbinden zu können.
 
 \paragraph{Datenspeicherung} Das System muss die importierten Rohdaten, Zwischenergebnisse der Link Discovery und die Graphenrepräsentation des Weltausschnittes permanent speichern können.
 
 \paragraph{Datenverarbeitung} Das System muss die importierten Daten entsprechend des in \cref{ld_process} beschriebenen Link--Discovery--Prozesses verarbeiten können. Dazu zählen die Schritte Bereinigung, Reduktion, Transformation und Integration. Die Implementierung dieser Schritte sollte änderbar und erweiterbar sein. Im Rahmen des Transformationsschrittes muss das System in der Lage sein, Kookkurrenzmaße zu berechnen.
 
-\paragraph{Visualisierung} Das System soll eine Oberfläche für die Visualisierung der in der Graphenrepräsentation des Weltausschnittes gespeicherten Daten bieten. Dazu zählen die Darstellung der Begriffe, deren Kontext und Beziehungen und eine Möglichkeit der manuellen Priorisierung zum interaktiven Erkunden des Datenbestandes.
+\paragraph{Visualisierung} Das System soll eine Oberfläche für die Visualisierung der in der Graphenrepräsentation des Weltausschnittes gespeicherten Daten bieten. Dazu zählt einerseits die Darstellung der Begriffe, deren Kontext und Beziehungen und andererseits eine Möglichkeit der manuellen Priorisierung zum interaktiven Erkunden des Datenbestandes.
 
 \paragraph{Priorisierung} Das System muss den in \cref{evo_for_prio} beschriebenen Priorisierungsprozess mittels evolutionärer Algorithmen implementieren. Dazu gehören Komponenten des Algorithmus aus \cref{evo_implementation} sowie eine Benutzeroberfläche zur interaktiven Selektion.
 
-\paragraph{Programmierschnittstelle} Das System muss eine Programmierschnittstelle (im Folgenden \emph{API}) zur programmatischen Abfrage der Daten bereit stellen. Die angebotenen Daten enthalten die Begriffe, deren Kontexte und priorisierte Beziehungen. Die Priorisierung wird vom Benutzer der API spezifiziert.
+\paragraph{Programmierschnittstelle} Das System muss eine Programmierschnittstelle (nachfolgend \emph{API}) zur programmatischen Abfrage der Daten bereit stellen. Die angebotenen Daten enthalten die Begriffe, deren Kontexte und priorisierte Beziehungen. Die Priorisierung wird vom Benutzer der API spezifiziert.
 
 \subsection{Nichtfunktionale Anforderungen}
 
@@ -41,7 +41,7 @@ Nachdem die Anforderungen an das System formuliert wurden, werden in den folgend
 
 Aus den im vorherigen Abschnitt formulierten Anforderungen wurde die im Folgenden beschriebene Systemarchitektur entwickelt. \cref{fig:architecture} zeigt die komplette Architektur des implementierten Link--Discovery--Systems. Darin sind, neben der Architektur des Systems selbst, alle genutzten Datenquellen und die Daten, die sie bereit stellen, aufgeführt.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=1\textwidth]{architecture}
 \caption{FMC--Blockdiagramm der gewählten Systemarchitektur}
@@ -58,7 +58,7 @@ Zum Zeitpunkt der Bearbeitung dieser Arbeit existierten zwei Anwendungen, die di
 
 Beim Tag Explorer handelt es sich um eine Browseranwendung, die die im Graphen gespeicherten Beziehungen visualisiert und interaktiv erkundbar macht. Der Benutzer dieser Anwendung kann mit selbst gewählten Gewichtungen der Beziehungen den Graphen durchsuchen. Außerdem werden, wenn vorhanden, die Designs auf der Spreadshirt--Plattform angezeigt, die mit dem gewählten Begriff getaggt sind. Somit wurde die funktionale Anforderung, den Kontext zu einem Begriff zu visualisieren, nur zum Teil umgesetzt, da der Tag Explorer lediglich den Tagging--Kontext eines Begriffes darstellt. In \cref{fig:tag_explorer} ist ein Screenshot der Anwendung abgebildet.
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{tag_explorer}
 \caption{Screenshot der Anwendung ``Tag Explorer''}
@@ -72,7 +72,7 @@ Nachdem die Architektur vorgestellt wurde, spezifiziert der nächste Abschnitt d
 \section{Technologieauswahl}
 \label{tech}
 
-Der folgende Abschnitt beschäftigt sich mit einer Auswahl der zur Umsetzung der Link Discovery eingesetzten Technologien. Die Kernelemente sind das Datenbanksystem, die konkrete Implementierung der Architekturkomponenten sowie die Datenverarbeitung mittels des Programmiermodells MapReduce.
+Der folgende Abschnitt beschäftigt sich mit einer Auswahl der zur Umsetzung der Link Discovery eingesetzten Technologien. Die Kernelemente sind das Datenbanksystem, die konkrete Implementierung der Architekturkomponenten sowie die parallele Datenverarbeitung mittels des Programmiermodells MapReduce.
 
 \subsection{Datenbanksystem}
 \label{db_choice}
@@ -86,9 +86,7 @@ Bei MongoDB handelt es sich um eine quelloffene dokumentenorientierte Datenbank.
 
 Zur Repräsentation der Dokumente verwendet MongoDB ein Format, das sich sehr an JSON \cite{json2006} anlehnt. JSON ist ein menschenlesbares Datenaustauschformat, das aus der Objektnotation der Programmiersprache JavaScript abgeleitet wurde. Das Datenformat von MongoDB ist BSON \cite{bson2013}, eine binäre Repräsentation von JSON, die einige zusätzliche Datentypen unterstützt. 
 
-\cref{lst:json} zeigt ein Beispiel für ein Dokument in MongoDB. Das Feld \emph{\_id} ist hierbei ein  Bezeichner vom Typ \emph{ObjectID}. Dieser stellt einen global eindeutigen Bezeichner dar, der benutzt werden kann, um Dokumente zu referenzieren. Innerhalb einer Collection muss \emph{\_id} grundsätzlich eindeutig sein. Das Feld \emph{address} zeigt, dass Dokumente weitere Dokumente enthalten können. Am Feld \emph{friends} wird deutlich, dass Werte für Schlüssel auch Arrays von Werten sein können. Diese sind nicht auf primitive Typen wie Zeichenketten oder Zahlen beschränkt, sondern können auch weitere Dokumente oder Arrays sein.
-
-\begin{lstlisting}[language=json, label={lst:json}, caption={JSON--Beispiel für ein Dokument in MongoDB}, float]
+\begin{lstlisting}[language=json, label={lst:json}, caption={JSON--Beispiel für ein Dokument in MongoDB}, float=ht]
 {
     "_id" : ObjectId("51efc20147cae77dfc02e0ac"),
     "name" : "Bob",
@@ -106,11 +104,15 @@ Zur Repräsentation der Dokumente verwendet MongoDB ein Format, das sich sehr an
 }
 \end{lstlisting}
 
+\cref{lst:json} zeigt ein Beispiel für ein Dokument in MongoDB. Das Feld \emph{\_id} ist hierbei ein  Bezeichner vom Typ \emph{ObjectID}. Dieser stellt einen global eindeutigen Bezeichner dar, der benutzt werden kann, um Dokumente zu referenzieren. Innerhalb einer Collection muss \emph{\_id} grundsätzlich eindeutig sein. Das Feld \emph{address} zeigt, dass Dokumente weitere Dokumente enthalten können. Am Feld \emph{friends} wird deutlich, dass Werte für Schlüssel auch Arrays von Werten sein können. Diese sind nicht auf primitive Typen wie Zeichenketten oder Zahlen beschränkt, sondern können auch weitere Dokumente oder Arrays sein.
+
 MongoDB unterstützt Anfragen über ein Binärprotokoll, welches über so genannte \emph{Treiber} in vielen Programmiersprachen abstrahiert zur Verfügung steht. Dieses Protokoll unterstützt vielfältige Lese- und Schreiboperationen, die komplexe Abfragen und Operationen auf den gespeicherten Daten zulassen. Außerdem bietet MongoDB eine Implementierung des MapReduce--Programmiermodells (siehe \cref{mapreduce}) sowie die Möglichkeit, Indizes auf allen Hierarchieebenen der Dokumente zu nutzen. Für interaktive Operationen steht die \emph{Mongo Shell} zur Verfügung, welche Abfragen mittels der Programmiersprache JavaScript erlaubt und somit einen Treiber für diese Sprache darstellt.
 
 Aufgrund der genannten Eigenschaften stellt MongoDB einen exzellenten Ausgangspunkt für die Link Discovery im Rahmen dieser Arbeit dar. Durch die vorhandene Schemaflexibilität können die Daten in der gerade benötigten Form gespeichert und abgefragt werden. Durch die Unterstützung von MapReduce mit mehreren Rechnern lassen sich Berechnungen wie die der Kookkurrenz (siehe \cref{mapreduce_cooccurence}) parallelisieren und somit beschleunigen. Die Unterstützung von Indizes auf allen Hierarchieebenen der Dokumente bietet Vorteile zur effektiven Verkürzung von Antwortzeiten auf Anfragen.
 
 MongoDB stellt das zentrale technische Element für die Link Discovery im Rahmen dieser Arbeit dar. Sobald die Daten aus den externen und internen Quellen in MongoDB importiert wurden, können die folgenden Schritte direkt mit Datenbankabfragen realisiert werden.
+
+\clearpage
 
 \subsubsection{Umsetzung der Graphenrepräsentation}
 
@@ -118,9 +120,7 @@ Um das in \cref{world_graph} beschriebene Datenmodell in MongoDB umzusetzen, mus
 
 Somit stellt sich anschließend die Frage, wie die Knoten und Kanten als Dokumente repräsentiert werden. Durch die durch MongoDB gegebene Schemaflexibilität lassen sich die Kontexte der durch die Knoten repräsentierten Begriffe direkt als Unterdokumente im Knotendokument ablegen. Der Schlüssel für diese Unterdokumente ist der Name des Kontextes. Dadurch lassen sich die Knoten leicht filtern, da die Abfrage auf das Vorhandensein des jeweiligen Schlüssels angepasst und durch Indizes auf diesen Schlüsseln unterstützt werden kann. \cref{lst:node_json} zeigt ein Beispiel für einen Knoten in JSON--Notation. Arrays mit vielen Elementen sind aus Platzgründen verkürzt dargestellt.
 
-Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben sich zusätzliche Eigenschaften. \cref{lst:edge_json} zeigt beispielhaft ein Kantendokument für eine Tagging--Kookkurrenz in JSON--Notation.
-
-\begin{lstlisting}[language=json, label={lst:node_json}, caption={JSON--Beispiel für ein Knotendokument in MongoDB}, float]
+\begin{lstlisting}[language=json, label={lst:node_json}, caption={JSON--Beispiel für ein Knotendokument in MongoDB}, float=ht]
 {
     "_id" : ObjectId("51efc22447cae77dfc03e16b"),
     "language" : "de",
@@ -151,7 +151,9 @@ Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben
 }
 \end{lstlisting}
 
-\begin{lstlisting}[language=json, label={lst:edge_json}, caption={JSON--Beispiel für ein Kantendokument}, float]
+Die Kanten können direkt als Dokumente abgebildet werden. Über den Typ ergeben sich zusätzliche Eigenschaften. Ein Kantendokument für eine Tagging--Kookkurrenz ist beispielhaft in  \cref{lst:edge_json} dargestellt.
+
+\begin{lstlisting}[language=json, label={lst:edge_json}, caption={JSON--Beispiel für ein Kantendokument}, float=ht]
 {
         "_id" : ObjectId("51efd6f61177ff360605bd99"),
         "source" : ObjectId("51efc1af47cae77dfc00c3f8"),
@@ -176,6 +178,8 @@ Die API wurde ebenfalls in JavaScript programmiert, unter Zuhilfenahme der Laufz
 Einzig die Importskripte für die MySQL--Datenbank von Spreadshirt und den Wortschatz der Universität Leipzig wurden in der Programmiersprache Ruby umgesetzt, da diese zum Zeitpunkt des Imports bessere Unterstützung für diese Datenquellen bot.
 
 Zusammenfassend lässt sich festhalten, dass die Architekturkomponenten größtenteils als Skripte implementiert wurden, die direkt mit MongoDB kommunizieren. Dadurch kann das System bei Benutzung von weiteren Datenquellen einfach erweitert werden.
+
+\clearpage
 
 \subsection{Datenverarbeitung}
 \label{mapreduce}
@@ -215,7 +219,7 @@ Als Eingabedaten für die Berechnung der Knotenmenge dienen Tupel der Form \((d,
 
 Die Reduce--Funktion fasst die einelementigen Listen zusammen, addiert die Vorkommen und erzeugt somit den Knoten, der für einen Begriff alle Dokumente, die mit diesem Begriff versehen wurden, sowie die Anzahl der Vorkommen insgesamt enthält.
 
-Die Map- und Reduce--Funktionen für die Knotenberechnung sind in \cref{lst:mapred_nodes} als Pseudo--Code dargestellt.
+Die Map- und Reduce--Funktionen für die Knotenberechnung sind als Pseudo--Code in \cref{lst:mapred_nodes} dargestellt.
 
 \begin{lstlisting}[language=pseudo, label={lst:mapred_nodes}, caption={Knotenerzeugung mit MapReduce}, float]
 function map(document, term) {
@@ -236,9 +240,9 @@ function reduce(term, values) {
 
 Die Berechnung der Kantenmenge kann mit den vorher berechneten Knoten als Eingabedaten erfolgen und wird in 2 Verarbeitungsschritte aufgeteilt. Zuerst werden die annotierten Knoten so umgeformt, dass zu einem Dokument alle vergebenen Begriffe bekannt sind. Im zweiten Schritt werden alle Paare von miteinander auftretenden Begriffen gebildet und die Ähnlichkeitsmaße berechnet.
 
-\cref{lst:mapred_edges1} zeigt die Umformung der Knoten mittels MapReduce. Als Eingabe für die Map--Funktion dienen die Knoten. Diese werden so umgeformt, dass für jedes Dokument, das am Knoten annotiert ist, ein neues Schlüssel-/Wertpaar emittiert wird. Die Reduce--Funktion fasst die emittierten Ergebnisse zusammen, so dass als Ergebnis alle Begriffe, die an ein Dokument vergeben wurden, gesammelt als Liste vorliegen.
+\cref{lst:mapred_edges1} zeigt die Umformung der Knoten mittels MapReduce. Als Eingabe für die Map--Funktion dienen die Knoten. Diese werden so umgeformt, dass für jedes Dokument, das am Knoten annotiert ist, ein neues Schlüssel-/Wertpaar emittiert wird. Die emittierten Ergebnisse werden in der Reduce--Funktion zusammengefasst, so dass als Ergebnis alle Begriffe, die an ein Dokument vergeben wurden, gesammelt als Liste vorliegen.
 
-\begin{lstlisting}[language=pseudo, label={lst:mapred_edges1}, caption={Umformung der Knoten mit MapReduce}, float]
+\begin{lstlisting}[language=pseudo, label={lst:mapred_edges1}, caption={Umformung der Knoten mit MapReduce}, float=ht]
 function map(node) {
     foreach document in node.documents do
         emit(document, {terms: [node]});
@@ -256,7 +260,7 @@ function reduce(term, values) {
 
 In \cref{lst:mapred_edges2} wird die Erzeugung der Kookkurrenzkanten dargestellt. Im Map--Schritt werden dazu alle möglichen Paare der mit einem Dokument verknüpften Begriffe gebildet und emittiert. Der Schlüssel ist eine Kombination aus Ziel- und Quellbegriff. Der Wert zählt die Anzahl der Kookkurrenzen zwischen beiden Begriffen. Während des Reduce--Schrittes werden alle Kanten zwischen zwei Begriffen zusammengefasst, die Summe der Kookkurrenzen gebildet und die Ähnlichkeitsmaße berechnet. Die Funktionen zur Berechnung der Maße sind in \cref{measures} beschrieben.
 
-\begin{lstlisting}[language=pseudo, label={lst:mapred_edges2}, caption={Kantenerzeugung mit MapReduce}, float]
+\begin{lstlisting}[language=pseudo, label={lst:mapred_edges2}, caption={Kantenerzeugung mit MapReduce}, float=ht]
 function map(document) {
     foreach term1 in document.terms do
         foreach term2 in document.terms do
