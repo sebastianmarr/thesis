@@ -12,7 +12,7 @@ Im Allgemeinen sind Tags kurze Schlagworte, die von dem Benutzer, der sie vergib
 
 Die Menge der Tags eines Systems ist nicht hierarchisch geordnet und es bestehen keine explizit formulierten Beziehungen zwischen einzelnen Tags. Somit ergibt sich eine lose Kategorisierung der Dokumente, die, im Gegensatz zu formalen Taxonomien und Ontologien, ständig von den Benutzern erweitert und verändert wird \cite{sc2005}. \textcite{je2004} beschäftigt sich tiefer gehend mit dem Unterschied zwischen starrer Klassifikation und loser Kategorisierung.
 
-Aus dieser Eigenschaft ergeben sich bestimmte Schwächen und Stärken von Tagging--Systemen, die von \textcite{ma2004} definiert wurden. Demnach liegen die Schwächen in der Mehrdeutigkeit von Tags und der mangelnden Kontrolle von Synonymen. Mehrdeutigkeit bezeichnet den Umstand, dass gleiche Tags zur Beschreibung von sehr unterschiedlichen Dokumenten genutzt werden können, da keine Systematik vorgegeben ist. Die mangelnde Kontrolle von Synonymen führt dazu, dass verschiedene Tags verwendet werden, um den gleichen Sachverhalt zu beschreiben.
+Aus den genannten Eigenschaften ergeben sich bestimmte Schwächen und Stärken von Tagging--Systemen, die von \textcite{ma2004} definiert wurden. Demnach liegen die Schwächen in der Mehrdeutigkeit von Tags und der mangelnden Kontrolle von Synonymen. Mehrdeutigkeit bezeichnet den Umstand, dass gleiche Tags zur Beschreibung von sehr unterschiedlichen Dokumenten genutzt werden können, da keine Systematik vorgegeben ist. Die mangelnde Kontrolle von Synonymen führt dazu, dass verschiedene Tags verwendet werden, um den gleichen Sachverhalt zu beschreiben.
 
 Zu den von \textcite{ma2004} formulierten Stärken gehören die starke Ausrichtung von Tags an den Gedankengängen der Benutzer und dem einfacheren Durchstöbern von Dokumenten. Da die Tags von den Benutzern eines Systems formuliert werden, spiegeln sie deren Vokabular und deren Gedankengänge wieder. Werden Tags statt zum Finden von konkreten Dokumenten zum Durchstöbern genutzt, bieten sie größere Möglichkeiten, interessante Inhalte zu finden, als in eine starre Kategorisierung.
 
@@ -27,7 +27,7 @@ Ein Tagging--System ist allgemein durch ein Tripel \(S=(D, T, U)\) von Mengen, s
 
 Die Relation \(R\) beschreibt den Vorgang des \emph{Taggings}. Ein Benutzer \(u\) des Systems vergibt einen Tag \(t\) an ein Dokument \(d\), um den Inhalt von \(d\) mit der Zeichenkette von \(t\) zu beschreiben. Der Zeitpunkt der Vergabe des Tags wird durch einen Zeitstempel \(ts\) repräsentiert. \(R\) enthält demnach Quadrupel der Form \((d,t,u,ts)\).
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.8\textwidth]{tag_system}
 \caption{FMC--Entity--Relationship--Diagramm eines Tagging--Systems}
@@ -68,7 +68,7 @@ Die vorliegende Masterarbeit wurde im Kontext der sprd.net AG (Spreadshirt) \cit
 
 Das Erstellen von Designs und die Konfiguration eines Produktes, also das Positionieren von Designs auf Produkttypen, wird vollständig vom Benutzer durchgeführt. Es agieren grundsätzlich zwei Arten von Benutzern mit der Spreadshirt--Plattform: \emph{Kunden} und \emph{Partner}.
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{how_spreadshirt_works}
 \caption{FMC--Blockdiagramm der Spreadshirt--Bereiche und Benutzer}
@@ -81,7 +81,7 @@ Partner sind Benutzer, die Designs oder Produkte erstellen und diese zum Verkauf
 
 Neben den von Kunden für sich selbst erstellten Produkten und den Partner--Shops existiert mit dem Spreadshirt--Marktplatz ein weiterer Vertriebskanal. Auf dem Marktplatz können Partner nach ihrer Zustimmung ihre Designs vertreiben. Kunden können nach Motiven suchen, die ihrem Geschmack entsprechen und diese bestellen, mit anderen Motiven kombinieren oder mit Texten versehen. Ein Produkt, das entweder in einem Partner--Shop oder auf dem Marktplatz positioniert und mit einem Preis versehen wurde, wird Artikel genannt.
 
-Die grundsätzliche Funktionsweise der Spreadshirt--Plattform ist in \cref{fig:howspreadshirtworks} als FMC--Blockdiagramm dargestellt.
+Die grundsätzliche Funktionsweise der Spreadshirt--Plattform ist in Form eines FMC--Blockdiagrammes in \cref{fig:howspreadshirtworks} dargestellt.
 
 Das Suchergebnis für Suchen auf dem Marktplatz hängt maßgeblich von den Metadaten ab, die der Partner für seine Designs oder Produkte vergeben hat. Dazu gehören Tags, aber auch Titel und Beschreibung des Designs oder Produktes. In dieser Arbeit wird ausschließlich das Tagging--System betrachtet.
 
@@ -146,4 +146,4 @@ Dieses Kapitel befasste sich mit Tagging--Systemen. Dazu wurden die Grundlagen u
 
 Außerdem wurde das im weiteren Verlauf dieser Arbeit verwendete Tagging--System von Spreadshirt \cite{sprd2013} näher betrachtet. Dazu wurden die speziellen Eigenschaften dieses Systems, die Datenqualität und die Menge der vorhandenen Daten beschrieben.
 
-Das nachfolgende Kapitel beschäftigt sich mit der Definition des Link--Discovery--Frameworks.
+Das folgende Kapitel beschäftigt sich mit der Definition des Link--Discovery--Frameworks.
