@@ -4,7 +4,7 @@ This is the repository of my Master's Thesis, including all the code, relevant r
 
 The codename [Laphroaig][1] is that of a distillery in Scotland.
 
-The final thesis pdf is available [here](thesis/masterarbeit.pdf).
+The final thesis pdf is available [here](masterarbeit.pdf).
 
 ## Subject
 
