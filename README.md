@@ -4,6 +4,8 @@ This is the repository of my Master's Thesis, including all the code, relevant r
 
 The codename [Laphroaig][1] is that of a distillery in Scotland.
 
+The final thesis pdf is available [here](thesis/masterarbeit.pdf).
+
 ## Subject
 
 The subject of my thesis is to find semantics in user-generated tags. Partners of Spreadshirt are able to tag their uploaded designs and created articles. Those tags are unstructured and can be chosen completely freely.
